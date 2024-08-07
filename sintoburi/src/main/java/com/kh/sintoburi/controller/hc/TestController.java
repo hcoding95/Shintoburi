@@ -8,18 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/hc/main/*")
 public class TestController {
 	
-	@GetMapping("/top")
-	public void top ()	{
-		System.out.println("이거임");
-	}
-	
-	@GetMapping("/bottom")
-	public void bottom()	{
-		System.out.println("이거임");
-	}
-	
 	@GetMapping("/main")
 	public void main() {
+		
+	}
+	
+	@GetMapping("/blog")
+	public void blog() {
 		
 	}
 	
