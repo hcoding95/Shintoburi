@@ -7,30 +7,33 @@
  <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
 <script>
 $(function() {
+	
+	
+	$(".btnMod").click(function() {
 	  let user_id = $(this).data("user-id");
-      // 가장 가까운 tr에서 gradeSelect 클래스의 값 가져오기
       let grade = $(this).closest('tr').find('select').val();
       
 	let sData ={
 			"user_id" : user_id,
 			"grade" : grade
 	};
-	$("#btnMod").click(function() {
 		
 		$.ajax({
 			type: "post",
-			url : "hn/manager/modGrade",
+			url : "/hn/manager/modGrade",
 			data : JSON.stringify(sData),
 			contentType: "application/json; charset=utf-8",
 			success : function(rData) {
 				console.log(sData);
 				console.log(rData);
-				alert("Dd");
+				 let updatedGrade = response.grade; // 서버에서 받은 업데이트된 등급
+	                $(this).closest('tr').find('.current-grade').text(updatedGrade);
+	                
+	                alert("수정 완료");
 			}
 		});
 		
 	});
-	
 	
 	
 	
@@ -77,17 +80,17 @@ $(function() {
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>
 					<td>${vo.email}</td>
-					<td>${vo.grade}${vo.business == 1 ? '[up]' : ''}</td>
+					<td  class="current-grade">${vo.grade}${vo.business == 1 ? '[up]' : ''}</td>
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td>
                        <select>
-						<option value="buyer">구매자</option>	                        
-						<option value="seller">판매자</option>	                        
+						  <option value="구매자" ${vo.grade == '구매자' ? 'selected' : '구매자'}>구매자</option>
+    					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>                      
                        </select>
                        </td >
                        <td>
-                       <button id="btnMod" class="btnMod btn btn-outline-dark" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
+                       <button class="btnMod btn btn-outline-dark" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
 					</td>
 				</tr>
 				</c:if>

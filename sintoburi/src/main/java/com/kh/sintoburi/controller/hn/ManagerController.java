@@ -1,6 +1,7 @@
 package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.UserDto;
@@ -37,14 +37,16 @@ public class ManagerController {
 		List<UserDto> list = userService.getList();
 		model.addAttribute("userList",list);
 	}
-	
-	// 회원등급수정
-	@PostMapping("/modGrade")
-	@ResponseBody
-	public boolean modGrade(@RequestBody UserDto dto) {
-		boolean result = userService.modifyGrade(dto);
-		return result ;
-	}
+	// 회원정보수정
+	 @PostMapping("/modGrade")
+	    @ResponseBody
+	    public boolean modGrade(@RequestBody Map<String, String> map) {
+	        String user_id = map.get("user_id");
+	        String grade = map.get("grade");
+
+	        boolean result = userService.modifyGrade(user_id, grade);
+	        return result;
+	    }
 	
 	// 문의사항 목록
 	@GetMapping("/enqList")
@@ -56,6 +58,7 @@ public class ManagerController {
 	// 문의사항 상세보기
 	@GetMapping("/enquiryDetail/{eno}")
     public String enquiryDetail(@PathVariable("eno") int eno, Model model) {
+		System.out.println("enquiryDetail...");
         EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
         model.addAttribute("enquiryVo", enquiryVo);
         return "hn/manager/enquiryDetail";

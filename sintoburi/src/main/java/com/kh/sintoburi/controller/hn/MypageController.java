@@ -51,9 +51,9 @@ public class MypageController {
 		return "mypage/enqRead";
 	}
 	// 수정
-	@PostMapping("/enqMod")
-	public String enqMod(EnquiryVo vo, RedirectAttributes rttr) {
-		boolean result = enquiryService.modify(vo);
+	@PostMapping("/enqMod/{eno}")
+	public String enqMod(@RequestParam("eno") int eno, RedirectAttributes rttr) {
+		boolean result = enquiryService.modify(eno);
 		rttr.addFlashAttribute("resultMod",result);
 		return "redirect:/mypage/enqList";
 	}

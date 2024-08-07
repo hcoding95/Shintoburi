@@ -4,13 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.kh.sintoburi.mapper.hn.UserMapper">
   
-  
+  <!-- 회원목록 -->
   <select id="getList" resultType="UserDto">
   	select user_id,user_name,grade,email,last_login 
   	from tbl_users
   </select>
   
-  
+<!-- 회원 등급 수정 --> 
     <update id="updateGrade">
         update tbl_users
         set grade = #{grade}
