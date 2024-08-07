@@ -17,7 +17,7 @@ import com.kh.sintoburi.service.hn.EnquiryService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/mypage/*")
+@RequestMapping("/hn/mypage/*")
 @Log4j
 public class MypageController {
 

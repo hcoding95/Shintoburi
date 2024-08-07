@@ -2,11 +2,14 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="org.zerock.ex01.mapper.UserMapper">
+  <mapper namespace="com.kh.sintoburi.mapper.hn.UserMapper">
+  
+  
   <select id="getList" resultType="UserDto">
   	select user_id,user_name,grade,email,last_login 
   	from tbl_users
   </select>
+  
   
     <update id="updateGrade">
         update tbl_users
@@ -14,10 +17,12 @@
         where user_id = #{user_id}
     </update>
   
+  <!--  회원 데이터 1개 -->
    <select id="selectById" resultType="UserDto">
   	select user_id,user_name,grade,email,last_login 
   	from tbl_users
   	where user_id = #{user_id}
   </select>
+  
   
   </mapper>
