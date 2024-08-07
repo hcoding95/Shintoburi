@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/hc/main/*")
-public class TestController {
+public class MainController {
 	
 	@GetMapping("/main")
 	public void main() {
@@ -15,6 +15,7 @@ public class TestController {
 	
 	@GetMapping("/blog")
 	public void blog() {
+		System.out.println("블로그 적용");
 		
 	}
 	
