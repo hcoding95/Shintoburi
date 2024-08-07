@@ -1,4 +1,4 @@
-package com.kh.sintoburi.controller.hc;
+package com.kh.sintoburi.controller.gr;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
