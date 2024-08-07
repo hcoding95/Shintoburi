@@ -14,9 +14,11 @@ body {
     align-items: center;
 }
 
+
 .header {
     width: 100%;
     max-width: 1200px;
+    min-width: 1200px;
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -29,7 +31,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* 로고와 프로필 섹션 사이에 20px 간격 추가 */
     
 }
 
@@ -39,11 +41,25 @@ body {
 }
 
 .header-content {
-    width: 100%;
-    max-width: 1200px;
+    width: calc(100% - 200px); /* 좌우 100px씩 마진 적용을 위한 너비 설정 */
+    max-width: 1000px;
+    min-width: 1000px; /* 최소 너비 설정 */
     display: flex;
     align-items: center;
-    margin-top: 5px; /* 로고와 프로필 섹션 사이에 간격 추가 */
+    margin-top: 20px; /* 로고와 프로필 섹션 사이에 간격 추가 */
+    margin-left: 100px; /* 왼쪽 끝단에서 100px 이동 */
+    padding-right: 300px; /* 오른쪽 끝단에서 100px 이동 */
+    padding-bottom: 20px;
+    
+}
+.profile-end {
+	max-width: 1100px;
+    min-width: 1100px; /* 최소 너비 설정 */
+	border-bottom: 2px solid #ddd; /* 테두리 추가 */
+}
+
+.text-end {
+	border-bottom: 2px solid #ddd; /* 테두리 추가 */
 }
 
 .profile-picture {
@@ -106,11 +122,88 @@ body {
     margin-right: 0;
 }
 
+/* 위에는 상단 탭부분 아래부터는 그 밑에꺼  */
+.container {
+    display: flex;
+    width: 1200px;
+    margin-top: 20px;
+    align-items: flex-start; /* 아이템들이 같은 곳에서 시작하도록 설정 */
+}
+
+.sidebar {
+    width: 300px;
+    margin-right: 20px;
+}
+
+.sidebar .section {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd; /* 테두리 추가 */
+    border-radius: 5px;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.photo-grid .photo {
+    background-color: #ccc;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-main-content {
+    flex-grow: 1;
+    margin-top: 0; /* 사이드바와 같은 높이에서 시작하도록 설정 */
+}
+/* 섹션 구분용 */
+.blog-control {
+	padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd; /* 테두리 추가 */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.posts {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.post {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.filters {
+    float: right; /* 오른쪽 끝에 붙이기 */
+  
+}
+#filterBtn {
+  	padding: 5px 5px; /* 버튼의 크기 조정 */
+    font-size: 12px;   /* 버튼 텍스트 크기 조정 */
+}
 </style>
     
 <!-- 사진 상단 부분  -->
 <div class="header">
-    <div class="logo-container">
+    <div class="logo-container profile-end">
         <img src="/resources/images/logo.png" alt="Logo">
     </div>
     
@@ -123,85 +216,89 @@ body {
                 <p>팔로워 갯수 <span>121</span></p>
             </div>
         </div>
-        <div class="profile-actions">
+        <div class="profile-actions ">
              <button>쪽지 보내기</button>
              <button>좋아요</button>
         </div>
     </div>
+	<div class="profile-end">
+		<p></p>
+	</div>
 </div>
 <!-- 사진 프로필 끝  -->
-    <div class="container">
-        <div class="sidebar">
-            <h3>소개</h3>
-            <p>출신</p>
-            <p>위치</p>
-            <p>이메일</p>
-            <h3>사진</h3>
-            <div class="photo-grid">
-                <div class="photo">A</div>
-                <div class="photo">A</div>
-                <div class="photo">A</div>
-                <div class="photo">A</div>
-                <div class="photo">A</div>
-                <div class="photo">A</div>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="filters">
-                <h3>게시물</h3>
-                <button>필터</button>
-            </div>
-            <div class="posts">
-                <div class="post">
-                    <div class="post-container">
-                        <div class="post-user-info">
-                            <div class="user-details">
-                                <img src="https://via.placeholder.com/50" alt="User">
-                                <div class="user-info-text">
-                                    <span>사용자 이름</span>
-                                    <span>게시 날짜</span>
-                                </div>
-                            </div>
-                            <div class="user-stats">
-                                <div>
-                                    <span>좋아요:</span>
-                                    <span>100</span>
-                                </div>
-                                <div>
-                                    <span>팔로워:</span>
-                                    <span>200</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel slide">
-                            <div class="carousel-item">
-                                <img src="https://via.placeholder.com/600x300" alt="Post Image">
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p>게시물 내용이 여기에 들어갑니다.</p>
-                        </div>
-                        <div class="post-stats">
-                            <div>
-                                <span>댓글 수:</span>
-                                <span>10</span>
-                            </div>
-                            <div>
-                                <span>공유 수:</span>
-                                <span>5</span>
-                            </div>
-                        </div>
-                        <div class="post-actions">
-                            <button>좋아요</button>
-                            <button>댓글 달기</button>
-                            <button>공유하기</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 추가적인 게시물들 -->
-            </div>
-        </div>
-    </div>
+<!-- 탭팬 부분 -->
+<div class="row" style="margin-top: 20px;">
+	<div class="col-md-12">
+		<div class="tabbable" id="tabs-62401">
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link active" href="#tab1" data-toggle="tab">게시물</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#tab2" data-toggle="tab">프로필 정보</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab1">
+				<!-- 탭팬 1내용 -->
+					<div class="container">
+				        <div class="sidebar">
+				        	<div class="blog-control">
+					            <h3 class="text-end">소개</h3>
+					            <p>출신</p>
+					            <p>위치</p>
+					            <p>이메일</p>
+				        	</div>
+				        	<div class="blog-control">
+					            <h3 class="text-end">사진</h3>
+					            <div class="photo-grid">
+					                <div class="photo">A</div>
+					                <div class="photo">A</div>
+					                <div class="photo">A</div>
+					                <div class="photo">A</div>
+					                <div class="photo">A</div>
+					                <div class="photo">A</div>
+					            </div>
+				        	</div>
+				        </div>
+				        <div class="blog-main-content">
+				        	<div class="blog-control">
+					            <h3 class="text-end">게시물 <div class="filters"><button id="filterBtn" class="btn btn-primary">필터</button></div></h3>
+				        	</div>
+				            <div class="posts blog-control">
+				                <div class="post">게시물 1</div>
+				                <div class="post">게시물 2</div>
+				                <div class="post">게시물 3</div>
+				                <div class="post">게시물 4</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				                <div class="post">게시물 5</div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<!-- 탭팬 1내용끝 -->
+				<div class="tab-pane" id="tab2">
+					<p>
+						Howdy, I'm in Section 2.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 탭팬 부분끝  -->
+     
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>
