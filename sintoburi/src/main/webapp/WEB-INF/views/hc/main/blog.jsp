@@ -154,7 +154,7 @@
 
 .photo-grid .photo {
     background-color: #ccc;
-    height: 100px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -167,6 +167,51 @@
     object-fit: cover; /* 이미지가 컨테이너를 채우도록 조정 */
     border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
 }
+.product-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.product-photo-grid .photo {
+    background-color: #ccc;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
+}
+
+.product-photo-grid .photo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* 이미지가 컨테이너를 채우도록 조정 */
+    border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
+}
+
+.photo-main-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+}
+
+.photo-main-grid .photo {
+    background-color: #ccc;
+    height: 120px; /* 이미지 높이를 줄임 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
+    overflow: hidden; /* 이미지를 컨테이너 내로 자르기 위해 overflow를 hidden으로 설정 */
+}
+.photo-main-grid .photo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 이미지가 컨테이너를 채우도록 조정 */
+    border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
+}
+
+
 
 .blog-main-content {
     flex-grow: 1;
@@ -209,6 +254,27 @@
   	padding: 5px 5px; /* 버튼의 크기 조정 */
     font-size: 12px;   /* 버튼 텍스트 크기 조정 */
 }
+
+/* 프로필 부분 */
+ .profile-section {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        .profile-section h3 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .profile-section div {
+            margin-bottom: 10px;
+        }
+        .profile-section span {
+            font-weight: bold;
+        }
+
 </style>
     
 <!-- 사진 상단 부분  -->
@@ -269,6 +335,14 @@
 					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
 					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
 					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					            </div>
+				        	</div>
+				        	<div class="blog-control">
+					            <h3 class="text-end">브랜드몰<div class="filters"><a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a></div></h3>
+					            <div class="product-photo-grid">
 					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
 					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
 					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
@@ -409,16 +483,57 @@
 					<div class="tab-pane" id="tab2">
 						<div class="container">
 							 <div class="profile-end">
-						        	<div class="blog-control">
-							            <h3 class="text-end">소개</button></div></h3>
-						     </div>
+							 	<!-- 프로필 -->
+								 <div class="profile-section">
+						            <h3 class="text-end">(유저)님의 프로필</h3>
+						            <div><span>유저 계급:</span> 계급명</div>
+						            <div><span>주요 작물:</span> 작물명</div>
+						            <div><span>출생연도:</span> 1990년</div>
+						            <div><span>생일:</span> 1월 1일</div>
+						            <div><span>성별:</span> 여성</div>
+						        </div>
+						        <div class="profile-section">
+						            <h3 class="text-end">연락처</h3>
+						            <div><span>전화 번호:</span> 010-1234-5678</div>
+						            <div><span>이메일:</span> jane.doe@example.com</div>
+						            <div><span>주소:</span> 서울시 강남구</div>
+						        </div>
+						        <div class="profile-section">
+						            <h3 class="text-end">웹사이트 및 소셜 링크</h3>
+						            <div><a href="https://example.com" target="_blank">어쩌구 저쩌구 사이트</a></div>
+						        </div>
+								<!-- 프로필 끝  -->
+							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="tab3">
 						<div class="container">
 							 <div class="profile-end">
-						        	<div class="blog-control">
-							            <h3 class="text-end">사진</button></div></h3>
+						       	<div class="blog-control">
+						       		<div class="blog-control">
+							            <h3 class="text-end">사진</h3>
+							            <div class="photo-main-grid">
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							            </div>
+				        			</div>
+					            </div>
 						     </div>
 						</div>
 					</div>
@@ -428,6 +543,47 @@
 	</div>
 </div>
 <!-- 탭팬 부분끝  -->
+</div>
+<a href="#" data-toggle="modal" data-target="#myModal">어쩌구 저쩌구 사이트</a>
+<!-- 모달창 스타일  -->
+<style>
+.modal-dialog.modal-fullscreen {
+    max-width: 100%;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+}
+
+.modal-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+</style>
+<!-- 모달창 jsp 뛰우기 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Your JSP Content</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="yourpage.jsp" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
