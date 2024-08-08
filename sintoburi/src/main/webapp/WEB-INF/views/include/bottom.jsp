@@ -3,13 +3,13 @@
 </main>
 <style>
 .footer {
-    background-color: #90EE90;
+    background-color: D6EFD8;
     padding: 20px 0;
     border-top: 1px solid #e7e7e7;
     margin-top: 20px;
 }
 
-.footer .container {
+.footer .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -54,9 +54,9 @@
 
 </style>
 <footer class="footer">
-    <div class="container">
+    <div class="footer-container">
         <div class="footer-column footer-logo">
-            <img src="/resources/images/logo.png" alt="농사랑 로고">
+            <img src="/resources/images/logo.png" alt="신토불이 로고">
         </div>
         <div class="footer-column footer-details">
             <p>(주)KH인재교육원</p>
