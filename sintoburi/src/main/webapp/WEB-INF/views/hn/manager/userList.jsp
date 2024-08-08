@@ -7,36 +7,31 @@
  <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
 <script>
 $(function() {
-	  let user_id = $(this).data("user-id");
-      // 가장 가까운 tr에서 gradeSelect 클래스의 값 가져오기
-      let grade = $(this).closest('tr').find('select').val();
-      
-	let sData ={
-			"user_id" : user_id,
-			"grade" : grade
-	};
 	$("#btnMod").click(function() {
+		  let user_id = $(this).attr("data-user-id");
+	      let grade = $(this).closest('tr').find('select').val();
+	      console.log(user_id);
+	      console.log(grade);
+	      
+			let sData ={
+					"user_id" : user_id,
+					"grade" : grade
+			};
 		
-		$.ajax({
-			type: "post",
-			url : "hn/manager/modGrade",
-			data : JSON.stringify(sData),
-			contentType: "application/json; charset=utf-8",
-			success : function(rData) {
-				console.log(sData);
-				console.log(rData);
-				alert("Dd");
-			}
-		});
-		
+			$.ajax({
+				type: "post",
+				url : "/hn/manager/modGrade",
+				data : JSON.stringify(sData),
+				contentType: "application/json; charset=utf-8",
+				success : function(rData) {
+					console.log(sData);
+					console.log(rData);
+					alert("dd");
+				}
+			});
 	});
 	
-	
-	
-	
 });
-
-
 </script>
 
  <!-- Content Row -->
@@ -81,7 +76,7 @@ $(function() {
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td>
-                       <select>
+                      <select name="grade" class="gradeSelect">
 						<option value="buyer">구매자</option>	                        
 						<option value="seller">판매자</option>	                        
                        </select>
@@ -96,7 +91,6 @@ $(function() {
 		</table>
 	</div>
 </div>
-                           
             </div> <!-- card-body -->
         </div>
     </div>

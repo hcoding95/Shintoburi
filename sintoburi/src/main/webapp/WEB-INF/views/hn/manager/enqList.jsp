@@ -28,8 +28,6 @@
                     <!-- 필요한 문의사항 타입 옵션 추가 -->
                 </select>
             </div>
-                 
-                 
              </div>
              <!-- Card Body -->
              <div class="card-body"> 

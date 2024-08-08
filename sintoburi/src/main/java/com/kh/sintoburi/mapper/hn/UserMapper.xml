@@ -10,7 +10,6 @@
   	from tbl_users
   </select>
   
-  
     <update id="updateGrade">
         update tbl_users
         set grade = #{grade}

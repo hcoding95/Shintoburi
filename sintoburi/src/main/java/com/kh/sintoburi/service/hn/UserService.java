@@ -10,7 +10,7 @@ public interface UserService {
 	public List<UserDto> getList();
 
 	// 등급수정
-	public boolean modifyGrade(UserDto dto);
+	public boolean modifyGrade(String grade, String user_id);
 
 	// 데이터 1개
 	public UserDto selectById(String user_id);

@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean modifyGrade(UserDto dto) {
-		int count = userMapper.updateGrade(dto);
+	public boolean modifyGrade(String grade, String user_id) {
+		int count = userMapper.updateGrade(grade, user_id);
 		return (count == 1)? true : false;
 	}
 

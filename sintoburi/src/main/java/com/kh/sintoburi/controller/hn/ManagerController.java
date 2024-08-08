@@ -1,6 +1,7 @@
 package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,10 +42,15 @@ public class ManagerController {
 	// 회원등급수정
 	@PostMapping("/modGrade")
 	@ResponseBody
-	public boolean modGrade(@RequestBody UserDto dto) {
-		boolean result = userService.modifyGrade(dto);
-		return result ;
+	public boolean modGrade(@RequestBody Map<String, Object> map) {
+	    System.out.println("modGrade...");
+	    String grade = (String)map.get("grade");
+	    String user_id = (String)map.get("user_id");
+
+	    boolean result = userService.modifyGrade(grade, user_id);
+	    return result;
 	}
+
 	
 	// 문의사항 목록
 	@GetMapping("/enqList")
