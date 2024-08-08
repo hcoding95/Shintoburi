@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <style>
 .header-top {
-    background-color: #f1f1f1;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,7 +55,6 @@
 .profile-end {
 	max-width: 1100px;
     min-width: 1100px; /* 최소 너비 설정 */
-	border-bottom: 2px solid #ddd; /* 테두리 추가 */
 }
 
 .text-end {
