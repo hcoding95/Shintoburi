@@ -4,14 +4,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+.header-top {
     background-color: #f1f1f1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 30px;
+    border: none;
+    border-radius: 5px;
 }
 
 
@@ -131,7 +131,7 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 500px;
     margin-right: 20px;
 }
 
@@ -155,6 +155,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
+}
+
+.photo-grid .photo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* 이미지가 컨테이너를 채우도록 조정 */
+    border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
 }
 
 .blog-main-content {
@@ -180,12 +188,10 @@ body {
 }
 
 .posts {
-    height: 500px;
-    overflow-y: auto;
+    overflow-y: visible;
 }
 
 .post {
-    background-color: #fff;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
@@ -195,15 +201,17 @@ body {
     float: right; /* 오른쪽 끝에 붙이기 */
   
 }
-#filterBtn {
+
+.btn-standard {
   	padding: 5px 5px; /* 버튼의 크기 조정 */
     font-size: 12px;   /* 버튼 텍스트 크기 조정 */
 }
 </style>
     
 <!-- 사진 상단 부분  -->
-<div class="header">
-    <div class="logo-container profile-end">
+<div class="header-top">
+<div class="header blog-control">
+    <div class="logo-container profile-end blog-control" >
         <img src="/resources/images/logo.png" alt="Logo">
     </div>
     
@@ -232,10 +240,13 @@ body {
 		<div class="tabbable" id="tabs-62401">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a class="nav-link active" href="#tab1" data-toggle="tab">게시물</a>
+					<a class="nav-link active" id="main-tab1" href="#tab1" data-toggle="tab">게시물</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#tab2" data-toggle="tab">프로필 정보</a>
+					<a class="nav-link" id="main-tab2" href="#tab2" data-toggle="tab">프로필 정보</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="main-tab3" href="#tab3" data-toggle="tab">사진</a>
 				</li>
 			</ul>
 			<div class="tab-content">
@@ -244,61 +255,205 @@ body {
 					<div class="container">
 				        <div class="sidebar">
 				        	<div class="blog-control">
-					            <h3 class="text-end">소개</h3>
+					            <h3 class="text-end">소개<div class="filters"><a id="filterBtn" href="#tab2" data-toggle="tab" data-tab="#main-tab2" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <p>출신</p>
 					            <p>위치</p>
 					            <p>이메일</p>
 				        	</div>
 				        	<div class="blog-control">
-					            <h3 class="text-end">사진</h3>
+					            <h3 class="text-end">사진<div class="filters"><a id="filterBtn" href="#tab3" data-toggle="tab" data-tab="#main-tab3" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <div class="photo-grid">
-					                <div class="photo">A</div>
-					                <div class="photo">A</div>
-					                <div class="photo">A</div>
-					                <div class="photo">A</div>
-					                <div class="photo">A</div>
-					                <div class="photo">A</div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
 					            </div>
 				        	</div>
 				        </div>
 				        <div class="blog-main-content">
 				        	<div class="blog-control">
-					            <h3 class="text-end">게시물 <div class="filters"><button id="filterBtn" class="btn btn-primary">필터</button></div></h3>
+					            <h3 class="text-end">게시물 <div class="filters "><button id="filterBtn" class="btn btn-primary btn-standard">필터</button></div></h3>
 				        	</div>
-				            <div class="posts blog-control">
-				                <div class="post">게시물 1</div>
-				                <div class="post">게시물 2</div>
-				                <div class="post">게시물 3</div>
-				                <div class="post">게시물 4</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
-				                <div class="post">게시물 5</div>
+				            <div class="posts">
+				            <!-- 포스트 시작 -->
+				            <div class="post-container">
+				            <!-- 메인의 내용 시작 -->
+								<!-- 카루셀 시작 -->
+							<!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
+							<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
+							    <div class="carousel-inner">
+							        <div class="carousel-item active">
+							            <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
+							        </div>
+							        <div class="carousel-item">
+							            <img src="/resources/images/1.png" class="d-block w-100" alt="Second Image">
+							        </div>
+							        <div class="carousel-item">
+							            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
+							        </div>
+							        <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+							    </div>
+							    <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+							    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
+							        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							        <span class="sr-only">Previous</span>
+							    </a>
+							    <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
+							        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							        <span class="sr-only">Next</span>
+							    </a>
+							</div>
+							<!-- 카루셀 끝 -->
+							     <div class="post-icons">
+							         <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
+							         <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
+							         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
+							         <a href="#"><img src="path_to_icon4.jpg" alt="Icon 4"></a>
+							     </div>
+							     <div class="post-user-info">
+							  	  <div class="user-details">
+							       <img src="/resources/images/logo.png" alt="User Image">
+							       <div class="user-info-text">
+							           <div>유저 이름</div>
+							           <div>게시 시간</div>
+							       </div>
+							     </div>
+							     <div class="user-stats">
+							       <div>좋아요(기호) <span>좋아요 갯수</span></div>
+							       <div>팔로워 수 <span>팔로워 수</span></div>
+							     </div>
+							</div>
+							    <div class="post-content">
+							         내용 2줄 이상 길어지면 <a href="#">더보기</a>
+							    </div>
+							    <div class="post-actions">
+							        <button>좋아요</button>
+							        <button>댓글 달기</button>
+							        <button>신고하기</button>
+							        <button>공유하기</button>
+							    </div>
+							    
+				            </div>
+							<!-- 메인 내용 끝 -->
+				            <!-- 포스트 끝 -->
+				            <div class="post-container">
+				            <!-- 메인의 내용 시작 -->
+								<!-- 카루셀 시작 -->
+							<!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
+							<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
+							    <div class="carousel-inner">
+							        <div class="carousel-item active">
+							            <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
+							        </div>
+							        <div class="carousel-item">
+							            <img src="/resources/images/1.png" class="d-block w-100" alt="Second Image">
+							        </div>
+							        <div class="carousel-item">
+							            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
+							        </div>
+							        <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+							    </div>
+							    <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+							    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
+							        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							        <span class="sr-only">Previous</span>
+							    </a>
+							    <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
+							        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							        <span class="sr-only">Next</span>
+							    </a>
+							</div>
+							<!-- 카루셀 끝 -->
+							     <div class="post-icons">
+							         <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
+							         <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
+							         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
+							         <a href="#"><img src="path_to_icon4.jpg" alt="Icon 4"></a>
+							     </div>
+							     <div class="post-user-info">
+							  	  <div class="user-details">
+							       <img src="/resources/images/logo.png" alt="User Image">
+							       <div class="user-info-text">
+							           <div>유저 이름</div>
+							           <div>게시 시간</div>
+							       </div>
+							     </div>
+							     <div class="user-stats">
+							       <div>좋아요(기호) <span>좋아요 갯수</span></div>
+							       <div>팔로워 수 <span>팔로워 수</span></div>
+							     </div>
+							</div>
+							    <div class="post-content">
+							         내용 2줄 이상 길어지면 <a href="#">더보기</a>
+							    </div>
+							    <div class="post-actions">
+							        <button>좋아요</button>
+							        <button>댓글 달기</button>
+							        <button>신고하기</button>
+							        <button>공유하기</button>
+							    </div>
+							    
+				            </div>
+							<!-- 메인 내용 끝 -->
+				            <!-- 포스트 끝 -->
 				            </div>
 				        </div>
 				    </div>
 				</div>
 				<!-- 탭팬 1내용끝 -->
-				<div class="tab-pane" id="tab2">
-					<p>
-						Howdy, I'm in Section 2.
-					</p>
+					<div class="tab-pane" id="tab2">
+						<div class="container">
+							 <div class="profile-end">
+						        	<div class="blog-control">
+							            <h3 class="text-end">소개</button></div></h3>
+						     </div>
+						</div>
+					</div>
+					<div class="tab-pane" id="tab3">
+						<div class="container">
+							 <div class="profile-end">
+						        	<div class="blog-control">
+							            <h3 class="text-end">사진</button></div></h3>
+						     </div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- 탭팬 부분끝  -->
-     
+</div>
+
+<script>
+$(function () {
+	// 더보기 버튼 클릭 이벤트 설정
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+        // 기존 활성화된 탭에서 active 클래스 제거
+        $('.nav-link').removeClass('active');
+        // 클릭한 탭에 active 클래스 추가
+        let targetTab = $(this).attr("data-tab");
+        $(targetTab).addClass('active');
+    });
+
+    // 더보기 버튼 클릭 이벤트 재설정 함수
+    function setMoreButtonEvents() {
+        $('a[data-tab]').off('click').on('click', function (e) {
+            e.preventDefault();
+            let targetTab = $(this).attr("data-tab");
+            $(targetTab).tab('show');
+        });
+    }
+
+    // 페이지 로드 시 및 탭 전환 시 더보기 버튼 클릭 이벤트 설정
+    setMoreButtonEvents();
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        setMoreButtonEvents();
+    });
+});
+</script>
+
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>

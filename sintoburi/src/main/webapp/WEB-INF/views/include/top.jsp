@@ -161,7 +161,7 @@ body, html {
 }
 
 main {
-    padding-top: 200px; /* 헤더 높이만큼 여백 추가 */
+    padding-top: 170px; /* 헤더 높이만큼 여백 추가 */
 }
 
 

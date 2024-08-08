@@ -60,13 +60,14 @@
 
 </div>
 <!-- 이벤트  끝 -->
-<!-- 메인 보여줄것 -->
+<!-- 메인의 내용 시작 -->
 <div class="post-container">
      <!-- 카루셀 시작 -->
-     <div id="imageCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+     <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
+     <div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner">
              <div class="carousel-item active">
-                 <img src="/resources/images/logo.png" class="d-block w-100" alt="First Image">
+                 <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
              </div>
              <div class="carousel-item">
                  <img src="/resources/images/1.png" class="d-block w-100" alt="Second Image">
@@ -76,11 +77,12 @@
              </div>
              <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
          </div>
-         <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+         <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+         <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
              <span class="sr-only">Previous</span>
          </a>
-         <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+         <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
              <span class="carousel-control-next-icon" aria-hidden="true"></span>
              <span class="sr-only">Next</span>
          </a>
@@ -114,8 +116,8 @@
         <button>신고하기</button>
         <button>공유하기</button>
     </div>
-</div>
-<!-- 메인 컨텐츠 끝 -->
+    
+<!-- 메인 내용 끝 -->
 
 <script>
     let page = 1;
