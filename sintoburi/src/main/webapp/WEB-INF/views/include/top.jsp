@@ -62,7 +62,7 @@ body, html {
     padding: 10px 0;
     /* 높이를 조절하고 싶다면 아래 높이 값을 변경하세요 */
     height: 30px !important; /* 이 부분을 수정하여 높이를 조절 */
-    background-color: #90EE90; /* 초록색 배경 추가 */
+    background-color: D6EFD8; /* 초록색 배경 추가 */
 }
 
 .middle-bar {
@@ -118,7 +118,7 @@ body, html {
     position: fixed;
     top: 0;
     z-index: 1001;
-    background-color: #90EE90;
+    background-color: D6EFD8;
     width: 100%;
 }
 
