@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.kh.sintoburi.mapper.hn.EnquiryMapper">
+ 	  
+ 	  <!-- 문의사항 목록 -->
+ 	  <select id="getList" resultType="EnquiryVo">
+        select * from tbl_enquiry
+		order by eno 
+    </select>
+   <!-- 문의사항 등록 --> 
+    <insert id="insert">
+    insert into tbl_enquiry
+    (eno, user_id, enquiry_type, content, image)
+    values
+    (seq_enquiry.nextval, #{user_id}, #{enquiry_type}, #{content}, #{image})
+</insert>
+    <!-- 문의사항 수정 -->
+      <update id="update" >
+        update tbl_enquiry
+        set user_id = #{user_id},
+            enquiry_type = #{enquiry_type},
+            content = #{content},
+            image = #{image}
+        where eno = #{eno}
+    </update>
+  <!--  문의사항삭제 -->  
+       <delete id="delete" >
+        delete from tbl_enquiry
+        where eno = #{eno}
+    </delete>
+   <!-- 문의사항 한개 데이터 --> 
+       <select id="selectByEno" resultType="EnquiryVo" >
+        select * from tbl_enquiry
+        where eno = #{eno}
+    </select>
+    
+  
+  </mapper>
