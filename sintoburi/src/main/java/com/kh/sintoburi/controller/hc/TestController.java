@@ -5,17 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/hc/main/*")
+@RequestMapping("/include/*")
 public class TestController {
 	
-	@GetMapping("/main")
-	public void main() {
-		
+	@GetMapping("/top")
+	public void top() {
+		System.out.println("작동중");
 	}
-	
-	@GetMapping("/blog")
-	public void blog() {
-		
-	}
-	
 }
