@@ -7,7 +7,7 @@
  <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
 <script>
 $(function() {
-	$("#btnMod").click(function() {
+	$(".btnMod").click(function() {
 		  let user_id = $(this).attr("data-user-id");
 	      let grade = $(this).closest('tr').find('select').val();
 	      console.log(user_id);
@@ -24,14 +24,15 @@ $(function() {
 			url : "/hn/manager/modGrade",
 			data : JSON.stringify(sData),
 			contentType: "application/json; charset=utf-8",
-			success : function(rData) {
-				console.log(sData);
-				console.log(rData);
-				 let updatedGrade = response.grade; // 서버에서 받은 업데이트된 등급
-	                $(this).closest('tr').find('.current-grade').text(updatedGrade);
-	                
-	                alert("수정 완료");
-			}
+			 success: function(result) {
+	                if (result) {
+	                    let updatedGrade = grade; // 업데이트된 등급
+	                    $(this).closest('tr').find('.current-grade').text(updatedGrade);
+	                    alert("수정 완료");
+	                } else {
+	                    alert("수정 실패");
+	                }
+	            }
 		});
 		
 	});

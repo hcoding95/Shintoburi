@@ -39,15 +39,14 @@ public class ManagerController {
 	}
 
 	
-	// 회원등급수정
 	@PostMapping("/modGrade")
 	@ResponseBody
-	public boolean modGrade(@RequestBody Map<String, Object> map) {
+	public boolean modGrade(@RequestBody UserDto dto) {
 	    System.out.println("modGrade...");
-	    String grade = (String)map.get("grade");
-	    String user_id = (String)map.get("user_id");
+	    String user_id = dto.getUser_id();
+	    String grade = dto.getGrade();
 
-	    boolean result = userService.modifyGrade(grade, user_id);
+	    boolean result = userService.modifyGrade(user_id, grade);
 	    return result;
 	}
 

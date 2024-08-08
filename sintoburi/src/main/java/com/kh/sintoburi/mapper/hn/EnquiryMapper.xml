@@ -9,6 +9,7 @@
         select * from tbl_enquiry
 		order by eno 
     </select>
+  
    <!-- 문의사항 등록 --> 
     <insert id="insert">
     insert into tbl_enquiry
@@ -16,6 +17,7 @@
     values
     (seq_enquiry.nextval, #{user_id}, #{enquiry_type}, #{content}, #{image})
 </insert>
+   
     <!-- 문의사항 수정 -->
       <update id="update" >
         update tbl_enquiry
@@ -25,11 +27,13 @@
             image = #{image}
         where eno = #{eno}
     </update>
+  
   <!--  문의사항삭제 -->  
        <delete id="delete" >
         delete from tbl_enquiry
         where eno = #{eno}
     </delete>
+   
    <!-- 문의사항 한개 데이터 --> 
        <select id="selectByEno" resultType="EnquiryVo" >
         select * from tbl_enquiry

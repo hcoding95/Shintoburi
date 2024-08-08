@@ -24,10 +24,6 @@ $(function() {
 </script>
 
 
-
-
-
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-2">
@@ -79,7 +75,6 @@ $(function() {
  			 <label for="formFile" class="form-label"></label>
  			 <input class="form-control" type="file" id="image" name="image">
 			</div>
-			
 		
 		<div class="col-md-2">
 		</div>

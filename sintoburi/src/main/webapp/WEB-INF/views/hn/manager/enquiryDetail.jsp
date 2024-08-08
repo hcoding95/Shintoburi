@@ -9,17 +9,26 @@
 <script>
 
 $(function() {
-	
+	var eno = '${enquiryVo.eno}'; 
+
+	// 문의사항 데이터 가져오기
     $.ajax({
         type: "get",
         url : "/hn/manager/enquiryDetail/" + eno,
         contentType: "application/json; charset=utf-8",
         success : function(enquiryVo) {
-            console.log(enquiryVo);
+         
  
           
         }
     });
+	
+	
+	// 문의사항 답변 등록하기
+	$("#btnReplyRegister").click(function() {
+		console.log("Dd");
+		
+	});
 
  
 });
@@ -90,8 +99,6 @@ $(function() {
 
 
 
-
-
 <div class="row">
 
      <!-- Area Chart -->
@@ -102,11 +109,33 @@ $(function() {
 
 <div class="row">
 	<div class="col-md-12">
-		
-		<div class="form-group">
-                    <label for="user_id">답변</label>
-                    <input type="text" class="form-control" id="reply" name="reply" >
-                </div>
+
+				
+				
+				<!-- 답변 입력 -->
+				
+				<div class="row my-2">
+					<div >
+					
+					<textarea rows="7" class="form-control" id="content" name="content" ></textarea>
+					</div>
+					
+				
+					<div class="col-md-2" style="top: 20px">
+						<button id="btnReplyRegister" type="button" class="btn btn-outline-dark">답변 등록</button>
+					</div>
+				</div>
+				<!-- // 답변 입력 -->
+				
+				<div class="row my-3">
+					<div class="col-md-12">
+						<table class="table" id="reply_table">
+							
+						</table>
+					</div>
+				</div>
+				
+				<!-- // 답변 -->
 	</div>
 </div>
             </div> <!-- card-body -->

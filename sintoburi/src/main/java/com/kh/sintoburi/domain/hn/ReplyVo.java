@@ -18,5 +18,6 @@ public class ReplyVo {
 	private String user_id;
 	private String reply_content;
 	private Date reply_date;
+	private String manager_id;
 
 }
