@@ -123,7 +123,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="userList">
+                <a class="nav-link" href="/hn/manager/userList">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>회원관리</span>
                 </a>

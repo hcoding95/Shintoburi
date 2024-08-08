@@ -81,15 +81,9 @@ $(function() {
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td>
-<<<<<<< HEAD
-                      <select name="grade" class="gradeSelect">
-						<option value="buyer">구매자</option>	                        
-						<option value="seller">판매자</option>	                        
-=======
                        <select>
 						  <option value="구매자" ${vo.grade == '구매자' ? 'selected' : '구매자'}>구매자</option>
     					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>                      
->>>>>>> branch 'hanna' of https://github.com/hcoding95/Shintoburi
                        </select>
                        </td >
                        <td>
