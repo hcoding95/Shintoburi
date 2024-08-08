@@ -133,6 +133,9 @@
 .sidebar {
     width: 500px;
     margin-right: 20px;
+    position: -webkit-sticky; /* Safari 지원을 위한 접두사 */
+    position: sticky;
+    top: 50px; /*
 }
 
 .sidebar .section {
