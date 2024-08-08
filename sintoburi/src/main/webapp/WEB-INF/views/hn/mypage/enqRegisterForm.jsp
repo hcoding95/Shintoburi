@@ -1,7 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
-  <%@ include file="/WEB-INF/views/include/top.jsp" %>
+<%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
+<%@ include file="/WEB-INF/views/include/top.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+
+<script>
+
+$(function() {
+    $("#enquiry_type").on("change", function() {
+        var selectedValue = $(this).val();
+        var textarea = $("#content");
+
+        if (selectedValue === "등급문의") {
+            textarea.attr("placeholder", "판매자로 권한 요청 시 사업자 번호 or 사업자등록증을 첨부해주세요.");
+        } else {
+            textarea.attr("placeholder", "");
+        }
+    });
+});
+
+</script>
+
+
+
+
+
 
 <div class="container-fluid">
 	<div class="row">
@@ -36,11 +61,10 @@
 						문의 유형
 					</label>
 				<select class="form-select" aria-label="Default select example" id="enquiry_type" name="enquiry_type">
-					<option value="배송문의">배송문의</option>
-					<option value="결제문의">결제문의</option>
-					<option value="판매문의">판매문의</option>
-					<option value="구매문의">구매문의</option>
-					<option value="등급문의">등급문의</option>
+						<option value="상품문의">상품문의</option>
+                        <option value="배송문의">배송문의</option>
+                        <option value="결제문의">결제문의</option>
+                        <option value="등급문의">등급문의</option>
 			</select>
 				</div>	
 				

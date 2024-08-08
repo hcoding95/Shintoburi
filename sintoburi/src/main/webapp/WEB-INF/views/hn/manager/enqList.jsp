@@ -6,11 +6,11 @@
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
  <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
 
- <!-- Content Row -->
 
- <div class="row">
 
-     <!-- Area Chart -->
+
+
+     
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
@@ -18,15 +18,15 @@
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                  <h6 class="m-0 font-weight-bold text-primary">문의 사항</h6>
                  <div class="col-md-3">
-                <select class="form-control" id="enquiryTypeSelect" onchange="filterEnquiryList(this.value)">
-                   	<option value="배송문의">전체</option>
-                   	<option value="배송문의">배송문의</option>
-					<option value="결제문의">결제문의</option>
-					<option value="판매문의">판매문의</option>
-					<option value="구매문의">구매문의</option>
-					<option value="등급문의">등급문의</option>
-                    <!-- 필요한 문의사항 타입 옵션 추가 -->
-                </select>
+<!--                 <select class="form-control" id="enquiryTypeSelect" onchange="filterEnquiryList(this.value)"> -->
+<!--                    	<option value="배송문의">전체</option> -->
+<!--                    	<option value="배송문의">배송문의</option> -->
+<!-- 					<option value="결제문의">결제문의</option> -->
+<!-- 					<option value="판매문의">판매문의</option> -->
+<!-- 					<option value="구매문의">구매문의</option> -->
+<!-- 					<option value="등급문의">등급문의</option> -->
+<!--                     필요한 문의사항 타입 옵션 추가 -->
+<!--                 </select> -->
             </div>
              </div>
              <!-- Card Body -->

@@ -143,7 +143,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="enqList">
+                <a class="nav-link" href="/hn/manager/enqList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>문의사항</span></a>
             </li>
