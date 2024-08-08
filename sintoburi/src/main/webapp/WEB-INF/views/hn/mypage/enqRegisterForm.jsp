@@ -1,14 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+  <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
-<body>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-2">
@@ -76,9 +70,4 @@
 	</div>
 </div>
 
-
-
-
-
-</body>
-</html>
+ <%@ include file="/WEB-INF/views/include/bottom.jsp" %>

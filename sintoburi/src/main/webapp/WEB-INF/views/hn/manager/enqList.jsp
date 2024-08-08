@@ -53,7 +53,7 @@
 					<tr class="col-md-8 text-center">
 						<td>${vo.eno}</td>
 					    <td>상품</td>
-					    <td><a href="enquiryDetail?eno=${vo.eno}">${vo.enquiry_type}</a></td>
+					    <td><a href="/hn/manager/enquiryDetail/${vo.eno}">${vo.enquiry_type}</a></td>
 					    <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
 					    <td>
                         <select>

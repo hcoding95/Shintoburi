@@ -12,7 +12,8 @@ public interface UserMapper {
 	public List<UserDto> getList();
 	
 	// 등급수정
-	public int updateGrade(@Param("grade") String grade, @Param("user_id") String user_id);
+
+	public int updateGrade(@Param("user_id") String user_id , @Param("grade") String grade);
 	
 	// 데이터 1개
 	public UserDto selectById(String user_id);

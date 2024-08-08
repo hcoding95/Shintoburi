@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.UserDto;
@@ -38,6 +37,7 @@ public class ManagerController {
 		List<UserDto> list = userService.getList();
 		model.addAttribute("userList",list);
 	}
+
 	
 	// 회원등급수정
 	@PostMapping("/modGrade")
@@ -51,6 +51,7 @@ public class ManagerController {
 	    return result;
 	}
 
+
 	
 	// 문의사항 목록
 	@GetMapping("/enqList")
@@ -62,6 +63,7 @@ public class ManagerController {
 	// 문의사항 상세보기
 	@GetMapping("/enquiryDetail/{eno}")
     public String enquiryDetail(@PathVariable("eno") int eno, Model model) {
+		System.out.println("enquiryDetail...");
         EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
         model.addAttribute("enquiryVo", enquiryVo);
         return "hn/manager/enquiryDetail";

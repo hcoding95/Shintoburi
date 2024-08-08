@@ -18,17 +18,22 @@ $(function() {
 					"grade" : grade
 			};
 		
-			$.ajax({
-				type: "post",
-				url : "/hn/manager/modGrade",
-				data : JSON.stringify(sData),
-				contentType: "application/json; charset=utf-8",
-				success : function(rData) {
-					console.log(sData);
-					console.log(rData);
-					alert("dd");
-				}
-			});
+
+		$.ajax({
+			type: "post",
+			url : "/hn/manager/modGrade",
+			data : JSON.stringify(sData),
+			contentType: "application/json; charset=utf-8",
+			success : function(rData) {
+				console.log(sData);
+				console.log(rData);
+				 let updatedGrade = response.grade; // 서버에서 받은 업데이트된 등급
+	                $(this).closest('tr').find('.current-grade').text(updatedGrade);
+	                
+	                alert("수정 완료");
+			}
+		});
+		
 	});
 	
 });
@@ -72,17 +77,23 @@ $(function() {
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>
 					<td>${vo.email}</td>
-					<td>${vo.grade}${vo.business == 1 ? '[up]' : ''}</td>
+					<td  class="current-grade">${vo.grade}${vo.business == 1 ? '[up]' : ''}</td>
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td>
+<<<<<<< HEAD
                       <select name="grade" class="gradeSelect">
 						<option value="buyer">구매자</option>	                        
 						<option value="seller">판매자</option>	                        
+=======
+                       <select>
+						  <option value="구매자" ${vo.grade == '구매자' ? 'selected' : '구매자'}>구매자</option>
+    					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>                      
+>>>>>>> branch 'hanna' of https://github.com/hcoding95/Shintoburi
                        </select>
                        </td >
                        <td>
-                       <button id="btnMod" class="btnMod btn btn-outline-dark" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
+                       <button class="btnMod btn btn-outline-dark" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
 					</td>
 				</tr>
 				</c:if>
