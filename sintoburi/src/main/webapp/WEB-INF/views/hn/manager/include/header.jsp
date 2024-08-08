@@ -142,11 +142,25 @@
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/enqList">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>문의사항</span></a>
-            </li>
+      <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>문의사항</span>
+                </a>
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar" style="">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                       
+                        <a class="collapse-item" href="/hn/manager/enqList">상품문의</a>
+                        <a class="collapse-item" href="/hn/manager/gradeEnqList">등급문의</a>
+                       
+                        </div>
+                </div>
+            </li>    
+            
+            
+            
+            
+            
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">

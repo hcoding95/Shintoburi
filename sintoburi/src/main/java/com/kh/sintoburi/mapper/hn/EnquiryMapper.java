@@ -8,8 +8,14 @@ import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryMapper {
 	
-	// 문의사항목록
+	//전체
 	public List<EnquiryVo> getList();
+	
+	// 상품문의사항목록
+	public List<EnquiryVo> goodsGetList();
+	
+	// 등급문의사항
+	public List<EnquiryVo> gradeGetList();
 	
 	// 문의사항등록
 	public int insert(EnquiryVo vo);

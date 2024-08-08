@@ -37,6 +37,7 @@ public class ManagerController {
 		List<UserDto> list = userService.getList();
 		model.addAttribute("userList",list);
 	}
+	
 
 	
 	@PostMapping("/modGrade")
@@ -58,6 +59,21 @@ public class ManagerController {
 		List<EnquiryVo> list = enquiryService.getList();
 		model.addAttribute("enquiryList",list);
 	}
+	
+	// 상품문의사항목록
+	@GetMapping("/goodsEnqList")
+	public void goodsEnqList(Model model) {
+		List<EnquiryVo> list = enquiryService.goodsGetList();
+		model.addAttribute("goodsEnqList",list);
+	}
+	
+	// 등급문의사항목록
+	@GetMapping("/gradeEnqList")
+	public void gradeEnqList(Model model) {
+		List<EnquiryVo> list = enquiryService.gradeGetList();
+		model.addAttribute("gradeEnqList",list);
+	}
+	
 	
 	// 문의사항 상세보기
 	@GetMapping("/enquiryDetail/{eno}")

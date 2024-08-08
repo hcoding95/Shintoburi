@@ -1,6 +1,7 @@
 package com.kh.sintoburi.hn;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,4 +50,16 @@ public class mapperTest {
 	        log.info("Rows inserted: " + count);
 	        log.info(vo.toString());
 	    }
+	 
+	 @Test
+	 public void goodsselect() {
+		 List<EnquiryVo> list = enquiryMapper.goodsGetList();
+		 log.info(list);
+	 }
+	 
+	 @Test
+	 public void gradeSelect() {
+		 List<EnquiryVo> list = enquiryMapper.gradeGetList();
+		 log.info(list);
+	 }
 }

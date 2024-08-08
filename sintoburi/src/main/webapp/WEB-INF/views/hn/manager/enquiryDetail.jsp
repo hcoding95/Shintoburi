@@ -4,12 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
-<%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
+
 
 <script>
 
 $(function() {
-	var eno = '${enquiryVo.eno}'; 
+	let eno = '${enquiryVo.eno}'; 
 
 	// 문의사항 데이터 가져오기
     $.ajax({
@@ -26,7 +26,33 @@ $(function() {
 	
 	// 문의사항 답변 등록하기
 	$("#btnReplyRegister").click(function() {
-		console.log("Dd");
+		
+		let reply_Content = $("#replyContent").val(); 
+	    let eno = '${enquiryVo.eno}'; 
+	    let user_id = '${enquiryVo.user_id}'; 
+	    let manager_id = 'manager';
+		
+		let sData = {
+				"eno": eno,
+		        "user_id": user_id,
+		       	"reply_content": reply_Content,
+		        "manager_id": manager_id
+	        };
+
+
+		
+		$.ajax({
+			type: "post",
+			url : "/hn/reply/registerReply",
+			data : JSON.stringify(sData),
+			contentType: "application/json; charset=utf-8",
+			success : function(rData) {
+				console.log(rData);
+				console.log(sData);
+				alert("답변이 성공적으로 등록되었습니다.");
+	            location.href = "/hn/manager/enqList";
+			}
+		});
 		
 	});
 
@@ -35,7 +61,7 @@ $(function() {
 </script>
 
 
-</script>
+
 
  <!-- Content Row -->
 
@@ -117,7 +143,7 @@ $(function() {
 				<div class="row my-2">
 					<div >
 					
-					<textarea rows="7" class="form-control" id="content" name="content" ></textarea>
+					<textarea rows="7" class="form-control" id="replyContent" name="replyContent" ></textarea>
 					</div>
 					
 				

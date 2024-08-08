@@ -27,5 +27,7 @@ public class ReplyController {
 		boolean result = replyService.insertReply(replyVo);
 		return result;
 	}
+	
+	// 답변 데이터 1개
             
 }

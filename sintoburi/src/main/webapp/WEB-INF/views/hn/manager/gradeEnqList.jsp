@@ -6,6 +6,7 @@
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
 
 
+
 <div class="row">
 
      <!-- Area Chart -->
@@ -28,7 +29,6 @@
                             <tr class="col-md-8 text-center" >
                                 <th>번호</th>
                                 <th>작성 아이디</th>
-                                <th>상품정보</th>
                                 <th>제목</th>
                                 <th>작성일</th>
                                 <th>답변상태</th>
@@ -38,17 +38,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${enquiryList}" var="vo">
+                            <c:forEach items="${gradeEnqList}" var="vo">
                                 <tr class="text-center">
                                     <td>${vo.eno}</td>
                                     <td>${vo.user_id}</td>
-                                    <td>상품</td>
                                     <td><a href="/hn/manager/enquiryDetail/${vo.eno}">${vo.enquiry_type}</a></td>
                                     <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
                                     <td>${vo.status}</td>
                                      
                                      <td><c:choose>
-                                    <c:when test="${vo.status == '답변완료'}">
+                                    <c:when test="${vo.status == '처리완료'}">
                                        <button class="btn btn-outline-dark" style="padding-bottom: 1px; padding-top: 1px;" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapse${vo.eno}">
                                            ▼ 
@@ -125,7 +124,6 @@
         </div>
     </div>
 </div>
-
 
 
 

@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
- 
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
- <%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
+
 <script>
 $(function() {
 	$(".btnMod").click(function() {
@@ -97,10 +96,43 @@ $(function() {
 		</table>
 	</div>
 </div>
+
+
+<!-- Pagination -->
+            <div class="row">
+				<div class="col-md-12">
+					<nav>
+						<ul class="pagination justify-content-center">
+							<c:if test="${pageMaker.prev == true}">
+							<li class="page-item">
+								<a class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
+							</li>
+							</c:if>
+							<c:forEach begin="${pageMaker.startPage}" 
+									   end="${pageMaker.endPage}" 
+									   var="v">
+							<li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
+								<a class="page-link" href="${v}">${v}</a>
+							</li>
+							</c:forEach>
+							<c:if test="${pageMaker.next == true}">
+							<li class="page-item">
+								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
+							</li>
+							</c:if>
+						</ul>
+					</nav>
+				</div>
+			</div>
+            <!-- // Pagination -->
             </div> <!-- card-body -->
         </div>
     </div>
 </div>
+
+
+
+
 
 
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>
