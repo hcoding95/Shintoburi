@@ -1,6 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 </main>
+<style>
+.footer {
+    background-color: #90EE90;
+    padding: 20px 0;
+    border-top: 1px solid #e7e7e7;
+    margin-top: 20px;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-column {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    height: 200px;
+}
+
+.footer-details {
+    text-align: left;
+}
+
+.footer-contact {
+    text-align: right;
+}
+
+.footer-contact p, .footer-details p {
+    margin: 5px 0;
+}
+
+.footer-social a {
+    margin-left: 10px;
+}
+
+.footer-copy {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+
+
+</style>
 <footer class="footer">
     <div class="container">
         <div class="footer-column footer-logo">
