@@ -103,6 +103,7 @@ $(function () {
             width: 60%;
             height: 90vh; /* 높이를 전체 화면 높이로 설정 */
             display: flex;
+            max-width: 800px; /* 최대 너비 설정 */
             justify-content: center;
             align-items: center;
             overflow: hidden;
@@ -121,7 +122,7 @@ $(function () {
         .carousel-item img {
             width: 100%;
             height: 100%;
-            min-width: 1100px; /* 최소 너비 설정 */
+            min-width: 800px; /* 최소 너비 설정 */
             min-height: 600px; /* 최소 높이 설정 */
             object-fit: cover;
         }
