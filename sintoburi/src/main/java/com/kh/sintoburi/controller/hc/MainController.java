@@ -24,4 +24,10 @@ public class MainController {
 		
 	}
 	
+	
+	@GetMapping("/register")
+	public void register() {
+		
+	}
+	
 }

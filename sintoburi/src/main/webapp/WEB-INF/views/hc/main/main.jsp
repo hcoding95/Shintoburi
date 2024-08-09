@@ -58,8 +58,77 @@
 </div>
 <div>
 
+
 </div>
 <!-- 이벤트  끝 -->
+<style>
+/* 부모 요소를 화면의 전체 높이를 차지하도록 설정하고, 세로 중앙 정렬 */
+.story-container-wrapper {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 제거 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.story-card {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    width: 400px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.story-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 50%;
+    background-color: #e7f3ff;
+    color: #007bff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.story-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.story-text strong {
+    font-size: 16px;
+    color: #333;
+}
+
+.story-text span {
+    font-size: 14px;
+    color: #666;
+}
+</style>
+<!-- 글쓰기 탭  -->
+<div class="story-container-wrapper">	
+	<a href="/hc/main/register">
+    <div class="story-card">
+        <div class="story-icon">
+            <span>+</span>
+        </div>
+        <div class="story-text">
+            <strong>스토리 만들기</strong><br>
+            <span>사진을 공유하거나 글을 남겨보세요.</span>
+        </div>
+    </div>
+    </a>
+</div>
+<!-- 글쓰기 탭 끝 -->
+
+
+
 <!-- 메인의 내용 시작 -->
 <div class="post-container">
      <!-- 카루셀 시작 -->

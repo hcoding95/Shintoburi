@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <head>
     <meta charset="UTF-8">
-    <title>화면 구성</title>
+    <title>디테일 뷰</title>
     
 <script type="text/javascript">
 
@@ -145,10 +145,10 @@ $(function () {
         /* 프로필 */
         .profile-section {
             padding: 10px;
-            border: 1px solid #ddd;
             margin-top : 10px;
-            border-radius: 5px;
             margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
             background-color: #f8f9fa;
         }
         .profile-section h3 {
@@ -222,6 +222,12 @@ $(function () {
   		     box-sizing: border-box;  /* 패딩과 보더를 포함하여 요소의 전체 너비를 계산 */
   		     border-radius: 10px;
 		}
+		.head-profile{
+			border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+            padding-top: 3px;
+		}
 		        
     </style>
 </head>
@@ -261,9 +267,9 @@ $(function () {
             <div class="container">
 			<div class="profile-end">
 				<!-- 프로필 -->
-			 <div class="profile-section">
-					  <div class="profile">
-				          <h3 class="text-end"><img src="/resources/images/logo.png" alt="프로필 사진">(유저)님의 프로필</h3>
+			 <div class="profile head-profile">
+					  <div class="profile ">
+				          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진">(유저)님의 프로필</h3>
 					  </div>
 			      </div>
 			      <!-- 본문 내용  -->

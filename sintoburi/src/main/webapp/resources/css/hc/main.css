@@ -15,6 +15,7 @@
             height: auto;
             min-width: 570px; /* 최소 너비 설정 */
             min-height: 100px; /* 최소 높이 설정 */
+            
         }
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
@@ -122,3 +123,7 @@
         .carousel.slide{
         	margin-bottom: 30px; 
         }
+        
+
+        
+        
