@@ -20,7 +20,7 @@ $(function() {
         success : function(rData) {
  
 
-        	 if (status === '답변완료') {
+        	 if (status === "답변완료") {
                  $("#replyContent").val(replyContent).prop("readonly", true);
                  $("#btnReplyRegister").hide(); // 답변 등록 버튼 숨기기
              } else {

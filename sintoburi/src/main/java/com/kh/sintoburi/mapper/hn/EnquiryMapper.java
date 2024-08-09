@@ -28,5 +28,9 @@ public interface EnquiryMapper {
 	
 	// 문의사항한개데이터
 	public EnquiryVo selectByEno(@Param("eno")  int eno);
+	
+	
+	// 문의사항 답변완료변경
+	public int updateStatus(@Param("eno") int eno);
 
 }

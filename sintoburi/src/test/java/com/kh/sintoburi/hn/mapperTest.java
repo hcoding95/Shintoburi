@@ -3,6 +3,7 @@ package com.kh.sintoburi.hn;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,26 @@ public class mapperTest {
 	 public void gradeSelect() {
 		 List<EnquiryVo> list = enquiryMapper.gradeGetList();
 		 log.info(list);
+	 }
+	 
+	 @Test
+	 public void updateStatus() {
+		 int eno = 1;
+		 int count = enquiryMapper.updateStatus(eno);
+		 log.info(count);
+	 }
+	 
+	 @Test
+	 public void selectReply() {
+		 List<ReplyVo> list = replyMapper.selectReply();
+		 log.info(list);
+	 }
+	 
+	 @Test
+	 public void selectByReplyEno() {
+		 int eno = 2;
+		 ReplyVo vo = replyMapper.selectByReplyEno(eno);
+		 log.info(vo);
+	 
 	 }
 }

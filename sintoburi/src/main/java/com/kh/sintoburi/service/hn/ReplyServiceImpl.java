@@ -1,5 +1,7 @@
 package com.kh.sintoburi.service.hn;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,19 @@ public class ReplyServiceImpl implements ReplyService {
 		return (count == 1 )? true : false;
 	}
 
+	@Override
+	public List<ReplyVo> replyList() {
+		List<ReplyVo> list = replyMapper.selectReply();
+		return list;
+	}
+
+	@Override
+	public ReplyVo selectByReplyEno(int eno) {
+		ReplyVo vo = replyMapper.selectByReplyEno(eno);
+		return vo;
+	}
+
+	
 	
 	
 }

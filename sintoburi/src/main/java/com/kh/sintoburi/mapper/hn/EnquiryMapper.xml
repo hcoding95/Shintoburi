@@ -55,5 +55,12 @@
         where eno = #{eno}
     </select>
     
+    <!-- 문의사항 답변 완료 -->
+  	<update id="updateStatus">
+  		update tbl_enquiry
+        set status = '답변완료'
+        where eno = #{eno} 
+  	</update>
+    
   
   </mapper>

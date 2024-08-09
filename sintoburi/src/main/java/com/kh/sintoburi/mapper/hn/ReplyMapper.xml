@@ -14,11 +14,15 @@
 
   
  <!-- 답변게시글 목록 -->
-  <select id="">
-  	
-  
-  
+  <select id="selectReply" resultType="ReplyVo">
+  	select * from tbl_reply
+  	order by eno
   </select>
   
+  <!--  답변게시글 한개 데이터 -->
+  <select id="selectByReplyEno" resultType="ReplyVo">
+  	select * from tbl_reply
+  	where eno = ${eno}
+  </select>
   
  </mapper>  
