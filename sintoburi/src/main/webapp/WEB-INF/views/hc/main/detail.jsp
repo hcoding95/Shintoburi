@@ -213,7 +213,7 @@ $(function () {
         
         .comment-input {
 		     position: sticky;
-			 bottom: 0;
+			 bottom: 10px;
 			 background-color: white;
 			 padding: 10px;
 			 border-top: 2px solid #666666;

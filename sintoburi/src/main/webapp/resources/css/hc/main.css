@@ -12,9 +12,10 @@
         }
         .carousel-item img {
             max-width: 100%;
-            height: auto;
+            height: 100%;
             min-width: 570px; /* 최소 너비 설정 */
-            min-height: 100px; /* 최소 높이 설정 */
+            min-height: 570px; /* 최소 높이 설정 */
+            max-height: 570px;
             
         }
         .carousel-control-prev-icon,
