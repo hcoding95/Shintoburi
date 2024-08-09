@@ -1,4 +1,4 @@
-package com.kh.sintoburi.controller.hc;
+package com.kh.sintoburi.controller.gr;
 
 import java.text.DateFormat;
 import java.util.Date;
