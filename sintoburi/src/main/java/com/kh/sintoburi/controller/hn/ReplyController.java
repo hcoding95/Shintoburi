@@ -28,6 +28,5 @@ public class ReplyController {
 		return result;
 	}
 	
-	// 답변 데이터 1개
             
 }

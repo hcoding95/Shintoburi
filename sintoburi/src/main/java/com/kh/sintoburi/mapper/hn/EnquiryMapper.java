@@ -8,8 +8,8 @@ import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryMapper {
 	
-	//전체
-	public List<EnquiryVo> getList();
+	//전체문의사항목록
+	public List<EnquiryVo> getList(@Param("user_id") String user_id);
 	
 	// 상품문의사항목록
 	public List<EnquiryVo> goodsGetList();
@@ -28,5 +28,11 @@ public interface EnquiryMapper {
 	
 	// 문의사항한개데이터
 	public EnquiryVo selectByEno(@Param("eno")  int eno);
+	
+	
+	// 상품 문의사항 답변완료변경
+	public int updateStatus(@Param("eno") int eno);
 
+	// 등급 문의사항 처리완료 
+	public int gradeUpdateStatus(@Param("eno") int eno);
 }

@@ -2,8 +2,6 @@ package com.kh.sintoburi.domain.hn;
 
 import java.util.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,14 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EnquiryVo {
-	
-	private int eno;
-	private String user_id;
-	private String enquiry_type;
-	private String content;
-	private String image;
+public class ReportPostVo {
+	private int re_no;
+	private int post_no;
+	private String post_content;
+	private String post_id;
+	private String re_reason;
+	private String re_id;
+	private Date re_date;
 	private String status;
-	private Date write_date;
 
 }

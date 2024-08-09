@@ -2,6 +2,8 @@ package com.kh.sintoburi.service.hn;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryService {
@@ -27,4 +29,11 @@ public interface EnquiryService {
 
 	// 문의사항데이터1개
 	public EnquiryVo selectByEno(int eno);
+	
+
+	// 문의사항 답변완료변경
+	public boolean updateStatus(int eno);
+	
+	// 등급 문의사항 처리완료 
+	public boolean gradeUpdateStatus(int eno);
 }

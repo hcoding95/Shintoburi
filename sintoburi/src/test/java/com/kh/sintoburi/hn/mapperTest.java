@@ -3,6 +3,7 @@ package com.kh.sintoburi.hn;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.ReplyVo;
+import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.ReplyMapper;
+import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,6 +29,9 @@ public class mapperTest {
 	
 	@Autowired
 	private ReplyMapper replyMapper;
+	
+	@Autowired
+	private ReportPostMapper reportPostMapper; 
 	
 	@Test
 	public void testInstance() {
@@ -52,6 +58,12 @@ public class mapperTest {
 	    }
 	 
 	 @Test
+	 public void getList() {
+		 List<EnquiryVo>list = enquiryMapper.getList("user00");
+		 log.info(list);
+	 }
+	 
+	 @Test
 	 public void goodsselect() {
 		 List<EnquiryVo> list = enquiryMapper.goodsGetList();
 		 log.info(list);
@@ -61,5 +73,44 @@ public class mapperTest {
 	 public void gradeSelect() {
 		 List<EnquiryVo> list = enquiryMapper.gradeGetList();
 		 log.info(list);
+	 }
+	 
+	 @Test
+	 public void updateStatus() {
+		 int eno = 1;
+		 int count = enquiryMapper.updateStatus(eno);
+		 log.info(count);
+	 }
+	 
+	 @Test
+	 public void selectReply() {
+		 List<ReplyVo> list = replyMapper.selectReply();
+		 log.info(list);
+	 }
+	 
+	 @Test
+	 public void selectByReplyEno() {
+		 int eno = 2;
+		 ReplyVo vo = replyMapper.selectByReplyEno(eno);
+		 log.info(vo);
+	 
+	 }
+	 
+	 @Test
+	 public void gradeUpdateStatus() {
+		 int count = enquiryMapper.gradeUpdateStatus(23);
+		 log.info(count);
+	 }
+	 
+	 @Test
+	 public void selectReportPost() {
+		List<ReportPostVo> list = reportPostMapper.selectReport();
+		log.info(list);
+	 }
+	 
+	 @Test
+	 public void selectByReNo() {
+		 ReportPostVo vo = reportPostMapper.selectByReNo(2);
+			log.info(vo);
 	 }
 }

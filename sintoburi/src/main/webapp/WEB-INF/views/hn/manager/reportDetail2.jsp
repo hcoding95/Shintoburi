@@ -15,12 +15,12 @@ $(function() {
 	// 문의사항 데이터 가져오기
     $.ajax({
         type: "get",
-        url : "/hn/manager/enquiryDetail/" + eno,
+        url : "/hn/manager/gradeEnqDetail/" + eno,
         contentType: "application/json; charset=utf-8",
         success : function(rData) {
  
 
-        	 if (status === '답변완료') {
+        	 if (status === "처리완료") {
                  $("#replyContent").val(replyContent).prop("readonly", true);
                  $("#btnReplyRegister").hide(); // 답변 등록 버튼 숨기기
              } else {
@@ -32,7 +32,7 @@ $(function() {
     });
 	
 	// 문의사항 답변 등록하기
-	$("#btnReplyRegister").click(function() {
+	$("#btnReplyOk").click(function() {
 		
 		let reply_Content = $("#replyContent").val(); 
 	    let eno = '${enquiryVo.eno}'; 
@@ -58,12 +58,12 @@ $(function() {
 			    
 				$.ajax({
 				  	 type: "post",
-                     url: "/hn/manager/updateStatus",
+                     url: "/hn/manager/gradeupdateStatus",
                      data: { eno: eno },
                      success: function() {
-                         alert("문의사항 상태가 '답변완료'로 업데이트되었습니다.");
+                         alert("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
                         
-                         location.href = "/hn/manager/enqList";
+                         location.href = "/hn/manager/gradeEnqList";
                      }
 			
 				});
@@ -101,7 +101,7 @@ $(function() {
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-12">
-           
+          
                 <div class="form-group">
                     <label for="user_id">작성자</label>
                     <input value="${enquiryVo.user_id}" type="text" class="form-control" id="user_id" name="user_id" readonly>
@@ -123,7 +123,7 @@ $(function() {
                     <label for="image">이미지</label>
                     <input type="image"  id="image" name="image">
                
-          
+            
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -156,13 +156,12 @@ $(function() {
 					<div class="form-group">
 					    <label for="content">답변</label>
 					    <textarea class="form-control" id="replyContent" name="replyContent" rows="5"
-					    <c:if test="${enquiryVo.status == '답변완료'}">readonly</c:if>
-					    ><c:if test="${enquiryVo.status == '답변완료'}">${replyVo.reply_content}</c:if></textarea>
+					    <c:if test="${enquiryVo.status == '처리완료'}">readonly</c:if>
+					    ><c:if test="${enquiryVo.status == '처리완료'}">${replyVo.reply_content}</c:if></textarea>
 					</div>
 					<div class="col-md-2" style="padding-left: 0px;">
-					    <button id="btnReplyRegister" type="button" class="btn btn-outline-dark"
-					        <c:if test="${enquiryVo.status == '답변완료'}">disabled</c:if>>답변 등록</button>
-					    <button id="btnSave" type="button" class="btn btn-outline-success" style="display: none;">저장</button>
+					    <button id="btnReplyOk" type="button" class="btn btn-outline-dark"
+					        <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>처리 완료</button>
 					</div>
 						
 				<!-- // 답변 입력 -->
