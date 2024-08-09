@@ -1,10 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 </main>
+<style>
+.footer {
+    background-color: D6EFD8;
+    padding: 20px 0;
+    border-top: 1px solid #e7e7e7;
+    margin-top: 20px;
+}
+
+.footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-column {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    height: 200px;
+}
+
+.footer-details {
+    text-align: left;
+}
+
+.footer-contact {
+    text-align: right;
+}
+
+.footer-contact p, .footer-details p {
+    margin: 5px 0;
+}
+
+.footer-social a {
+    margin-left: 10px;
+}
+
+.footer-copy {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+
+
+</style>
 <footer class="footer">
-    <div class="container">
+    <div class="footer-container">
         <div class="footer-column footer-logo">
-            <img src="/resources/images/logo.png" alt="농사랑 로고">
+            <img src="/resources/images/logo.png" alt="신토불이 로고">
         </div>
         <div class="footer-column footer-details">
             <p>(주)KH인재교육원</p>
