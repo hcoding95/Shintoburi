@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.kh.sintoburi.mapper.hn.ReportPostMapper">
+  
+  <select id="selectReport" resultType="ReportPostVo">
+  	select * from tbl_reportPost
+  	order by re_no
+  </select>
+  
+  <insert id="insertReport">
+  	insert into tbl_reportPost 
+	(re_no, post_no, post_content, post_id, re_reason, re_id, status) 
+	values (seq_reportpost.nextval, #{post_no}, #{post_content},
+	#{post_id},  #{re_reason},   #{re_id}, #{status});
+
+  </insert>
+  
+  <select id="selectByReNo" resultType="ReportPostVo">
+	  select * from tbl_reportPost
+	  where re_no = #{re_no}
+  </select>
+  
+  
+</mapper>

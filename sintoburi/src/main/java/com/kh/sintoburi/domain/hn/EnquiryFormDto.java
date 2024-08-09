@@ -13,14 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EnquiryVo {
-	
-	private int eno;
+public class EnquiryFormDto {
+
 	private String user_id;
 	private String enquiry_type;
 	private String content;
-	private String image;
-	private String status;
-	private Date write_date;
-
+	private MultipartFile image;
 }

@@ -3,9 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.kh.sintoburi.mapper.hn.EnquiryMapper">
- 	  
+ 	 
+ 	   
  	  <select id="getList" resultType="EnquiryVo">
  	    select * from tbl_enquiry
+<!-- 	 	where user_id = #{user_id} -->
 	 	order by eno 
  	  </select>
  	  
@@ -60,7 +62,17 @@
   		update tbl_enquiry
         set status = '답변완료'
         where eno = #{eno} 
+       
   	</update>
+  	
+  	 <!-- 문의사항 답변 완료 -->
+  	<update id="gradeUpdateStatus">
+  		update tbl_enquiry
+        set status = '처리완료'
+        where eno = #{eno} 
+        and enquiry_type = '등급문의'
+  	</update>
+    
     
   
   </mapper>

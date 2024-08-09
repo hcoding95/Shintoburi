@@ -63,11 +63,18 @@ public class EnquriyServiceImpl implements EnquiryService {
 		return vo;
 	}
 
-	// 문의사항답변완료
+	// 상품 문의사항 답변완료로 상태변경
 	@Override
 	public boolean updateStatus(int eno) {
 		int count = enquiryMapper.updateStatus(eno);
 		return (count == 1) ? true : false;
+	}
+
+	// 등급 문의사항 처리완료로 상태변경
+	@Override
+	public boolean gradeUpdateStatus(int eno) {
+	 	int count = enquiryMapper.gradeUpdateStatus(eno);
+	 	return (count == 1) ? true : false;
 	}
 
 }
