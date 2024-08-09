@@ -278,7 +278,7 @@
     
 <!-- 사진 상단 부분  -->
 <div class="header-top">
-<div class="header blog-control">
+<div class="header">
     <div class="logo-container profile-end blog-control" >
         <img src="/resources/images/logo.png" alt="Logo">
     </div>

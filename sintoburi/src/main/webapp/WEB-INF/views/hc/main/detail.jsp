@@ -10,6 +10,20 @@
 <head>
     <meta charset="UTF-8">
     <title>화면 구성</title>
+    
+<script type="text/javascript">
+
+
+$(function () {
+    const textarea = document.getElementById('comment-textarea');
+
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto'; // 먼저 높이를 자동으로 설정
+        this.style.height = (this.scrollHeight <= 90 ? this.scrollHeight : 90) + 'px'; // 스크롤 높이를 계산하여 3줄까지만 확장
+    });
+});
+
+</script>
    <style>
         body {
             display: flex;
@@ -53,16 +67,36 @@
             flex-direction: column;
         }
         .comment-input {
-            display: flex;
-            margin-top: 10px;
-        }
-        .comment-input input {
-            flex-grow: 1;
-            padding: 5px;
-        }
-        .comment-input button {
-            padding: 5px 10px;
-        }
+    display: flex;
+    align-items: center;  /* 버튼과 텍스트가 중앙에 맞춰지도록 */
+    width: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.comment-input textarea {
+    flex-grow: 1;  /* textarea가 가능한 모든 공간을 차지하도록 설정 */
+    height: 30px; /* 초기 높이 설정 */
+    max-height: 90px; /* 최대 3줄 높이 */
+    overflow-y: auto; /* 3줄 이상일 때 스크롤 표시 */
+    resize: none; /* 사용자가 크기 조절 불가 */
+    padding: 5px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.comment-input button {
+    height: auto; /* 버튼 높이를 textarea 높이에 맞추도록 설정 */
+    padding: 5px 10px;
+    box-sizing: border-box;
+    flex-shrink: 0; /* 버튼이 줄어들지 않도록 설정 */
+}
+
 
         .image-area {
             position: relative;
@@ -74,6 +108,9 @@
             overflow: hidden;
             box-sizing: border-box;
             margin-top: 20px;
+            margin-left: 20px; 
+            margin-right: 20px;
+            
         }        
 
         .carousel-inner {
@@ -163,6 +200,28 @@
         .comment-box .comment-content p {
             margin: 0;
         }
+        
+        .reply {
+        	max-height: 300px;
+        	overflow-y: auto; /* 세로 스크롤을 가능하게 설정 */
+        }
+        .main-content{
+        	max-height: 400px;
+        	overflow-y: auto; /* 세로 스크롤을 가능하게 설정 */
+        }
+        
+        .comment-input {
+		     position: sticky;
+			 bottom: 0;
+			 background-color: white;
+			 padding: 10px;
+			 border-top: 2px solid #666666;
+			 border: 1px solid black;  /* 전체 테두리를 검은색으로 설정 */
+			 z-index: 1;  /* 다른 요소 위에 나타나도록 설정 */
+			 width: 100%;  /* 너비를 100%로 설정하여 부모 요소의 너비를 꽉 채움 */
+  		     box-sizing: border-box;  /* 패딩과 보더를 포함하여 요소의 전체 너비를 계산 */
+  		     border-radius: 10px;
+		}
 		        
     </style>
 </head>
@@ -197,7 +256,6 @@
 		<!-- 카루셀 끝 -->
         
         
-        
         </div>
         <div class="side-bar">
             <div class="container">
@@ -208,28 +266,198 @@
 				          <h3 class="text-end"><img src="/resources/images/logo.png" alt="프로필 사진">(유저)님의 프로필</h3>
 					  </div>
 			      </div>
-			      <div class="profile-section">
+			      <!-- 본문 내용  -->
+			      <div class="profile-section main-content">
 			          <h3 class="text-end">본문내용</h3>
 			          <div><span>전화 번호:</span> 010-1234-5678</div>
 			          <div><span>이메일:</span> jane.doe@example.com</div>
 			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div><span>전화 번호:</span> 010-1234-5678</div>
+			          <div><span>이메일:</span> jane.doe@example.com</div>
+			          <div><span>주소:</span> 서울시 강남구</div>
 			      </div>
-			        <div class="profile-section">
+			      <!-- 본문 내용끝  -->
+			        <div class="profile-section reply">
 			          <h3 class="text-end">댓글</h3>
+					  	<!-- 댓글 시작 -->
 					  <div class="comment-box">
 				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
 		                     <div class="comment-content">
 		                     	<div class="author-time">
 			                       <div class="author">작성자 이름</div>
 			                       <div class="time">작성 시간</div>
-		                     	
 		                     	</div>
 		                       <p>작성 내용</p>
 		                     </div>
 			          </div>
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     <!-- 댓글 끝 -->
+					  <div class="comment-box">
+				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
+		                     <div class="comment-content">
+		                     	<div class="author-time">
+			                       <div class="author">작성자 이름</div>
+			                       <div class="time">작성 시간</div>
+		                     	</div>
+		                       <p>작성 내용</p>
+		                     </div>
+			          </div>
+		                     <!-- 댓글 끝 -->
+		                     
+		                     
+		                     
 	                  <div class="comment-input">
-	                    <input type="text" placeholder="댓글 입력창">
-	                    <button>버튼</button>
+	                    <textarea  id="comment-textarea" placeholder="댓글 입력창"></textarea>
+	                    <button class="btn btn-success">버튼</button>
 	                  </div>
 			        </div>
 			<!-- 프로필 끝  -->
