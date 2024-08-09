@@ -33,4 +33,7 @@ public interface EnquiryService {
 
 	// 문의사항 답변완료변경
 	public boolean updateStatus(int eno);
+	
+	// 등급 문의사항 처리완료 
+	public boolean gradeUpdateStatus(int eno);
 }

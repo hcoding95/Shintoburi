@@ -12,8 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.ReplyVo;
+import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.ReplyMapper;
+import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -27,6 +29,9 @@ public class mapperTest {
 	
 	@Autowired
 	private ReplyMapper replyMapper;
+	
+	@Autowired
+	private ReportPostMapper reportPostMapper; 
 	
 	@Test
 	public void testInstance() {
@@ -51,6 +56,12 @@ public class mapperTest {
 	        log.info("Rows inserted: " + count);
 	        log.info(vo.toString());
 	    }
+	 
+	 @Test
+	 public void getList() {
+		 List<EnquiryVo>list = enquiryMapper.getList("user00");
+		 log.info(list);
+	 }
 	 
 	 @Test
 	 public void goodsselect() {
@@ -83,5 +94,23 @@ public class mapperTest {
 		 ReplyVo vo = replyMapper.selectByReplyEno(eno);
 		 log.info(vo);
 	 
+	 }
+	 
+	 @Test
+	 public void gradeUpdateStatus() {
+		 int count = enquiryMapper.gradeUpdateStatus(23);
+		 log.info(count);
+	 }
+	 
+	 @Test
+	 public void selectReportPost() {
+		List<ReportPostVo> list = reportPostMapper.selectReport();
+		log.info(list);
+	 }
+	 
+	 @Test
+	 public void selectByReNo() {
+		 ReportPostVo vo = reportPostMapper.selectByReNo(2);
+			log.info(vo);
 	 }
 }

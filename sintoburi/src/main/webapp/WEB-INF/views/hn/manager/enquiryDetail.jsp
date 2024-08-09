@@ -101,7 +101,7 @@ $(function() {
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-12">
-            <form id="enquiryForm" role="form" action="/mypage/" method="post">
+           
                 <div class="form-group">
                     <label for="user_id">작성자</label>
                     <input value="${enquiryVo.user_id}" type="text" class="form-control" id="user_id" name="user_id" readonly>
@@ -123,7 +123,7 @@ $(function() {
                     <label for="image">이미지</label>
                     <input type="image"  id="image" name="image">
                
-            </form>
+          
         </div>
         <div class="col-md-2"></div>
     </div>

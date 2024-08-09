@@ -50,7 +50,10 @@ $(function() {
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                  <h6 class="m-0 font-weight-bold text-primary">회원 목록</h6>
-                 
+                 <select>
+                 	<option>아이디</option>
+                 	<option>이메일</option>
+                 </select>
              </div>
              <!-- Card Body -->
              <div class="card-body"> 
@@ -83,7 +86,8 @@ $(function() {
                        <td>
                        <select>
 						  <option value="구매자" ${vo.grade == '구매자' ? 'selected' : '구매자'}>구매자</option>
-    					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>                      
+    					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>   
+    					                  
                        </select>
                        </td >
                        <td>

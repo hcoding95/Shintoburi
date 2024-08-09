@@ -164,7 +164,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/hn/manager/reportList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>신고게시글</span></a>
             </li>

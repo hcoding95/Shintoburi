@@ -14,7 +14,7 @@
              <!-- Card Header - Dropdown -->
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">상품 게시글 관리</h6>
+                 <h6 class="m-0 font-weight-bold text-primary">신고 게시글 관리</h6>
                  
              </div>
              <!-- Card Body -->
@@ -27,27 +27,27 @@
     <thead>
         <tr class="text-center">
             <th>번호</th>
-            <th>작성 아이디</th>
-            <th>상품</th>
-            <th>제목</th>
-            <th>작성일</th>
-            <th>답변상태</th>
+            <th>신고게시글</th>
+            <th>게시글작성자</th>
+            <th>신고유형</th>
+            <th>신고일</th>
+            <th>처리상태</th>
             <th>답변확인</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${enquiryList}" var="vo">
+        <c:forEach items="${reportList}" var="vo">
             <tr class="text-center">
-                <td>${vo.eno}</td>
-                <td>${vo.user_id}</td>
-                <td>상품</td>
-                <td><a href="/hn/manager/enquiryDetail/${vo.eno}">${vo.enquiry_type}</a></td>
-                <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
+                <td>${vo.re_no}</td>
+                <td>${vo.post_no}</td>
+                <td>${vo.post_id}</td>
+                <td><a href="/hn/manager/reportDetail/${vo.re_no}">${vo.re_reason}</a></td>
+                <td><fmt:formatDate value="${vo.re_date}" pattern="yyyy-MM-dd"/></td>
                 <td>${vo.status}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${vo.status == '답변완료'}">
+                        <c:when test="${vo.status == '처리완료'}">
                             <button class="btn btn-outline-dark collapsed" type="button" data-toggle="collapse" data-target="#collapse${vo.eno}" aria-expanded="false" style="
                                 padding-bottom: 0px;
                                 padding-top: 0px;
@@ -61,11 +61,12 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
+                <td></td>
             </tr>
             <!-- 답변 아코디언 -->
             <tr>
                 <td colspan="10"> <!-- Adjust the colspan value as needed -->
-                    <div id="collapse${vo.eno}" class="collapse">
+                    <div id="collapse${vo.re_no}" class="collapse">
                         <div class="card card-body">
                             <table class="table mb-0">
                                 <thead>
@@ -75,17 +76,17 @@
                                         <th>답변 날짜</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <c:forEach items="${replyList}" var="reply">
-                                         <c:if test="${reply.eno == vo.eno}">
-                                            <tr class="text-center">
-                                                <td>${reply.rno}</td>
-                                                <td>${reply.reply_content}</td>
-                                                <td><fmt:formatDate value="${reply.reply_date}" pattern="yyyy-MM-dd"/></td>
-                                            </tr>
-                                        </c:if>
-                                    </c:forEach>
-                                </tbody>
+<!--                                 <tbody> -->
+<%--                                     <c:forEach items="${replyList}" var="reply"> --%>
+<%--                                          <c:if test="${reply.eno == vo.eno}"> --%>
+<!--                                             <tr class="text-center"> -->
+<%--                                                 <td>${reply.rno}</td> --%>
+<%--                                                 <td>${reply.reply_content}</td> --%>
+<%--                                                 <td><fmt:formatDate value="${reply.reply_date}" pattern="yyyy-MM-dd"/></td> --%>
+<!--                                             </tr> -->
+<%--                                         </c:if> --%>
+<%--                                     </c:forEach> --%>
+<!--                                 </tbody> -->
                             </table>
                         </div>
                     </div>
