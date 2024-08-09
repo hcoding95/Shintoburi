@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class LoginDto {
-
+	
 	private String user_id;
 	private String user_pw;
 	private boolean useCookie;
+
 }

@@ -154,5 +154,15 @@ public class ManagerController {
 		List<ReportPostVo> list = reportPostService.ReportList();
 		model.addAttribute("reportList", list);
 	}
+	
+	// 신고게시글상세보기
+	@GetMapping("/reportDetail/{re_no}")
+	public String reportDetail(@PathVariable("re_no") int re_no, Model model) {
+		
+		ReportPostVo reportPostVo = reportPostService.selectByReNo(re_no);
+		model.addAttribute("reportPostVo", reportPostVo);
+		
+		return "hn/manager/reportDetail";
+	}
 
 }

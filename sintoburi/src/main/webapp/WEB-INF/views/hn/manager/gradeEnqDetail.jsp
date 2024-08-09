@@ -121,7 +121,7 @@ $(function() {
                 </div>
                 
                     <label for="image">이미지</label>
-                    <input type="image"  id="image" name="image">
+                    <input type="file"  id="image" name="image">
                
             
         </div>

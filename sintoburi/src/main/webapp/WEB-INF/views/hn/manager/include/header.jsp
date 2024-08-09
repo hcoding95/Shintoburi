@@ -35,7 +35,6 @@
     <!-- Page level plugins -->
     <script src="/resources/vendor/chart.js/Chart.min.js"></script>
 
-<!--     Page level custom scripts -->
 <!--     <script src="/resources/js/demo/chart-area-demo.js"></script> -->
 <!--     <script src="/resources/js/demo/chart-pie-demo.js"></script> -->
     
@@ -384,7 +383,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/hn/user/login" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

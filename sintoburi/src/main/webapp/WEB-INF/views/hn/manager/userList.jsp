@@ -36,6 +36,8 @@ $(function() {
 		
 	});
 	
+ 
+	
 });
 </script>
 
@@ -80,7 +82,9 @@ $(function() {
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>
 					<td>${vo.email}</td>
-					<td  class="current-grade">${vo.grade}${vo.business == 1 ? '[up]' : ''}</td>
+					 <td class="current-grade">
+                  	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">[up]</c:if>
+              		  </td>
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td>

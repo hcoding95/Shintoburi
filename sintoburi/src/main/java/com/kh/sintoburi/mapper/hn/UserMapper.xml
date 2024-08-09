@@ -6,8 +6,7 @@
   
   <!-- 회원목록 -->
   <select id="getList" resultType="UserDto">
-  	select user_id,user_name,grade,email,last_login 
-  	from tbl_users
+  	select * from tbl_users
   </select>
   
 
@@ -25,6 +24,36 @@
   	from tbl_users
   	where user_id = #{user_id}
   </select>
+  
+  <!-- 로그인 -->
+  <select id="login" resultType="UserVo">
+		select *
+		from tbl_user
+		where user_id = #{user_id}
+		and user_pw = #{user_pw}
+	</select>
+<!-- 회원가입 -->
+	<insert id="join">
+		insert into tbl_user (user_id, user_pw, user_name,email,address)
+		values(#{user_id},#{user_pw}, #{user_name} , #{email},#{address})
+	</insert>
+
+	<select id="checkDupId" resultType="int">
+		select count(*) from tbl_user
+		where user_id = #{user_id}
+	</select>
+	
+	<select id="getEmailById" resultType="string">
+		select user_email from tbl_user
+		where user_id = #{user_id}
+		
+	</select>
+	
+	<update id="updatePw">
+		update tbl_user set 
+			user_pw = #{user_pw}
+		where user_id = #{user_id}	
+	</update>
   
   
   

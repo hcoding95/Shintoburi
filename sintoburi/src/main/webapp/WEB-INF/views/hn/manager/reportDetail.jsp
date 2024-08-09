@@ -103,25 +103,30 @@ $(function() {
         <div class="col-md-12">
           
                 <div class="form-group">
-                    <label for="user_id">작성자</label>
-                    <input value="${enquiryVo.user_id}" type="text" class="form-control" id="user_id" name="user_id" readonly>
+                    <label for="re_id">신고자</label>
+                    <input value="${reportPostVo.re_id}" type="text" class="form-control"  readonly>
+                </div>
+                
+                 <div class="form-group">
+                    <label for="post_id ">글작성자</label>
+                    <input value="${reportPostVo.post_id}" type="text" class="form-control"  readonly>
                 </div>
                 <div class="form-group">
-                    <label for="enquiry_type">문의 유형</label>
+                    <label for="enquiry_type">신고 유형</label>
                     <select class="form-select" id="enquiry_type" name="enquiry_type" disabled>
-                        <option value="상품문의" <c:if test="${enquiryVo.enquiry_type =='상품문의'}">selected</c:if>>상품문의</option>
-                        <option value="배송문의" <c:if test="${enquiryVo.enquiry_type =='배송문의'}">selected</c:if>>배송문의</option>
-                        <option value="결제문의" <c:if test="${enquiryVo.enquiry_type =='결제문의'}">selected</c:if>>결제문의</option>
-                        <option value="등급문의" <c:if test="${enquiryVo.enquiry_type =='등급문의'}">selected</c:if>>등급문의</option>
+                        <option value="스팸" <c:if test="${enquiryVo.enquiry_type =='스팸'}">selected</c:if>>스팸</option>
+                        <option value="거짓정보" <c:if test="${enquiryVo.enquiry_type =='거짓정보'}">selected</c:if>>거짓정보</option>
+                        <option value="불법또는규제상품판매" <c:if test="${enquiryVo.enquiry_type =='불법또는규제상품판매'}">selected</c:if>>불법또는규제상품판매</option>
+                        <option value="혐오발언" <c:if test="${enquiryVo.enquiry_type =='혐오발언'}">selected</c:if>>혐오발언</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="content">내용</label>
-                    <textarea class="form-control" id="content" name="content" rows="10" readonly>${enquiryVo.content}</textarea>
+                    <textarea class="form-control" id="content" name="content" rows="10" readonly>${reportPostVo.post_content}</textarea>
                 </div>
                 
                     <label for="image">이미지</label>
-                    <input type="image"  id="image" name="image">
+                    <input type="file"  id="image" name="image">
                
             
         </div>
