@@ -29,7 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	                UserDto userDto = (UserDto) obj;
 	                session.setAttribute("login", userDto);
 
-	                // 등급에 따라 다른 페이지로 리다이렉트
+	                
 	                String location;
 	                switch (userDto.getGrade()) {
 	                    case "판매자":
