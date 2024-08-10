@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
 
@@ -359,11 +361,14 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
+                       <!-- Nav Item - User Information -->
+                        <c:choose>
+                        	<c:when test="${not empty login}">
+                        
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${login.user_id}(${login.grade})</span>
                                 <img class="img-profile rounded-circle"
                                     src="/resources/img/undraw_profile.svg">
                             </a>
@@ -383,11 +388,19 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/hn/user/login" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
+                        </li>
+                        	</c:when>
+                        	<c:otherwise>
+                        		 <li class="nav-item dropdown no-arrow">
+                        		 	<a href="/hn/user/login" class="btn btn-primary my-3">로그인</a>
+                        		 </li>
+                        	</c:otherwise>
+                        </c:choose>
                         </li>
 
                     </ul>

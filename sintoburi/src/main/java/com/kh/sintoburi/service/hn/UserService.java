@@ -2,8 +2,7 @@ package com.kh.sintoburi.service.hn;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
+import com.kh.sintoburi.domain.hn.LoginDto;
 import com.kh.sintoburi.domain.hn.UserDto;
 
 public interface UserService {
@@ -16,5 +15,7 @@ public interface UserService {
 
 	// 데이터 1개
 	public UserDto selectById(String user_id);
+	// 로그인
+	public UserDto login(LoginDto dto);
 
 }

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.kh.sintoburi.mapper.hn.ReportPostMapper">
-  
+  <!-- 신고게시글목록 -->
   <select id="selectReport" resultType="ReportPostVo">
   	select * from tbl_reportPost
   	order by re_no
@@ -16,7 +16,7 @@
 	#{post_id},  #{re_reason},   #{re_id}, #{status});
 
   </insert>
-  
+<!-- 신고게시글한개 -->  
   <select id="selectByReNo" resultType="ReportPostVo">
 	  select * from tbl_reportPost
 	  where re_no = #{re_no}

@@ -26,31 +26,31 @@
   </select>
   
   <!-- 로그인 -->
-  <select id="login" resultType="UserVo">
+  <select id="login" resultType="userDto">
 		select *
-		from tbl_user
+		from tbl_users
 		where user_id = #{user_id}
 		and user_pw = #{user_pw}
 	</select>
-<!-- 회원가입 -->
+
+	<!-- 회원가입 -->
 	<insert id="join">
-		insert into tbl_user (user_id, user_pw, user_name,email,address)
+		insert into tbl_users (user_id, user_pw, user_name,email,address)
 		values(#{user_id},#{user_pw}, #{user_name} , #{email},#{address})
 	</insert>
-
+	<!-- 아이디저장 -->
 	<select id="checkDupId" resultType="int">
-		select count(*) from tbl_user
+		select count(*) from tbl_users
 		where user_id = #{user_id}
 	</select>
-	
+	<!-- 이메일조회 -->
 	<select id="getEmailById" resultType="string">
-		select user_email from tbl_user
+		select user_email from tbl_users
 		where user_id = #{user_id}
-		
 	</select>
-	
+	<!-- 비밀번호변경 -->
 	<update id="updatePw">
-		update tbl_user set 
+		update tbl_users set 
 			user_pw = #{user_pw}
 		where user_id = #{user_id}	
 	</update>

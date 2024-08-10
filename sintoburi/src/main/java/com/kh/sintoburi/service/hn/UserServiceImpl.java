@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.sintoburi.domain.hn.LoginDto;
 import com.kh.sintoburi.domain.hn.UserDto;
+import com.kh.sintoburi.domain.hn.UserVo;
 import com.kh.sintoburi.mapper.hn.UserMapper;
 
 @Service
@@ -29,6 +31,12 @@ public class UserServiceImpl implements UserService {
 	public UserDto selectById(String user_id) {
 		UserDto dto = userMapper.selectById(user_id);
 		return dto;
+	}
+	
+	@Override
+	public UserDto login(LoginDto dto) {
+		UserDto userDto =	userMapper.login(dto);
+		return userDto;
 	}
 
 }

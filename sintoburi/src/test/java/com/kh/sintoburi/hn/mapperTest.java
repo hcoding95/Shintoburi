@@ -1,21 +1,22 @@
 package com.kh.sintoburi.hn;
 
-import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.LoginDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.ReplyMapper;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
+import com.kh.sintoburi.mapper.hn.UserMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -32,6 +33,9 @@ public class mapperTest {
 	
 	@Autowired
 	private ReportPostMapper reportPostMapper; 
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	@Test
 	public void testInstance() {
@@ -112,5 +116,13 @@ public class mapperTest {
 	 public void selectByReNo() {
 		 ReportPostVo vo = reportPostMapper.selectByReNo(2);
 			log.info(vo);
+	 }
+	 
+	 @Test
+	 public void login() {
+		 LoginDto dto = new LoginDto();
+		 dto.setUser_id("user00");
+		 dto.setUser_pw("user00");
+		 userMapper.login(dto);
 	 }
 }
