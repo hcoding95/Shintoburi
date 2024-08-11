@@ -43,9 +43,7 @@ public class UploadController {
 	@ResponseBody
 	@PostMapping("/uploadFormAction")
 	public List<AttachFileDto> uploadFormAction(MultipartFile[] uploadFiles) throws Exception {
-		log.info("uploadFormAction...");
-		String uploadPath = "E:/upload/"+ getFolder();
-		System.out.println(getFolder());
+		String uploadPath = "D:/upload/"+ getFolder();
 		// E:/upload/2024/07/23 ...
 		File folder = new File(uploadPath);
 		if(!folder.exists()) {
@@ -57,19 +55,15 @@ public class UploadController {
 		for (MultipartFile file : uploadFiles) {
 			
 			//AttachFileDto attachDto = new AttachFileDto();
-			log.info("----------------");
-			log.info(file.getOriginalFilename());
-			log.info(file.getSize());
 			String uuid = UUID.randomUUID().toString();
 			String savedName = uuid + "_" + file.getOriginalFilename();
 			File f = new File(uploadPath, savedName);
 			boolean isImage = MyfileUtil.checkImageType(f);
-			AttachFileDto attachDto = AttachFileDto.builder()
-					.fileName(file.getOriginalFilename())
-					.uuid(uuid)
-					.image(isImage)
-					.uploadPath(uploadPath)
-					.build();
+			AttachFileDto attachDto = new AttachFileDto();
+			attachDto.setFile_name(file.getOriginalFilename());
+			attachDto.setUuid(uuid);
+			attachDto.setFile_path(uploadPath);
+			attachDto.setImage(isImage);
 			list.add(attachDto);
 			file.transferTo(f);
 		}
@@ -79,9 +73,8 @@ public class UploadController {
 	
 	@ResponseBody
 	@GetMapping("/display")
-	public ResponseEntity<byte[]> getFiles(String fileName) throws Exception {
-		System.out.println("fileName _" + fileName);
-		File f = new File(fileName);
+	public ResponseEntity<byte[]> getFiles(String file_name) throws Exception {
+		File f = new File(file_name);
 		// binary data == byte[]
 		byte[] data = FileCopyUtils.copyToByteArray(f);
 		org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();

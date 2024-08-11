@@ -19,25 +19,8 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/main")
-	public void main() {
-		
-	}
-	
-	@GetMapping("/blog")
-	public void blog() {
-		System.out.println("블로그 적용");
-		
-	}
-	
-	@GetMapping("/detail")
-	public void detail() {
-		
-	}
-	
-	
-	@GetMapping("/register")
-	public void register() {
+	@GetMapping("/home")
+	public void home() {
 		
 	}
 	
@@ -53,11 +36,10 @@ public class MainController {
 		String path = "";
 		if(loginVo != null) {
 			session.setAttribute("login", loginVo);
-			path = "redirect:/hc/main/main";
+			path = "redirect:/hc/main/home";
 		} else {
 			path = "redirect:/hc/main/login";
 		}
-		
 		return path;
 	}
 	

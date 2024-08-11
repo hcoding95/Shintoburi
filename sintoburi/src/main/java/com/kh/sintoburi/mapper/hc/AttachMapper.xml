@@ -6,8 +6,8 @@
   <mapper namespace="com.kh.sintoburi.mapper.hc.AttachMapper">
   
   	<insert id="insert">
-  		insert into tbl_attach(uuid, fileName, uploadPath, image, blogNo)
-  		values (#{uuid}, #{fileName}, #{uploadPath}, #{image}, #{blogNo})
+  		insert into tbl_attach(uuid, fileName, file_Path, blogNo)
+  		values (#{uuid}, #{fileName}, #{file_Path}, #{blogNo})
   	</insert>
   	
   	<select id="getAttachList" resultType="AttachFileDto">

@@ -43,7 +43,8 @@ $(function () {
        
        
         .side-bar {
-            width: 40%;
+            /* width: 40%; */
+            width: 100%;
             border-left: 1px solid black;
             display: flex;
             flex-direction: column;
@@ -100,7 +101,8 @@ $(function () {
 
         .image-area {
             position: relative;
-            width: 60%;
+            /* width: 60%; */
+            width : 100%;
             height: 90vh; /* 높이를 전체 화면 높이로 설정 */
             display: flex;
             max-width: 800px; /* 최대 너비 설정 */
@@ -123,7 +125,7 @@ $(function () {
             width: 100%;
             height: 100%;
             min-width: 800px; /* 최소 너비 설정 */
-            min-height: 600px; /* 최소 높이 설정 */
+            min-height: 800px; /* 최소 높이 설정 */
             object-fit: cover;
         }
 

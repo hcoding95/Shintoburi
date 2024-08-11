@@ -174,7 +174,7 @@ main {
                     <a href="#" class="btn ">공지사항[24/07/22] 당첨자발표 | 7월 고기데이 기획전 경품 당첨자</a>
                 </div>
                 <div class="user-menu">
-                    <a href="#" class="btn ">로그인</a>
+                    <a href="/hc/main/login" class="btn ">로그인</a>
                     <a href="#" class="btn">회원가입</a>
                     <a href="#" class="btn">마이페이지</a>
                     <a href="#" class="btn">주문조회</a>

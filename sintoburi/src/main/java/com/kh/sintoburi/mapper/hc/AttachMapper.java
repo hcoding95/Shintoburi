@@ -9,9 +9,9 @@ public interface AttachMapper {
 
 	public int insert(AttachFileDto dto);
 	
-	public List<AttachFileDto> getAttachList(Long blogNo);
+	public List<AttachFileDto> getAttachList(int blog_no);
 	
-	public int delete(long blogNo);
+	public int delete(int blog_no);
 	
 	public List<AttachFileDto> getOldAttachList();
 	

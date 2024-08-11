@@ -113,7 +113,7 @@
 </style>
 <!-- 글쓰기 탭  -->
 <div class="story-container-wrapper">	
-	<a href="/hc/main/register">
+	<a href="/hc/blog/register">
     <div class="story-card">
         <div class="story-icon">
             <span>+</span>
@@ -161,7 +161,9 @@
          <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
          <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
          <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
-         <a href="#"><img src="path_to_icon4.jpg" alt="Icon 4"></a>
+         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
+         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
+         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
      </div>
      <div class="post-user-info">
   	  <div class="user-details">

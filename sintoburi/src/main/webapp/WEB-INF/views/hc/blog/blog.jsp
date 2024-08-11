@@ -571,7 +571,7 @@
     <div class="modal-dialog modal-fullscreen" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <iframe src="/hc/main/detail" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe>
+                <iframe src="/hc/blog/detail" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">이전페이지</button>
