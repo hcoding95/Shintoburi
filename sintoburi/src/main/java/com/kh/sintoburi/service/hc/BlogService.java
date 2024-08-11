@@ -8,6 +8,7 @@ import com.kh.sintoburi.domain.hc.ProductTagDto;
 
 public interface BlogService {
 	
+	public List<BlogVo> getList();
 	public boolean insert(BlogVo blogVo);
 		
 

@@ -1,5 +1,6 @@
 package com.kh.sintoburi.service.hc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,25 @@ public class BlogServiceImpl implements BlogService {
 			});
 		}
 		return (result > 0)? true : false;
+	}
+
+	@Override
+	public List<BlogVo> getList() {
+		List<BlogVo> list = blogMapper.getListWithPage();
+		list.forEach(vo -> {
+			int blog_no = vo.getBlog_no();
+			List<AttachFileDto> attachList = attachMapper.getAttachList(blog_no);
+			if(attachList != null) {
+				vo.setFileList(attachList);
+			}
+			List<ProductTagDto> tagList = productTagMapper.getTagList(blog_no);
+			if(tagList != null) {
+				vo.setProductTagList(tagList);
+			}
+		});
+		
+		
+		return list;
 	}
 
 }

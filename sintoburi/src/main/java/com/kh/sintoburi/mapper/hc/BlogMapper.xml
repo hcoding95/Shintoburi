@@ -13,6 +13,11 @@
   		values(#{blog_no}, #{user_id}, #{blog_content})
   	</insert>
   	
+  	<select id="getListWithPage" resultType="BlogVo">
+  		select * from tbl_blog
+  	
+  	</select>
+  	
   	
   
   </mapper>

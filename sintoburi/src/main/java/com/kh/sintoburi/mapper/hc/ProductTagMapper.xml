@@ -10,6 +10,11 @@
   		values(#{blog_no}, #{product_id})
   	</insert>
   	
+  	<select id="getTagList" resultType="ProductTagDto">
+  		select * from tbl_blog_tag
+  		where blog_no = #{blog_no}
+  	</select>
+  	
   	
   
   </mapper>

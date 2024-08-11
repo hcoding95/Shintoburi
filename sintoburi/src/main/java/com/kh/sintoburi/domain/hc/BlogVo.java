@@ -14,7 +14,6 @@ public class BlogVo {
 	private String 	blog_content;
 	private Date regdate;
 	private Date updatedate;
-	
 	private List<AttachFileDto> fileList;
 	private List<ProductTagDto> productTagList;
 	
