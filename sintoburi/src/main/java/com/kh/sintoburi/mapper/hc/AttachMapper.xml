@@ -6,23 +6,23 @@
   <mapper namespace="com.kh.sintoburi.mapper.hc.AttachMapper">
   
   	<insert id="insert">
-  		insert into tbl_attach(uuid, fileName, file_Path, blogNo)
-  		values (#{uuid}, #{fileName}, #{file_Path}, #{blogNo})
+  		insert into tbl_blog_img(uuid, file_name, file_path, blog_no)
+  		values (#{uuid}, #{file_name}, #{file_path}, #{blog_no})
   	</insert>
   	
   	<select id="getAttachList" resultType="AttachFileDto">
-  		select * from tbl_attach
-  		where bno = #{blogNo}
+  		select * from tbl_blog_img
+  		where blog_no = #{blog_no}
   	</select>
   	
   	<delete id="delete">
-  		delete from tbl_attach
-  		where bno = #{blogNo}
+  		delete from tbl_blog_img
+  		where blog_no = #{blog_no}
   	</delete>
   	
   	<select id="getOldAttachList" resultType="AttachFileDto">
-  		select * from tbl_attach
-		where uploadPath = 'E:/upload/' ||
+  		select * from tbl_blog_img
+		where file_path = 'E:/upload/' ||
 		 (select TO_CHAR(sysdate - 1, 'YYYY/MM/DD') from dual)
 		 <!-- (select sysdate - 1 from dual); -->
   	</select>

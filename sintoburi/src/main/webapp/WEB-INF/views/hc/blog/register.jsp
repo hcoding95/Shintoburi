@@ -158,17 +158,22 @@ $(function () {
 			let file_name = $(this).data("file_name");
 			let file_path = $(this).data("file_path");
 			let uuid = $(this).data("uuid");
-			let image = $(this).data("type");
 			
-			let inputTag = `<input type="hidden" name="fileList[\${i}].file_name" value="\${file_name}" >
-						    <input type="hidden" name="fileList[\${i}].file_path" value="\${file_path}" >
-					 		<input type="hidden" name="fileList[\${i}].uuid" value="\${uuid}" >
-					 		<input type="hidden" name="fileList[\${i}].image" value="\${image == true ?'I':'F'}">`;
+			let inputTag = `
+				<input type="hidden" name="fileList[\${i}].file_name" value="\${file_name}" >
+			    <input type="hidden" name="fileList[\${i}].file_path" value="\${file_path}" >
+		 		<input type="hidden" name="fileList[\${i}].uuid" value="\${uuid}" >
+		 		`;
+		 		console.log("시작");
+		 		console.log(file_name);
+		 		console.log(file_path);
+		 		console.log(uuid);
 			$("#frmRegister").prepend(inputTag);
 		});
 		
 		$("#productList > li").each(function (i) {
 			let product_id = $(this).attr("data-product_id");
+			console.log(product_id);
 			let productTag = `
 				<input type="hidden" name="productTagList[\${i}].product_id" value="\${product_id}" >				
 			`;
@@ -279,7 +284,7 @@ $(function () {
 	
  <div class="profile head-profile">
 		  <div class="profile ">
-	          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진"><input name="user_id" value="user_id" type="hidden">${login.user_name}님의 스토리</input></h3>
+	          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진"><input name="user_id" value="${login.user_id}" type="hidden">${login.user_name}님의 스토리</input></h3>
 		  </div>
       </div>
       <!-- 본문 내용  -->

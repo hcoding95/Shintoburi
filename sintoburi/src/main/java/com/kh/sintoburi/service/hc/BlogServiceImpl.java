@@ -15,7 +15,11 @@ import com.kh.sintoburi.mapper.hc.BlogMapper;
 import com.kh.sintoburi.mapper.hc.ProductMapper;
 import com.kh.sintoburi.mapper.hc.ProductTagMapper;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j
 public class BlogServiceImpl implements BlogService {
 	
 	@Autowired
@@ -30,7 +34,9 @@ public class BlogServiceImpl implements BlogService {
 	public boolean insert(BlogVo blogVo) {
 		int result = blogMapper.insertSelectKey(blogVo);
 		int blog_no = blogVo.getBlog_no();
+		System.out.println("blog_no는??" + blog_no);
 		List<AttachFileDto> fileList = blogVo.getFileList();
+		System.out.println(fileList);
 		if(fileList != null) {
 			fileList.forEach(dto -> {
 				dto.setBlog_no(blog_no);

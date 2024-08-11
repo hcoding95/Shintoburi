@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.ProductDto;
+import com.kh.sintoburi.mapper.hc.BlogMapper;
 import com.kh.sintoburi.mapper.hc.ProductMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -21,6 +23,18 @@ public class Test {
 	@Autowired
 	private ProductMapper mapper;
 	
+	@Autowired
+	private BlogMapper blogMapper;
+	
+	@org.junit.Test
+	public void mapperTest2() {
+		BlogVo vo = new BlogVo();
+		vo.setBlog_content("엄준식");
+		vo.setUser_id("user01");
+		blogMapper.insertSelectKey(vo);
+				
+		
+	}
 	@org.junit.Test
 	public void mapperTest() {
 		ProductDto dto = new ProductDto();

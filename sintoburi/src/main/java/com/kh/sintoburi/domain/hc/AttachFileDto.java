@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class AttachFileDto {
 	private String file_name;   //1.png
 	private String file_path; // yyyy/MM/dd
