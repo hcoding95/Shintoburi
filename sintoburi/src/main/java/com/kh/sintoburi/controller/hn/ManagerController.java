@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.PageDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.UserDto;
@@ -39,7 +41,7 @@ public class ManagerController {
 
 	@Autowired
 	private ReplyService replyService;
-	
+
 	@Autowired
 	private ReportPostService reportPostService;
 
@@ -47,11 +49,16 @@ public class ManagerController {
 
 	// 회원목록
 	@GetMapping("/userList")
-	public void userList(Model model) {
-		List<UserDto> list = userService.getList();
+	public void userList(Model model, Criteria criteria) {
+		System.out.println("Page Number: " + criteria.getPageNum());
+		System.out.println("Amount per Page: " + criteria.getAmount());
+		
+		List<UserDto> list = userService.getList(criteria);
+		int total = userService.getTotal(criteria);
+		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("userList", list);
+		model.addAttribute("pageMaker", pageMaker);
 	}
-
 
 	// 등급수정
 
@@ -68,24 +75,26 @@ public class ManagerController {
 
 	// 상품리스트
 
-	// 전체문의사항목록
-
-	@GetMapping("/enqList")
-	public void list(Model model) {
-		List<EnquiryVo> enquiryList = enquiryService.getList();
-		model.addAttribute("enquiryList", enquiryList);
-		
-		// 답변 리스트 
-		List<ReplyVo> replyLisy = replyService.replyList();
-		model.addAttribute("replyList", replyLisy);
-
-	}
+//	로그인한 유저 문의사항
+//	@GetMapping("/enqList")
+//	public void list(Model model) {
+//		List<EnquiryVo> enquiryList = enquiryService.getList();
+//		model.addAttribute("enquiryList", enquiryList);
+//		// 답변 리스트
+//		List<ReplyVo> replyLisy = replyService.replyList();
+//		model.addAttribute("replyList", replyLisy);
+//
+//	}
 
 	// 상품문의사항목록
 	@GetMapping("/goodsEnqList")
 	public void goodsEnqList(Model model) {
 		List<EnquiryVo> list = enquiryService.goodsGetList();
 		model.addAttribute("goodsEnqList", list);
+		
+		// 답변 리스트
+		List<ReplyVo> replyLisy = replyService.replyList();
+		model.addAttribute("replyList", replyLisy);
 	}
 
 	// 상품문의사항, 답변 상세보기
@@ -119,8 +128,8 @@ public class ManagerController {
 	public void gradeEnqList(Model model) {
 		List<EnquiryVo> list = enquiryService.gradeGetList();
 		model.addAttribute("gradeEnqList", list);
-		
-		//답변리스트
+
+		// 답변리스트
 		List<ReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("gradeReplyList", replyLisy);
 	}
@@ -154,14 +163,14 @@ public class ManagerController {
 		List<ReportPostVo> list = reportPostService.ReportList();
 		model.addAttribute("reportList", list);
 	}
-	
+
 	// 신고게시글상세보기
 	@GetMapping("/reportDetail/{re_no}")
 	public String reportDetail(@PathVariable("re_no") int re_no, Model model) {
-		
+
 		ReportPostVo reportPostVo = reportPostService.selectByReNo(re_no);
 		model.addAttribute("reportPostVo", reportPostVo);
-		
+
 		return "hn/manager/reportDetail";
 	}
 

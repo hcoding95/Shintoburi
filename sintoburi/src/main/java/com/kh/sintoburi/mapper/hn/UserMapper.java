@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.LoginDto;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.domain.hn.UserVo;
@@ -14,8 +15,13 @@ public interface UserMapper {
 	// 회원목록
 	public List<UserDto> getList();
 
-	// 등급수정
+	// 회원 목록 페이징 적용
+	public List<UserDto> getListWithPaging(Criteria criteria);
 
+	// 게시글 갯수
+	public int getTotalCount(Criteria criteria);	
+
+	// 등급수정
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
@@ -32,6 +38,7 @@ public interface UserMapper {
 
 	// 이메일조회
 	public String getEmailById(@Param("user_id") String user_id);
+
 	// 비밀번호변경
 	public int updatePw(Map<String, String> map);
 

@@ -8,7 +8,7 @@ import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryMapper {
 	
-	//전체문의사항목록
+	// 로그인 문의사항 목록
 	public List<EnquiryVo> getList(@Param("user_id") String user_id);
 	
 	// 상품문의사항목록

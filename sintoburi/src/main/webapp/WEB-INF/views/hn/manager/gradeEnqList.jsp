@@ -15,8 +15,19 @@
              <!-- Card Header - Dropdown -->
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">등급 게시글 관리</h6>
-                 
+                 <h6 class="m-0 font-weight-bold text-primary">등급 게시글</h6>
+               <form action="" method="get">
+	            		<select name="type">
+	            			<option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
+	            			<option value="U" ${criteria.type == 'U' ? 'selected' : ''}>미처리</option>
+	            			<option value="C" ${criteria.type == 'C' ? 'selected' : ''}>처리완료</option>
+	            		</select>
+	            		<input type="text" name="keyword"
+	            			value="${criteria.keyword}">
+	            		
+	            		<button style="margin-right: 750px;" type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
+            		</form>
+            	
              </div>
              <!-- Card Body -->
              <div class="card-body"> 
@@ -47,11 +58,8 @@
                 <td>
                     <c:choose>
                         <c:when test="${vo.status == '처리완료'}">
-                            <button class="btn btn-outline-dark collapsed" type="button" data-toggle="collapse" data-target="#collapse${vo.eno}" aria-expanded="false" style="
-                                padding-bottom: 0px;
-                                padding-top: 0px;
-                                padding-left: 10px;
-                                padding-right: 10px;">
+                            <button class="btn btn-sm" type="button" data-toggle="collapse" 
+                            data-target="#collapse${vo.eno}" aria-expanded="false">
                                 ▼
                             </button>
                         </c:when>

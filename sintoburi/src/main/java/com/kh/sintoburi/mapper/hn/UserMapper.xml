@@ -9,7 +9,68 @@
   	select * from tbl_users
   </select>
   
+  
+  
+  
+  <!--  페이징처리 -->
+ <select id="getListWithPaging" resultType="UserDto">
+    SELECT * FROM (
+        SELECT
+            user_id,
+            user_name,
+            email,
+            grade,
+            last_login,
+            ROW_NUMBER() OVER (ORDER BY last_login DESC) AS rn
+        FROM tbl_users
+        <where>
+            <if test="type != null">
+           	 <trim prefix="(" suffix=")" prefixOverrides="or">
+           	 <foreach item="type" collection="typeArr">
+				<trim prefix="or">
+                <choose>
+					<when test="type == 'I'.toString()">
+						user_id like '%' || #{keyword} || '%'
+					</when>
+					<when test="type == 'E'.toString()">
+						email like '%' || #{keyword} || '%'
+					</when>
+					
+				</choose>
+            	</trim>
+					</foreach>
+				</trim>
+			</if>
+        </where>
+    ) AS subquery
+    WHERE rn &gt; (#{pageNum} - 1) * #{amount} AND rn &lt;= #{pageNum} * #{amount}
+</select>
+  
+ <!-- 게시글 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_users
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'I'.toString()">
+                                    user_id like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'E'.toString()">
+                                    email like '%' || #{keyword} || '%'
+                                </when>
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
 
+			
+   
 <!-- 회원 등급 수정 --> 
 
     <update id="updateGrade">

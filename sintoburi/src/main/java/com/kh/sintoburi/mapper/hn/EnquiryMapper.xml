@@ -7,7 +7,7 @@
  	   
  	  <select id="getList" resultType="EnquiryVo">
  	    select * from tbl_enquiry
-<!-- 	 	where user_id = #{user_id} -->
+	 	where user_id = #{user_id}
 	 	order by eno 
  	  </select>
  	  

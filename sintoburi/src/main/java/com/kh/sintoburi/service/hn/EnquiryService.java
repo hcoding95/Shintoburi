@@ -8,10 +8,9 @@ import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryService {
 
-	//전체
-	public List<EnquiryVo> getList();
+	//로그인한사용자목록
+	public List<EnquiryVo> getList(String user_id);
 		
-	
 	// 상품문의사항목록
 	public List<EnquiryVo> goodsGetList();
 

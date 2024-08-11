@@ -151,7 +151,7 @@
                 <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar" style="">
                     <div class="bg-white py-2 collapse-inner rounded">
                        
-                        <a class="collapse-item" href="/hn/manager/enqList">상품문의</a>
+                        <a class="collapse-item" href="/hn/manager/goodsEnqList">상품문의</a>
                         <a class="collapse-item" href="/hn/manager/gradeEnqList">등급문의</a>
                        
                         </div>

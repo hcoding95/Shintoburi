@@ -5,6 +5,89 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        #wrapper {
+            display: flex;
+            min-height: 100vh;
+            justify-content: center; /* 수평 중앙 정렬 */
+            align-items: flex-start; /* 상단 정렬 */
+        }
+
+        #content-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1200px; /* 최대 너비 설정 */
+        }
+
+        #sidebar-wrapper {
+            width: 200px; /* 사이드바 너비 */
+            background-color: #fff;
+            border-right: 1px solid #ddd; /* 사이드바의 오른쪽 경계선 */
+            flex-shrink: 0; /* 사이드바가 줄어들지 않도록 설정 */
+        }
+
+        #page-content-wrapper {
+            flex: 1; /* 나머지 공간 차지 */
+            padding: 20px; /* 콘텐츠 여백 추가 */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 수평 중앙 정렬 */
+        }
+
+        .center-text span {
+            font-size: 30px;
+            font-weight: bold;
+            padding-left: 16px;
+        }
+
+        .sidebar-heading {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .list-group-item {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 15px;
+        }
+
+        .sub-menu {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .sub-menu li {
+            margin-bottom: 8px;
+        }
+
+        .sub-menu a {
+            font-size: 1rem;
+            color: black;
+            text-decoration: none;
+        }
+
+        .sub-menu a:hover {
+            color: #333;
+        }
+
+        .table-container {
+            width: 100%;
+            max-width: 1000px; /* 테이블 최대 너비 설정 */
+        }
+
+        .table {
+            width: 100%; /* 테이블 폭을 부모 컨테이너에 맞춤 */
+        }
+    </style>
+</head>
 
 <script>
 
@@ -22,57 +105,95 @@ $(function() {
 });
 
 </script>
-
-
-
-	<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <h3 class="text-center">1:1 문의사항</h3>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <form role="form" action="/hn/mypage/enqRegister" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="user_id">작성자</label>
-                    <input value="user00" type="text" class="form-control" id="user_id" name="user_id" readonly />
+<body>
+    <div id="wrapper">
+        <div id="content-wrapper">
+            <div id="sidebar-wrapper">
+                <div class="center-text">
+                    <span>마이페이지</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="enquiry_type">문의 유형</label>
-                    <select class="form-select" aria-label="Default select example" id="enquiry_type" name="enquiry_type">
-                        <option value="상품문의">상품문의</option>
-                        <option value="배송문의">배송문의</option>
-                        <option value="결제문의">결제문의</option>
-                        <option value="등급문의">등급문의</option>
-                    </select>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item list-group-item-action list-group-item-light p-3">
+                        마이쇼핑
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a href="#!">주문/배송 조회</a></li>
+                        <li><a href="#!">취소/반품/교환 내역</a></li>
+                    </ul>
+                    <div class="list-group-item list-group-item-action list-group-item-light p-3">
+                        마이활동
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a href="/hn/mypage/enqList">1:1문의내역</a></li>
+                        <li><a href="#!">리뷰 (<span class="num_review">0</span>)</a></li>
+                        <li><a href="#!">이벤트 참여 현황</a></li>
+                    </ul>
+                    <div class="list-group-item list-group-item-action list-group-item-light p-3">
+                        마이정보
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a href="#!">회원정보 수정</a></li>
+                        <li><a href="#!">배송지/환불계좌</a></li>
+                        <li><a href="#!">회원탈퇴</a></li>
+                    </ul>
                 </div>
+            </div>
+            
+            
+ 
 
-                <div class="form-group">
-                    <label for="content">내용</label>
-                    <textarea rows="10" class="form-control" id="content" name="content"></textarea>
-                </div>
+            <!-- Main Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Title Section -->
+                    <div class="row mb-4">
+                        <div class="col-md-12 text-center">
+                            <h3>1:1 문의사항</h3>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="image">첨부파일</label>
-                    <input class="form-control" type="file" id="image" name="image">
-                </div>
+                    <!-- Form Section -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form role="form" action="/hn/mypage/enqRegister" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="user_id">작성자</label>
+                                    <input value="user00" type="text" class="form-control" id="user_id" name="user_id" readonly />
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-9"></div>
-                    <div class="col-md-3 text-end">
-                        <button type="submit" class="btn btn-dark">작성완료</button>
+                                <div class="form-group">
+                                    <label for="enquiry_type">문의 유형</label>
+                                    <select class="form-select" aria-label="Default select example" id="enquiry_type" name="enquiry_type">
+                                        <option value="상품문의">상품문의</option>
+                                        <option value="배송문의">배송문의</option>
+                                        <option value="결제문의">결제문의</option>
+                                        <option value="등급문의">등급문의</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="content">내용</label>
+                                    <textarea rows="10" class="form-control" id="content" name="content"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="image">첨부파일</label>
+                                    <input class="form-control" type="file" id="image" name="image">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 text-end">
+                                       <button type="submit" class="btn btn-dark" style=" margin-left: 840px;">작성완료</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
+<!-- main -->
         </div>
     </div>
-</div>
 
 
 

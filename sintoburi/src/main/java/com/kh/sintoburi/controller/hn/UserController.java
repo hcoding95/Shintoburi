@@ -44,10 +44,10 @@ public class UserController {
 	        String location = null;
 	        switch (userDto.getGrade()) {
 	        case "판매자":
-	            location = "/hn/";
+	            location = "/hn/mypage/myPageMain";
 	            break;
 	        case "구매자":
-	            location = "/hn/";
+	            location = "/hn/mypage/myPageMain";
 	            break;
 	        case "관리자":
 	            location = "/hn/manager/userList";

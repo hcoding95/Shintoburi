@@ -33,8 +33,20 @@ $(function() {
 	                }
 	            }
 		});
-		
 	});
+		
+	// 페이지 블럭
+	 $("a.page-link").click(function(e) {
+	        e.preventDefault(); // 브라우저의 기본 기능 막기
+	        
+	        let pageNum = $(this).attr("href");
+	        console.log(pageNum);
+	        $("#actionForm > input[name=pageNum]").val(pageNum);
+	        $("#actionForm").attr("action", "/hn/manager/userList");
+	        $("#actionForm").submit();
+	    });
+		
+	
 	
  
 	
@@ -49,13 +61,25 @@ $(function() {
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
+          
+            		
+             
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                  <h6 class="m-0 font-weight-bold text-primary">회원 목록</h6>
-                 <select>
-                 	<option>아이디</option>
-                 	<option>이메일</option>
-                 </select>
+               <form action="/hn/manager/userList" method="get">
+	            		<select name="type">
+	            			<option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
+<%-- 	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>판매자</option> --%>
+<%-- 	            			<option value="B" ${criteria.type == 'B' ? 'selected' : ''}>구매자</option> --%>
+	            			<option value="E" ${criteria.type == 'E' ? 'selected' : ''}>이메일</option>
+	            		</select>
+	            		<input type="text" name="keyword"
+	            			value="${criteria.keyword}">
+	            		
+	            		<button style="margin-right: 780px;" type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
+            		</form>
+            	
              </div>
              <!-- Card Body -->
              <div class="card-body"> 
@@ -95,7 +119,7 @@ $(function() {
                        </select>
                        </td >
                        <td>
-                       <button class="btnMod btn btn-outline-dark" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
+                       <button class="btnMod btn btn-outline-dark btn-sm" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
 					</td>
 				</tr>
 				</c:if>
@@ -113,7 +137,7 @@ $(function() {
 						<ul class="pagination justify-content-center">
 							<c:if test="${pageMaker.prev == true}">
 							<li class="page-item">
-								<a class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
+								<a  id ="page" class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
 							</li>
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}" 
@@ -142,5 +166,5 @@ $(function() {
 
 
 
-
+<%@ include file="/WEB-INF/views/hn/manager/include/action_form.jsp" %>
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

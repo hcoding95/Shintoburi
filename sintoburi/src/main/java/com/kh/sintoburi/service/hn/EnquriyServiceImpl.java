@@ -13,11 +13,10 @@ public class EnquriyServiceImpl implements EnquiryService {
 
 	@Autowired
 	private EnquiryMapper enquiryMapper;
-
-	// 전체문의
+	// 로그인한 사용자의 문의사하
 	@Override
-	public List<EnquiryVo> getList() {
-		List<EnquiryVo> list = enquiryMapper.goodsGetList();
+	public List<EnquiryVo> getList(String user_id) {
+		List<EnquiryVo> list = enquiryMapper.getList(user_id);
 		return list;
 	}
 
@@ -76,5 +75,7 @@ public class EnquriyServiceImpl implements EnquiryService {
 	 	int count = enquiryMapper.gradeUpdateStatus(eno);
 	 	return (count == 1) ? true : false;
 	}
+
+
 
 }

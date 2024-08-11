@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.util.hn.MyFileUtil;
 
@@ -31,12 +34,30 @@ public class MypageController {
 
 	@Autowired
 	private EnquiryService enquiryService;
+	
+	
+	@GetMapping("/myPageMain")
+	public void myPageMain() {
+		
+	}
 
 	// 1:1 문의사항
 	@GetMapping("/enqList")
-	public void list(Model model) { // 해야할 것 사용자 로그인 세션!!
-		List<EnquiryVo> list = enquiryService.getList();
+	public String getEnquiryList(HttpSession session, Model model) {
+		// 세션에서 로그인한 사용자 정보 가져오기
+		UserDto login = (UserDto) session.getAttribute("login");
+
+		// 로그인 상태 확인
+		if (login == null) {
+			// 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+			return "redirect:/hn/user/login";
+		}
+
+		String user_id = login.getUser_id();
+		List<EnquiryVo> list = enquiryService.getList(user_id);
 		model.addAttribute("list", list);
+
+		return "hn/mypage/enqList"; 
 	}
 
 	@GetMapping("/enqRegisterForm")
@@ -66,11 +87,8 @@ public class MypageController {
 		String folderName = folder.getName();
 //		log.info("folderName: " + folderName);
 
-		EnquiryVo vo = EnquiryVo.builder()
-				.content(dto.getContent())
-				.enquiry_type(dto.getEnquiry_type())
-				.user_id(dto.getUser_id())
-				.image(folderName).build();
+		EnquiryVo vo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
+				.user_id(dto.getUser_id()).image(folderName).build();
 		log.info("vo:" + vo);
 
 		// 파일을 디스크에 저장
@@ -103,7 +121,7 @@ public class MypageController {
 	public String enqRead(@RequestParam("eno") int eno, Model model) {
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
 		model.addAttribute("enquiryVo", enquiryVo);
-		return "mypage/enqRead";
+		return "hn/mypage/enqRead";
 	}
 
 	// 수정

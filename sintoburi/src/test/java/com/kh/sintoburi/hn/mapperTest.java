@@ -125,4 +125,10 @@ public class mapperTest {
 		 dto.setUser_pw("user00");
 		 userMapper.login(dto);
 	 }
+	 
+	 @Test
+	 public void goodsList() {
+		 List<EnquiryVo> list = enquiryMapper.goodsGetList();
+		 log.info(list);
+	 }
 }

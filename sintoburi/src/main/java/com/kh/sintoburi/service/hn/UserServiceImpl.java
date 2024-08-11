@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.LoginDto;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.domain.hn.UserVo;
@@ -16,9 +17,16 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public List<UserDto> getList() {
+	public List<UserDto> getList(Criteria criteria) {
 		List<UserDto> list = userMapper.getList();
 		return list;
+	}
+	
+
+	@Override
+	public int getTotal(Criteria criteria) {
+		int count = userMapper.getTotalCount(criteria);
+		return count;
 	}
 
 	@Override
@@ -38,5 +46,9 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto =	userMapper.login(dto);
 		return userDto;
 	}
+
+
+
+
 
 }
