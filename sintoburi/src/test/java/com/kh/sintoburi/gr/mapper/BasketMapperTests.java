@@ -1,4 +1,4 @@
-package com.kh.sintoburi.mapper.gr;
+package com.kh.sintoburi.gr.mapper;
 
 import java.util.List;
 

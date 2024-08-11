@@ -6,7 +6,7 @@
   <mapper namespace="com.kh.sintoburi.mapper.gr.BasketMapper">
  
  	<select id="getList" resultType="BasketDetailDto">
-	select b.pno, p.name, i.img_path, b.p_count, p.price, b.p_count*p.price	total_price, b.put_date
+	select k.user_id, b.pno, p.name, i.img_path, b.p_count, p.price, b.p_count*p.price	total_price, b.put_date
 	from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k
 	where b.bno = k.bno
 		and k.user_id = #{user_id}
