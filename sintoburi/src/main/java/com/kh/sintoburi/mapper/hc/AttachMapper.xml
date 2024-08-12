@@ -27,8 +27,8 @@
   	
   	<update id="update">
   		update tbl_blog_img
-  		set uuid = #{uuid}, file_path = #{file_path}, file_name = #{file_name}
-  		where blog_no = #{blog_no}
+  		set file_path = #{file_path}, file_name = #{file_name}
+  		where uuid = #{uuid}
   	</update>
   	
   	<select id="getOldAttachList" resultType="AttachFileDto">

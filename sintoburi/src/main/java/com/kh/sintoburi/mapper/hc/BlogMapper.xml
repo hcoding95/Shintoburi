@@ -15,7 +15,7 @@
   	
   	<update id="updateBlog">
   		update tbl_blog 
-  		set blog_content = #{blog_content} updatedate = sysdate
+  		set blog_content = #{blog_content}, updatedate = sysdate
   		where blog_no = #{blog_no}
   	</update>
   	

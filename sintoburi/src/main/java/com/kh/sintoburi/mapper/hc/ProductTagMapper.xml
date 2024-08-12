@@ -18,8 +18,8 @@
   	
   	<update id="update">
   		update tbl_blog_tag
-  		set	product_id = #{product_id}, product_name = #{product_name}
-  		where blog_no = #{blog_no}
+  		set	product_name = #{product_name}
+  		where  product_id = #{product_id} and blog_no = #{blog_no}
   	</update>
   	
   	<select id="getTagList" resultType="ProductTagDto">

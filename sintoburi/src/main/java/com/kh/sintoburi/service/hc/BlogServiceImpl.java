@@ -50,6 +50,7 @@ public class BlogServiceImpl implements BlogService {
 				dto.setBlog_no(blog_no);
 				productTagMapper.insert(dto);
 			});
+			
 		}
 		return (result > 0)? true : false;
 	}
@@ -59,6 +60,7 @@ public class BlogServiceImpl implements BlogService {
 	public boolean modify(BlogVo blogVo) {
 		int result = blogMapper.updateBlog(blogVo);
 		int blog_no = blogVo.getBlog_no();
+		System.out.println("수정할 블로그 번호는" + blog_no);
 		List<AttachFileDto> fileList = blogVo.getFileList();
 		List<AttachFileDto> tbl_fileList = attachMapper.getAttachList(blog_no);
 		
@@ -67,6 +69,7 @@ public class BlogServiceImpl implements BlogService {
 			//기존 데이터와 비교하여 중복체크 
 			for ( AttachFileDto dbDto : tbl_fileList) {
 				String dbUuid = dbDto.getUuid();
+				dbDto.setDuplicate(false);
 				for (AttachFileDto insertDto : fileList) {
 					String insertUuid = insertDto.getUuid();
 					if(dbUuid.equals(insertUuid)) {
@@ -79,11 +82,11 @@ public class BlogServiceImpl implements BlogService {
 					attachMapper.deleteByUuid(dbUuid);
 				}
 			}
-			
 			fileList.forEach(dto -> {
 				int file_blog_no = dto.getBlog_no();
 				// 이게 새로 만든 이미지일경우
 				if(file_blog_no == 0) {
+					System.out.println("파일 없음 생성작업");
 					dto.setBlog_no(blog_no);
 					attachMapper.insert(dto);
 				} else {
@@ -95,9 +98,10 @@ public class BlogServiceImpl implements BlogService {
 		List<ProductTagDto> tbl_productTagList = productTagMapper.getTagList(blog_no);
 		if(productTagList != null) {
 			// 기존 데이터와 중복 체크
-			for ( ProductTagDto dbDto : productTagList) {
+			for ( ProductTagDto dbDto : tbl_productTagList) {
 				int dbProduct_id = dbDto.getProduct_id();
-				for (ProductTagDto insertDto : tbl_productTagList) {
+				dbDto.setDuplicate(false);
+				for (ProductTagDto insertDto : productTagList) {
 					int insertProduct_id = insertDto.getProduct_id();
 					if(dbProduct_id == insertProduct_id) {
 						dbDto.setDuplicate(true);
@@ -113,9 +117,10 @@ public class BlogServiceImpl implements BlogService {
 				int tag_blog_no = dto.getBlog_no();
 				//새로 만든 태그인지 체크
 				if(tag_blog_no == 0) {
+					System.out.println("태그생성");
 					dto.setBlog_no(blog_no);
 					productTagMapper.insert(dto);
-				} else {
+				}else {
 					productTagMapper.update(dto);
 				}
 			});

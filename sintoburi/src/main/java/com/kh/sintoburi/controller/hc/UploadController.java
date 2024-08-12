@@ -53,7 +53,6 @@ public class UploadController {
 		List<AttachFileDto> list = new ArrayList<AttachFileDto>();
 		
 		for (MultipartFile file : uploadFiles) {
-			
 			//AttachFileDto attachDto = new AttachFileDto();
 			String uuid = UUID.randomUUID().toString();
 			String savedName = uuid + "_" + file.getOriginalFilename();

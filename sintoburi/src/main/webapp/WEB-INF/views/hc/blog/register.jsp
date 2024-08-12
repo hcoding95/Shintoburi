@@ -196,16 +196,27 @@ $(function () {
 		let productId = $(this).attr("data-product_id");
         let productName = $(this).attr("data-product_name");
         
-        let liTag = `
-        	<li class="tag-delete" style="cursor:pointer" ;
-        		data-product_id="\${productId}"
-				data-product_name="\${productName}"
-        	>(\${productId})\${productName}</li>
-        `;
-		$("#productList").append(liTag);
-		$("#modal-product-tag-list").empty(); // 모달의 리스트 초기화
-		$("#modal-tag-value").val(''); // 입력 필드 초기화
-		$('#product-tag-modal').modal('hide');
+        let isExist = false;
+        $("#productList li").each(function() {
+			if($(this).attr("data-product_id") == productId) {
+				isExist = true;
+				return false;
+			}
+		})
+        if(!isExist) {
+	        let liTag = `
+	        	<li class="tag-delete" style="cursor:pointer" ;
+	        		data-product_id="\${productId}"
+					data-product_name="\${productName}"
+	        	>(<span>\${productId}</span>)\${productName}</li>
+	        `;
+			$("#productList").append(liTag);
+			$("#modal-product-tag-list").empty(); // 모달의 리스트 초기화
+			$("#modal-tag-value").val(''); // 입력 필드 초기화
+			$('#product-tag-modal').modal('hide');
+        } else {
+			alert("추가한 상품태그입니다.");     	
+        }
 	});
 	
 	$("#product-modal-btn").click(function () {

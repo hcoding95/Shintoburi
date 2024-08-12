@@ -78,6 +78,7 @@ $(function () {
 								   		data-file_name="\${obj.file_name}"
 										data-file_path="\${obj.file_path}"
 										data-uuid="\${obj.uuid}"
+										data-file_blog_no="0"
 										data-type="\${obj.image}">
 										\${imgTag}</div>`;					
 					} else {
@@ -85,6 +86,7 @@ $(function () {
 								   		data-file_name="\${obj.file_name}"
 										data-file_path="\${obj.file_path}"
 										data-uuid="\${obj.uuid}"
+										data-file_blog_no="0"
 										data-type="\${obj.image}">
 										\${imgTag}</div>`;					
 					}											
@@ -169,17 +171,20 @@ $(function () {
 	// 등록폼 전송
 	$("#frmRegister").submit(function () {
 		/* 블로그 번호 추가  */
-		let blog_no = <input type="hidden" name="blog_no" value="\${blogVo.blog_no}>";
+		let blog_no = '<input type="hidden" name="blog_no" value="${blogVo.blog_no}">';
 		$("#frmRegister").prepend(blog_no);
+		
 		$("#carousel-list > div").each(function (i) {
 			let file_name = $(this).data("file_name");
 			let file_path = $(this).data("file_path");
 			let uuid = $(this).data("uuid");
+			let file_blog_no = $(this).data("file_blog_no");
 			
 			let inputTag = `
 				<input type="hidden" name="fileList[\${i}].file_name" value="\${file_name}" >
 			    <input type="hidden" name="fileList[\${i}].file_path" value="\${file_path}" >
 		 		<input type="hidden" name="fileList[\${i}].uuid" value="\${uuid}" >
+		 		<input type="hidden" name="fileList[\${i}].blog_no" value="\${file_blog_no}" >
 		 		`;
 		 		console.log("시작");
 		 		console.log(file_name);
@@ -191,10 +196,12 @@ $(function () {
 		$("#productList > li").each(function (i) {
 			let product_id = $(this).attr("data-product_id");
 			let product_name = $(this).attr("data-product_name");
+			let product_blog_no = $(this).attr("data-blog_no")
 			console.log(product_id);
 			let productTag = `
 				<input type="hidden" name="productTagList[\${i}].product_id" value="\${product_id}" >				
 				<input type="hidden" name="productTagList[\${i}].product_name" value="\${product_name}" >				
+				<input type="hidden" name="productTagList[\${i}].blog_no" value="\${product_blog_no}" >				
 			`;
 			$("#frmRegister").prepend(productTag);
 		});											
@@ -214,16 +221,28 @@ $(function () {
 		let productId = $(this).attr("data-product_id");
         let productName = $(this).attr("data-product_name");
         
-        let liTag = `
-        	<li class="tag-delete" style="cursor:pointer" ;
-        		data-product_id="\${productId}"
-				data-product_name="\${productName}"
-        	>(\${productId})\${productName}</li>
-        `;
-		$("#productList").append(liTag);
-		$("#modal-product-tag-list").empty(); // 모달의 리스트 초기화
-		$("#modal-tag-value").val(''); // 입력 필드 초기화
-		$('#product-tag-modal').modal('hide');
+        let isExist = false;
+        $("#productList li").each(function() {
+			if($(this).attr("data-product_id") == productId) {
+				isExist = true;
+				return false;
+			}
+		})
+        if(!isExist) {
+	        let liTag = `
+	        	<li class="tag-delete" style="cursor:pointer" ;
+	        		data-product_id="\${productId}"
+					data-product_name="\${productName}"
+					data-blog_no="0"
+	        	>(<span>\${productId}</span>)\${productName}</li>
+	        `;
+			$("#productList").append(liTag);
+			$("#modal-product-tag-list").empty(); // 모달의 리스트 초기화
+			$("#modal-tag-value").val(''); // 입력 필드 초기화
+			$('#product-tag-modal').modal('hide');
+        } else {
+			alert("추가한 상품태그입니다.");     	
+        }
 	});
 	
 	$("#product-modal-btn").click(function () {
@@ -253,8 +272,9 @@ $(function () {
 					<tr>
 						<td>\${vo.product_id }</td>
 						<td><a class="text-primary"
-							data-product_id="\${vo.product_id }"
-							data-product_name="\${vo.product_name }"
+							data-product_id="\${vo.product_id}"
+							data-product_name="\${vo.product_name}"
+							
 							>\${vo.product_name }</a></td>
 					</tr>
 					`;						
@@ -281,6 +301,7 @@ $(function () {
              	data-file_name="${file.file_name}"
 				data-file_path="${file.file_path}"
 				data-uuid="${file.uuid}"
+				data-file_blog_no="${file.blog_no}"
              >
                  <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image" data-callpath="${file.file_path }/${file.uuid}_${file.file_name}">
                  <span class="delete-button" style="cursor:pointer; position: absolute; top: 10px; right: 10px;" data-file_name="${file.file_name}">이미지 삭제</span>
@@ -350,7 +371,8 @@ $(function () {
 							<li class="tag-delete" style="cursor:pointer";
 				        		data-product_id="${tag.product_id}"
 								data-product_name="${tag.product_name}"
-				        	>(${tag.product_id})${tag.product_name}</li>
+								data-blog_no="${tag.blog_no}"
+				        	>(<span>${tag.product_id}</span>)${tag.product_name}</li>
 						</c:forEach>
 						</ul>
 					</div>
