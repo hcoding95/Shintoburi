@@ -19,7 +19,7 @@
 <script type="text/javascript">
 $(function () {
 	// 파일 타입 확인
-	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|txt)$");
+	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|pdf|txt)$");
 	// run.exe , smile.zip...
 	let maxSize = 5242880; // 5MB 업로드 최대 크기 확인
 	let imageNum = 0;

@@ -71,6 +71,17 @@ public class BlogController {
 		return path;
 	}
 	
+	@PostMapping("/delete")
+	public String delete(int blog_no) {
+		String path = "";
+		if(blogService.delete(blog_no)) {
+			path="redirect:/hc/main/home";
+		} else {
+			path="redirect:/hc/blog/modify_form?blog_no=" + blog_no;
+		}
+		return path;
+	}
+ 	
 	
 
 }

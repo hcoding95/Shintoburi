@@ -50,6 +50,11 @@ public class Test {
 		System.out.println("vo는?" + vo);
 	}
 	
+	@org.junit.Test
+	public void mapperTest4() {
+		blogMapper.deteteByBlog_no(8);
+	}
+	
 	
 	
 	

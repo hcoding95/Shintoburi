@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
@@ -135,25 +136,25 @@
 
 
 <!-- 메인의 내용 시작 -->
-<c:forEach items="${list}" var="vo">
+<c:forEach items="${list}" var="vo" varStatus="status">
 <div class="post-container">
      <!-- 카루셀 시작 -->
      <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
-     <div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
+     <div id="imageCarousel2${status.index }"  class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner">
              <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
-             <c:forEach items="${vo.fileList}" var="file" varStatus="status">
-             <div class="carousel-item ${status.index == 0 ? 'active' : '' }">
+             <c:forEach items="${vo.fileList}" var="file" varStatus="innerstatus">
+             <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
                  <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image">
              </div>
              </c:forEach>
          </div>
          <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
-         <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
+         <a class="carousel-control-prev" href="#imageCarousel2${status.index }" role="button" data-slide="prev">
              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
              <span class="sr-only">Previous</span>
          </a>
-         <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
+         <a class="carousel-control-next" href="#imageCarousel2${status.index }" role="button" data-slide="next">
              <span class="carousel-control-next-icon" aria-hidden="true"></span>
              <span class="sr-only">Next</span>
          </a>
@@ -171,7 +172,9 @@
        <img src="/resources/images/logo.png" alt="User Image">
        <div class="user-info-text">
            <div><a href="/hc/blog/blog">${vo.user_id}</a></div>
-           <div>${vo.regdate}</div>
+           <div><c:choose> <c:when test="${empty vo.updatedate}"><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd hh:mm"/></c:when>
+           	<c:otherwise><fmt:formatDate value="${vo.updatedate}" pattern="yyyy.MM.dd hh:mm"/>수정</c:otherwise>
+            </c:choose></div>
        </div>
      </div>
      <div class="user-stats">
@@ -188,8 +191,10 @@
         <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
         <button><i class="fa fa-comment">댓글 달기</i></button>
         <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
-        <button><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></button>
-        <!-- <button><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></button> -->
+        <button><c:choose>
+        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
+        	<c:otherwise><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></c:otherwise>
+        </c:choose></button>
     </div>
 </div>
 </c:forEach>    
@@ -203,5 +208,4 @@
         }
     });
 </script>
-
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>

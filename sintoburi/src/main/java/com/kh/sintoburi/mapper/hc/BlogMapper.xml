@@ -19,6 +19,11 @@
   		where blog_no = #{blog_no}
   	</update>
   	
+  	<delete id="deteteByBlog_no">
+  		delete from tbl_blog
+  		where blog_no = #{blog_no}
+  	</delete>
+  	
   	<select id="getListWithPage" resultType="BlogVo">
   		select * from tbl_blog
   		order by blog_no desc

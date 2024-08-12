@@ -12,6 +12,7 @@ public interface BlogService {
 	public BlogVo readByBlogNo(int blog_no);
 	public boolean insert(BlogVo blogVo);
 	public boolean modify(BlogVo blogVo);
+	public boolean delete(int blog_no);
 		
 
 }

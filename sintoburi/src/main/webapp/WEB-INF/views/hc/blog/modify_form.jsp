@@ -19,7 +19,7 @@
 <script type="text/javascript">
 $(function () {
 	// 파일 타입 확인
-	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|txt)$");
+	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|pdf|txt)$");
 	// run.exe , smile.zip...
 	let maxSize = 5242880; // 5MB 업로드 최대 크기 확인
 	let imageNum = ${blogVo.fileList.size()};
@@ -285,6 +285,16 @@ $(function () {
 	});
 	
 	
+	$("#deleteBtn").click(function () {
+		let check = confirm("삭제하시겠습니까?");
+		if(check) {
+			console.log("삭제로직발동");
+			$("#deletForm").submit();
+			//return false;
+		}
+	});
+	
+	
 });
 </script>
 <!-- 스크립트 끝  -->
@@ -382,7 +392,8 @@ $(function () {
 		<!-- 상품 태그 끝 -->
                     
                  <button type="submit" class="btn btn-success">수정</button>
-                 <a href="/hc/main/home" class="btn btn-danger">목록으로</a>
+                 <button type="button" id="deleteBtn" class="btn btn-danger">삭제</button>
+                 <a href="/hc/main/home" class="btn btn-primary">목록으로</a>
 	</form>
                    
        </div>
@@ -390,6 +401,10 @@ $(function () {
 	</div>
      </div>
  </div>
+<form id="deletForm" action="/hc/blog/delete" method="post">
+	<input type="hidden" name="blog_no" value="${blogVo.blog_no}">
+</form>
+ 
 <!-- 상품 태그 모달 창  -->
 <div class="modal fade" id="product-tag-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -433,7 +448,6 @@ $(function () {
 		</div>
 	</div>
 </div>
-
 
 
 <!-- 상품 태그 모달 창 끝  -->

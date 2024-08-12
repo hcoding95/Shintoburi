@@ -83,7 +83,7 @@ COMMIT;
 
 
 Create Table Tbl_Blog_Tag(
-    Blog_No Number(10) References Tbl_Blog(Blog_No),
+    Blog_No Number(10) References Tbl_Blog(Blog_No) ON DELETE CASCADE,
     Product_Id Number(10) References Tbl_Product(Product_Id),
     Constraint Pk_Blog_Tag Primary Key (Blog_No, Product_Id)
 );

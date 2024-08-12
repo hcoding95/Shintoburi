@@ -60,7 +60,6 @@ public class BlogServiceImpl implements BlogService {
 	public boolean modify(BlogVo blogVo) {
 		int result = blogMapper.updateBlog(blogVo);
 		int blog_no = blogVo.getBlog_no();
-		System.out.println("수정할 블로그 번호는" + blog_no);
 		List<AttachFileDto> fileList = blogVo.getFileList();
 		List<AttachFileDto> tbl_fileList = attachMapper.getAttachList(blog_no);
 		
@@ -160,6 +159,12 @@ public class BlogServiceImpl implements BlogService {
 			blogVo.setProductTagList(productTagList);
 		}
 		return blogVo;
+	}
+
+	@Override
+	public boolean delete(int blog_no) {
+		int count = blogMapper.deteteByBlog_no(blog_no);
+		return (count > 0)? true : false;
 	}
 
 }
