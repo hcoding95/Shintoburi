@@ -18,7 +18,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDto> getList(Criteria criteria) {
-		List<UserDto> list = userMapper.getList();
+//		List<UserDto> list = userMapper.getList();
+		List<UserDto> list = userMapper.getListWithPaging(criteria);
 		return list;
 	}
 	

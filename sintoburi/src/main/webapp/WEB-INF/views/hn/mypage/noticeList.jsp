@@ -4,9 +4,7 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
  <%@ include file="/WEB-INF/views/include/top.jsp" %>
- <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
-
-
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
             <!-- Main Content -->
             <div id="page-content-wrapper">
@@ -30,44 +28,40 @@
 					        </a>
 					    </div>
 					</div>
-                 	 
+
                     <!-- Table Section -->
                     <div class="table-container">
                         <table class="table">
                             <thead>
                                 <tr class="text-center">
                                     <th>번호</th>
-                                    <th>상품정보</th>
                                     <th>제목</th>
                                     <th>작성일</th>
-                                    <th>답변상태</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <c:forEach items="${list}" var="vo">
-                                    <tr class="text-center">
-                                        <td>${vo.eno}</td>
-                                        <td>상품</td>
-                                        <td><a href="/hn/mypage/enqRead?eno=${vo.eno}">${vo.enquiry_type}</a></td>
-                                        <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
-                                        <td>${vo.status}</td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
+<!--                             <tbody> -->
+<%--                                 <c:forEach items="${list}" var="vo"> --%>
+<!--                                     <tr class="text-center"> -->
+<%--                                         <td>${vo.eno}</td> --%>
+<!--                                         <td>상품</td> -->
+<%--                                         <td><a href="/hn/mypage/enqRead?eno=${vo.eno}">${vo.enquiry_type}</a></td> --%>
+<%--                                         <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td> --%>
+<%--                                         <td>${vo.status}</td> --%>
+<!--                                     </tr> -->
+<%--                                 </c:forEach> --%>
+<!--                             </tbody> -->
                         </table>
                         <div class="row">
                             <div class="col-md-10"></div>
                             <div class="col-md-2">
-                                <a href="http://localhost/hn/mypage/enqRegisterForm">
-                                    <button type="button" class="btn btn-outline-dark">1:1문의하기</button>
-                                </a>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-      
-</body>
+ 
+
 
 
  <%@ include file="/WEB-INF/views/include/bottom.jsp" %>

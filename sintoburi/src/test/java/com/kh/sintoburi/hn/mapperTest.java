@@ -8,15 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.LoginDto;
+import com.kh.sintoburi.domain.hn.PageDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
+import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.ReplyMapper;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 import com.kh.sintoburi.mapper.hn.UserMapper;
+import com.kh.sintoburi.service.hn.UserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -36,6 +39,8 @@ public class mapperTest {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	
 	
 	@Test
 	public void testInstance() {
@@ -130,5 +135,10 @@ public class mapperTest {
 	 public void goodsList() {
 		 List<EnquiryVo> list = enquiryMapper.goodsGetList();
 		 log.info(list);
+	 }
+	 
+	 @Test
+	 public void getListCount( ) {
+	
 	 }
 }

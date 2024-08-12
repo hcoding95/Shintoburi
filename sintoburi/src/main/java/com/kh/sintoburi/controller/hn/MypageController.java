@@ -140,7 +140,14 @@ public class MypageController {
 		return "redirect:/mypage/enqList";
 	}
 	// 공지사항
+	@GetMapping("/noticeList")
+	public void noticeList() {
+		
+	}
 
-	// FAQ
-
+	// 자주하는질문
+	@GetMapping("/questionList")
+	public void questionList() {
+		
+	}
 }

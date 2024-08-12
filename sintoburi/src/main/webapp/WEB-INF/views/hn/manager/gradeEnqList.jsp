@@ -25,7 +25,7 @@
 	            		<input type="text" name="keyword"
 	            			value="${criteria.keyword}">
 	            		
-	            		<button style="margin-right: 750px;" type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
+	            		<button type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
             		</form>
             	
              </div>
