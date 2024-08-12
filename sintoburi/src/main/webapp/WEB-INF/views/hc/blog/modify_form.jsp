@@ -22,7 +22,7 @@ $(function () {
 	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|txt)$");
 	// run.exe , smile.zip...
 	let maxSize = 5242880; // 5MB 업로드 최대 크기 확인
-	let imageNum = 0;
+	let imageNum = ${blogVo.fileList.size()};
 	function checkExtension (file_name, fileSize) {
 		if (fileSize > maxSize) {
 			alert("파일 사이즈 초과");
@@ -69,7 +69,7 @@ $(function () {
 						console.log("파일패스는?", path);
 						let callPath = obj.file_path + "/" + obj.uuid + "_" + obj.file_name;
 						imgTag = `
-							<img class="d-block w-100" alt="First Image" src="/display?file_name=\${path}" data-callpath="\${callPath}">
+							<img class="d-block w-100" alt="First Image" src="/display?file_name=\${path}">
 							<span class="delete-button" style="cursor:pointer; position: absolute; top: 10px; right: 10px;" data-file_name="\${file_name}">이미지 삭제</span>
 							`;
 					}
@@ -117,14 +117,28 @@ $(function () {
 		let files = e.originalEvent.dataTransfer.files;
 		uploadFiles(files);
 	});
-	
+	// 카루셀에서 삭제 클릭
 	$(document).on("click", ".delete-button", function () {
 	    let file_name = $(this).data("file_name");
 	    let that = $(this);
 	    let sData = { file_name : file_name };
 	    console.log("삭제클릭");
+	 	// 현재 삭제하려는 이미지가 active 클래스가 있는지 확인
+        if (that.closest('.carousel-item').hasClass('active')) {
+            let nextItem = that.closest('.carousel-item').next('.carousel-item');
+            let prevItem = that.closest('.carousel-item').prev('.carousel-item');
+
+            // 다음 이미지가 있으면 다음 이미지를 active로 만들고, 없으면 이전 이미지를 active로 만듦
+            if (nextItem.length) {
+                nextItem.addClass('active');
+            } else if (prevItem.length) {
+                prevItem.addClass('active');
+            }
+        }
+
+        that.closest('.carousel-item').remove(); // 이미지와 삭제 버튼을 포함한 전체 div를 삭제
 	    imageNum--;
-	    // 서버에서 파일 삭제 요청
+	  /*   // 서버에서 파일 삭제 요청 수정일때는 수정 취소를 할 수 있기때문에 반영하지않는다.. 이러고 업데이트가 된다 면 나중에 유효화해서 db랑 비교해서 지우기로 한다
 	    $.ajax({
 	        type: "delete",
 	        url: "/delete",
@@ -148,12 +162,15 @@ $(function () {
 	        error: function(err) {
 	            console.error("파일 삭제 실패:", err);
 	        }
-	    });
+	    }); */
 	});
 	
 	
 	// 등록폼 전송
 	$("#frmRegister").submit(function () {
+		/* 블로그 번호 추가  */
+		let blog_no = <input type="hidden" name="blog_no" value="\${blogVo.blog_no}>";
+		$("#frmRegister").prepend(blog_no);
 		$("#carousel-list > div").each(function (i) {
 			let file_name = $(this).data("file_name");
 			let file_path = $(this).data("file_path");
@@ -174,9 +191,10 @@ $(function () {
 		$("#productList > li").each(function (i) {
 			let product_id = $(this).attr("data-product_id");
 			let product_name = $(this).attr("data-product_name");
+			console.log(product_id);
 			let productTag = `
-				<input type="hidden" name="productTagList[\${i}].product_id" value="\${product_id}" >
-				<input type="hidden" name="productTagList[\${i}].product_name" value="\${product_name}" >
+				<input type="hidden" name="productTagList[\${i}].product_id" value="\${product_id}" >				
+				<input type="hidden" name="productTagList[\${i}].product_name" value="\${product_name}" >				
 			`;
 			$("#frmRegister").prepend(productTag);
 		});											
@@ -257,10 +275,17 @@ $(function () {
 <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
 <div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
     <div id="carousel-list" class="carousel-inner">
-    	<!-- 이미지 시작  -->
-     <!--   <div class="carousel-item active">
-           <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
-       </div> -->
+       <!-- 이미지 시작  -->
+       <c:forEach items="${blogVo.fileList}" var="file" varStatus="status">
+             <div class="carousel-item ${status.index == 0 ? 'active' : '' }"
+             	data-file_name="${file.file_name}"
+				data-file_path="${file.file_path}"
+				data-uuid="${file.uuid}"
+             >
+                 <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image" data-callpath="${file.file_path }/${file.uuid}_${file.file_name}">
+                 <span class="delete-button" style="cursor:pointer; position: absolute; top: 10px; right: 10px;" data-file_name="${file.file_name}">이미지 삭제</span>
+             </div>
+       </c:forEach>
        <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
    </div>
    <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
@@ -281,7 +306,7 @@ $(function () {
          <div class="container">
 <div class="profile-end">
 	<!-- 프로필 -->
-	<form id="frmRegister" action="/hc/blog/registerAction" method="post">
+	<form id="frmRegister" action="/hc/blog/modifyAction" method="post">
 	
  <div class="profile head-profile">
 		  <div class="profile ">
@@ -291,7 +316,7 @@ $(function () {
       <!-- 본문 내용  -->
       <div class="profile-section main-content">
           <h3 class="text-end">본문내용</h3>
-          <textarea name="blog_content" id="main-content"></textarea>
+          <textarea name="blog_content" id="main-content">${blogVo.blog_content}</textarea>
       </div>
       <!-- 본문 내용끝  -->
       <!-- 첨부 파일 -->
@@ -321,6 +346,12 @@ $(function () {
 	     	   <div class="row">
 					<div class="col-md-12">
 						<ul id="productList">
+						<c:forEach items="${blogVo.productTagList}" var="tag">
+							<li class="tag-delete" style="cursor:pointer";
+				        		data-product_id="${tag.product_id}"
+								data-product_name="${tag.product_name}"
+				        	>(${tag.product_id})${tag.product_name}</li>
+						</c:forEach>
 						</ul>
 					</div>
 				</div>
@@ -328,7 +359,7 @@ $(function () {
 		</div>
 		<!-- 상품 태그 끝 -->
                     
-                 <button type="submit" class="btn btn-success">등록</button>
+                 <button type="submit" class="btn btn-success">수정</button>
                  <a href="/hc/main/home" class="btn btn-danger">목록으로</a>
 	</form>
                    
@@ -378,9 +409,7 @@ $(function () {
 				</button>
 			</div>
 		</div>
-		
 	</div>
-				
 </div>
 
 

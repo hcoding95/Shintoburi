@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
@@ -134,21 +135,18 @@
 
 
 <!-- 메인의 내용 시작 -->
+<c:forEach items="${list}" var="vo">
 <div class="post-container">
      <!-- 카루셀 시작 -->
      <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
      <div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner">
-             <div class="carousel-item active">
-                 <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
-             </div>
-             <div class="carousel-item">
-                 <img src="/resources/images/1.png" class="d-block w-100" alt="Second Image">
-             </div>
-             <div class="carousel-item">
-                 <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
-             </div>
              <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+             <c:forEach items="${vo.fileList}" var="file" varStatus="status">
+             <div class="carousel-item ${status.index == 0 ? 'active' : '' }">
+                 <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image">
+             </div>
+             </c:forEach>
          </div>
          <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
          <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
@@ -161,18 +159,19 @@
          </a>
      </div>
      <!-- 카루셀 끝 -->
+     <c:if test="${not empty vo.productTagList }">
      <div class="post-icons">
-         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1"></a>
-         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1"></a>
-         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1"></a>
-         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1"></a>
+     	<c:forEach items="${vo.productTagList }" var="tag" >
+         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+     	</c:forEach>
      </div>
+     </c:if>
      <div class="post-user-info">
   	  <div class="user-details">
        <img src="/resources/images/logo.png" alt="User Image">
        <div class="user-info-text">
-           <div><a href="/hc/blog/blog">유저 이름</a></div>
-           <div>게시 시간</div>
+           <div><a href="/hc/blog/blog">${vo.user_id}</a></div>
+           <div>${vo.regdate}</div>
        </div>
      </div>
      <div class="user-stats">
@@ -183,16 +182,17 @@
      </div>
 </div>
     <div class="post-content">
-         내용 2줄 이상 길어지면 <a href="#">더보기</a>
+         ${vo.blog_content} <a href="#">더보기</a>
     </div>
     <div class="post-actions">
         <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
         <button><i class="fa fa-comment">댓글 달기</i></button>
         <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
-        <button><a href="/hc/blog/register"><i class="fa fa-pen-to-square">수정하기</i></a></button>
+        <button><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></button>
         <!-- <button><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></button> -->
     </div>
-    
+</div>
+</c:forEach>    
 <!-- 메인 내용 끝 -->
 
 <script>

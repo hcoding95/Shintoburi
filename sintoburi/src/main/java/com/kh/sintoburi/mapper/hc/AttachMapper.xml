@@ -15,10 +15,21 @@
   		where blog_no = #{blog_no}
   	</select>
   	
-  	<delete id="delete">
+  	<delete id="deleteAll">
   		delete from tbl_blog_img
   		where blog_no = #{blog_no}
   	</delete>
+  	
+  	<delete id="deleteByUuid">
+  		delete from tbl_blog_img
+  		where uuid = #{uuid}
+  	</delete>
+  	
+  	<update id="update">
+  		update tbl_blog_img
+  		set uuid = #{uuid}, file_path = #{file_path}, file_name = #{file_name}
+  		where blog_no = #{blog_no}
+  	</update>
   	
   	<select id="getOldAttachList" resultType="AttachFileDto">
   		select * from tbl_blog_img

@@ -11,8 +11,9 @@ import com.kh.sintoburi.domain.hc.UserVo;
 public interface BlogMapper {
 
 	public int insertSelectKey(BlogVo blogVo);
+	public int updateBlog(BlogVo blogVo);
 	public List<BlogVo> getListWithPage();
-	
+	public BlogVo getBlogVoByBlogNo(int blog_no);
 	
 	
 }

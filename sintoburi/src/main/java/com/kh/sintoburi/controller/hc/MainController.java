@@ -30,7 +30,6 @@ public class MainController {
 	public void home(Model model) {
 		List<BlogVo> list = blogService.getList();
 		model.addAttribute("list", list);
-		
 	}
 	
 	@GetMapping("/login")

@@ -53,6 +53,75 @@ public class BlogServiceImpl implements BlogService {
 		}
 		return (result > 0)? true : false;
 	}
+	
+	@Transactional
+	@Override
+	public boolean modify(BlogVo blogVo) {
+		int result = blogMapper.updateBlog(blogVo);
+		int blog_no = blogVo.getBlog_no();
+		List<AttachFileDto> fileList = blogVo.getFileList();
+		List<AttachFileDto> tbl_fileList = attachMapper.getAttachList(blog_no);
+		
+		System.out.println(fileList);
+		if(fileList != null) {
+			//기존 데이터와 비교하여 중복체크 
+			for ( AttachFileDto dbDto : tbl_fileList) {
+				String dbUuid = dbDto.getUuid();
+				for (AttachFileDto insertDto : fileList) {
+					String insertUuid = insertDto.getUuid();
+					if(dbUuid.equals(insertUuid)) {
+						dbDto.setDuplicate(true);
+						break;
+					}
+				}
+				// 중복 되지 않았다면 삭제
+				if(!dbDto.isDuplicate()) {
+					attachMapper.deleteByUuid(dbUuid);
+				}
+			}
+			
+			fileList.forEach(dto -> {
+				int file_blog_no = dto.getBlog_no();
+				// 이게 새로 만든 이미지일경우
+				if(file_blog_no == 0) {
+					dto.setBlog_no(blog_no);
+					attachMapper.insert(dto);
+				} else {
+					attachMapper.update(dto);
+				}
+			});
+		}
+		List<ProductTagDto> productTagList = blogVo.getProductTagList();
+		List<ProductTagDto> tbl_productTagList = productTagMapper.getTagList(blog_no);
+		if(productTagList != null) {
+			// 기존 데이터와 중복 체크
+			for ( ProductTagDto dbDto : productTagList) {
+				int dbProduct_id = dbDto.getProduct_id();
+				for (ProductTagDto insertDto : tbl_productTagList) {
+					int insertProduct_id = insertDto.getProduct_id();
+					if(dbProduct_id == insertProduct_id) {
+						dbDto.setDuplicate(true);
+						break;
+					}
+				}
+				// 중복 되지 않았다면 삭제
+				if(!dbDto.isDuplicate()) {
+					productTagMapper.deleteByPrimaryKey(dbDto);
+				}
+			}
+			productTagList.forEach(dto -> {
+				int tag_blog_no = dto.getBlog_no();
+				//새로 만든 태그인지 체크
+				if(tag_blog_no == 0) {
+					dto.setBlog_no(blog_no);
+					productTagMapper.insert(dto);
+				} else {
+					productTagMapper.update(dto);
+				}
+			});
+		}
+		return (result > 0)? true : false;
+	}
 
 	@Override
 	public List<BlogVo> getList() {
@@ -71,6 +140,21 @@ public class BlogServiceImpl implements BlogService {
 		
 		
 		return list;
+	}
+	
+	@Transactional
+	@Override
+	public BlogVo readByBlogNo(int blog_no) {
+		BlogVo blogVo = blogMapper.getBlogVoByBlogNo(blog_no);
+		List<AttachFileDto> fileList =  attachMapper.getAttachList(blog_no);
+		if(fileList.size() != 0) {
+			blogVo.setFileList(fileList);
+		}
+		List<ProductTagDto> productTagList = productTagMapper.getTagList(blog_no);
+		if (productTagList.size() != 0 ) {
+			blogVo.setProductTagList(productTagList);
+		}
+		return blogVo;
 	}
 
 }

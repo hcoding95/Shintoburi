@@ -43,6 +43,16 @@ public class Test {
 	}
 	
 	
+	@org.junit.Test
+	public void mapperTest3() {
+		int blog_no = 1;
+		BlogVo vo = blogMapper.getBlogVoByBlogNo(blog_no);
+		System.out.println("vo는?" + vo);
+	}
+	
+	
+	
+	
 	
 
 	

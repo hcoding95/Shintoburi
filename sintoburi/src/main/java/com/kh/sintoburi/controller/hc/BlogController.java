@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,6 @@ public class BlogController {
 	
 	@GetMapping("/detail")
 	public void detail() {
-		
 	}
 	
 	
@@ -51,6 +51,26 @@ public class BlogController {
 		}
 		return path;
 	}
+	
+	@GetMapping("/modify_form")
+	public void modify_form (int blog_no, Model model) {
+		BlogVo blogVo = blogService.readByBlogNo(blog_no);
+		model.addAttribute("blogVo", blogVo);
+	}
+	
+	// 이거 겟메핑인거 다른 로그인한 사람이 접근할때 확인해서 격퇴하는걸로
+	@PostMapping("/modifyAction")
+	public String modifyAction(BlogVo blogVo) {
+		System.out.println("내가받은 blogvo는?" + blogVo);
+		String path = "";
+		if(blogService.modify(blogVo)) {
+			path="redirect:/hc/main/home";
+		} else {
+			path="redirect:/hc/blog/register";
+		}
+		return path;
+	}
+	
 	
 
 }

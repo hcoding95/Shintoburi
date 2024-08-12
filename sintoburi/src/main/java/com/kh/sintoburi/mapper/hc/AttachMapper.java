@@ -11,7 +11,11 @@ public interface AttachMapper {
 	
 	public List<AttachFileDto> getAttachList(int blog_no);
 	
-	public int delete(int blog_no);
+	public int update(AttachFileDto dto);
+	
+	public int deleteAll(int blog_no);
+	
+	public int deleteByUuid(String uuid);
 	
 	public List<AttachFileDto> getOldAttachList();
 	

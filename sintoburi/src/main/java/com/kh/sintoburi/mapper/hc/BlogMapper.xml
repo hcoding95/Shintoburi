@@ -13,11 +13,22 @@
   		values(#{blog_no}, #{user_id}, #{blog_content})
   	</insert>
   	
+  	<update id="updateBlog">
+  		update tbl_blog 
+  		set blog_content = #{blog_content} updatedate = sysdate
+  		where blog_no = #{blog_no}
+  	</update>
+  	
   	<select id="getListWithPage" resultType="BlogVo">
   		select * from tbl_blog
-  	
+  		order by blog_no desc
   	</select>
   	
+  	
+  	<select id="getBlogVoByBlogNo" resultType="BlogVo">
+  		select * from tbl_blog
+  		where blog_no = #{blog_no}
+  	</select>
   	
   
   </mapper>

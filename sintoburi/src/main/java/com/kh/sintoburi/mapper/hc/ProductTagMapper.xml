@@ -6,9 +6,21 @@
   <mapper namespace="com.kh.sintoburi.mapper.hc.ProductTagMapper">
   	
   	<insert id="insert">
-  		insert into tbl_blog_tag(blog_no, product_id)
-  		values(#{blog_no}, #{product_id})
+  		insert into tbl_blog_tag(blog_no, product_id, product_name)
+  		values(#{blog_no}, #{product_id}, #{product_name})
   	</insert>
+  	
+  	<delete id="deleteByPrimaryKey">
+  		delete from tbl_blog_tag
+  		where blog_no = #{blog_no}
+  		and product_id = #{product_id}
+  	</delete>
+  	
+  	<update id="update">
+  		update tbl_blog_tag
+  		set	product_id = #{product_id}, product_name = #{product_name}
+  		where blog_no = #{blog_no}
+  	</update>
   	
   	<select id="getTagList" resultType="ProductTagDto">
   		select * from tbl_blog_tag
