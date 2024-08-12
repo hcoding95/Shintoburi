@@ -3,13 +3,111 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.kh.sintoburi.mapper.hn.EnquiryMapper">
- 	 
- 	   
+
  	  <select id="getList" resultType="EnquiryVo">
  	    select * from tbl_enquiry
 	 	where user_id = #{user_id}
 	 	order by eno 
  	  </select>
+ 	  
+ 	  
+ 	  <!-- 상품 페이징처리 -->
+ <select id="getGoodsWithPaging" resultType="EnquiryVo">
+    select *
+    from (
+        select
+            eno,
+            user_id,
+            enquiry_type,
+            status,
+            write_date,
+            row_number() over (order by eno desc) as rn
+        from tbl_enquiry
+        <where>
+            <if test="typeArr != null and typeArr.length > 0">
+                <trim prefix="(" suffix=")" prefixOverrides="or">
+                    <foreach item="type" collection="typeArr" separator="or">
+                        <choose>
+                            <when test="type == 'E'.toString()">
+                                eno like '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'I'.toString()">
+                                user_id like '%' || #{keyword} || '%'
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </where>
+    ) subquery
+    where rn &gt; (#{pageNum} - 1) * #{amount}
+      and rn &lt;= #{pageNum} * #{amount}
+      and enquiry_type != '등급문의'
+</select>
+
+<!-- 등급 페이징처리 -->
+ <select id="getGradeWithPaging" resultType="EnquiryVo">
+    select *
+    from (
+        select
+            eno,
+            user_id,
+            enquiry_type,
+            status,
+            write_date,
+            row_number() over (order by eno desc) as rn
+        from tbl_enquiry
+        <where>
+            <if test="typeArr != null and typeArr.length > 0">
+                <trim prefix="(" suffix=")" prefixOverrides="or">
+                    <foreach item="type" collection="typeArr" separator="or">
+                        <choose>
+                            <when test="type == 'E'.toString()">
+                                eno like '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'I'.toString()">
+                                user_id like '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'S'.toString()">
+                                status like '%' || #{keyword} || '%'
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </where>
+    ) subquery
+    where rn &gt; (#{pageNum} - 1) * #{amount}
+      and rn &lt;= #{pageNum} * #{amount}
+      and enquiry_type = '등급문의'
+</select>
+
+ <!-- 게시글 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_enquiry
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'E'.toString()">
+                                    eno like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'I'.toString()">
+                                    user_id like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'S'.toString()">
+	                                status like '%' || #{keyword} || '%'
+	                            </when>
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
+ 	  
  	  
  	  
  	  <!--상품 문의사항 목록 -->

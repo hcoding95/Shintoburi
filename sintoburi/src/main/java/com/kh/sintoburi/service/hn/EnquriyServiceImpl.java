@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 
@@ -13,24 +14,34 @@ public class EnquriyServiceImpl implements EnquiryService {
 
 	@Autowired
 	private EnquiryMapper enquiryMapper;
-	// 로그인한 사용자의 문의사하
+
+	// 로그인한 사용자의 문의사항
 	@Override
 	public List<EnquiryVo> getList(String user_id) {
 		List<EnquiryVo> list = enquiryMapper.getList(user_id);
 		return list;
 	}
 
+	// 게시글 갯수
+	@Override
+	public int getTotalCount(Criteria criteria) {
+		int count = enquiryMapper.getTotalCount(criteria);
+		return count;
+	}
+
 	// 상품문의사항목록
 	@Override
-	public List<EnquiryVo> goodsGetList() {
-		List<EnquiryVo> list = enquiryMapper.goodsGetList();
+	public List<EnquiryVo> goodsGetList(Criteria criteria) {
+//		List<EnquiryVo> list = enquiryMapper.goodsGetList();
+		List<EnquiryVo> list = enquiryMapper.getGoodsWithPaging(criteria);
 		return list;
 	}
 
 	// 등급문의사항
 	@Override
-	public List<EnquiryVo> gradeGetList() {
-		List<EnquiryVo> list = enquiryMapper.gradeGetList();
+	public List<EnquiryVo> gradeGetList(Criteria criteria) {
+//		List<EnquiryVo> list = enquiryMapper.gradeGetList();
+		List<EnquiryVo> list = enquiryMapper.getGradeWithPaging(criteria);
 		return list;
 	}
 
@@ -72,10 +83,8 @@ public class EnquriyServiceImpl implements EnquiryService {
 	// 등급 문의사항 처리완료로 상태변경
 	@Override
 	public boolean gradeUpdateStatus(int eno) {
-	 	int count = enquiryMapper.gradeUpdateStatus(eno);
-	 	return (count == 1) ? true : false;
+		int count = enquiryMapper.gradeUpdateStatus(eno);
+		return (count == 1) ? true : false;
 	}
-
-
 
 }

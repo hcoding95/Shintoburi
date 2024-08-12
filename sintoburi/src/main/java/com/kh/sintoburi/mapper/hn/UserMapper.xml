@@ -32,11 +32,8 @@
                             <when test="type == 'E'.toString()">
                                 email LIKE '%' || #{keyword} || '%'
                             </when>
-                              <when test="type == 'GS'.toString()">
-                                grade LIKE '%' || '판매자' || '%'
-                            </when>
-                               <when test="type == 'GB'.toString()">
-                                grade LIKE '%' || '구매자' || '%'
+                            <when test="type == 'G'.toString()">
+                                grade LIKE '%' || #{keyword} || '%'
                             </when>
                         </choose>
                     </foreach>
@@ -63,6 +60,9 @@
                                 <when test="type == 'E'.toString()">
                                     email like '%' || #{keyword} || '%'
                                 </when>
+                                <when test="type == 'G'.toString()">
+                               		 grade LIKE '%' || #{keyword} || '%'
+                           		 </when>
                             </choose>
 						</trim>
 					</foreach>

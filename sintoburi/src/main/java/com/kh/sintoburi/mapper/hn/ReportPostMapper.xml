@@ -9,6 +9,69 @@
   	order by re_no
   </select>
   
+   <!--  페이징처리 -->
+ <select id="getListWithPaging" resultType="ReportPostVo">
+    select *
+    from (
+        select
+            re_no,
+            post_no,
+            post_id,
+            re_reason,
+            re_date,
+            status,
+            row_number() over (order by re_no desc) as rn
+        from tbl_reportPost
+        <where>
+            <if test="typeArr != null and typeArr.length > 0">
+                <trim prefix="(" suffix=")" prefixOverrides="or">
+                    <foreach item="type" collection="typeArr" separator="or">
+                        <choose>
+                            <when test="type == 'N'.toString()">
+                               re_no LIKE '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'W'.toString()">
+                                post_id LIKE '%' || #{keyword} || '%'
+                            </when>
+                              <when test="type == 'S'.toString()">
+	                                status like '%' || #{keyword} || '%'
+	                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </where>
+    ) subquery
+    WHERE rn &gt; (#{pageNum} - 1) * #{amount}
+      AND rn &lt;= #{pageNum} * #{amount}
+</select>
+
+ <!-- 게시글 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_reportPost
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'N'.toString()">
+                              	 	re_no LIKE '%' || #{keyword} || '%'
+	                            </when>
+	                            <when test="type == 'W'.toString()">
+	                               post_id LIKE '%' || #{keyword} || '%'
+                           		 </when>
+                           		   <when test="type == 'S'.toString()">
+	                                status like '%' || #{keyword} || '%'
+	                            </when>
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
+  
   <insert id="insertReport">
   	insert into tbl_reportPost 
 	(re_no, post_no, post_content, post_id, re_reason, re_id, status) 

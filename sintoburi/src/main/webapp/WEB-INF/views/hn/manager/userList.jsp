@@ -66,6 +66,7 @@ $(function() {
 			        	<option value="W" ${criteria.type == 'W' ? 'selected' : ''}>전체</option>
 			            <option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
 			            <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>이메일</option>
+			            <option value="G" ${criteria.type == 'G' ? 'selected' : ''}>등급</option>
 			        </select>
 			        <input id="inputSearch" type="text" name="keyword" value="${criteria.keyword}" style="margin-right: 10px;">
 			        <button id="btnSearch" type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>

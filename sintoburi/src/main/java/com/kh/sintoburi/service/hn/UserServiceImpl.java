@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
 		List<UserDto> list = userMapper.getListWithPaging(criteria);
 		return list;
 	}
-	
 
 	@Override
 	public int getTotal(Criteria criteria) {
@@ -31,9 +30,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean modifyGrade(String user_id ,String grade) {
-		int count = userMapper.updateGrade(user_id,grade);
-		return (count == 1)? true : false;
+	public boolean modifyGrade(String user_id, String grade) {
+		int count = userMapper.updateGrade(user_id, grade);
+		return (count == 1) ? true : false;
 	}
 
 	@Override
@@ -41,15 +40,11 @@ public class UserServiceImpl implements UserService {
 		UserDto dto = userMapper.selectById(user_id);
 		return dto;
 	}
-	
+
 	@Override
 	public UserDto login(LoginDto dto) {
-		UserDto userDto =	userMapper.login(dto);
+		UserDto userDto = userMapper.login(dto);
 		return userDto;
 	}
-
-
-
-
 
 }

@@ -5,7 +5,24 @@
 <%--   <%@ include file ="/WEB-INF/views/hn/manager/include/bs.jsp" %> --%>
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
  
-
+<script>
+$(function() {
+		
+	// 페이지 블럭
+	 $("a.page-link").click(function(e) {
+	        e.preventDefault(); // 브라우저의 기본 기능 막기
+	        
+	        let pageNum = $(this).attr("href");
+	        console.log(pageNum);
+	        $("#actionForm > input[name=pageNum]").val(pageNum);
+	        $("#actionForm").attr("action", "/hn/manager/goodsEnqList");
+	        $("#actionForm").submit();
+	    });
+	
+	
+	
+});
+</script>
 
 <div class="row">
 
@@ -16,10 +33,11 @@
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                  <h6 class="m-0 font-weight-bold text-primary">상품 게시글</h6>
-               <form action="" method="get">
+              	 <form method="get">
 	            		<select name="type">
+	            			<option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
 	            			<option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
-	            			<option value="E" ${criteria.type == 'E' ? 'selected' : ''}>문의유형</option>
+	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
 	            			
 	            		</select>
 	            		<input type="text" name="keyword"

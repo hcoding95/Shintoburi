@@ -56,8 +56,8 @@ public class ManagerController {
 		List<UserDto> list = userService.getList(criteria);
 		int total = userService.getTotal(criteria);
 		PageDto pageMaker = new PageDto(criteria, total);
-		model.addAttribute("userList", list);
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("userList", list);
 	}
 
 	// 등급수정
@@ -88,8 +88,12 @@ public class ManagerController {
 
 	// 상품문의사항목록
 	@GetMapping("/goodsEnqList")
-	public void goodsEnqList(Model model) {
-		List<EnquiryVo> list = enquiryService.goodsGetList();
+	public void goodsEnqList(Model model,Criteria criteria) {
+		List<EnquiryVo> list = enquiryService.goodsGetList(criteria);
+		
+		int total = enquiryService.getTotalCount(criteria);
+		PageDto pageMaker = new PageDto(criteria, total);
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("goodsEnqList", list);
 		
 		// 답변 리스트
@@ -125,8 +129,12 @@ public class ManagerController {
 
 	// 등급문의사항목록
 	@GetMapping("/gradeEnqList")
-	public void gradeEnqList(Model model) {
-		List<EnquiryVo> list = enquiryService.gradeGetList();
+	public void gradeEnqList(Model model,Criteria criteria) {
+		List<EnquiryVo> list = enquiryService.gradeGetList(criteria);
+		
+		int total = enquiryService.getTotalCount(criteria);
+		PageDto pageMaker = new PageDto(criteria, total);
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("gradeEnqList", list);
 
 		// 답변리스트
@@ -159,8 +167,11 @@ public class ManagerController {
 
 	// 신고게시글목록
 	@GetMapping("/reportList")
-	public void reportList(Model model) {
-		List<ReportPostVo> list = reportPostService.ReportList();
+	public void reportList(Model model, Criteria criteria) {
+		List<ReportPostVo> list = reportPostService.ReportList(criteria);
+		int total = reportPostService.getTotalCount(criteria);
+		PageDto pageMaker = new PageDto(criteria, total);
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("reportList", list);
 	}
 
