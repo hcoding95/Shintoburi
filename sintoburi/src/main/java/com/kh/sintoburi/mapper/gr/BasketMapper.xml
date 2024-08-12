@@ -12,6 +12,7 @@
 		and k.user_id = #{user_id}
 		and b.pno = p.pno
 		and p.pno = i.pno
+		order by b.put_date desc
 	  </select>
 	  
 	  <insert id="insertSelectKey">

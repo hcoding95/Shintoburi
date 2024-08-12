@@ -30,7 +30,7 @@ public class BasketMapperTests {
 	
 	@Test
 	public void testGetList() {
-		String user_id= "user01";
+		String user_id= "user02";
 		List<BasketDetailDto> list = basketMapper.getList(user_id);
 		log.info(list);
 	}
@@ -44,7 +44,7 @@ public class BasketMapperTests {
 	
 	@Test
 	public void testInsert() {
-		String user_id = "user04";
+		String user_id = "user01";
 		int bno = basketMapper.getBnoByUser(user_id);
 		
 		if (bno == 0) {

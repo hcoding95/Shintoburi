@@ -54,8 +54,8 @@
 	</bean>
 	
 
-	<mybatis-spring:scan base-package="com.kh.sintoburi.gr.mapper"/>
-	<context:component-scan base-package="com.kh.sintoburi.gr.service"></context:component-scan>
+	<mybatis-spring:scan base-package="com.kh.sintoburi.mapper.gr"/>
+	<context:component-scan base-package="com.kh.sintoburi.service.gr"></context:component-scan>
 	<context:component-scan base-package="com.kh.sintoburi.task.gr"></context:component-scan>
 
 	
