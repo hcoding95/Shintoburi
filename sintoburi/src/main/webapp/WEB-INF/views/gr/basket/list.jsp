@@ -3,15 +3,53 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="/WEB-INF/views/gr/include/top.jsp"%>   
+
     
- 
+<script>
+$(function() {
+	
+	$(".btnp_count").click(function(){
+		let bdno =$(this).attr("data-bdno");
+		let p_count=$(".p_count").val().trim();
+		console.log("bdno:", bdno);
+		console.log("p_count:", p_count);	
+		
+		let sData = {
+				"bdno" : bdno,
+				"p_count" : p_count
+		};
+		console.log("sData:", sData);
+		
+		$.ajax({
+			type: "post",
+			url : "/gr/basket/modCount",
+			data : JSON.stringify(sData),
+			contentType: "application/json; charset=utf-8",
+			 success: function(result) {
+				 if (result) {
+	                    let modCount = p_count; // 업데이트
+	                    $(".p_count").text(modCount);
+	                    alert("수정 완료");
+	                } else {
+	                    alert("수정 실패");
+	                }
+	            }
+		});
+	});
+	
+	
+	
+});
+</script>
+<%-- ${list} --%>
+
  <div class="row">
 	<div class="col-md-2">
 	</div>
 		<div class="col-md-8">
 			<c:set var="user_id" value="${detailDto.user_id}" />
 			 <div>
-				${user_id}님의 장바구니입니다. 
+				${login.user_id}님의 장바구니입니다. 
 			 </div>
 			<table class="table">
 				<thead>
@@ -37,8 +75,8 @@
 						<td>${detailDto.name}</td>
 						<td>${detailDto.img_path}</td>
 						<td>
-						<input type="text" id="p_count" name="p_count" value="${detailDto.p_count}">
-						<button type="button" id ="btnp_count" name="btnp_count">수정</button>
+						<input type="text" class="p_count" value="${detailDto.p_count}">
+						<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}">수정</button>
 						</td>	
 						<td>${detailDto.price}</td>
 						<td>${detailDto.total_price}</td>
@@ -51,47 +89,30 @@
 		<div class="container-fluid">
 	
 	
-	<div class="row">
-<!-- 		<div class="col-md-10"> -->
-<!-- 		</div> -->
-		
-		<div class="col-md-2">
-<!-- 			<a href="http://localhost/gr/basket/remove"> -->
-			<button type="button" class="btn btn-outline-dark">삭제하기</button>
-<!-- 			</a> -->
-		</div>
-		
-		<div class="col-md-2">
-<!-- 			<a href="http://localhost/gr/basket/remove"> -->
-			<button type="button" class="btn btn-outline-dark">주문하기</button>
-<!-- 			</a> -->
-		</div>
-		
-		<div class="col-md-2">
-<!-- 			<a href="http://localhost/gr/basket/remove"> -->
-			<button type="button" class="btn btn-outline-dark">장바구니 비우기</button>
-<!-- 			</a> -->
-		</div>
-		
-	</div>
+	<div class="row justify-content-end">
+    <div class="col-auto">
+        <a href="http://localhost/gr/basket/orderForm">
+            <button type="button" class="btn btn-warning">주문하기</button>
+        </a>
+    </div>
+
+    <div class="col-auto">
+        <button type="button" class="btn btn-danger">삭제하기</button>
+    </div>
+
+    <div class="col-auto">
+        <button type="button" class="btn btn-secondary">장바구니 비우기</button>
+    </div>
 </div>
+	
+	
+	</div>
 		</div>
 		<div class="col-md-2">
 		</div>
 	</div>
  
  
- 
-    
-    
-<!-- <!DOCTYPE html> -->
-<!-- <html> -->
-<!-- <head> -->
-<!-- <meta charset="UTF-8"> -->
-<!-- <title>Insert title here</title> -->
-<!-- </head> -->
-<!-- <body> -->
-<%-- ${list} --%>
-<!-- </body> -->
+
 </html>
 <%@ include file="/WEB-INF/views/gr/include/bottom.jsp"%>
