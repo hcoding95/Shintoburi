@@ -58,7 +58,7 @@
                         <div class="row">
                             <div class="col-md-10"></div>
                             <div class="col-md-2">
-                                <a href="http://localhost/hn/mypage/enqRegisterForm">
+                                <a href="/hn/mypage/enqRegisterForm">
                                     <button type="button" class="btn btn-outline-dark">1:1문의하기</button>
                                 </a>
                             </div>

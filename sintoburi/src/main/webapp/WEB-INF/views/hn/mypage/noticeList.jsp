@@ -39,17 +39,16 @@
                                     <th>작성일</th>
                                 </tr>
                             </thead>
-<!--                             <tbody> -->
-<%--                                 <c:forEach items="${list}" var="vo"> --%>
-<!--                                     <tr class="text-center"> -->
-<%--                                         <td>${vo.eno}</td> --%>
-<!--                                         <td>상품</td> -->
-<%--                                         <td><a href="/hn/mypage/enqRead?eno=${vo.eno}">${vo.enquiry_type}</a></td> --%>
-<%--                                         <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td> --%>
-<%--                                         <td>${vo.status}</td> --%>
-<!--                                     </tr> -->
-<%--                                 </c:forEach> --%>
-<!--                             </tbody> -->
+                            <tbody>
+                                <c:forEach items="${noticeList}" var="vo">
+                                    <tr class="text-center">
+                                        <td>${vo.n_no}</td>
+                                        <td><a href="/hn/mypage/noticeRead?n_no=${vo.n_no}" style="color: black;">${vo.title}</a></td>
+                                        <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
+                                        
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
                         </table>
                         <div class="row">
                             <div class="col-md-10"></div>
@@ -60,6 +59,10 @@
                     </div>
                 </div>
             </div>
+ 
+ 
+ 
+ 
  
 
 

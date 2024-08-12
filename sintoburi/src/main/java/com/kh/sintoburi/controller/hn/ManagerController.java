@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.PageDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
+import com.kh.sintoburi.service.hn.NoticeService;
 import com.kh.sintoburi.service.hn.ReplyService;
 import com.kh.sintoburi.service.hn.ReportPostService;
 import com.kh.sintoburi.service.hn.UserService;
@@ -44,6 +46,9 @@ public class ManagerController {
 
 	@Autowired
 	private ReportPostService reportPostService;
+	
+	@Autowired
+	private NoticeService noticeService;
 
 	// 회원리스트
 
@@ -183,6 +188,32 @@ public class ManagerController {
 		model.addAttribute("reportPostVo", reportPostVo);
 
 		return "hn/manager/reportDetail";
+	}
+	
+	
+	// 공지사항
+	@GetMapping("/noticeList")
+	public void noticeList(Model model) {
+		List<NoticeVo> list = noticeService.getListNotice();
+		model.addAttribute("noticeList",list);
+	}
+	
+	// 공지사항등록폼
+	@GetMapping("/noticeForm")
+	public void noticeForm() {
+		
+	}
+	
+	// 공지사항등록
+	@PostMapping("/noticeRegister")
+	public void noticeRegister() {
+		
+	}
+	
+	// 자주하는 질문
+	@GetMapping("/questionList")
+	public void questionList() {
+		
 	}
 
 }

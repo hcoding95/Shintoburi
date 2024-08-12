@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
-import com.kh.sintoburi.domain.hn.UserDto;
 
 public interface EnquiryMapper {
 
