@@ -1,4 +1,4 @@
-package com.kh.sintoburi.service.gr;
+package com.kh.sintoburi.gr.service;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.kh.sintoburi.domain.gr.BasketDetailDto;
 import com.kh.sintoburi.domain.gr.BasketDetailVo;
 import com.kh.sintoburi.domain.gr.BasketVo;
+import com.kh.sintoburi.service.gr.BasketService;
 
 import lombok.extern.log4j.Log4j;
 
