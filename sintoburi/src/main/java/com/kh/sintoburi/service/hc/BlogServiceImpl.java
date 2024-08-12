@@ -167,4 +167,10 @@ public class BlogServiceImpl implements BlogService {
 		return (count > 0)? true : false;
 	}
 
+	@Override
+	public List<BlogVo> getListByUser_id(String user_id) {
+		List<BlogVo> list = blogMapper.getListByUser_id(user_id);
+		return list;
+	}
+
 }

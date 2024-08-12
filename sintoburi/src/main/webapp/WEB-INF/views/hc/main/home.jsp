@@ -171,7 +171,7 @@
   	  <div class="user-details">
        <img src="/resources/images/logo.png" alt="User Image">
        <div class="user-info-text">
-           <div><a href="/hc/blog/blog">${vo.user_id}</a></div>
+           <div><a href="/hc/blog/blog?user_id=${vo.user_id}">${vo.user_id}</a></div>
            <div><c:choose> <c:when test="${empty vo.updatedate}"><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd hh:mm"/></c:when>
            	<c:otherwise><fmt:formatDate value="${vo.updatedate}" pattern="yyyy.MM.dd hh:mm"/>수정</c:otherwise>
             </c:choose></div>

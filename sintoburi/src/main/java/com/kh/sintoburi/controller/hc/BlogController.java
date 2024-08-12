@@ -27,7 +27,10 @@ public class BlogController {
 	private BlogService blogService;
 	
 	@GetMapping("/blog")
-	public void blog() {
+	public void blog(String user_id, Model model) {
+		List<BlogVo> list = blogService.getListByUser_id(user_id);
+		model.addAttribute("list", list);
+		
 	}
 	
 	@GetMapping("/detail")

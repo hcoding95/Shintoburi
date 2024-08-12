@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <style>
@@ -357,9 +359,73 @@
 				            <!-- 포스트 시작 -->
 				            <div class="post-container">
 				            <!-- 메인의 내용 시작 -->
+<!-- 							<div class="post-container"> -->
+							<c:forEach items="${list}" var="vo" varStatus="status">
+							     <!-- 카루셀 시작 -->
+							     <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
+							     <div id="imageCarousel2${status.index }"  class="carousel slide" data-ride="carousel" data-interval="false">
+							         <div class="carousel-inner">
+							             <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+							             <c:forEach items="${vo.fileList}" var="file" varStatus="innerstatus">
+							             <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
+							                 <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image">
+							             </div>
+							             </c:forEach>
+							         </div>
+							         <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+							         <a class="carousel-control-prev" href="#imageCarousel2${status.index }" role="button" data-slide="prev">
+							             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							             <span class="sr-only">Previous</span>
+							         </a>
+							         <a class="carousel-control-next" href="#imageCarousel2${status.index }" role="button" data-slide="next">
+							             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							             <span class="sr-only">Next</span>
+							         </a>
+							     </div>
+							     <!-- 카루셀 끝 -->
+							     <c:if test="${not empty vo.productTagList }">
+							     <div class="post-icons">
+							     	<c:forEach items="${vo.productTagList }" var="tag" >
+							         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+							     	</c:forEach>
+							     </div>
+							     </c:if>
+							     <div class="post-user-info">
+							  	  <div class="user-details">
+							       <img src="/resources/images/logo.png" alt="User Image">
+							       <div class="user-info-text">
+							           <div><a href="/hc/blog/blog">${vo.user_id}</a></div>
+							           <div><c:choose> <c:when test="${empty vo.updatedate}"><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd hh:mm"/></c:when>
+							           	<c:otherwise><fmt:formatDate value="${vo.updatedate}" pattern="yyyy.MM.dd hh:mm"/>수정</c:otherwise>
+							            </c:choose></div>
+							       </div>
+							     </div>
+							     <div class="user-stats">
+							       <div><i class="fa fa-thumbs-up">좋아요</i><span>1000</span></div>
+							       <!-- 좋아요 눌렀을때 <i class="fa-solid fa-thumbs-up"></i> -->
+							       <div><i class="fa fa-handshake">팔로워</i><span>10000</span></div>
+							       <!-- 팔로우 눌렀을때<i class="fa-solid fa-handshake"></i> -->
+							     </div>
+							</div>
+							    <div class="post-content">
+							         ${vo.blog_content} <a href="#">더보기</a>
+							    </div>
+							    <div class="post-actions">
+							        <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
+							        <button><i class="fa fa-comment">댓글 달기</i></button>
+							        <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
+							        <button><c:choose>
+							        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
+							        	<c:otherwise><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></c:otherwise>
+							        </c:choose></button>
+							    </div>
+							</c:forEach> 
+							</div>
+							<!-- 메인 내용 끝 -->
+				            <!-- 원래 메인의 내용 시작 -->
 								<!-- 카루셀 시작 -->
 							<!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
-							<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
+							<!-- <div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
 							    <div class="carousel-inner">
 							        <div class="carousel-item active">
 							            <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
@@ -370,9 +436,9 @@
 							        <div class="carousel-item">
 							            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
 							        </div>
-							        <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+							        더 많은 이미지가 필요하면 이곳에 추가
 							    </div>
-							    <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+							    여기에 위에 넣은 id 넣을것 아래 2개에 
 							    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
 							        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							        <span class="sr-only">Previous</span>
@@ -382,7 +448,7 @@
 							        <span class="sr-only">Next</span>
 							    </a>
 							</div>
-							<!-- 카루셀 끝 -->
+							카루셀 끝
 							     <div class="post-icons">
 							         <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
 							         <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
@@ -413,12 +479,12 @@
 							    </div>
 							    
 				            </div>
-							<!-- 메인 내용 끝 -->
-				            <!-- 포스트 끝 -->
+							메인 내용 끝
+				            포스트 끝
 				            <div class="post-container">
-				            <!-- 메인의 내용 시작 -->
-								<!-- 카루셀 시작 -->
-							<!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
+				            메인의 내용 시작
+								카루셀 시작
+							카루셀 아이디에 특정값을 넣을것 같으면 삑남
 							<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
 							    <div class="carousel-inner">
 							        <div class="carousel-item active">
@@ -430,9 +496,9 @@
 							        <div class="carousel-item">
 							            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
 							        </div>
-							        <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+							        더 많은 이미지가 필요하면 이곳에 추가
 							    </div>
-							    <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+							    여기에 위에 넣은 id 넣을것 아래 2개에 
 							    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
 							        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							        <span class="sr-only">Previous</span>
@@ -442,7 +508,7 @@
 							        <span class="sr-only">Next</span>
 							    </a>
 							</div>
-							<!-- 카루셀 끝 -->
+							카루셀 끝
 							     <div class="post-icons">
 							         <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
 							         <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
@@ -472,8 +538,8 @@
 							        <button>공유하기</button>
 							    </div>
 							    
-				            </div>
-							<!-- 메인 내용 끝 -->
+				            </div> 
+							<!-- 원래 메인 내용 끝 -->
 				            <!-- 포스트 끝 -->
 				            </div>
 				        </div>

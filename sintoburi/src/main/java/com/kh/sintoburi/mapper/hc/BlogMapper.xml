@@ -35,5 +35,10 @@
   		where blog_no = #{blog_no}
   	</select>
   	
+  	<select id="getListByUser_id" resultType="BlogVo">
+  		select * from tbl_blog
+  		where user_id = #{user_id}
+  		order by blog_no desc
+  	</select>
   
   </mapper>

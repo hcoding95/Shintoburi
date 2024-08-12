@@ -14,6 +14,7 @@ public interface BlogMapper {
 	public int updateBlog(BlogVo blogVo);
 	public int deteteByBlog_no(int blog_no);
 	public List<BlogVo> getListWithPage();
+	public List<BlogVo> getListByUser_id(String user_id);
 	public BlogVo getBlogVoByBlogNo(int blog_no);
 	
 	

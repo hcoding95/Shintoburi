@@ -185,7 +185,7 @@ main {
         <div class="middle-bar">
             <div class="main-container">
                 <div class="logo">
-                    <a href="/"><img src="/resources/images/logo.png" alt="농사랑 로고"></a>
+                    <a href="/hc/main/home"><img src="/resources/images/logo.png" alt="신토불이 로고"></a>
                 </div>
             </div>
         </div>
