@@ -1,4 +1,4 @@
-package com.kh.sintoburi.dao.gr;
+package com.kh.sintoburi.gr.dao;
 
 import java.sql.Connection;
 
