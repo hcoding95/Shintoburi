@@ -1,6 +1,5 @@
 package com.kh.sintoburi.domain.hc;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

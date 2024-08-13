@@ -28,7 +28,7 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public boolean modifyReply(ReplyDto replyDto) {
-		int count = replyMapper.modify(replyDto);
+		int count = replyMapper.modifyReply(replyDto);
 		return (count >0)? true : false;
 	}
 

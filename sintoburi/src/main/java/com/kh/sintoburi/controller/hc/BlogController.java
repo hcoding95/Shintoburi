@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.sintoburi.domain.hc.BlogVo;
+import com.kh.sintoburi.domain.hc.ReplyDto;
 import com.kh.sintoburi.service.hc.BlogService;
+import com.kh.sintoburi.service.hc.ReplyService;
 
 @Controller
 @RequestMapping("/hc/blog/*")
@@ -18,6 +20,9 @@ public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@GetMapping("/blog")
 	public void blog(String user_id, Model model) {
@@ -28,11 +33,10 @@ public class BlogController {
 	
 	@GetMapping("/detail")
 	public void detail(int blog_no, Model model) {
-		System.out.println("디테일뷰작동" + blog_no);
 		BlogVo blogVo = blogService.readByBlogNo(blog_no);
+		List<ReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
 		model.addAttribute("blogVo", blogVo);
-		System.out.println("내가 만든 디테일은?" + blogVo);
-		
+		model.addAttribute("replyList", replyList);
 	}
 	
 	
@@ -43,7 +47,6 @@ public class BlogController {
 	
 	@PostMapping("/registerAction")
 	public String registeraction(BlogVo blogVo) {
-		System.out.println("내가받은 blogvo는?" + blogVo);
 		String path = "";
 		if(blogService.insert(blogVo)) {
 			path="redirect:/hc/main/home";

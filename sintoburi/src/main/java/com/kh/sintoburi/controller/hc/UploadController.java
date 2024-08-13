@@ -1,7 +1,6 @@
 package com.kh.sintoburi.controller.hc;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import com.kh.sintoburi.domain.hc.AttachFileDto;
 import com.kh.sintoburi.util.hc.MyfileUtil;
 
 import lombok.extern.log4j.Log4j;
-import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @Log4j

@@ -15,4 +15,19 @@
   		values (seq_blog_reply.nextval, #{blog_no}, #{replyer}, #{reply_content}, sysdate)
   	</insert>
   	
+  	<update id="modifyReply">
+  		update tbl_blog_reply
+  		set	reply_content = #{reply_content}, updatedate = sysdate
+  		where blog_rno = #{blog_rno}
+  	</update>
+  	
+  	<delete id="deleteReply">
+  		delete from tbl_blog_reply
+  		where blog_rno = #{blog_rno}	
+  	</delete>
+  	
+  	
+  	
+  	
+  	
   </mapper>

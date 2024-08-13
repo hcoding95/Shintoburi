@@ -1,7 +1,6 @@
 package com.kh.sintoburi.domain.hc;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class AttachFileDto {

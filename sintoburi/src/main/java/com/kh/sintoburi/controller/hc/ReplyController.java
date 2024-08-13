@@ -3,9 +3,9 @@ package com.kh.sintoburi.controller.hc;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +26,8 @@ public class ReplyController {
 	}
 	// 댓글 쓰기
 	@PostMapping("/setReply")
-	public boolean setReply(ReplyDto replyDto) {
+	public boolean setReply(@RequestBody ReplyDto replyDto) {
+		System.out.println("내가받은 댓글 정보는? " + replyDto);
 		if(replyService.insertReply(replyDto)) {
 			return true;
 		}
