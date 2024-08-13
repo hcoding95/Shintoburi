@@ -21,7 +21,7 @@
   		where blog_rno = #{blog_rno}
   	</update>
   	
-  	<delete id="deleteReply">
+  	<delete id="deleteByBlog_rno">
   		delete from tbl_blog_reply
   		where blog_rno = #{blog_rno}	
   	</delete>

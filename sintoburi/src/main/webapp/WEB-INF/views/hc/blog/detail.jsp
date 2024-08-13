@@ -28,36 +28,71 @@ $(function () {
 $(function () {
 	$("#replyBtn").click(function () {
 		let replyer = '${login.user_id}';
-		let comment = $("#comment-textarea").text();
+		let comment = $("#comment-textarea").val();
 		let sData = {
 				'replyer' : replyer,
+				'blog_no' : '${blogVo.blog_no}',
 				'reply_content' : comment
 		}
 		
 		$.ajax({
 			type : "post",
 			url : "/hc/reply/setReply",
-			data : JSON.stingify(sData),
+			data : JSON.stringify(sData),
 			contentType : "application/json; charset=utf-8",
 			success : function (rData) {
 				if(rData) {
-					/* <div class="comment-box">
-		         	 <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-	                <div class="comment-content">
-	                	<div class="author-time">
-	                      <div class="author">작성자 이름</div>
-	                      <div class="time">작성 시간</div>
-	                	</div>
-	                  <p>작성 내용</p>
-	                </div>
-	                </div>
-		          </div>
-					$("#comment-line").append(comment); */
+					location.reload();
 				}
-				
 			}
 		});
 	});
+	
+	
+	$(".replyModifyBtn").click(function () {
+		let replyer = '${login.user_id}';
+		let comment = $("#comment-textarea").val();
+		let blog_rno = $(this).data("blog_rno");
+		let sData = {
+				'replyer' : replyer,
+				'blog_no' : '${blogVo.blog_no}',
+				'reply_content' : comment,
+				'blog_rno' : blog_rno
+		}
+		$.ajax({
+			type : "post",
+			url : "/hc/reply/modify",
+			data : JSON.stringify(sData),
+			contentType : "application/json; charset=utf-8",
+			success : function (rData) {
+				if(rData) {
+					location.reload();					
+				}
+			}
+		});
+		
+	});
+	
+	$(".replyDeleteBtn").click(function () {
+		let blog_rno = $(this).data("blog_rno");
+		$.ajax({
+			type : "post",
+			url : "/hc/reply/delete",
+			data : {"blog_rno" : blog_rno},
+			success : function(rData) {
+				if(rData) {
+					location.reload();
+				}
+			}
+			
+		});
+		
+		
+	});
+	
+	
+	
+	
 });
 
 
@@ -235,8 +270,11 @@ body {
 .comment-box .comment-content .author-time {
     display: flex;
     justify-content: flex-start;
- 		    align-items: center;
+ 	align-items: center;
     margin-bottom: 5px;
+}
+.time {
+	margin-left: 10px;
 }
 .comment-box .comment-content p {
     margin: 0;
@@ -249,6 +287,10 @@ body {
 .main-content{
 	max-height: 400px;
 	overflow-y: auto; /* 세로 스크롤을 가능하게 설정 */
+}
+.btn-reply{
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .comment-input {
@@ -320,18 +362,23 @@ body {
 		                     <div class="comment-content">
 		                     	<div class="author-time">
 			                       <div class="author">${reply.replyer }</div>
-			                       <div class="time"><c:choose>
-			                       	<c:when test="${empty reply.updatedate }">${reply.regdate }</c:when>
-			                       	<c:otherwise>${reply.updatedate }수정</c:otherwise>
-			                       	</c:choose> 
+			                       <div class="time">
+			                       <c:choose>
+			                       		<c:when test="${empty reply.updatedate }"><fmt:formatDate value="${reply.regdate }" pattern="yyyy.MM.dd hh:mm"/></c:when>
+			                       		<c:otherwise><fmt:formatDate value="${reply.updatedate }" pattern="yyyy.MM.dd hh:mm"/> (수정)</c:otherwise>
+			                       </c:choose> 
 			                       </div>
+			                       <c:if test="${login.user_id eq reply.replyer }">
+			                       <div><button class="btn btn-primary btn-reply replyModifyBtn"  data-blog_rno="${reply.blog_rno}">수정</button></div>
+			                       <div><button class="btn btn-danger btn-reply replyDeleteBtn"  data-blog_rno="${reply.blog_rno}">삭제</button></div>
+			                       </c:if>
 		                     	</div>
-		                       <p>${reply.reply_content }</p>
+		                       <p><input readonly="readonly" value="${reply.reply_content }"></p>
 		                     </div>
 		                     </div>
-				          </div>
 			              <!-- 댓글 끝 -->
 			          </c:forEach>
+				    </div>
 	                  <div class="comment-input">
 	                    <textarea  id="comment-textarea" placeholder="댓글 입력창"></textarea>
 	                    <button id="replyBtn" class="btn btn-success">등록</button>

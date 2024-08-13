@@ -37,7 +37,7 @@ public class ReplyController {
 	}
 	// 댓글 수정
 	@PostMapping("/modify")
-	public boolean modify(ReplyDto replyDto) {
+	public boolean modify(@RequestBody ReplyDto replyDto) {
 		if(replyService.modifyReply(replyDto)) {
 			return true;
 		}
@@ -46,6 +46,7 @@ public class ReplyController {
 	// 댓글 수정
 	@PostMapping("/delete")
 	public boolean delete(int blog_rno) {
+		System.out.println("내가받은 댓글 번호는 ?" + blog_rno);
 		if(replyService.deleteReply(blog_rno)) {
 			return true;
 		}
