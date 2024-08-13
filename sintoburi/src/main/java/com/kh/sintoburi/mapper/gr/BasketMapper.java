@@ -34,4 +34,8 @@ public interface BasketMapper {
 	public int deleteAll(@Param("bno") int bno);
 	//장바구니 상세보기
 	
+	
+	// 장바구니 지우기
+	public int deleteBasket(@Param("bno") int bno);
+	
 }

@@ -23,7 +23,7 @@ public class BasketServiceImpl implements BasketService{
 	}
 
 	@Override
-	public boolean basketKey(BasketVo basketVo) {
+	public boolean getBasketKey(BasketVo basketVo) {
 		int count = basketMapper.insertSelectKey(basketVo);
 		return (count == 1) ? true : false;
 	}
@@ -35,7 +35,7 @@ public class BasketServiceImpl implements BasketService{
 	}
 
 	@Override
-	public int IsBasket(String user_id) {
+	public int getBnoByUserId(String user_id) {
 		int bno = basketMapper.getBnoByUser(user_id);
 		return bno;
 	}
@@ -54,7 +54,8 @@ public class BasketServiceImpl implements BasketService{
 
 	@Override
 	public boolean removeAll(int bno) {
-		int count = basketMapper.deleteAll(bno);
-		return (count == 1) ? true : false;
+		int count = basketMapper.deleteAll(bno); // 장바구니 내용물 모두 삭제
+		count += basketMapper.deleteBasket(bno); // 장바구니 삭제
+		return (count == 2) ? true : false;
 	}
 }
