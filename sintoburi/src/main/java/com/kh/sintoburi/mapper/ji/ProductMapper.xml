@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.project01.mapper.ProductMapper">
+	
+	<!-- 쇼핑몰 메인 - 상품 목록 -->
+	<select id="getProducts" resultType="ProductVo">
+		select * from tbl_product
+	</select>  
+  
+  	<!-- 상품 등록 -->
+	<!-- <insert id="insertProduct">
+		insert into tbl_product
+			(pno, name, content, price, stock, status, cate_no)
+		values
+			(seq_product.nextval, #{name}, #{content}, #{price}, #{stock}, #{status}, #{cate_no})
+	</insert> -->
+	
+	<insert id="insertProduct" parameterType="ProductVo">
+	    <selectKey keyProperty="pno" order="BEFORE" resultType="int">
+	        SELECT seq_product.nextval FROM dual
+	    </selectKey>
+	    
+	    insert into tbl_product
+	        (pno, name, content, price, stock, status, cate_no)
+	    values
+	        (#{pno}, #{name}, #{content}, #{price}, #{stock}, #{status}, #{cate_no})
+	</insert>
+  
+  	<!-- 상품 등록 - 키 insertSelectKey(ProductVo vo) vo.setPno(nextval) 처리 -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="pno" order="BEFORE"
+			resultType="long">
+			select seq_product.nextval from dual
+		</selectKey>
+		insert into tbl_product
+			(pno, name, content, price, stock, status)
+		values
+			(#{pno}, #{name}, #{content}, #{price}, #{stock}, #{status})
+	</insert>
+  	
+  	<!-- 상품 상세보기 -->
+  	<select id="selectByPno" resultType="ProductVo">
+  		select * from tbl_product
+  		where pno = #{pno}
+  	</select>
+  	
+  	<!-- 상품 삭제 -->
+  	<!-- <delete id="deleteProduct">
+  		delete from tbl_product
+  		where pno = #{pno}
+  	</delete> -->
+  	
+  	<!-- 카테고리별 상품 출력 -->
+	<select id="selectProductsByCate" resultType="ProductVo">
+		select * from tbl_product
+		where cate_no = #{cate_no}
+		order by stock desc, price desc
+	</select>
+
+</mapper>
