@@ -21,6 +21,7 @@
     min-height: 400px; /* 높이를 줄여서 더 가벼운 느낌을 줌 */
     max-height: 570px;
     object-fit: cover; /* 이미지가 잘리더라도 가득 채우도록 */
+    cursor: pointer;
 }
 
 /* 캐러셀 화살표 */

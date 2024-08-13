@@ -166,10 +166,11 @@
 }
 
 .photo-grid .photo img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover; /* 이미지가 컨테이너를 채우도록 조정 */
     border-radius: 5px; /* 이미지에 둥근 모서리 추가 */
+    cursor: pointer;
 }
 .product-photo-grid {
     display: grid;
@@ -337,12 +338,14 @@
 				        	<div class="blog-control">
 					            <h3 class="text-end">사진<div class="filters"><a id="filterBtn" href="#tab3" data-toggle="tab" data-tab="#main-tab3" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <div class="photo-grid">
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					            	<!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+					            	<c:forEach items="${list}" var="pictureVo" begin="0" end="5" step="1">
+					             		<c:if test="${not empty pictureVo.fileList }">
+							             <c:forEach items="${pictureVo.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
+							                <div class="photo"><a data-toggle="modal" data-target="#myModal${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
+							             </c:forEach>
+						             	</c:if>
+					            	</c:forEach>
 					            </div>
 				        	</div>
 				        	<div class="blog-control">
@@ -463,24 +466,14 @@
 						       		<div class="blog-control">
 							            <h3 class="text-end">사진</h3>
 							            <div class="photo-main-grid">
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-							                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+							            	<!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+							            	<c:forEach items="${list}" var="pictureVo">
+							             		<c:if test="${not empty pictureVo.fileList }">
+									             <c:forEach items="${pictureVo.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
+									                <div class="photo"><a data-toggle="modal" data-target="#myModal${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
+									             </c:forEach>
+								             	</c:if>
+							            	</c:forEach>
 							            </div>
 				        			</div>
 					            </div>

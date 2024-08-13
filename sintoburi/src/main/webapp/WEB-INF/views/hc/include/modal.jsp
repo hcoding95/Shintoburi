@@ -22,24 +22,38 @@
     overflow-y: auto;
 }
 
-.left {
+.modal-footer {
     display: flex;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    background: #fff; /* 각 구역의 흰색 배경 */
-    border-radius: 8px; /* 둥근 모서리 적용 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 추가 */
-    justify-content: space-between;
-}        
+    justify-content: space-between; /* 양쪽 끝에 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%;
+}
 
-.left img {
+.cover{
+	border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 */
+    margin-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.modal-left {
+    display: flex;
+    align-items: center; /* 아이템들을 수직 중앙 정렬 */
+    margin-bottom: 0; /* 부트스트랩의 기본 마진 리셋 */
+    padding: 5px;
+    background: #fff; /* 흰색 배경 */
+    flex-grow: 1; /* 남는 공간을 차지하게 설정 */
+}
+
+.modal-left img {
     width: 50px;
     height: 50px;
-    border-radius: 8px; /* 이미지에도 둥근 모서리 적용 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 이미지에도 그림자 추가 */
-}        
+    border-radius: 8px; /* 이미지 둥근 모서리 */
+    margin-right: 5px; /* 이미지와 텍스트 사이 간격 */
+}
+    
+    
         
 </style>
 <!-- 모달창 jsp 뛰우기 -->
@@ -50,10 +64,14 @@
                 <iframe src="/hc/blog/detail?blog_no=${detailVo.blog_no}" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe>
             </div>
             <div class="modal-footer">
-            	<div class="left">
+            	<div class="modal-left">
+	            	<c:if test="${not empty detailVo.productTagList }">
             		<c:forEach items="${detailVo.productTagList}" var="tag">
-            			<a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+	            		<div class="cover">
+	            			<a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+	            		</div>
             		</c:forEach>
+	            	</c:if>
             	</div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
             </div>
