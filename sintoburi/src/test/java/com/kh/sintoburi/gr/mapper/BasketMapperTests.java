@@ -30,7 +30,7 @@ public class BasketMapperTests {
 	
 	@Test
 	public void testGetList() {
-		String user_id= "user02";
+		String user_id= "user01";
 		List<BasketDetailDto> list = basketMapper.getList(user_id);
 		log.info(list);
 	}

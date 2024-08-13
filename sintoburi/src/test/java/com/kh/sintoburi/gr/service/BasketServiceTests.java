@@ -31,28 +31,28 @@ public class BasketServiceTests {
 	}
 	
 	@Test
-	public void testIsBasket() {
-		String user_id ="user01";
-		int bno = basketService.IsBasket(user_id);
+	public void testGetBnoByUserId() {
+		String user_id ="user03";
+		int bno = basketService.getBnoByUserId(user_id);
 		log.info("bno:"+ bno);
 	}
 	
 	@Test
 	public void testPutBasket() {
-		String user_id = "user01";
-		int bno = basketService.IsBasket(user_id);
+		String user_id = "user03";
+		int bno = basketService.getBnoByUserId(user_id);
 		
 		if (bno == 0) {
 			BasketVo vo = new BasketVo();
 			vo.setUser_id(user_id);
-			basketService.basketKey(vo);
+			basketService.getBasketKey(vo);
 			bno = vo.getBno();
 		}
 		
 		BasketDetailVo detailVo = new BasketDetailVo();
-		detailVo.setPno(2);
+		detailVo.setPno(1);
 		detailVo.setBno(bno);
-		detailVo.setP_count(6);
+		detailVo.setP_count(3);
 		boolean result = basketService.putBasket(detailVo);
 		log.info("result:" + result);
 	}
@@ -81,7 +81,7 @@ public class BasketServiceTests {
 	
 	@Test
 	public void testRemoveAll() {
-		int bno = 8;
+		int bno = 1;
 		boolean result = basketService.removeAll(bno);
 		log.info("result:" + result);
 	}

@@ -7,18 +7,18 @@
     
 <script>
 $(function() {
-	
+	//개수 수정
 	$(".btnp_count").click(function(){
 		let bdno =$(this).attr("data-bdno");
 		let p_count=$(".p_count").val().trim();
-		console.log("bdno:", bdno);
-		console.log("p_count:", p_count);	
+		//console.log("bdno:", bdno);
+		//console.log("p_count:", p_count);	
 		
 		let sData = {
 				"bdno" : bdno,
 				"p_count" : p_count
 		};
-		console.log("sData:", sData);
+		//console.log("sData:", sData);
 		
 		$.ajax({
 			type: "post",
@@ -37,7 +37,83 @@ $(function() {
 		});
 	});
 	
+	//체크한 것 삭제
+	$("#btnRemoveOne").click(function(){
+		let bdnos = [];
+		let checkedItems = $("[name=selectedItems]:checked");
+		$.each(checkedItems, function(idx, val) {
+			let bdno = checkedItems.eq(idx).val();
+			//console.log("bdno:", bdno);
+			bdnos.push(bdno);
+		});
+		//console.log("bdnos:", bdnos);
+		
+		let sData = {
+				"bdnos" : bdnos
+		};
+		$.ajax({
+			type: "post",
+			url : "/gr/basket/removeOne",
+			data : JSON.stringify(sData),
+			contentType: "application/json; charset=utf-8",
+			 success: function(result) {
+				 //console.log("result:", result);
+				 if (result) {
+	                    alert("삭제 완료");
+	                    location.reload();
+	                } else {
+	                    alert("삭제 실패");
+	                }
+	            }
+		});
+	});
+
+	//모두 삭제, 장바구니 삭제
+	$("#btnRemoveAll").click(function(){
+// 	    let bno = 1;
+// 	    console.log("bno:", bno);
+// 	    let sData = {
+// 	        "bno": bno
+// 	    };
+	    
+	    $.ajax({
+	        type: "POST",
+	        url: "/gr/basket/removeAll",
+// 	        data: JSON.stringify(sData),
+// 	        contentType: "application/json; charset=utf-8",
+	        success: function(result) {
+	            if (result) {
+	                alert("삭제 성공");
+	                location.reload();
+	            } else {
+	                alert("삭제 실패");
+	            }
+	        }
+	    });
 	
+	});
+	
+	//장바구니 담기
+	
+	
+	
+	
+	//주문하기
+	$("#btnOrder").click(function(){
+		let bdnos = [];
+		let checkedItems = $("[name=selectedItems]:checked");
+		$.each(checkedItems, function(idx, val) {
+			let bdno = checkedItems.eq(idx).val();
+			//console.log("bdno:", bdno);
+			bdnos.push(bdno);
+		});
+		//console.log("bdnos:", bdnos);
+		
+		let sData = {
+				"bdnos" : bdnos
+		};
+	
+	});
 	
 });
 </script>
@@ -65,7 +141,7 @@ $(function() {
 					</tr>
 				</thead>
 
-				<tbody>
+				<tbody >
 				<c:forEach items="${list}" var="detailDto">
 					<tr class="col-md-8 text-center">
 					    <td>
@@ -92,19 +168,18 @@ $(function() {
 	<div class="row justify-content-end">
     <div class="col-auto">
         <a href="http://localhost/gr/basket/orderForm">
-            <button type="button" class="btn btn-warning">주문하기</button>
+            <button type="button" id="btnOrder" name="btnOrder" class="btn btn-warning">주문하기</button>
         </a>
     </div>
 
     <div class="col-auto">
-        <button type="button" class="btn btn-danger">삭제하기</button>
+        <button type="button" id="btnRemoveOne" name="btnRemoveOne" class="btn btn-danger" >삭제하기</button>
     </div>
 
     <div class="col-auto">
-        <button type="button" class="btn btn-secondary">장바구니 비우기</button>
+        <button type="button" id="btnRemoveAll" name="btnRemoveAll" class="btn btn-secondary">장바구니 비우기</button>
     </div>
-</div>
-	
+	</div>
 	
 	</div>
 		</div>
@@ -112,7 +187,5 @@ $(function() {
 		</div>
 	</div>
  
- 
-
 </html>
 <%@ include file="/WEB-INF/views/gr/include/bottom.jsp"%>
