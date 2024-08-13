@@ -5,7 +5,7 @@
   <!-- 매퍼 인터페이스 경로와 같게 지정  -->
   <mapper namespace="com.kh.sintoburi.mapper.hc.ReplyMapper">
   	
-  	<select id="getListByBlog_no" resultType="ReplyDto">
+  	<select id="getReplyListByBlog_no" resultType="ReplyDto">
   		select * from tbl_blog_reply
   		where blog_no = #{blog_no}
   	</select>

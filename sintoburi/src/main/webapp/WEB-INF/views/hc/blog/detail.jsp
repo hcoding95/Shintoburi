@@ -37,7 +37,7 @@ $(function () {
 		$.ajax({
 			type : "post",
 			url : "/hc/reply/setReply",
-			data : JSONstingify(sData),
+			data : JSON.stingify(sData),
 			contentType : "application/json; charset=utf-8",
 			success : function (rData) {
 				if(rData) {
@@ -313,7 +313,7 @@ body {
 			      <!-- 본문 내용끝  -->
 			        <div class="profile-section reply">
 			          <h3 id="comment-line" class="text-end">댓글</h3>
-			          <c:forEach  items="${replyList}" var="reply">>
+			          <c:forEach items="${replyList}" var="reply">
 						  <!-- 댓글 시작 -->
 						  <div class="comment-box">
 				         	 <img src="/resources/images/logo.png" alt="댓글 작성자 사진">

@@ -16,7 +16,7 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public List<ReplyDto> getReplyListByBlog_no(int blog_no) {
-		List<ReplyDto> list = replyMapper.getListByBlog_no(blog_no);
+		List<ReplyDto> list = replyMapper.getReplyListByBlog_no(blog_no);
 		return list;
 	}
 

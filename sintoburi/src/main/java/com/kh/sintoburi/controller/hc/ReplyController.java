@@ -24,6 +24,8 @@ public class ReplyController {
 		List<ReplyDto> list = replyService.getReplyListByBlog_no(blog_no);
 		return list;
 	}
+	
+	
 	// 댓글 쓰기
 	@PostMapping("/setReply")
 	public boolean setReply(@RequestBody ReplyDto replyDto) {
