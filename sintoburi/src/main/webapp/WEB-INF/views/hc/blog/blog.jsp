@@ -5,6 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
+<!-- 글리피콘 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <style>
 .header-top {
     
@@ -356,11 +359,9 @@
 					            <h3 class="text-end">게시물 <div class="filters "><button id="filterBtn" class="btn btn-primary btn-standard">필터</button></div></h3>
 				        	</div>
 				            <div class="posts">
-				            <!-- 포스트 시작 -->
-				            <div class="post-container">
 				            <!-- 메인의 내용 시작 -->
-<!-- 							<div class="post-container"> -->
 							<c:forEach items="${list}" var="vo" varStatus="status">
+							<div class="post-container">
 							     <!-- 카루셀 시작 -->
 							     <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
 							     <div id="imageCarousel2${status.index }"  class="carousel slide" data-ride="carousel" data-interval="false">
@@ -368,7 +369,7 @@
 							             <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
 							             <c:forEach items="${vo.fileList}" var="file" varStatus="innerstatus">
 							             <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
-							                 <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image">
+							                 <a data-toggle="modal" data-target="#myModal${vo.blog_no}"><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a>
 							             </div>
 							             </c:forEach>
 							         </div>
@@ -412,135 +413,18 @@
 							    </div>
 							    <div class="post-actions">
 							        <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
-							        <button><i class="fa fa-comment">댓글 달기</i></button>
+							        <button><a data-toggle="modal" data-target="#myModal${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
 							        <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
 							        <button><c:choose>
 							        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
 							        	<c:otherwise><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></c:otherwise>
 							        </c:choose></button>
 							    </div>
+							</div>
+							<c:set var="detailVo" value="${vo}"></c:set>
+							<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
 							</c:forEach> 
-							</div>
 							<!-- 메인 내용 끝 -->
-				            <!-- 원래 메인의 내용 시작 -->
-								<!-- 카루셀 시작 -->
-							<!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
-							<!-- <div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
-							    <div class="carousel-inner">
-							        <div class="carousel-item active">
-							            <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
-							        </div>
-							        <div class="carousel-item">
-							            <img src="/resources/images/1.png" class="d-block w-100" alt="Second Image">
-							        </div>
-							        <div class="carousel-item">
-							            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
-							        </div>
-							        더 많은 이미지가 필요하면 이곳에 추가
-							    </div>
-							    여기에 위에 넣은 id 넣을것 아래 2개에 
-							    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
-							        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							        <span class="sr-only">Previous</span>
-							    </a>
-							    <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
-							        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-							        <span class="sr-only">Next</span>
-							    </a>
-							</div>
-							카루셀 끝
-							     <div class="post-icons">
-							         <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
-							         <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
-							         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
-							         <a href="#"><img src="path_to_icon4.jpg" alt="Icon 4"></a>
-							     </div>
-							     <div class="post-user-info">
-							  	  <div class="user-details">
-							       <img src="/resources/images/logo.png" alt="User Image">
-							       <div class="user-info-text">
-							           <div>유저 이름</div>
-							           <div>게시 시간</div>
-							       </div>
-							     </div>
-							     <div class="user-stats">
-							       <div>좋아요(기호) <span>좋아요 갯수</span></div>
-							       <div>팔로워 수 <span>팔로워 수</span></div>
-							     </div>
-							</div>
-							    <div class="post-content">
-							         내용 2줄 이상 길어지면 <a href="#">더보기</a>
-							    </div>
-							    <div class="post-actions">
-							        <button>좋아요</button>
-							        <button>댓글 달기</button>
-							        <button>신고하기</button>
-							        <button>공유하기</button>
-							    </div>
-							    
-				            </div>
-							메인 내용 끝
-				            포스트 끝
-				            <div class="post-container">
-				            메인의 내용 시작
-								카루셀 시작
-							카루셀 아이디에 특정값을 넣을것 같으면 삑남
-							<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
-							    <div class="carousel-inner">
-							        <div class="carousel-item active">
-							            <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
-							        </div>
-							        <div class="carousel-item">
-							            <img src="/resources/images/1.png" class="d-block w-100" alt="Second Image">
-							        </div>
-							        <div class="carousel-item">
-							            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
-							        </div>
-							        더 많은 이미지가 필요하면 이곳에 추가
-							    </div>
-							    여기에 위에 넣은 id 넣을것 아래 2개에 
-							    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
-							        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							        <span class="sr-only">Previous</span>
-							    </a>
-							    <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
-							        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-							        <span class="sr-only">Next</span>
-							    </a>
-							</div>
-							카루셀 끝
-							     <div class="post-icons">
-							         <a href="#"><img src="path_to_icon1.jpg" alt="Icon 1"></a>
-							         <a href="#"><img src="path_to_icon2.jpg" alt="Icon 2"></a>
-							         <a href="#"><img src="path_to_icon3.jpg" alt="Icon 3"></a>
-							         <a href="#"><img src="path_to_icon4.jpg" alt="Icon 4"></a>
-							     </div>
-							     <div class="post-user-info">
-							  	  <div class="user-details">
-							       <img src="/resources/images/logo.png" alt="User Image">
-							       <div class="user-info-text">
-							           <div>유저 이름</div>
-							           <div>게시 시간</div>
-							       </div>
-							     </div>
-							     <div class="user-stats">
-							       <div>좋아요(기호) <span>좋아요 갯수</span></div>
-							       <div>팔로워 수 <span>팔로워 수</span></div>
-							     </div>
-							</div>
-							    <div class="post-content">
-							         내용 2줄 이상 길어지면 <a href="#">더보기</a>
-							    </div>
-							    <div class="post-actions">
-							        <button>좋아요</button>
-							        <button>댓글 달기</button>
-							        <button>신고하기</button>
-							        <button>공유하기</button>
-							    </div>
-							    
-				            </div> 
-							<!-- 원래 메인 내용 끝 -->
-				            <!-- 포스트 끝 -->
 				            </div>
 				        </div>
 				    </div>
@@ -610,43 +494,8 @@
 </div>
 <!-- 탭팬 부분끝  -->
 </div>
-<a href="#" data-toggle="modal" data-target="#myModal">어쩌구 저쩌구 사이트</a>
-<!-- 모달창 스타일  -->
-<style>
-.modal-dialog.modal-fullscreen {
-    max-width: 100%;
-    margin: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
 
-.modal-content {
-    height: 100%;
-    border: none;
-    border-radius: 0;
-}
 
-.modal-body {
-    flex-grow: 1;
-    overflow-y: auto;
-}
-</style>
-<!-- 모달창 jsp 뛰우기 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <iframe src="/hc/blog/detail" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">이전페이지</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">다음페이지</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
 $(function () {

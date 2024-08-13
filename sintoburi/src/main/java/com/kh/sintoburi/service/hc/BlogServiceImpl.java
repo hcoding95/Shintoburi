@@ -126,7 +126,8 @@ public class BlogServiceImpl implements BlogService {
 		}
 		return (result > 0)? true : false;
 	}
-
+	
+	@Transactional
 	@Override
 	public List<BlogVo> getList() {
 		List<BlogVo> list = blogMapper.getListWithPage();
@@ -166,10 +167,22 @@ public class BlogServiceImpl implements BlogService {
 		int count = blogMapper.deteteByBlog_no(blog_no);
 		return (count > 0)? true : false;
 	}
-
+	
+	@Transactional
 	@Override
 	public List<BlogVo> getListByUser_id(String user_id) {
 		List<BlogVo> list = blogMapper.getListByUser_id(user_id);
+		list.forEach(vo -> {
+			int blog_no = vo.getBlog_no();
+			List<AttachFileDto> attachList = attachMapper.getAttachList(blog_no);
+			if(attachList != null) {
+				vo.setFileList(attachList);
+			}
+			List<ProductTagDto> tagList = productTagMapper.getTagList(blog_no);
+			if(tagList != null) {
+				vo.setProductTagList(tagList);
+			}
+		});
 		return list;
 	}
 

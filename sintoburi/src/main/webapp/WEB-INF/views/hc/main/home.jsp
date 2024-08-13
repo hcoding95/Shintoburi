@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <!-- 글리피콘 -->
-<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <!-- 이벤트  -->
@@ -145,7 +144,7 @@
              <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
              <c:forEach items="${vo.fileList}" var="file" varStatus="innerstatus">
              <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
-                 <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image">
+                 <a data-toggle="modal" data-target="#myModal${vo.blog_no}"><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a>
              </div>
              </c:forEach>
          </div>
@@ -189,7 +188,7 @@
     </div>
     <div class="post-actions">
         <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
-        <button><i class="fa fa-comment">댓글 달기</i></button>
+        <button><a data-toggle="modal" data-target="#myModal${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
         <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
         <button><c:choose>
         	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
@@ -197,6 +196,8 @@
         </c:choose></button>
     </div>
 </div>
+<c:set var="detailVo" value="${vo}"></c:set>
+<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
 </c:forEach>    
 <!-- 메인 내용 끝 -->
 

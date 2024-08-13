@@ -34,7 +34,12 @@ public class BlogController {
 	}
 	
 	@GetMapping("/detail")
-	public void detail() {
+	public void detail(int blog_no, Model model) {
+		System.out.println("디테일뷰작동" + blog_no);
+		BlogVo blogVo = blogService.readByBlogNo(blog_no);
+		model.addAttribute("blogVo", blogVo);
+		System.out.println("내가 만든 디테일은?" + blogVo);
+		
 	}
 	
 	

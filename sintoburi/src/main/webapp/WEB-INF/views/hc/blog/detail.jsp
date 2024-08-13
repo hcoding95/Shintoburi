@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -235,11 +237,37 @@ $(function () {
     </style>
 </head>
 <body>
-    <div class="main">
-        <div class="image-area">
+	<div class="main">
+    <!-- 카루셀 시작 -->
+    <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
+    <div id="imageCarousel"  class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+            <c:forEach items="${blogVo.fileList}" var="file" varStatus="innerstatus">
+            <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
+                <img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image">
+            </div>
+            </c:forEach>
+        </div>
+        <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <!-- 카루셀 끝 -->
+
+	
+	<!-- 원래것 -->
+    
+        <!-- <div class="image-area"> -->
         <!-- 카루셀 시작 -->
 		<!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
-		<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
+	<!-- 	<div id="imageCarousel2"  class="carousel slide" data-ride="carousel" data-interval="false">
 		    <div class="carousel-inner">
 		        <div class="carousel-item active">
 		            <img src="/resources/images/black.png" class="d-block w-100" alt="First Image">
@@ -250,9 +278,9 @@ $(function () {
 		        <div class="carousel-item">
 		            <img src="/resources/images/2.png" class="d-block w-100" alt="Third Image">
 		        </div>
-		        <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
+		        더 많은 이미지가 필요하면 이곳에 추가
 		    </div>
-		    <!-- 여기에 위에 넣은 id 넣을것 아래 2개에  -->
+		    여기에 위에 넣은 id 넣을것 아래 2개에 
 		    <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
 		        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		        <span class="sr-only">Previous</span>
@@ -261,7 +289,7 @@ $(function () {
 		        <span class="carousel-control-next-icon" aria-hidden="true"></span>
 		        <span class="sr-only">Next</span>
 		    </a>
-		</div>
+		</div> -->
 		<!-- 카루셀 끝 -->
         
         
@@ -272,184 +300,18 @@ $(function () {
 				<!-- 프로필 -->
 			 <div class="profile head-profile">
 					  <div class="profile ">
-				          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진">(유저)님의 프로필</h3>
+				          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_id})님의 스토리</h3>
 					  </div>
 			      </div>
 			      <!-- 본문 내용  -->
 			      <div class="profile-section main-content">
 			          <h3 class="text-end">본문내용</h3>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
-			          <div><span>전화 번호:</span> 010-1234-5678</div>
-			          <div><span>이메일:</span> jane.doe@example.com</div>
-			          <div><span>주소:</span> 서울시 강남구</div>
+			          <div>${blogVo.blog_content }</div>
 			      </div>
 			      <!-- 본문 내용끝  -->
 			        <div class="profile-section reply">
 			          <h3 class="text-end">댓글</h3>
 					  	<!-- 댓글 시작 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
-					  <div class="comment-box">
-				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
-		                     <div class="comment-content">
-		                     	<div class="author-time">
-			                       <div class="author">작성자 이름</div>
-			                       <div class="time">작성 시간</div>
-		                     	</div>
-		                       <p>작성 내용</p>
-		                     </div>
-			          </div>
-		                     <!-- 댓글 끝 -->
-		                     <!-- 댓글 끝 -->
 					  <div class="comment-box">
 				          <img src="/resources/images/commenter.jpg" alt="댓글 작성자 사진">
 		                     <div class="comment-content">
