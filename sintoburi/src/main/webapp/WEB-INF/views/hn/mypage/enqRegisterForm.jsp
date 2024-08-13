@@ -178,14 +178,15 @@ $(function() {
 
                                 <div class="form-group">
                                     <label for="image">첨부파일</label>
-                                    <input class="form-control" type="file" id="image" name="image">
+                                    <input  type="file" id="image" name="image">
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-12 text-end">
-                                       <button type="submit" class="btn btn-dark" style=" margin-left: 840px;">작성완료</button>
-                                    </div>
-                                </div>
+                               
+                                <div class="col-md-12 text-right">
+							        <a href="/hn/manager/noticeForm">
+							            <button class="btnMod btn btn-outline-dark btn-sm" type="button">작성하기</button>
+							        </a>
+						    	</div>
                             </form>
                         </div>
                     </div>

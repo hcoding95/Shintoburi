@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
+import com.kh.sintoburi.service.hn.NoticeService;
 import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
@@ -35,10 +37,12 @@ public class MypageController {
 	@Autowired
 	private EnquiryService enquiryService;
 	
-	
+	@Autowired
+	private NoticeService noticeService;
+
 	@GetMapping("/myPageMain")
 	public void myPageMain() {
-		
+
 	}
 
 	// 1:1 문의사항
@@ -57,7 +61,7 @@ public class MypageController {
 		List<EnquiryVo> list = enquiryService.getList(user_id);
 		model.addAttribute("list", list);
 
-		return "hn/mypage/enqList"; 
+		return "hn/mypage/enqList";
 	}
 
 	@GetMapping("/enqRegisterForm")
@@ -139,15 +143,24 @@ public class MypageController {
 		rttr.addFlashAttribute("resultDel", result);
 		return "redirect:/mypage/enqList";
 	}
+
 	// 공지사항
 	@GetMapping("/noticeList")
-	public void noticeList() {
-		
+	public void noticeList(Model model) {
+		List<NoticeVo> list = noticeService.getListNotice();
+		model.addAttribute("noticeList", list);
+	}
+	
+	@GetMapping("/noticeRead")
+	public String notiveRead(@RequestParam("n_no") int n_no , Model model) {
+		NoticeVo noticeVo = noticeService.selectByNno(n_no);
+		model.addAttribute("noticeVo",noticeVo);
+		return "hn/mypage/noticeRead";
 	}
 
 	// 자주하는질문
 	@GetMapping("/questionList")
 	public void questionList() {
-		
+
 	}
 }

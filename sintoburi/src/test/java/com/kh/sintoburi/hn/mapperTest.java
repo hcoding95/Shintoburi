@@ -11,11 +11,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.LoginDto;
+import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.PageDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
+import com.kh.sintoburi.mapper.hn.NoticeMapper;
 import com.kh.sintoburi.mapper.hn.ReplyMapper;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 import com.kh.sintoburi.mapper.hn.UserMapper;
@@ -39,6 +41,9 @@ public class mapperTest {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private NoticeMapper noticeMapper;
 	
 	
 	
@@ -138,7 +143,9 @@ public class mapperTest {
 	 }
 	 
 	 @Test
-	 public void getListCount( ) {
-	
+	 public void NoticeList() {
+		 List<NoticeVo> list = noticeMapper.selectNotice();
+		 log.info(list);
 	 }
+	
 }
