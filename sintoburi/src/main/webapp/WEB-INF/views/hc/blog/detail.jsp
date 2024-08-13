@@ -205,6 +205,7 @@ body {
     object-fit: cover;
 }
 
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: black; /* 화살표 배경색 설정 */
@@ -235,6 +236,11 @@ body {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+.profile-header {
+	display: flex;
+    justify-content: space-between; /* 공간을 양쪽으로 분산하여 버튼이 오른쪽에 위치 */
+    align-items: center; /* 버튼과 텍스트가 중앙에 맞춰지도록 정렬 */
+}
 .profile-section div {
     margin-bottom: 10px;
 }
@@ -244,6 +250,9 @@ body {
 
 .text-end {
 	border-bottom: 2px solid #ddd; /* 테두리 추가 */
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .comment-box {
     display: flex;
@@ -346,14 +355,17 @@ body {
 			<div class="profile-end">
 				<!-- 프로필 -->
 			 <div class="profile head-profile">
-					  <div class="profile ">
+					  <div class="profile profile-header ">
 				          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_id})님의 스토리</h3>
+				          <button id="followBtn" class="btn btn-primary">팔로우</button>
 					  </div>
 			      </div>
 			      <!-- 본문 내용  -->
 			      <div class="profile-section main-content">
-			          <h3 class="text-end">본문내용</h3>
-			          <div>${blogVo.blog_content }</div>
+			      	<div class="content-hearder">
+			          <h3 class="text-end">본문내용<button id="likeBtn" class="btn btn-primary">좋아요</button></h3>
+			      	</div>
+			        <div>${blogVo.blog_content }</div>
 			      </div>
 			      <!-- 본문 내용끝  -->
 			        <div class="profile-section reply">

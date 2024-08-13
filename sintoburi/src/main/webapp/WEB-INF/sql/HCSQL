@@ -39,15 +39,10 @@ INCREMENT BY 1
 NOCACHE;
 
 CREATE TABLE TBL_USER_FOLLOW (
-    FOLLOW_NO NUMBER(10) primary key,
     USER_FOLLOWER VARCHAR2(40) REFERENCES TBL_USER(USER_ID) ON DELETE CASCADE,
-    USER_FOLLOWING VARCHAR2(40) REFERENCES TBL_USER(USER_ID) ON DELETE CASCADE
+    USER_FOLLOWING VARCHAR2(40) REFERENCES TBL_USER(USER_ID) ON DELETE CASCADE,
+    CONSTRAINT PK_USER_FOLLOW PRIMARY KEY (USER_FOLLOWER, USER_FOLLOWING)
 );
-
-CREATE SEQUENCE SEQ_USER_FOLLOW
-START WITH 1
-INCREMENT BY 1
-NOCACHE;
 
 
 CREATE TABLE TBL_BLOG_IMG (
@@ -86,4 +81,11 @@ Create Table Tbl_Blog_Tag(
     Blog_No Number(10) References Tbl_Blog(Blog_No) ON DELETE CASCADE,
     Product_Id Number(10) References Tbl_Product(Product_Id),
     Constraint Pk_Blog_Tag Primary Key (Blog_No, Product_Id)
+);
+
+Create Table Tbl_Blog_Like(
+    Blog_No Number(10) References Tbl_Blog (Blog_No) On Delete Cascade,
+    User_Id Varchar2(40) References Tbl_User(User_Id) On Delete Cascade,
+    Constraint Tbl_Blog_Like_Pk Primary Key (Blog_No, User_Id)
+    
 );
