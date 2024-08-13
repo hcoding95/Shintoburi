@@ -38,6 +38,6 @@ public interface EnquiryService {
 	public boolean updateStatus(int eno);
 	
 	// 등급 문의사항 처리완료 
-	public boolean gradeUpdateStatus(int eno);
+	public boolean gradeUpdateStatus(int eno,String status);
 
 }

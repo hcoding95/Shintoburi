@@ -38,6 +38,7 @@ $(function() {
 	    let eno = '${enquiryVo.eno}'; 
 	    let user_id = '${enquiryVo.user_id}'; 
 	    let manager_id = 'manager';
+	    let selectedStatus = $("#status").val();
 		
 		let sData = {
 				"eno": eno,
@@ -59,9 +60,9 @@ $(function() {
 				$.ajax({
 				  	 type: "post",
                      url: "/hn/manager/gradeupdateStatus",
-                     data: { eno: eno },
+                     data: { eno: eno , status: selectedStatus},
                      success: function() {
-                         alert("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
+                    	 alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
                         
                          location.href = "/hn/manager/gradeEnqList";
                      }
@@ -166,7 +167,7 @@ $(function() {
 					</div>
 				
 					<div class="form-group">
-                    <select class="form-select" id="enquiry_type" name="enquiry_type" >
+                    <select class="form-select" id="status" name="status" >
                    	  	<option value="처리완료">처리완료</option>
 					    <option value="보류상태">보류상태</option>
                     </select>

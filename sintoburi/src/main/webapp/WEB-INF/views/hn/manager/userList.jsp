@@ -54,7 +54,6 @@ $(function() {
  <!-- Content Row -->
 
  <div class="row">
-
      <!-- Area Chart -->
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
@@ -98,6 +97,7 @@ $(function() {
 					 <td class="current-grade">
                   	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">[up]</c:if>
               		  </td>
+              		 
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td>

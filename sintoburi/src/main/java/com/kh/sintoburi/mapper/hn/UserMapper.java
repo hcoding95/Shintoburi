@@ -35,7 +35,7 @@ public interface UserMapper {
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public UserDto selectById(String user_id);
+	public UserDto selectById(@Param("user_id") String user_id);
 
 	// 로그인
 	public UserDto login(LoginDto dto);

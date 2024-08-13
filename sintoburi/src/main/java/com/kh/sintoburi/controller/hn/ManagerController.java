@@ -64,6 +64,7 @@ public class ManagerController {
 		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("userList", list);
+		
 
 	}
 
@@ -72,11 +73,12 @@ public class ManagerController {
 	public void managerList(Model model, Criteria criteria) {
 
 		List<UserDto> managerList = userService.managerList(criteria);
-		int managerTotal = userService.managerTotalCount(criteria);
+		System.out.println("managerList" + managerList);
+		int total = userService.managerTotalCount(criteria);
 		
-		PageDto managerPageMaker = new PageDto(criteria, managerTotal);
+		PageDto pageMaker = new PageDto(criteria, total);
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("managerList", managerList);
-		model.addAttribute("managerPageMaker", managerPageMaker);
 	}
 
 	// 등급수정
@@ -174,11 +176,11 @@ public class ManagerController {
 
 	// 등급문의사항 답변완료 변경
 	@PostMapping("/gradeupdateStatus")
-	public ResponseEntity<String> gradeUpdateStatus(@RequestParam int eno) {
-		boolean result = enquiryService.gradeUpdateStatus(eno);
+	public ResponseEntity<String> gradeUpdateStatus(@RequestParam int eno,  @RequestParam String status) {
+		boolean result = enquiryService.gradeUpdateStatus(eno,status);
 
 		if (result) {
-			return ResponseEntity.ok("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
+			  return ResponseEntity.ok("문의사항 상태가 '" + status + "'로 업데이트되었습니다.");
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문의사항 상태 업데이트에 실패했습니다.");
 		}

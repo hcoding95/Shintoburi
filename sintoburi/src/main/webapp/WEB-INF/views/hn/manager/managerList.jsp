@@ -32,7 +32,7 @@ $(function() {
 	                }
 	            }
 		});
-	});
+	
 
 
 	// 매니저페이지 블럭
@@ -47,12 +47,12 @@ $(function() {
 	
 	
 	
-	
+	});
 });
 </script>
 
 <div class="row">
-
+s
      <!-- Area Chart -->
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
@@ -88,9 +88,9 @@ $(function() {
                                		pattern="yyyy-MM-dd"/></td>
                        <td>
                        <select>
-						  <option value="관리자" ${vo.grade == '관리자' ? 'selected' : '관리자'}>관리자</option>
-						  <option value="구매자" ${vo.grade == '구매자' ? 'selected' : '구매자'}>구매자</option>
-    					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>   
+						  	<option value="관리자" ${vo.grade == '관리자' ? 'selected' : ''}>관리자</option>
+						    <option value="구매자" ${vo.grade == '구매자' ? 'selected' : ''}>구매자</option>
+						    <option value="판매자" ${vo.grade == '판매자' ? 'selected' : ''}>판매자</option>
                        </select>
                        </td >
                        <td>
@@ -113,16 +113,16 @@ $(function() {
 								<a  id ="managerpage" class="Page-link managerPage" href="${pageMaker.startPage - 1}">&laquo;</a>
 							</li>
 							</c:if>
-							<c:forEach begin="${managerPageMaker.startPage}" 
-									   end="${managerPageMaker.endPage}" 
+							<c:forEach begin="${pageMaker.startPage}" 
+									   end="${pageMaker.endPage}" 
 									   var="v">
-							<li class="page-item managerPage ${v == managerPageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
+							<li class="page-item managerPage ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
 								<a class="page-link" href="${v}">${v}</a>
 							</li>
 							</c:forEach>
-							<c:if test="${managerPageMaker.next == true}">
+							<c:if test="${pageMaker.next == true}">
 							<li class="page-item managerPage">
-								<a class="page-link" href="${managerPageMaker.endPage + 1}">&raquo;</a>
+								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
 							</li>
 							</c:if>
 						</ul>

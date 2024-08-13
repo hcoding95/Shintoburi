@@ -43,5 +43,5 @@ public interface EnquiryMapper {
 	public int updateStatus(@Param("eno") int eno);
 
 	// 등급 문의사항 처리완료
-	public int gradeUpdateStatus(@Param("eno") int eno);
+	public int gradeUpdateStatus(@Param("eno") int eno , @Param("status") String status);
 }

@@ -1,13 +1,18 @@
 package com.kh.sintoburi.hn;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
+import com.kh.sintoburi.service.hn.UserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -18,6 +23,9 @@ public class serviceTest {
 	
 	@Autowired
 	private EnquiryService enquiryService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Test
 	public void testInstance() {
@@ -36,5 +44,6 @@ public class serviceTest {
 		boolean result = enquiryService.modify(vo);
 		log.info(result);
 	}
-
+	
+	
 }

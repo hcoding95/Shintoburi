@@ -25,6 +25,7 @@
             email,
             grade,
             last_login,
+            business,
             row_number() over (order by last_login desc) as rn
         from tbl_users
         <where>
@@ -87,6 +88,7 @@
             email,
             grade,
             last_login,
+            business,
             row_number() over (order by last_login desc) as rn
         from tbl_users
         <where>
@@ -117,7 +119,7 @@
 <!-- 매니저게시글 갯수 -->
 	<select id="managerTotalCount" resultType="int">
 		select count(*) from tbl_users
-		where grade='관리자'
+		where grade= '관리자'
 		<where>
 			<if test="type != null">
 				<trim prefix="(" suffix=")" prefixOverrides="or">
@@ -154,7 +156,7 @@
   
   <!--  회원 데이터 1개 -->
    <select id="selectById" resultType="UserDto">
-  	select user_id,user_name,grade,email,last_login 
+  	select user_id,user_name,grade,email,last_login,business
   	from tbl_users
   	where user_id = #{user_id}
   </select>

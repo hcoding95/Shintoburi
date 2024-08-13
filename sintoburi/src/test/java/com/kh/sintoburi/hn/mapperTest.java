@@ -104,11 +104,6 @@ public class mapperTest {
 
 	}
 
-	@Test
-	public void gradeUpdateStatus() {
-		int count = enquiryMapper.gradeUpdateStatus(23);
-		log.info(count);
-	}
 
 	@Test
 	public void selectReportPost() {
@@ -160,5 +155,22 @@ public class mapperTest {
 		List<UserDto> list = userMapper.managerList();
 		log.info(list);
 	}
+	
+	@Test
+	public void selectById() {
+		String user_id = "user00";
+		UserDto dto = userMapper.selectById(user_id);
+		log.info(dto);
+	}
+	
+	@Test
+	public void userList() {
+	List<UserDto> list = userMapper.getList();
+		log.info(list);
+	}
+	
+
+	
+	
 
 }

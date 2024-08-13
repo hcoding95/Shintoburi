@@ -82,9 +82,10 @@ public class EnquriyServiceImpl implements EnquiryService {
 
 	// 등급 문의사항 처리완료로 상태변경
 	@Override
-	public boolean gradeUpdateStatus(int eno) {
-		int count = enquiryMapper.gradeUpdateStatus(eno);
+	public boolean gradeUpdateStatus(int eno,String status) {
+		int count = enquiryMapper.gradeUpdateStatus(eno,status);
 		return (count == 1) ? true : false;
 	}
+
 
 }
