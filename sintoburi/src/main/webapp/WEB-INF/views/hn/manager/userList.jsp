@@ -34,17 +34,17 @@ $(function() {
 	            }
 		});
 	});
-		
-	// 페이지 블럭
-	 $("a.page-link").click(function(e) {
+	
+	// 회원테이블 페이지 블럭
+	 $(".userPage").click(function(e) {
 	        e.preventDefault(); // 브라우저의 기본 기능 막기
-	        
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
 	        $("#actionForm > input[name=pageNum]").val(pageNum);
 	        $("#actionForm").attr("action", "/hn/manager/userList");
 	        $("#actionForm").submit();
 	    });
+
 	
 	
 	
@@ -124,19 +124,19 @@ $(function() {
 						<ul class="pagination justify-content-center">
 							<c:if test="${pageMaker.prev == true}">
 							<li class="page-item">
-								<a  id ="page" class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
+								<a  id ="userpage" class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a>
 							</li>
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}" 
 									   end="${pageMaker.endPage}" 
 									   var="v">
 							<li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link" href="${v}">${v}</a>
+								<a class="page-link userPage" href="${v}">${v}</a>
 							</li>
 							</c:forEach>
 							<c:if test="${pageMaker.next == true}">
 							<li class="page-item">
-								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
+								<a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a>
 							</li>
 							</c:if>
 						</ul>
@@ -154,4 +154,4 @@ $(function() {
 
 
 <%@ include file="/WEB-INF/views/hn/manager/include/action_form.jsp" %>
- <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>
+<%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

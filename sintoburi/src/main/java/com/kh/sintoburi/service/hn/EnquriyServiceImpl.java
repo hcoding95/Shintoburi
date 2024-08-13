@@ -54,8 +54,8 @@ public class EnquriyServiceImpl implements EnquiryService {
 
 	// 문의사항수정
 	@Override
-	public boolean modify(int eno) {
-		int count = enquiryMapper.update(eno);
+	public boolean modify(EnquiryVo vo) {
+		int count = enquiryMapper.update(vo);
 		return (count == 1) ? true : false;
 	}
 

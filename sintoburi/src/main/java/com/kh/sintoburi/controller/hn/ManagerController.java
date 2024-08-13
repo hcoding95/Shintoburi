@@ -46,7 +46,7 @@ public class ManagerController {
 
 	@Autowired
 	private ReportPostService reportPostService;
-	
+
 	@Autowired
 	private NoticeService noticeService;
 
@@ -57,16 +57,29 @@ public class ManagerController {
 	public void userList(Model model, Criteria criteria) {
 		System.out.println("Page Number: " + criteria.getPageNum());
 		System.out.println("Amount per Page: " + criteria.getAmount());
-		
+
+		// 회원목록
 		List<UserDto> list = userService.getList(criteria);
 		int total = userService.getTotal(criteria);
 		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("userList", list);
+
+	}
+
+	// 매니저목록
+	@GetMapping("/managerList")
+	public void managerList(Model model, Criteria criteria) {
+
+		List<UserDto> managerList = userService.managerList(criteria);
+		int managerTotal = userService.managerTotalCount(criteria);
+		
+		PageDto managerPageMaker = new PageDto(criteria, managerTotal);
+		model.addAttribute("managerList", managerList);
+		model.addAttribute("managerPageMaker", managerPageMaker);
 	}
 
 	// 등급수정
-
 	@PostMapping("/modGrade")
 	@ResponseBody
 	public boolean modGrade(@RequestBody UserDto dto) {
@@ -93,14 +106,14 @@ public class ManagerController {
 
 	// 상품문의사항목록
 	@GetMapping("/goodsEnqList")
-	public void goodsEnqList(Model model,Criteria criteria) {
+	public void goodsEnqList(Model model, Criteria criteria) {
 		List<EnquiryVo> list = enquiryService.goodsGetList(criteria);
-		
+
 		int total = enquiryService.getTotalCount(criteria);
 		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("goodsEnqList", list);
-		
+
 		// 답변 리스트
 		List<ReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("replyList", replyLisy);
@@ -134,9 +147,9 @@ public class ManagerController {
 
 	// 등급문의사항목록
 	@GetMapping("/gradeEnqList")
-	public void gradeEnqList(Model model,Criteria criteria) {
+	public void gradeEnqList(Model model, Criteria criteria) {
 		List<EnquiryVo> list = enquiryService.gradeGetList(criteria);
-		
+
 		int total = enquiryService.getTotalCount(criteria);
 		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
@@ -153,6 +166,7 @@ public class ManagerController {
 		System.out.println("enquiryDetail...");
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
 		model.addAttribute("enquiryVo", enquiryVo);
+
 		ReplyVo replyVo = replyService.selectByReplyEno(eno);
 		model.addAttribute("replyVo", replyVo);
 		return "hn/manager/gradeEnqDetail";
@@ -189,31 +203,30 @@ public class ManagerController {
 
 		return "hn/manager/reportDetail";
 	}
-	
-	
+
 	// 공지사항
 	@GetMapping("/noticeList")
 	public void noticeList(Model model) {
 		List<NoticeVo> list = noticeService.getListNotice();
-		model.addAttribute("noticeList",list);
+		model.addAttribute("noticeList", list);
 	}
-	
+
 	// 공지사항등록폼
 	@GetMapping("/noticeForm")
 	public void noticeForm() {
-		
+
 	}
-	
+
 	// 공지사항등록
 	@PostMapping("/noticeRegister")
 	public void noticeRegister() {
-		
+
 	}
-	
+
 	// 자주하는 질문
 	@GetMapping("/questionList")
 	public void questionList() {
-		
+
 	}
 
 }

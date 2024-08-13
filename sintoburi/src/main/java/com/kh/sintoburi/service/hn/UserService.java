@@ -11,8 +11,14 @@ public interface UserService {
 	// 회원목록
 	public List<UserDto> getList(Criteria criteria);
 
-	// 갯수
+	// 매니저목록
+	public List<UserDto> managerList(Criteria criteria);
+
+	// 회원 목록 갯수
 	public int getTotal(Criteria criteria);
+	
+	// 매니저 목록 갯수
+	public int managerTotalCount(Criteria criteria);
 
 	// 등급수정
 	public boolean modifyGrade(String user_id, String grade);

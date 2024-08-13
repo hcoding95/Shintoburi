@@ -100,7 +100,7 @@ $(function() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${replyList}" var="reply">
+                                    <c:forEach items="${gradeReplyList}" var="reply">
                                          <c:if test="${reply.eno == vo.eno}">
                                             <tr class="text-center">
                                                 <td>${reply.rno}</td>
