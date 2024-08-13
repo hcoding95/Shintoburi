@@ -136,12 +136,10 @@
                     <h2>LOGIN</h2>
                     <form action="/hn/user/loginPost" method="post">
                         <div class="form-group">
-                            <input type="text" value="manager" class="form-control form-control-user" id="user_id" name="user_id" placeholder="아이디" required>
+                            <input type="text" value="user00" class="form-control form-control-user" id="user_id" name="user_id" placeholder="아이디" required>
                         </div>
-                        <div class="form-group" style="
-							    margin-bottom: 0px;
-							">
-                            <input type="password" value="manager" class="form-control form-control-user" id="user_pw" name="user_pw" placeholder="비밀번호" required="">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="password" value="user00" class="form-control form-control-user" id="user_pw" name="user_pw" placeholder="비밀번호" required="">
                         </div>
                         <div class="form-group">
                             <div class="form-checkbox-wrapper">

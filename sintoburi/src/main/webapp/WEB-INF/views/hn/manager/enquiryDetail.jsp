@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
 
 <script>
@@ -63,7 +62,7 @@ $(function() {
                      success: function() {
                          alert("문의사항 상태가 '답변완료'로 업데이트되었습니다.");
                         
-                         location.href = "/hn/manager/enqList";
+                         location.href = "/hn/manager/goodsEnqList";
                      }
 			
 				});

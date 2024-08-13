@@ -31,7 +31,7 @@ public interface EnquiryMapper {
 	public int insert(EnquiryVo vo);
 
 	// 문의사항수정
-	public int update(@Param("eno") int eno);
+	public int update(EnquiryVo vo);
 
 	// 문의사항삭제
 	public int delete(@Param("eno") int eno);

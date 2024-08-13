@@ -10,45 +10,43 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.domain.hn.UserVo;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter{
+public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-	
-	 @Override
-	    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-	                           ModelAndView modelAndView) throws Exception {
-	        System.out.println("postHandle...");
-	        if (modelAndView != null) {
-	            Object obj = modelAndView.getModel().get("userDto");
-	            System.out.println("obj:" + obj);
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		System.out.println("postHandle...");
+		if (modelAndView != null) {
+			Object obj = modelAndView.getModel().get("userDto");
+			System.out.println("obj:" + obj);
 
-	            if (obj == null) { // 로그인 실패
-	                modelAndView.setViewName("redirect:/user/login");
-	            } else {
-	                // 로그인 성공
-	                HttpSession session = request.getSession();
-	                UserDto userDto = (UserDto) obj;
-	                session.setAttribute("login", userDto);
+			if (obj == null) { // 로그인 실패
+				modelAndView.setViewName("redirect:/hn/user/login");
+			} else {
+				// 로그인 성공
+				HttpSession session = request.getSession();
+				UserDto userDto = (UserDto) obj;
+				session.setAttribute("login", userDto);
 
-	                
-	                String location;
-	                switch (userDto.getGrade()) {
-	                    case "판매자":
-	                        location = "/hn/";
-	                        break;
-	                    case "구매자":
-	                        location = "/hn/";
-	                        break;
-	                    case "관리자":
-	                        location = "/hn/manager/userList";
-	                        break;
-	                    default:
-	                        location = "/";
-	                        break;
-	                }
+				String location;
+				switch (userDto.getGrade()) {
+				case "판매자":
+					location = "/hn/";
+					break;
+				case "구매자":
+					location = "/hn/";
+					break;
+				case "관리자":
+					location = "/hn/manager/userList";
+					break;
+				default:
+					location = "/";
+					break;
+				}
 
-	                System.out.println("location:" + location);
-	                modelAndView.setViewName("redirect:" + location);
-	            }
-	        }
-	    }
+				System.out.println("location:" + location);
+				modelAndView.setViewName("redirect:" + location);
+			}
+		}
+	}
 }
