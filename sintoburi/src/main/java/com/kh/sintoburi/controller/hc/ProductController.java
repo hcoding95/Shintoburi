@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.sintoburi.domain.hc.ProductDto;
+import com.kh.sintoburi.domain.hc.ProductTagDto;
 import com.kh.sintoburi.service.hc.ProductService;
 
 @Controller
@@ -21,8 +21,8 @@ public class ProductController {
 	
 	@PostMapping("/getList")
 	@ResponseBody
-	public List<ProductDto> getList(@RequestBody ProductDto dto){
-		List<ProductDto> list = productService.getProductList(dto);
+	public List<ProductTagDto> getList(@RequestBody ProductTagDto dto){
+		List<ProductTagDto> list = productService.getProductList(dto);
 		return list;
 	}
 	

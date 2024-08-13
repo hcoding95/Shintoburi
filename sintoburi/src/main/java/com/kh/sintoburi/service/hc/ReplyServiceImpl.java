@@ -3,10 +3,12 @@ package com.kh.sintoburi.service.hc;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.hc.ReplyDto;
 import com.kh.sintoburi.mapper.hc.ReplyMapper;
 
+@Service
 public class ReplyServiceImpl implements ReplyService {
 	
 	@Autowired
@@ -20,8 +22,20 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public boolean insertReply(ReplyDto replyDto) {
-		int count = replyDto.insertReply(replyDto);
-		return false;
+		int count = replyMapper.insertReply(replyDto);
+		return (count >0)? true : false;
+	}
+
+	@Override
+	public boolean modifyReply(ReplyDto replyDto) {
+		int count = replyMapper.modify(replyDto);
+		return (count >0)? true : false;
+	}
+
+	@Override
+	public boolean deleteReply(int blog_rno) {
+		int count = replyMapper.deleteByBlog_rno(blog_rno);
+		return (count >0)? true : false;
 	}
 	
 	

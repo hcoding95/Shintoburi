@@ -8,4 +8,6 @@ public interface ReplyService {
 
 	public List<ReplyDto> getReplyListByBlog_no(int blog_no);
 	public boolean insertReply(ReplyDto replyDto);
+	public boolean modifyReply(ReplyDto replyDto);
+	public boolean deleteReply(int blog_rno);
 }

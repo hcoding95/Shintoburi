@@ -9,9 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sintoburi.domain.hc.BlogVo;
-import com.kh.sintoburi.domain.hc.ProductDto;
+import com.kh.sintoburi.domain.hc.ProductTagDto;
 import com.kh.sintoburi.mapper.hc.BlogMapper;
-import com.kh.sintoburi.mapper.hc.ProductMapper;
+import com.kh.sintoburi.mapper.hc.ProductTagMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 public class Test {
 	
 	@Autowired
-	private ProductMapper mapper;
+	private ProductTagMapper mapper;
 	
 	@Autowired
 	private BlogMapper blogMapper;
@@ -37,9 +37,9 @@ public class Test {
 	}
 	@org.junit.Test
 	public void mapperTest() {
-		ProductDto dto = new ProductDto();
+		ProductTagDto dto = new ProductTagDto();
 		dto.setProduct_id(10);
-		List<ProductDto> list = mapper.getProductListWithCondition(dto);
+		List<ProductTagDto> list = mapper.getProductListWithCondition(dto);
 	}
 	
 	

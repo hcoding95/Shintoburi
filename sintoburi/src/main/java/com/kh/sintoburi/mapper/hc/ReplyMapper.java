@@ -19,6 +19,8 @@ public interface ReplyMapper {
 	public int deteteByBlog_no(int blog_no);
 	public List<BlogVo> getListWithPage();
 	public BlogVo getBlogVoByBlogNo(int blog_no);
+	public int modify(ReplyDto replyDto);
+	public int deleteByBlog_rno(int blog_rno);
 	
 	
 }

@@ -11,4 +11,6 @@ public interface ProductTagMapper {
 	public int update(ProductTagDto tagDto);
 	public int deleteByPrimaryKey(ProductTagDto tagDto);
 	public List<ProductTagDto> getTagList(int blog_no);
+	
+	public List<ProductTagDto> getProductListWithCondition(ProductTagDto dto);
 }

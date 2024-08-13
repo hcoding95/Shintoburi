@@ -9,15 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.sintoburi.domain.hc.AttachFileDto;
 import com.kh.sintoburi.domain.hc.BlogVo;
-import com.kh.sintoburi.domain.hc.ProductDto;
 import com.kh.sintoburi.domain.hc.ProductTagDto;
 import com.kh.sintoburi.mapper.hc.AttachMapper;
 import com.kh.sintoburi.mapper.hc.BlogMapper;
-import com.kh.sintoburi.mapper.hc.ProductMapper;
 import com.kh.sintoburi.mapper.hc.ProductTagMapper;
 
 import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j

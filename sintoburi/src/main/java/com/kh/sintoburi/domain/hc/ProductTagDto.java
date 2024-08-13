@@ -1,5 +1,7 @@
 package com.kh.sintoburi.domain.hc;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
