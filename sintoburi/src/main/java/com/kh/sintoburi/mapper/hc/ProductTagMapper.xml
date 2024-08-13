@@ -27,12 +27,12 @@
   		where blog_no = #{blog_no}
   	</select>
   	
-  	<select id="getProductListWithCondition" resultType="ProductDto">
+  	<select id="getProductListWithCondition" resultType="ProductTagDto">
   		select * from tbl_product
   		<where>
   		<choose>
-  			<when test="product_id == null">
-  				product_name like #{product_name} || '%' 
+  			<when test="product_id == 0">
+  				product_name like '%' || #{product_name} || '%' 
   			</when>
   			<when test="product_name == null">
   				product_id like #{product_id} || '%' 

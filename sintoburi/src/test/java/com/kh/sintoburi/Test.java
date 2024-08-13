@@ -38,7 +38,8 @@ public class Test {
 	@org.junit.Test
 	public void mapperTest() {
 		ProductTagDto dto = new ProductTagDto();
-		dto.setProduct_id(10);
+		dto.setProduct_name("테스트");
+		System.out.println("프로덕트 dto는?" + dto);
 		List<ProductTagDto> list = mapper.getProductListWithCondition(dto);
 	}
 	

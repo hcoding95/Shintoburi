@@ -22,6 +22,7 @@ public class ProductController {
 	@PostMapping("/getList")
 	@ResponseBody
 	public List<ProductTagDto> getList(@RequestBody ProductTagDto dto){
+		System.out.println("내가받은 productTagDto는?" + dto);
 		List<ProductTagDto> list = productService.getProductList(dto);
 		return list;
 	}
