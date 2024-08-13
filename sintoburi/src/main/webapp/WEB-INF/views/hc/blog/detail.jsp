@@ -47,11 +47,18 @@ $(function () {
 			}
 		});
 	});
-	
-	
 	$(".replyModifyBtn").click(function () {
+		let commentBox = $(this).closest(".comment-box");
+		commentBox.find(".modify-comment").hide();
+		commentBox.find(".modify-input").show();
+		commentBox.find(".replyModifyOkBtn").show();
+		$(this).hide();
+	})
+	
+	
+	$(".replyModifyOkBtn").click(function () {
 		let replyer = '${login.user_id}';
-		let comment = $("#comment-textarea").val();
+		let comment = $(this).closest(".comment-box").find(".modify-input").val();
 		let blog_rno = $(this).data("blog_rno");
 		let sData = {
 				'replyer' : replyer,
@@ -70,7 +77,6 @@ $(function () {
 				}
 			}
 		});
-		
 	});
 	
 	$(".replyDeleteBtn").click(function () {
@@ -84,10 +90,7 @@ $(function () {
 					location.reload();
 				}
 			}
-			
 		});
-		
-		
 	});
 	
 	
@@ -370,10 +373,14 @@ body {
 			                       </div>
 			                       <c:if test="${login.user_id eq reply.replyer }">
 			                       <div><button class="btn btn-primary btn-reply replyModifyBtn"  data-blog_rno="${reply.blog_rno}">수정</button></div>
+			                       <div><button class="btn btn-success btn-reply replyModifyOkBtn" style="display: none;"  data-blog_rno="${reply.blog_rno}">수정완료</button></div>
 			                       <div><button class="btn btn-danger btn-reply replyDeleteBtn"  data-blog_rno="${reply.blog_rno}">삭제</button></div>
 			                       </c:if>
 		                     	</div>
-		                       <p><input readonly="readonly" value="${reply.reply_content }"></p>
+		                       <p>
+		                       <div class="modify-comment">${reply.reply_content }</div>
+		                       <input style="display: none;" class="modify-input" value="${reply.reply_content }">
+		                       </p>
 		                     </div>
 		                     </div>
 			              <!-- 댓글 끝 -->

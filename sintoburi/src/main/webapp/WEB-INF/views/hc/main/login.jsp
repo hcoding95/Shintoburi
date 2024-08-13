@@ -54,7 +54,7 @@
                                             <input type="text" class="form-control form-control-user"
                                                 id="user_id" name="user_id"
                                                 placeholder="Enter User Id..."
-                                                value="user02">
+                                                value="user10">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
