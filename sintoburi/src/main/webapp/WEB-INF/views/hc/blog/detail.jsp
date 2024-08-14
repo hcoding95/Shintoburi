@@ -356,14 +356,29 @@ body {
 				<!-- 프로필 -->
 			 <div class="profile head-profile">
 					  <div class="profile profile-header ">
-				          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_id})님의 스토리</h3>
-				          <button id="followBtn" class="btn btn-primary">팔로우</button>
+				          <h3><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_name})님의 스토리</h3>
+				          <c:choose>
+				          <c:when test="${blogVo.checkFollow eq true }">
+				          	<button id="followBtn" class="btn btn-danger"><i class="fa fa-handshake">팔로우</i></button>
+				          </c:when>
+				          <c:otherwise>
+				          	<button id="followBtn" class="btn btn-primary"><i class="fa fa-handshake" style="opacity: 0.5;">팔로우</i></button>
+				          </c:otherwise>
+				          </c:choose>
 					  </div>
 			      </div>
 			      <!-- 본문 내용  -->
 			      <div class="profile-section main-content">
 			      	<div class="content-hearder">
-			          <h3 class="text-end">본문내용<button id="likeBtn" class="btn btn-primary">좋아요</button></h3>
+			          <h3 class="text-end">본문내용
+			          <c:choose>
+				          <c:when test="${blogVo.checkLike eq true}">
+				          <button id="likeBtn" class="btn btn-primary"><i class="fa-solid fa-thumbs-up">좋아요</i></button>
+				          </c:when>
+				          <c:otherwise>
+				          <button id="likeBtn" class="btn btn-danger"><i class="fa-regular fa-thumbs-up">좋아요</i></button>
+				          </c:otherwise>
+				      </c:choose></h3>
 			      	</div>
 			        <div>${blogVo.blog_content }</div>
 			      </div>

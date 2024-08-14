@@ -15,6 +15,7 @@ import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.LoginDto;
 import com.kh.sintoburi.domain.hc.UserVo;
 import com.kh.sintoburi.service.hc.BlogService;
+import com.kh.sintoburi.service.hc.InjectionService;
 import com.kh.sintoburi.service.hc.UserService;
 
 @Controller
@@ -25,10 +26,18 @@ public class MainController {
 	private UserService userService;
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private InjectionService injectionService;
 	
 	@GetMapping("/home")
-	public void home(Model model) {
+	public void home(Model model, HttpSession session) {
 		List<BlogVo> list = blogService.getList();
+		UserVo loginUser = (UserVo)session.getAttribute("login");
+		String login_id = "";
+		if(loginUser != null) {
+			login_id = loginUser.getUser_id();
+		}
+		list = injectionService.checkListFollowAndLike(list, login_id);
 		model.addAttribute("list", list);
 	}
 	

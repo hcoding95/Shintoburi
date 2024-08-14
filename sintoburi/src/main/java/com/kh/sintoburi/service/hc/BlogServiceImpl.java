@@ -2,6 +2,7 @@ package com.kh.sintoburi.service.hc;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +27,13 @@ public class BlogServiceImpl implements BlogService {
 	@Autowired
 	private AttachMapper attachMapper;
 	
+	
 	@Transactional
 	@Override
 	public boolean insert(BlogVo blogVo) {
 		int result = blogMapper.insertSelectKey(blogVo);
 		int blog_no = blogVo.getBlog_no();
-		System.out.println("blog_no는??" + blog_no);
 		List<AttachFileDto> fileList = blogVo.getFileList();
-		System.out.println(fileList);
 		if(fileList != null) {
 			fileList.forEach(dto -> {
 				dto.setBlog_no(blog_no);
@@ -46,7 +46,6 @@ public class BlogServiceImpl implements BlogService {
 				dto.setBlog_no(blog_no);
 				productTagMapper.insert(dto);
 			});
-			
 		}
 		return (result > 0)? true : false;
 	}
@@ -123,25 +122,7 @@ public class BlogServiceImpl implements BlogService {
 		return (result > 0)? true : false;
 	}
 	
-	@Transactional
-	@Override
-	public List<BlogVo> getList() {
-		List<BlogVo> list = blogMapper.getListWithPage();
-		list.forEach(vo -> {
-			int blog_no = vo.getBlog_no();
-			List<AttachFileDto> attachList = attachMapper.getAttachList(blog_no);
-			if(attachList != null) {
-				vo.setFileList(attachList);
-			}
-			List<ProductTagDto> tagList = productTagMapper.getTagList(blog_no);
-			if(tagList != null) {
-				vo.setProductTagList(tagList);
-			}
-		});
-		
-		
-		return list;
-	}
+	
 	
 	@Transactional
 	@Override
@@ -162,6 +143,24 @@ public class BlogServiceImpl implements BlogService {
 	public boolean delete(int blog_no) {
 		int count = blogMapper.deteteByBlog_no(blog_no);
 		return (count > 0)? true : false;
+	}
+	
+	@Transactional
+	@Override
+	public List<BlogVo> getList() {
+		List<BlogVo> list = blogMapper.getListWithPage();
+		list.forEach(vo -> {
+			int blog_no = vo.getBlog_no();
+			List<AttachFileDto> attachList = attachMapper.getAttachList(blog_no);
+			if(attachList != null) {
+				vo.setFileList(attachList);
+			}
+			List<ProductTagDto> tagList = productTagMapper.getTagList(blog_no);
+			if(tagList != null) {
+				vo.setProductTagList(tagList);
+			}
+		});
+		return list;
 	}
 	
 	@Transactional

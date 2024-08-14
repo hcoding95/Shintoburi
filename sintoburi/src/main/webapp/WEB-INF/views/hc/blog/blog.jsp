@@ -8,6 +8,55 @@
 <!-- 글리피콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<script>
+$(function () {
+	$(".likeBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let blog_no = that.attr("data-blog_no");
+		let liked = that.attr("data-liked");
+		let sData = {
+			'user_id' : login_id,
+			'blog_no' : blog_no
+		};
+		console.log(sData);
+		console.log(liked);
+		if (liked == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/removeLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 취소");
+					let container = that.closest(".post-container");
+					let countLike = container.find(".sumLike");
+					let count = parseInt(countLike.text(), 10);
+					countLike.text(count - 1);
+					that.attr("data-liked", "false"); // data-liked 값을 "false"로 변경
+					that.html('<i class="fa-regular fa-thumbs-up">좋아요</i>');
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/addLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 클릭");
+					let container = that.closest(".post-container");
+					let countLike = container.find(".sumLike");
+					let count = parseInt(countLike.text(), 10);
+					countLike.text(count + 1);
+					that.attr("data-liked", "true"); // data-liked 값을 "true"로 변경
+					that.html('<i class="fa-solid fa-thumbs-up">좋아요</i>');
+				} 
+			});
+		}
+	});
+});
+</script>
 <style>
 .header-top {
     
@@ -398,24 +447,30 @@
 							  	  <div class="user-details">
 							       <img src="/resources/images/logo.png" alt="User Image">
 							       <div class="user-info-text">
-							           <div><a href="/hc/blog/blog">${vo.user_id}</a></div>
-							           <div><c:choose> <c:when test="${empty vo.updatedate}"><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd hh:mm"/></c:when>
+							           <div><a href="/hc/blog/blog?user_id=${vo.user_id }">${vo.user_name}</a></div>
+							           <div><c:choose>
+							           <c:when test="${empty vo.updatedate}"><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd hh:mm"/></c:when>
 							           	<c:otherwise><fmt:formatDate value="${vo.updatedate}" pattern="yyyy.MM.dd hh:mm"/>수정</c:otherwise>
 							            </c:choose></div>
 							       </div>
 							     </div>
 							     <div class="user-stats">
-							       <div><i class="fa fa-thumbs-up">좋아요</i><span>1000</span></div>
-							       <!-- 좋아요 눌렀을때 <i class="fa-solid fa-thumbs-up"></i> -->
-							       <div><i class="fa fa-handshake">팔로워</i><span>10000</span></div>
-							       <!-- 팔로우 눌렀을때<i class="fa-solid fa-handshake"></i> -->
+							       <div><i class="fa fa-thumbs-up">좋아요</i><span class="sumLike">${vo.sumLike }</span></div>
+							       <div><i class="fa fa-handshake">팔로워</i><span class="sumFollow">${vo.sumFollower }</span></div>
 							     </div>
 							</div>
 							    <div class="post-content">
 							         ${vo.blog_content} <a href="#">더보기</a>
 							    </div>
 							    <div class="post-actions">
-							        <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
+							        <button class="likeBtn" data-blog_no="${vo.blog_no}" data-liked="${vo.checkLike}"><c:choose>
+							        	<c:when test="${vo.checkLike eq true }">
+							        	<i class="fa-solid fa-thumbs-up">좋아요</i>
+							        	</c:when>
+							        	<c:otherwise>
+							        	<i class="fa-regular fa-thumbs-up">좋아요</i>
+							        	</c:otherwise>
+							        	</c:choose></button>
 							        <button><a data-toggle="modal" data-target="#myModal${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
 							        <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
 							        <button><c:choose>
@@ -467,10 +522,12 @@
 							            <h3 class="text-end">사진</h3>
 							            <div class="photo-main-grid">
 							            	<!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
-							            	<c:forEach items="${list}" var="pictureVo">
-							             		<c:if test="${not empty pictureVo.fileList }">
-									             <c:forEach items="${pictureVo.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
-									                <div class="photo"><a data-toggle="modal" data-target="#myModal${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
+							            	<c:forEach items="${list}" var="pictureVo2">
+							             		<c:if test="${not empty pictureVo2.fileList }">
+									             <c:forEach items="${pictureVo2.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
+									                <div class="photo"><a data-toggle="modal" data-target="#pictureModal${pictureVo2.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
+									                <c:set var="detailVo" value="${pictureVo2}"></c:set>
+													<%@ include file="/WEB-INF/views/hc/include/picture_modal.jsp" %>
 									             </c:forEach>
 								             	</c:if>
 							            	</c:forEach>

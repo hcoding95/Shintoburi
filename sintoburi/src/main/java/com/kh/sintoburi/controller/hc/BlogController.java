@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hc;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.ReplyDto;
+import com.kh.sintoburi.domain.hc.UserVo;
 import com.kh.sintoburi.service.hc.BlogService;
+import com.kh.sintoburi.service.hc.InjectionService;
 import com.kh.sintoburi.service.hc.ReplyService;
 
 @Controller
@@ -25,17 +29,32 @@ public class BlogController {
 	@Autowired
 	private ReplyService replyService;
 	
+	@Autowired
+	private InjectionService injectionService;
+	
 	@GetMapping("/blog")
-	public void blog(String user_id, Model model) {
+	public void blog(String user_id, HttpSession session,Model model) {
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
+		UserVo loginUser = (UserVo)session.getAttribute("login");
+		String login_id = "";
+		if(loginUser != null) {
+			login_id = loginUser.getUser_id();
+		}
+		list = injectionService.checkListFollowAndLike(list, login_id);
 		model.addAttribute("list", list);
-		
 	}
+	
 	@Transactional
 	@GetMapping("/detail")
-	public void detail(int blog_no, Model model) {
+	public void detail(int blog_no, HttpSession session, Model model) {
 		BlogVo blogVo = blogService.readByBlogNo(blog_no);
 		List<ReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
+		UserVo loginUser = (UserVo)session.getAttribute("login");
+		String login_id = "";
+		if(loginUser != null) {
+			login_id = loginUser.getUser_id();
+		}
+		blogVo = injectionService.checkVoFollowAndLike(blogVo, login_id);
 		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("replyList", replyList);
 	}
@@ -48,6 +67,7 @@ public class BlogController {
 	
 	@PostMapping("/registerAction")
 	public String registeraction(BlogVo blogVo) {
+		System.out.println("내가만들 blogVo는?" + blogVo);
 		String path = "";
 		if(blogService.insert(blogVo)) {
 			path="redirect:/hc/main/home";
