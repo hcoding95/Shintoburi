@@ -4,6 +4,8 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
+<!-- 글리피콘 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -93,9 +95,41 @@ $(function () {
 		});
 	});
 	
-	
-	
-	
+	$("#likeBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let blog_no = that.attr("data-blog_no");
+		let liked = that.attr("data-liked");
+		let sData = {
+			'user_id' : login_id,
+			'blog_no' : blog_no
+		};
+		console.log(sData);
+		console.log(liked);
+		if (liked == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/removeLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 취소");
+					location.reload();
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/addLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 클릭");
+					location.reload();
+				} 
+			});
+		}
+	});
 });
 
 
@@ -117,6 +151,9 @@ body {
     box-sizing: border-box;
 }
 
+#followBtn{
+	margin-right: 10px;
+}
 
 .side-bar {
     /* width: 40%; */
@@ -359,10 +396,10 @@ body {
 				          <h3><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_name})님의 스토리</h3>
 				          <c:choose>
 				          <c:when test="${blogVo.checkFollow eq true }">
-				          	<button id="followBtn" class="btn btn-danger"><i class="fa fa-handshake">팔로우</i></button>
+				          	<button id="followBtn" class="btn btn-danger"><i class="fa fa-handshake">취소(${blogVo.sumFollower })</i></button>
 				          </c:when>
 				          <c:otherwise>
-				          	<button id="followBtn" class="btn btn-primary"><i class="fa fa-handshake" style="opacity: 0.5;">팔로우</i></button>
+				          	<button id="followBtn" class="btn btn-primary"><i class="fa fa-handshake">팔로우(${blogVo.sumFollower })</i></button>
 				          </c:otherwise>
 				          </c:choose>
 					  </div>
@@ -373,10 +410,10 @@ body {
 			          <h3 class="text-end">본문내용
 			          <c:choose>
 				          <c:when test="${blogVo.checkLike eq true}">
-				          <button id="likeBtn" class="btn btn-primary"><i class="fa-solid fa-thumbs-up">좋아요</i></button>
+				          <button id="likeBtn" class="btn btn-danger" data-blog_no="${blogVo.blog_no }" data-liked="${blogVo.checkLike}"><i class="fa-solid fa-thumbs-up">취소(${blogVo.sumLike })</i></button>
 				          </c:when>
 				          <c:otherwise>
-				          <button id="likeBtn" class="btn btn-danger"><i class="fa-regular fa-thumbs-up">좋아요</i></button>
+				          <button id="likeBtn" class="btn btn-primary" data-blog_no="${blogVo.blog_no }" data-liked="${blogVo.checkLike}"><i class="fa-regular fa-thumbs-up">좋아요(${blogVo.sumLike })</i></button>
 				          </c:otherwise>
 				      </c:choose></h3>
 			      	</div>

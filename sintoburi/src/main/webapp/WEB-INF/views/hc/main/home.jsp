@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <!-- 글리피콘 -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <script>
 $(function () {
@@ -226,8 +225,8 @@ $(function () {
        </div>
      </div>
      <div class="user-stats">
-       <div><i class="fa fa-thumbs-up"> 좋아요</i><span class="sumLike">${vo.sumLike }</span></div>
-       <div><i class="fa fa-handshake">팔로워</i><span class="sumFollow">${vo.sumFollower }</span></div>
+       <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike">${vo.sumLike }</span></i></div>
+       <div><i class="fa fa-handshake">팔로워<span class="sumFollow">${vo.sumFollower }</span></i></div>
      </div>
 </div>
     <div class="post-content">

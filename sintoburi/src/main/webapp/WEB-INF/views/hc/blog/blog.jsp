@@ -455,8 +455,8 @@ $(function () {
 							       </div>
 							     </div>
 							     <div class="user-stats">
-							       <div><i class="fa fa-thumbs-up">좋아요</i><span class="sumLike">${vo.sumLike }</span></div>
-							       <div><i class="fa fa-handshake">팔로워</i><span class="sumFollow">${vo.sumFollower }</span></div>
+							       <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike">${vo.sumLike }</span></i></div>
+							       <div><i class="fa fa-handshake">팔로워<span class="sumFollow">${vo.sumFollower }</span></i></div>
 							     </div>
 							</div>
 							    <div class="post-content">
