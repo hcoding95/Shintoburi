@@ -28,12 +28,12 @@ public class BasketMapperTests {
 		log.info("basketMapper:" + basketMapper);
 	}
 	
-	@Test
-	public void testGetList() {
-		String user_id= "user01";
-		List<BasketDetailDto> list = basketMapper.getList(user_id);
-		log.info(list);
-	}
+//	@Test
+//	public void testGetList() {
+//		String user_id= "user01";
+//		List<BasketDetailDto> list = basketMapper.getList(user_id);
+//		log.info(list);
+//	}
 	
 	@Test
 	public void testGetBnoByUser() {

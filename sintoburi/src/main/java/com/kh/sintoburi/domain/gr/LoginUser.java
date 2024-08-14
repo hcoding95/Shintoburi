@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
+@AllArgsConstructor 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
-public class LoginDto {
+public class LoginUser {
 	private String user_id;
 	private String user_name;
 	private String user_pw;

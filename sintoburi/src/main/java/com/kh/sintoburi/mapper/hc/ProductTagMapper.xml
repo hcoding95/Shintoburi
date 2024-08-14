@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 매퍼 인터페이스 경로와 같게 지정  -->
+  <mapper namespace="com.kh.sintoburi.mapper.hc.ProductTagMapper">
+  	
+  	<insert id="insert">
+  		insert into tbl_blog_tag(blog_no, product_id, product_name)
+  		values(#{blog_no}, #{product_id}, #{product_name})
+  	</insert>
+  	
+  	<delete id="deleteByPrimaryKey">
+  		delete from tbl_blog_tag
+  		where blog_no = #{blog_no}
+  		and product_id = #{product_id}
+  	</delete>
+  	
+  	<update id="update">
+  		update tbl_blog_tag
+  		set	product_name = #{product_name}
+  		where  product_id = #{product_id} and blog_no = #{blog_no}
+  	</update>
+  	
+  	<select id="getTagList" resultType="ProductTagDto">
+  		select * from tbl_blog_tag
+  		where blog_no = #{blog_no}
+  	</select>
+  	
+  	<select id="getProductListWithCondition" resultType="ProductTagDto">
+  		select * from tbl_product
+  		<where>
+  		<choose>
+  			<when test="product_id == 0">
+  				product_name like '%' || #{product_name} || '%' 
+  			</when>
+  			<when test="product_name == null">
+  				product_id like #{product_id} || '%' 
+  			</when>
+  		</choose>
+  		</where>
+  		order by product_id asc
+  	</select>
+  	
+  	
+  
+  </mapper>

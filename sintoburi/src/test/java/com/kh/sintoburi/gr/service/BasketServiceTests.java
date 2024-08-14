@@ -23,12 +23,12 @@ public class BasketServiceTests {
 	@Autowired
 	private BasketService basketService;
 	
-	@Test
-	public void testGetList() {
-		String user_id = "user01";
-		List<BasketDetailDto> list = basketService.getList(user_id);
-		log.info(list);
-	}
+//	@Test
+//	public void testGetList() {
+//		String user_id = "user01";
+//		List<BasketDetailDto> list = basketService.getList(user_id);
+//		log.info(list);
+//	}
 	
 	@Test
 	public void testGetBnoByUserId() {

@@ -4,36 +4,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="/WEB-INF/views/gr/include/top.jsp"%>   
 
-    
 <script>
 $(function() {
 	//개수 수정
+	
 	$(".btnp_count").click(function(){
-		let bdno =$(this).attr("data-bdno");
-		let p_count=$(".p_count").val().trim();
+		let bdno = $(this).attr("data-bdno");
+		let p_count = $(this).attr("data-pcount");
+		let inputp_count = $(this).siblings(".p_count").val().trim();
+		
 		//console.log("bdno:", bdno);
-		//console.log("p_count:", p_count);	
+		//console.log("p_count:", p_count);
+		//console.log("inputp_count:", inputp_count);	
 		
 		let sData = {
-				"bdno" : bdno,
-				"p_count" : p_count
+			"bdno": bdno,
+			"p_count": inputp_count
 		};
-		//console.log("sData:", sData);
 		
 		$.ajax({
 			type: "post",
 			url : "/gr/basket/modCount",
 			data : JSON.stringify(sData),
 			contentType: "application/json; charset=utf-8",
-			 success: function(result) {
-				 if (result) {
-	                    let modCount = p_count; // 업데이트
-	                    $(".p_count").text(modCount);
-	                    alert("수정 완료");
-	                } else {
-	                    alert("수정 실패");
-	                }
-	            }
+			success: function(result) {
+				if (result) {
+					let modCount = inputp_count; // 업데이트
+					if (modCount === p_count) {
+						alert("수정 값을 입력해주세요");
+					} else {
+						$(".p_count").text(modCount);
+						alert("수정 완료");
+						location.reload();
+					}
+				} else {
+					alert("수정 실패");
+				}
+			}
 		});
 	});
 	
@@ -43,44 +50,33 @@ $(function() {
 		let checkedItems = $("[name=selectedItems]:checked");
 		$.each(checkedItems, function(idx, val) {
 			let bdno = checkedItems.eq(idx).val();
-			//console.log("bdno:", bdno);
 			bdnos.push(bdno);
 		});
-		//console.log("bdnos:", bdnos);
 		
 		let sData = {
-				"bdnos" : bdnos
+			"bdnos" : bdnos
 		};
 		$.ajax({
 			type: "post",
 			url : "/gr/basket/removeOne",
 			data : JSON.stringify(sData),
 			contentType: "application/json; charset=utf-8",
-			 success: function(result) {
-				 //console.log("result:", result);
-				 if (result) {
-	                    alert("삭제 완료");
-	                    location.reload();
-	                } else {
-	                    alert("삭제 실패");
-	                }
-	            }
+			success: function(result) {
+				if (result) {
+					alert("삭제 완료");
+					location.reload();
+				} else {
+					alert("삭제 실패");
+				}
+			}
 		});
 	});
 
 	//모두 삭제, 장바구니 삭제
 	$("#btnRemoveAll").click(function(){
-// 	    let bno = 1;
-// 	    console.log("bno:", bno);
-// 	    let sData = {
-// 	        "bno": bno
-// 	    };
-	    
 	    $.ajax({
 	        type: "POST",
 	        url: "/gr/basket/removeAll",
-// 	        data: JSON.stringify(sData),
-// 	        contentType: "application/json; charset=utf-8",
 	        success: function(result) {
 	            if (result) {
 	                alert("삭제 성공");
@@ -90,32 +86,26 @@ $(function() {
 	            }
 	        }
 	    });
-	
 	});
 	
-	//장바구니 담기
+	
+	// 페이지 블럭
+	 $("a.page-link").click(function(e) {
+	        e.preventDefault(); // 브라우저의 기본 기능 막기
+	        
+	        let pageNum = $(this).attr("href");
+	        console.log(pageNum);
+	        $("#actionForm > input[name=pageNum]").val(pageNum);
+	        $("#actionForm > input[name=amount]").val('${pageMaker.cri.amount}');
+	        $("#actionForm").attr("action", "/gr/basket/list");
+	        $("#actionForm").attr("method","get");
+	        $("#actionForm").submit();
+	    });
 	
 	
-	
-	
-	//주문하기
-	$("#btnOrder").click(function(){
-		let bdnos = [];
-		let checkedItems = $("[name=selectedItems]:checked");
-		$.each(checkedItems, function(idx, val) {
-			let bdno = checkedItems.eq(idx).val();
-			//console.log("bdno:", bdno);
-			bdnos.push(bdno);
-		});
-		//console.log("bdnos:", bdnos);
-		
-		let sData = {
-				"bdnos" : bdnos
-		};
-	
-	});
 	
 });
+
 </script>
 <%-- ${list} --%>
 
@@ -123,25 +113,29 @@ $(function() {
 	<div class="col-md-2">
 	</div>
 		<div class="col-md-8">
+			
 			<c:set var="user_id" value="${detailDto.user_id}" />
 			 <div>
-				${login.user_id}님의 장바구니입니다. 
+				${login.user_id}님의 장바구니입니다. (합계 금액: ${sumPrice})
+					
+					
 			 </div>
+			 
 			<table class="table">
 				<thead>
 					<tr class="col-md-8 text-center">
 						<th>체크</th>
 						<th>상품번호</th>
 						<th>상품명</th>
-						<th>사진</th>
-						<th>개수</th>	
-						<th>가격</th>
-						<th>총가격</th>	
-						<th>담은 날짜</th>	
+						<th>상품사진</th>
+						<th>상품수</th>	
+						<th>상품금액</th>
+						<th>총금액</th>	
+						<th>담은날짜</th>	
 					</tr>
 				</thead>
 
-				<tbody >
+				<tbody>
 				<c:forEach items="${list}" var="detailDto">
 					<tr class="col-md-8 text-center">
 					    <td>
@@ -151,41 +145,76 @@ $(function() {
 						<td>${detailDto.name}</td>
 						<td>${detailDto.img_path}</td>
 						<td>
-						<input type="text" class="p_count" value="${detailDto.p_count}">
-						<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}">수정</button>
+							<input type="text" class="p_count" value="${detailDto.p_count}">
+							<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}" data-pcount="${detailDto.p_count}">수정</button>
 						</td>	
 						<td>${detailDto.price}</td>
 						<td>${detailDto.total_price}</td>
-						<td><fmt:formatDate value="${detailDto.put_date}"
-                                		pattern="yyyy-MM-dd"/></td> 
+						<td><fmt:formatDate value="${detailDto.put_date}" pattern="yyyy-MM-dd"/></td> 
 					</tr>
-				</c:forEach>	
+				</c:forEach>
+					
 				</tbody>
 			</table>
+			
+									
 		<div class="container-fluid">
-	
-	
-	<div class="row justify-content-end">
-    <div class="col-auto">
-        <a href="http://localhost/gr/basket/orderForm">
-            <button type="button" id="btnOrder" name="btnOrder" class="btn btn-warning">주문하기</button>
-        </a>
-    </div>
+			<div class="row justify-content-end">
+			    <div class="col-auto">
+			        <a href="http://localhost/gr/basket/orderForm">
+			            <button type="button" id="btnOrder" name="btnOrder" class="btn btn-warning">주문하기</button>
+			        </a>
+			    </div>
 
-    <div class="col-auto">
-        <button type="button" id="btnRemoveOne" name="btnRemoveOne" class="btn btn-danger" >삭제하기</button>
-    </div>
+			    <div class="col-auto">
+			        <button type="button" id="btnRemoveOne" name="btnRemoveOne" class="btn btn-danger" >삭제하기</button>
+			    </div>
 
-    <div class="col-auto">
-        <button type="button" id="btnRemoveAll" name="btnRemoveAll" class="btn btn-secondary">장바구니 비우기</button>
-    </div>
-	</div>
-	
-	</div>
+			    <div class="col-auto">
+			        <button type="button" id="btnRemoveAll" name="btnRemoveAll" class="btn btn-secondary">장바구니 비우기</button>
+			    </div>
+			</div>
 		</div>
+		</div>
+		
+		
 		<div class="col-md-2">
+	
 		</div>
+		
+	
 	</div>
- 
+	
+		<!-- Pagination -->
+<div class="row">
+	<div class="col-md-12">
+		<nav>
+			<ul class="pagination justify-content-center">
+
+				이전
+				<c:if test="${pageMaker.prev == true}">
+					<li class="page-item"><a class="page-link"
+						href="${pageMaker.startPage - 1}">&laquo;</a></li>
+				</c:if>
+				페이지
+				<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
+					var="v">
+					<li class="page-item ${v == pageMaker.cri.pageNum?'active' : ''}">
+						<a class="page-link" href="${v}">${v}</a>
+					</li>
+				</c:forEach>
+
+				다음
+				<c:if test="${pageMaker.next == true}">
+					<li class="page-item"><a class="page-link"
+						href="${pageMaker.endPage + 1}">&raquo;</a></li>
+				</c:if>
+			</ul>
+		</nav>
+	</div>
+</div>
+<!-- // Pagination -->	
+
 </html>
+<%@ include file="/WEB-INF/views/gr/include/action_form.jsp" %>
 <%@ include file="/WEB-INF/views/gr/include/bottom.jsp"%>
