@@ -7,8 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.kh.sintoburi.domain.hn.UserDto;
-import com.kh.sintoburi.domain.hn.UserVo;
+import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.domain.hn.HnUserVo;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
@@ -25,7 +25,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			} else {
 				// 로그인 성공
 				HttpSession session = request.getSession();
-				UserDto userDto = (UserDto) obj;
+				HnUserDto userDto = (HnUserDto) obj;
 				session.setAttribute("login", userDto);
 
 				String location;

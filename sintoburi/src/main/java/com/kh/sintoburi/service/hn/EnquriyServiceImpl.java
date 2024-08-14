@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 
@@ -24,14 +24,14 @@ public class EnquriyServiceImpl implements EnquiryService {
 
 	// 게시글 갯수
 	@Override
-	public int getTotalCount(Criteria criteria) {
+	public int getTotalCount(HnCriteria criteria) {
 		int count = enquiryMapper.getTotalCount(criteria);
 		return count;
 	}
 
 	// 상품문의사항목록
 	@Override
-	public List<EnquiryVo> goodsGetList(Criteria criteria) {
+	public List<EnquiryVo> goodsGetList(HnCriteria criteria) {
 //		List<EnquiryVo> list = enquiryMapper.goodsGetList();
 		List<EnquiryVo> list = enquiryMapper.getGoodsWithPaging(criteria);
 		return list;
@@ -39,7 +39,7 @@ public class EnquriyServiceImpl implements EnquiryService {
 
 	// 등급문의사항
 	@Override
-	public List<EnquiryVo> gradeGetList(Criteria criteria) {
+	public List<EnquiryVo> gradeGetList(HnCriteria criteria) {
 //		List<EnquiryVo> list = enquiryMapper.gradeGetList();
 		List<EnquiryVo> list = enquiryMapper.getGradeWithPaging(criteria);
 		return list;

@@ -5,43 +5,43 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.kh.sintoburi.domain.hn.Criteria;
-import com.kh.sintoburi.domain.hn.LoginDto;
-import com.kh.sintoburi.domain.hn.UserDto;
-import com.kh.sintoburi.domain.hn.UserVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.hn.HnLoginDto;
+import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.domain.hn.HnUserVo;
 
-public interface UserMapper {
+public interface HnUserMapper {
 
 	// 회원목록
-	public List<UserDto> getList();
+	public List<HnUserDto> getList();
 	
 	// 매니저목록
-	public List<UserDto> managerList();
+	public List<HnUserDto> managerList();
 
 	// 회원 목록 페이징 적용
-	public List<UserDto> getListWithPaging(Criteria criteria);
+	public List<HnUserDto> getListWithPaging(HnCriteria criteria);
 	
 	// 매니저 목록 페이징 
-	public List<UserDto> managerListPaging(Criteria criteria);
+	public List<HnUserDto> managerListPaging(HnCriteria criteria);
 	
 	
 	// 회원 게시글 갯수
-	public int getTotalCount(Criteria criteria);	
+	public int getTotalCount(HnCriteria criteria);	
 
 	// 매니저 목록 갯수
-	public int managerTotalCount(Criteria criteria);
+	public int managerTotalCount(HnCriteria criteria);
 	
 	// 등급수정
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public UserDto selectById(@Param("user_id") String user_id);
+	public HnUserDto selectById(@Param("user_id") String user_id);
 
 	// 로그인
-	public UserDto login(LoginDto dto);
+	public HnUserDto login(HnLoginDto dto);
 
 	// 회원가입
-	public int join(UserVo vo);
+	public int join(HnUserVo vo);
 
 	// 아이디저장
 	public int checkDupId(@Param("user_id") String user_id);

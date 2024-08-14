@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.sintoburi.domain.hn.LoginDto;
-import com.kh.sintoburi.domain.hn.UserDto;
-import com.kh.sintoburi.service.hn.UserService;
+import com.kh.sintoburi.domain.hn.HnLoginDto;
+import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/hn/user/*")
 @Log4j
-public class UserController {
+public class HnUserController {
 
 	@Autowired
-	private UserService userService;
+	private HnUserService userService;
 
 	@GetMapping("/login")
 	public void login() {
@@ -30,9 +30,9 @@ public class UserController {
 	}
 
 	@PostMapping("/loginPost")
-	public String loginPost(LoginDto dto, HttpServletRequest request, Model model) throws Exception {
+	public String loginPost(HnLoginDto dto, HttpServletRequest request, Model model) throws Exception {
 	    System.out.println("dto: " + dto);
-	    UserDto userDto = userService.login(dto);
+	    HnUserDto userDto = userService.login(dto);
 	    System.out.println("userDto: " + userDto);
 
 	    if (userDto != null) {

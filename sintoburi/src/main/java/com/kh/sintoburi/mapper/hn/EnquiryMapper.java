@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryMapper {
@@ -13,7 +13,7 @@ public interface EnquiryMapper {
 	public List<EnquiryVo> getList(@Param("user_id") String user_id);
 
 	// 게시글 갯수
-	public int getTotalCount(Criteria criteria);
+	public int getTotalCount(HnCriteria criteria);
 
 	// 상품문의사항목록
 	public List<EnquiryVo> goodsGetList();
@@ -22,10 +22,10 @@ public interface EnquiryMapper {
 	public List<EnquiryVo> gradeGetList();
 
 	// 상품목록페이징
-	public List<EnquiryVo> getGoodsWithPaging(Criteria criteria);
+	public List<EnquiryVo> getGoodsWithPaging(HnCriteria criteria);
 	
 	// 등급목록페이징
-	public List<EnquiryVo> getGradeWithPaging(Criteria criteria);
+	public List<EnquiryVo> getGradeWithPaging(HnCriteria criteria);
 	
 	// 문의사항등록
 	public int insert(EnquiryVo vo);

@@ -2,21 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.kh.sintoburi.mapper.hn.UserMapper">
+  <mapper namespace="com.kh.sintoburi.mapper.hn.HnUserMapper">
   
   <!-- 회원목록 -->
-	  <select id="getList" resultType="UserDto">
+	  <select id="getList" resultType="HnUserDto">
 	  	select * from tbl_users
 	  </select>
   
 	<!-- 매니저목록 -->
-	  <select id="managerList" resultType="UserDto">
+	  <select id="managerList" resultType="HnUserDto">
 	  	select * from tbl_users
 	  	where grade = '관리자'
 	  </select>
   
   <!--  회원페이징처리 -->
- <select id="getListWithPaging" resultType="UserDto">
+ <select id="getListWithPaging" resultType="HnUserDto">
     select *
     from (
         select
@@ -79,7 +79,7 @@
 	</select> 
 
 <!--  매니저페이징처리 -->
- <select id="managerListPaging" resultType="UserDto">
+ <select id="managerListPaging" resultType="HnUserDto">
     select *
     from (
         select
@@ -155,14 +155,14 @@
     </update>
   
   <!--  회원 데이터 1개 -->
-   <select id="selectById" resultType="UserDto">
+   <select id="selectById" resultType="HnUserDto">
   	select user_id,user_name,grade,email,last_login,business
   	from tbl_users
   	where user_id = #{user_id}
   </select>
   
   <!-- 로그인 -->
-  <select id="login" resultType="userDto">
+  <select id="login" resultType="HnUserDto">
 		select *
 		from tbl_users
 		where user_id = #{user_id}

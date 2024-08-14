@@ -5,31 +5,31 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.hn.ReplyVo;
+import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.mapper.hn.EnquiryReplyMapper;
 
 @Service
-public class ReplyServiceImpl implements ReplyService {
+public class EnquiryReplyServiceImpl implements EnquiryReplyService {
 
 	@Autowired
 	private EnquiryReplyMapper replyMapper;
 	
 	// 답변 등록
 	@Override
-	public boolean insertReply(ReplyVo replyVo) {
+	public boolean insertReply(EnquiryReplyVo replyVo) {
 		int count = replyMapper.insertReply(replyVo);
 		return (count == 1 )? true : false;
 	}
 
 	@Override
-	public List<ReplyVo> replyList() {
-		List<ReplyVo> list = replyMapper.selectReply();
+	public List<EnquiryReplyVo> replyList() {
+		List<EnquiryReplyVo> list = replyMapper.selectReply();
 		return list;
 	}
 
 	@Override
-	public ReplyVo selectByReplyEno(int eno) {
-		ReplyVo vo = replyMapper.selectByReplyEno(eno);
+	public EnquiryReplyVo selectByReplyEno(int eno) {
+		EnquiryReplyVo vo = replyMapper.selectByReplyEno(eno);
 		return vo;
 	}
 

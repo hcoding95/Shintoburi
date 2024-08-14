@@ -6,18 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReplyVo {
-	
-	private int rno;
-	private int eno;
+public class HnUserDto {
 	private String user_id;
-	private String reply_content;
-	private Date reply_date;
-	private String manager_id;
+	private String user_name;
+	private String grade;
+	private String email;
+	private Date  last_login;
+	private int business;
 
 }

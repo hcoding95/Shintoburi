@@ -8,22 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
-import com.kh.sintoburi.domain.hn.LoginDto;
+import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
-import com.kh.sintoburi.domain.hn.PageDto;
-import com.kh.sintoburi.domain.hn.ReplyVo;
+import com.kh.sintoburi.domain.hn.HnPageDto;
+import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
-import com.kh.sintoburi.domain.hn.UserDto;
+import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
 import com.kh.sintoburi.mapper.hn.EnquiryReplyMapper;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
-import com.kh.sintoburi.mapper.hn.UserMapper;
-import com.kh.sintoburi.service.hn.UserService;
+import com.kh.sintoburi.mapper.hn.HnUserMapper;
+import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -42,7 +42,7 @@ public class mapperTest {
 	private ReportPostMapper reportPostMapper;
 
 	@Autowired
-	private UserMapper userMapper;
+	private HnUserMapper userMapper;
 
 	@Autowired
 	private NoticeMapper noticeMapper;
@@ -63,7 +63,7 @@ public class mapperTest {
 
 	@Test
 	public void insertReply() {
-		ReplyVo vo = ReplyVo.builder().eno(1).user_id("user02").reply_content("답변").manager_id("manager").build();
+		EnquiryReplyVo vo = EnquiryReplyVo.builder().eno(1).user_id("user02").reply_content("답변").manager_id("manager").build();
 
 		int count = replyMapper.insertReply(vo);
 		log.info("Rows inserted: " + count);
@@ -97,14 +97,14 @@ public class mapperTest {
 
 	@Test
 	public void selectReply() {
-		List<ReplyVo> list = replyMapper.selectReply();
+		List<EnquiryReplyVo> list = replyMapper.selectReply();
 		log.info(list);
 	}
 
 	@Test
 	public void selectByReplyEno() {
 		int eno = 2;
-		ReplyVo vo = replyMapper.selectByReplyEno(eno);
+		EnquiryReplyVo vo = replyMapper.selectByReplyEno(eno);
 		log.info(vo);
 
 	}
@@ -124,7 +124,7 @@ public class mapperTest {
 
 	@Test
 	public void login() {
-		LoginDto dto = new LoginDto();
+		HnLoginDto dto = new HnLoginDto();
 		dto.setUser_id("user00");
 		dto.setUser_pw("user00");
 		userMapper.login(dto);
@@ -157,20 +157,20 @@ public class mapperTest {
 	
 	@Test
 	public void managerList() {
-		List<UserDto> list = userMapper.managerList();
+		List<HnUserDto> list = userMapper.managerList();
 		log.info(list);
 	}
 	
 	@Test
 	public void selectById() {
 		String user_id = "user00";
-		UserDto dto = userMapper.selectById(user_id);
+		HnUserDto dto = userMapper.selectById(user_id);
 		log.info(dto);
 	}
 	
 	@Test
 	public void userList() {
-	List<UserDto> list = userMapper.getList();
+	List<HnUserDto> list = userMapper.getList();
 		log.info(list);
 	}
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryService {
@@ -13,13 +13,13 @@ public interface EnquiryService {
 	public List<EnquiryVo> getList(String user_id);
 	
 	// 갯수
-	public int getTotalCount(Criteria criteria);
+	public int getTotalCount(HnCriteria criteria);
 		
 	// 상품문의사항목록
-	public List<EnquiryVo> goodsGetList(Criteria criteria);
+	public List<EnquiryVo> goodsGetList(HnCriteria criteria);
 
 	// 등급문의사항
-	public List<EnquiryVo> gradeGetList(Criteria criteria);
+	public List<EnquiryVo> gradeGetList(HnCriteria criteria);
 
 	// 문의사항등록
 	public boolean register(EnquiryVo vo);

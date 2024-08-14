@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 
@@ -16,7 +16,7 @@ public class ReportPostServiceImpl implements ReportPostService{
 	private ReportPostMapper reportPostMapper;
 
 	@Override
-	public List<ReportPostVo> ReportList(Criteria criteria) {
+	public List<ReportPostVo> ReportList(HnCriteria criteria) {
 //		List<ReportPostVo> list = reportPostMapper.selectReport();
 		List<ReportPostVo> list = reportPostMapper.getListWithPaging(criteria);
 		return list;
@@ -29,7 +29,7 @@ public class ReportPostServiceImpl implements ReportPostService{
 	}
 
 	@Override
-	public int getTotalCount(Criteria criteria) {
+	public int getTotalCount(HnCriteria criteria) {
 		int count = reportPostMapper.getTotalCount(criteria);
 		return count;
 	}

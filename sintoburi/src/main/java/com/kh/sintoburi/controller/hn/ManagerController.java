@@ -21,22 +21,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
-import com.kh.sintoburi.domain.hn.PageDto;
-import com.kh.sintoburi.domain.hn.ReplyVo;
+import com.kh.sintoburi.domain.hn.HnPageDto;
+import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
-import com.kh.sintoburi.domain.hn.UserDto;
+import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.NoticeService;
-import com.kh.sintoburi.service.hn.ReplyService;
+import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.ReportPostService;
-import com.kh.sintoburi.service.hn.UserService;
+import com.kh.sintoburi.service.hn.HnUserService;
 import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
@@ -48,13 +48,13 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class ManagerController {
 
 	@Autowired
-	private UserService userService;
+	private HnUserService userService;
 
 	@Autowired
 	private EnquiryService enquiryService;
 
 	@Autowired
-	private ReplyService replyService;
+	private EnquiryReplyService replyService;
 
 	@Autowired
 	private ReportPostService reportPostService;
@@ -69,14 +69,14 @@ public class ManagerController {
 
 	// 회원목록
 	@GetMapping("/userList")
-	public void userList(Model model, Criteria criteria) {
+	public void userList(Model model, HnCriteria criteria) {
 		System.out.println("Page Number: " + criteria.getPageNum());
 		System.out.println("Amount per Page: " + criteria.getAmount());
 
 		// 회원목록
-		List<UserDto> list = userService.getList(criteria);
+		List<HnUserDto> list = userService.getList(criteria);
 		int total = userService.getTotal(criteria);
-		PageDto pageMaker = new PageDto(criteria, total);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("userList", list);
 
@@ -84,13 +84,13 @@ public class ManagerController {
 
 	// 매니저목록
 	@GetMapping("/managerList")
-	public void managerList(Model model, Criteria criteria) {
+	public void managerList(Model model, HnCriteria criteria) {
 
-		List<UserDto> managerList = userService.managerList(criteria);
+		List<HnUserDto> managerList = userService.managerList(criteria);
 		System.out.println("managerList" + managerList);
 		int total = userService.managerTotalCount(criteria);
 
-		PageDto pageMaker = new PageDto(criteria, total);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("managerList", managerList);
 	}
@@ -98,7 +98,7 @@ public class ManagerController {
 	// 등급수정
 	@PostMapping("/modGrade")
 	@ResponseBody
-	public boolean modGrade(@RequestBody UserDto dto) {
+	public boolean modGrade(@RequestBody HnUserDto dto) {
 		System.out.println("modGrade...");
 		String user_id = dto.getUser_id();
 		String grade = dto.getGrade();
@@ -122,16 +122,16 @@ public class ManagerController {
 
 	// 상품문의사항목록
 	@GetMapping("/goodsEnqList")
-	public void goodsEnqList(Model model, Criteria criteria) {
+	public void goodsEnqList(Model model, HnCriteria criteria) {
 		List<EnquiryVo> list = enquiryService.goodsGetList(criteria);
 
 		int total = enquiryService.getTotalCount(criteria);
-		PageDto pageMaker = new PageDto(criteria, total);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("goodsEnqList", list);
 
 		// 답변 리스트
-		List<ReplyVo> replyLisy = replyService.replyList();
+		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("replyList", replyLisy);
 	}
 
@@ -142,7 +142,7 @@ public class ManagerController {
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
 		model.addAttribute("enquiryVo", enquiryVo);
 
-		ReplyVo replyVo = replyService.selectByReplyEno(eno);
+		EnquiryReplyVo replyVo = replyService.selectByReplyEno(eno);
 		model.addAttribute("replyVo", replyVo);
 		return "hn/manager/enquiryDetail";
 	}
@@ -163,16 +163,16 @@ public class ManagerController {
 
 	// 등급문의사항목록
 	@GetMapping("/gradeEnqList")
-	public void gradeEnqList(Model model, Criteria criteria) {
+	public void gradeEnqList(Model model, HnCriteria criteria) {
 		List<EnquiryVo> list = enquiryService.gradeGetList(criteria);
 
 		int total = enquiryService.getTotalCount(criteria);
-		PageDto pageMaker = new PageDto(criteria, total);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("gradeEnqList", list);
 
 		// 답변리스트
-		List<ReplyVo> replyLisy = replyService.replyList();
+		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("gradeReplyList", replyLisy);
 	}
 
@@ -183,7 +183,7 @@ public class ManagerController {
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
 		model.addAttribute("enquiryVo", enquiryVo);
 
-		ReplyVo replyVo = replyService.selectByReplyEno(eno);
+		EnquiryReplyVo replyVo = replyService.selectByReplyEno(eno);
 		model.addAttribute("replyVo", replyVo);
 		return "hn/manager/gradeEnqDetail";
 	}
@@ -202,10 +202,10 @@ public class ManagerController {
 
 	// 신고게시글목록
 	@GetMapping("/reportList")
-	public void reportList(Model model, Criteria criteria) {
+	public void reportList(Model model, HnCriteria criteria) {
 		List<ReportPostVo> list = reportPostService.ReportList(criteria);
 		int total = reportPostService.getTotalCount(criteria);
-		PageDto pageMaker = new PageDto(criteria, total);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("reportList", list);
 	}

@@ -18,18 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
-import com.kh.sintoburi.domain.hn.PageDto;
-import com.kh.sintoburi.domain.hn.ReplyVo;
-import com.kh.sintoburi.domain.hn.UserDto;
+import com.kh.sintoburi.domain.hn.HnPageDto;
+import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
+import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.NoticeService;
-import com.kh.sintoburi.service.hn.ReplyService;
+import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
@@ -47,7 +47,7 @@ public class MypageController {
 	private NoticeService noticeService;
 	
 	@Autowired
-	private ReplyService replyService;
+	private EnquiryReplyService replyService;
 	
 	@Autowired
 	private FaqService faqService;
@@ -59,9 +59,9 @@ public class MypageController {
 
 	// 1:1 문의사항
 	@GetMapping("/enqList")
-	public String getEnquiryList(HttpSession session, Model model, Criteria criteria) {
+	public String getEnquiryList(HttpSession session, Model model, HnCriteria criteria) {
 		// 세션에서 로그인한 사용자 정보 가져오기
-		UserDto login = (UserDto) session.getAttribute("login");
+		HnUserDto login = (HnUserDto) session.getAttribute("login");
 
 		// 로그인 상태 확인
 		if (login == null) {
@@ -74,11 +74,11 @@ public class MypageController {
 		model.addAttribute("list", list);
 		
 		int total = enquiryService.getTotalCount(criteria);
-		PageDto pageMaker = new PageDto(criteria, total);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		// 답변
-		List<ReplyVo> replyLisy = replyService.replyList();
+		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("replyList", replyLisy);
 
 		return "hn/mypage/enqList";

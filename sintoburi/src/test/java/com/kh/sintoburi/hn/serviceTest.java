@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
-import com.kh.sintoburi.domain.hn.UserDto;
+import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
-import com.kh.sintoburi.service.hn.UserService;
+import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -25,7 +25,7 @@ public class serviceTest {
 	private EnquiryService enquiryService;
 	
 	@Autowired
-	private UserService userService;
+	private HnUserService userService;
 	
 	@Test
 	public void testInstance() {
