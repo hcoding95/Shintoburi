@@ -1,6 +1,10 @@
 package com.kh.sintoburi.controller.hn;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,21 +18,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.Criteria;
+import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.PageDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
+import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.NoticeService;
 import com.kh.sintoburi.service.hn.ReplyService;
 import com.kh.sintoburi.service.hn.ReportPostService;
 import com.kh.sintoburi.service.hn.UserService;
+import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequestMapping("/hn/manager/*")
@@ -49,6 +60,9 @@ public class ManagerController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private FaqService faqService;
 
 	// 회원리스트
 
@@ -221,14 +235,75 @@ public class ManagerController {
 
 	// 공지사항등록
 	@PostMapping("/noticeRegister")
-	public void noticeRegister() {
+	public String noticeRegister(NoticeFormDto dto, RedirectAttributes rttr) throws IOException{
+//		log.info("image:" + image);
+		log.info("vo:" + dto);
+		MultipartFile multi = dto.getImage();
+
+		String uploadPath = "D:/upload/sintoburi/notice";
+
+		File folder = new File(uploadPath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
+		String fileName = multi.getOriginalFilename();
+//		log.info("fileName:" + fileName);
+		String image = dto.getImage().getOriginalFilename();
+
+		// 폴더이름 얻어오기
+		String folderName = folder.getName();
+//		log.info("folderName: " + folderName);
+
+		NoticeVo vo = NoticeVo.builder()
+				.n_no(dto.getN_no())
+				.title(dto.getTitle())
+				.content(dto.getContent())
+				.write_date(dto.getWrite_date())
+				.image(folderName+ "/" + fileName)
+				.build();
+		log.info("vo:" + vo);
+
+		// 파일을 디스크에 저장
+
+		String uuid = UUID.randomUUID().toString();
+		String savedFileName = uuid + "_" + multi.getOriginalFilename();
+		File f = new File(uploadPath, savedFileName);
+		// 업로드된 파일이 이미지라면 썸네일 이미지 생성
+		// 썸네일 파일명: s_원본이미지명
+
+		boolean isImage = MyFileUtil.checkImageType(f);
+
+		if (isImage) {
+			// 원본 파일을 읽어서 -> 썸네일 파일로 출력
+			FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + savedFileName));
+
+			Thumbnailator.createThumbnail(multi.getInputStream(), thumbnail, 100, 100);
+			thumbnail.close();
+		}
+		multi.transferTo(f);
+		
+		boolean result = noticeService.registerNotice(vo);
+		log.info("result:" + result);
+		rttr.addFlashAttribute("registerNotice", result);
+		return "redirect:/hn/manager/noticeList";
 
 	}
 
 	// 자주하는 질문
-	@GetMapping("/questionList")
-	public void questionList() {
-
+	@GetMapping("/faqList")
+	public void faqList() {
+		
+	}
+	
+	@GetMapping("/faqRegisterForm")
+	public void faqRegisterForm() {
+		
+	}
+	
+	@PostMapping("/faqRegister")
+	public void faqRegister() {
+		
 	}
 
 }

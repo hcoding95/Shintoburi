@@ -121,22 +121,37 @@
             <div class="sidebar-heading">
                 게시글관리
             </div>
-
+            
+           
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>회원관리</span>
-                </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar" style="">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                       
-                        <a class="collapse-item" href="/hn/manager/userList">회원목록</a>
-                        <a class="collapse-item" href="/hn/manager/managerList">매니저목록</a>
-                       
-                        </div>
-                </div>
-            </li>  
+			<li class="nav-item">
+			    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMember" aria-expanded="true" aria-controls="collapseMember">
+			        <i class="fas fa-fw fa-folder"></i>
+			        <span>회원관리</span>
+			    </a>
+			    <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
+			        <div class="bg-white py-2 collapse-inner rounded">
+			            <a class="collapse-item" href="/hn/manager/userList">회원목록</a>
+			            <a class="collapse-item" href="/hn/manager/managerList">매니저목록</a>
+			        </div>
+			    </div>
+			</li>
+			
+			 <!-- Nav Item - Inquiry Collapse Menu -->
+			<li class="nav-item">
+			    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseInquiry" aria-expanded="true" aria-controls="collapseInquiry">
+			        <i class="fas fa-fw fa-folder"></i>
+			        <span>문의사항</span>
+			    </a>
+			    <div id="collapseInquiry" class="collapse" aria-labelledby="headingInquiry" data-parent="#accordionSidebar">
+			        <div class="bg-white py-2 collapse-inner rounded">
+			            <a class="collapse-item" href="/hn/manager/goodsEnqList">상품문의</a>
+			            <a class="collapse-item" href="/hn/manager/gradeEnqList">등급문의</a>
+			        </div>
+			    </div>
+			</li>   
+            
+			
             
               <li class="nav-item">
                 <a class="nav-link" href="/hn/manager/noticeList">
@@ -147,29 +162,14 @@
             </li>
             
              <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/questionList">
+                <a class="nav-link" href="/hn/manager/faqList">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>자주하는질문</span>
                 </a>
 
             </li>
 
-            <!-- Nav Item - Charts -->
-      <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>문의사항</span>
-                </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar" style="">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                       
-                        <a class="collapse-item" href="/hn/manager/goodsEnqList">상품문의</a>
-                        <a class="collapse-item" href="/hn/manager/gradeEnqList">등급문의</a>
-                       
-                        </div>
-                </div>
-            </li>    
-            
+          
 
 
             <!-- Nav Item - Tables -->

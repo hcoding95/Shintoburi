@@ -23,7 +23,7 @@
 					        </a>
 					    </div>
 					    <div class="col" style="padding: 0;">
-					        <a href="/hn/mypage/questionList" style="text-decoration: none; color: black; background-color: #D6EFD8; padding: 10px; display: block;">
+					        <a href="/hn/mypage/faqList" style="text-decoration: none; color: black; background-color: #D6EFD8; padding: 10px; display: block;">
 					            <h3 style="margin: 0;">자주하는 질문</h3>
 					        </a>
 					    </div>

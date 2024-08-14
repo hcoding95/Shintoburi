@@ -56,7 +56,7 @@
 		
 		<div class="row">
 		    <div class="col-md-12 text-right">
-		        <a href="/hn/manager/noticeForm">
+		        <a href="/hn/manager/faqRegisterForm">
 		            <button class="btnMod btn btn-outline-dark btn-sm" type="button">작성하기</button>
 		        </a>
 		    </div>
