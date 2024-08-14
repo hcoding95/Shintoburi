@@ -86,7 +86,7 @@ $(function() {
 			</thead>
 			<tbody>
 			<c:forEach items="${userList}" var="vo">
-			 <c:if test="${vo.grade != '관리자' || vo.grade !='마스터'}">
+			 <c:if test="${vo.grade != '관리자' && vo.grade != '마스터'}">
 				<tr class="col-md-8 text-center">
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>

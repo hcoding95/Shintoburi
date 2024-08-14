@@ -181,7 +181,16 @@ public class mapperTest {
 		log.info(list);
 	}
 
-	
+	@Test
+	public void noticeMod() {
+		NoticeVo noticeVo = NoticeVo.builder()
+				.n_no(30)
+				.title("dd-수정")
+				.content("수정완료")
+				.build();
+	int count =	noticeMapper.updateNotice(noticeVo);
+	log.info(count);
+	}
 	
 
 }

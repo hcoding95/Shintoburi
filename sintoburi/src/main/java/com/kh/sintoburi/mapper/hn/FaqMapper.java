@@ -14,7 +14,7 @@ public interface FaqMapper {
 	public int insertFaq(FaqVo faqVo);
 	
 	// 수정
-	public int updateFaq(@Param("f_no") int f_no);
+	public int updateFaq(FaqVo faqVo);
 	
 	// 삭제
 	public int deleteFaq(@Param("f_no") int f_no);

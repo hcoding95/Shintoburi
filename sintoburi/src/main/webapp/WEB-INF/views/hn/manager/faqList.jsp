@@ -24,35 +24,19 @@
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성일</th>
-					
 				</tr>
 			</thead>
 			<tbody>
-<%-- 			<c:forEach items="${userList}" var="vo"> --%>
-<%-- 			 <c:if test="${vo.grade != '관리자'}"> --%>
-<!-- 				<tr class="col-md-8 text-center"> -->
-<%-- 					<td>${vo.user_id}</td> --%>
-<%-- 					<td>${vo.user_name}</td> --%>
-<%-- 					<td>${vo.email}</td> --%>
-<!-- 					 <td class="current-grade"> -->
-<%--                   	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">[up]</c:if> --%>
-<!--               		  </td> -->
-<%-- 					 <td><fmt:formatDate value="${vo.last_login}" --%>
-<%--                                		pattern="yyyy-MM-dd"/></td> --%>
-<!--                        <td> -->
-<!--                        <select> -->
-<%-- 						  <option value="구매자" ${vo.grade == '구매자' ? 'selected' : '구매자'}>구매자</option> --%>
-<%--     					  <option value="판매자" ${vo.grade == '판매자' ? 'selected' : '구매자'}>판매자</option>    --%>
-<!--                        </select> -->
-<!--                        </td > -->
-<!--                        <td> -->
-<%--                        <button class="btnMod btn btn-outline-dark btn-sm" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button> --%>
-<!-- 					</td> -->
-<!-- 				</tr> -->
-<%-- 				</c:if> --%>
-<%-- 			</c:forEach>	 --%>
+			<c:forEach items="${faqList}" var="vo">
+				<tr class="col-md-8 text-center">
+					<td>${vo.f_no}</td>
+					<td><a href="/hn/manager/faqDetail/${vo.f_no}">${vo.title}</a></td>
+					<td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td> 
+ 				</tr> 
+ 			</c:forEach>	 
 			</tbody>
 		</table>
+		
 		
 		<div class="row">
 		    <div class="col-md-12 text-right">

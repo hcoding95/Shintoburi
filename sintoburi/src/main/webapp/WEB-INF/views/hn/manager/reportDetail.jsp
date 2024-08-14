@@ -62,7 +62,6 @@ $(function() {
                      data: { eno: eno },
                      success: function() {
                          alert("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
-                        
                          location.href = "/hn/manager/gradeEnqList";
                      }
 			

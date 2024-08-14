@@ -26,8 +26,8 @@ public class FaqServiceImpl implements FaqService{
 	}
 
 	@Override
-	public boolean faqModify(int f_no) {
-		int count = faqMapper.updateFaq(f_no);
+	public boolean faqModify(FaqVo faqVo) {
+		int count = faqMapper.updateFaq(faqVo);
 		return (count == 1)? true : false;
 	}
 

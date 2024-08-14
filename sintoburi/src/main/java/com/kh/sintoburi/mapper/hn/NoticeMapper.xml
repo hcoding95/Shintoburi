@@ -21,7 +21,7 @@
 	<!-- 공지사항 등록 -->
 	<insert id="insertNotice">
 		insert into tbl_notice (n_no,title,content)
-		values (seq_notice.nextVal,#{title},#{content}
+		values (seq_notice.nextVal,#{title},#{content})
 	</insert>
 
 	<!-- 공지사항 수정 -->
@@ -35,7 +35,7 @@
 
 	<!-- 공지사항 삭제 -->
 	<delete id="deleteNotice">
-		delete * from tbl_notice
+		delete from tbl_notice
 		where n_no = #{n_no}
 	</delete>
 </mapper>

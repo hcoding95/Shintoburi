@@ -10,13 +10,13 @@
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">문의 사항</h6>
+                <h6 class="m-0 font-weight-bold text-primary">공지 사항</h6>
             </div>
             <!-- Card Body -->
             <div class="card-body"> 
                 <div class="row">
                     <div class="col-md-12">
-                        <form role="form" action="/hn/mypage/noticeRegister" method="post" enctype="multipart/form-data">
+                        <form role="form" action="/hn/manager/noticeRegister" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="title">제목</label>
                                 <input type="text" class="form-control" id="title" name="title" />

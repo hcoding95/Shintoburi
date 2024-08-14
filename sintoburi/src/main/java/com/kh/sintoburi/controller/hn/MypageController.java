@@ -179,7 +179,7 @@ public class MypageController {
 				.content(dto.getContent())
 				.enquiry_type(dto.getEnquiry_type())
 				.user_id(dto.getUser_id())
-				.image(folderName+ "/" + fileName)
+				.image(folderName)
 				.eno(dto.getEno())
 				.build();
 		log.info("enquiryVo:" + enquiryVo);

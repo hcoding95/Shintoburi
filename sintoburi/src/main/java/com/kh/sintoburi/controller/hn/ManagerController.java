@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.PageDto;
@@ -60,7 +61,7 @@ public class ManagerController {
 
 	@Autowired
 	private NoticeService noticeService;
-	
+
 	@Autowired
 	private FaqService faqService;
 
@@ -78,7 +79,6 @@ public class ManagerController {
 		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("userList", list);
-		
 
 	}
 
@@ -89,7 +89,7 @@ public class ManagerController {
 		List<UserDto> managerList = userService.managerList(criteria);
 		System.out.println("managerList" + managerList);
 		int total = userService.managerTotalCount(criteria);
-		
+
 		PageDto pageMaker = new PageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("managerList", managerList);
@@ -190,11 +190,11 @@ public class ManagerController {
 
 	// 등급문의사항 답변완료 변경
 	@PostMapping("/gradeupdateStatus")
-	public ResponseEntity<String> gradeUpdateStatus(@RequestParam int eno,  @RequestParam String status) {
-		boolean result = enquiryService.gradeUpdateStatus(eno,status);
+	public ResponseEntity<String> gradeUpdateStatus(@RequestParam int eno, @RequestParam String status) {
+		boolean result = enquiryService.gradeUpdateStatus(eno, status);
 
 		if (result) {
-			  return ResponseEntity.ok("문의사항 상태가 '" + status + "'로 업데이트되었습니다.");
+			return ResponseEntity.ok("문의사항 상태가 '" + status + "'로 업데이트되었습니다.");
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문의사항 상태 업데이트에 실패했습니다.");
 		}
@@ -235,7 +235,68 @@ public class ManagerController {
 
 	// 공지사항등록
 	@PostMapping("/noticeRegister")
-	public String noticeRegister(NoticeFormDto dto, RedirectAttributes rttr) throws IOException{
+	public String noticeRegister(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
+//		log.info("image:" + image);
+		log.info("vo:" + dto);
+		MultipartFile multi = dto.getImage();
+
+		String uploadPath = "D:/upload/sintoburi/notice";
+
+		File folder = new File(uploadPath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
+		String fileName = multi.getOriginalFilename();
+//		log.info("fileName:" + fileName);
+		String image = dto.getImage().getOriginalFilename();
+
+		// 폴더이름 얻어오기
+		String folderName = folder.getName();
+//		log.info("folderName: " + folderName);
+
+		NoticeVo vo = NoticeVo.builder().n_no(dto.getN_no()).title(dto.getTitle()).content(dto.getContent())
+				.write_date(dto.getWrite_date()).image(folderName + "/" + fileName).build();
+		log.info("vo:" + vo);
+
+		// 파일을 디스크에 저장
+
+		String uuid = UUID.randomUUID().toString();
+		String savedFileName = uuid + "_" + multi.getOriginalFilename();
+		File f = new File(uploadPath, savedFileName);
+		// 업로드된 파일이 이미지라면 썸네일 이미지 생성
+		// 썸네일 파일명: s_원본이미지명
+
+		boolean isImage = MyFileUtil.checkImageType(f);
+
+		if (isImage) {
+			// 원본 파일을 읽어서 -> 썸네일 파일로 출력
+			FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + savedFileName));
+
+			Thumbnailator.createThumbnail(multi.getInputStream(), thumbnail, 100, 100);
+			thumbnail.close();
+		}
+		multi.transferTo(f);
+
+		boolean result = noticeService.registerNotice(vo);
+		log.info("result:" + result);
+		rttr.addFlashAttribute("registerNotice", result);
+		return "redirect:/hn/manager/noticeList";
+
+	}
+	
+	// 공지사항 상세보기
+	@GetMapping("/noticeDetail/{n_no}")
+	public String noticeDetail(@PathVariable("n_no") int n_no, Model model) {
+		NoticeVo noticeVo = noticeService.selectByNno(n_no);
+		model.addAttribute("noticeVo", noticeVo);
+
+		return "hn/manager/noticeDetail";
+	}
+	
+	// 공지사항 수정
+	@PostMapping("/noticeMod")
+	public String noticeMod (NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
 //		log.info("image:" + image);
 		log.info("vo:" + dto);
 		MultipartFile multi = dto.getImage();
@@ -256,11 +317,11 @@ public class ManagerController {
 //		log.info("folderName: " + folderName);
 
 		NoticeVo vo = NoticeVo.builder()
-				.n_no(dto.getN_no())
 				.title(dto.getTitle())
 				.content(dto.getContent())
 				.write_date(dto.getWrite_date())
-				.image(folderName+ "/" + fileName)
+				.image(folderName)
+				.n_no(dto.getN_no())
 				.build();
 		log.info("vo:" + vo);
 
@@ -283,27 +344,48 @@ public class ManagerController {
 		}
 		multi.transferTo(f);
 		
-		boolean result = noticeService.registerNotice(vo);
-		log.info("result:" + result);
-		rttr.addFlashAttribute("registerNotice", result);
+		boolean result = noticeService.modifyNotice(vo);
+		rttr.addFlashAttribute("noticeMod",result);
 		return "redirect:/hn/manager/noticeList";
-
 	}
-
+	
+	// 공지사항 삭제
+	@PostMapping("/noticeDel")
+	public String noticeDel(@RequestParam("n_no") int n_no, RedirectAttributes rttr) {
+		boolean result = noticeService.removeNotice(n_no);
+		rttr.addFlashAttribute("noticeDel",result);
+		return "redirect:/hn/manager/noticeList";
+	}
+	
+	
 	// 자주하는 질문
 	@GetMapping("/faqList")
-	public void faqList() {
+	public void faqList(Model model) {
+		List<FaqVo> list = faqService.faqList();
+		model.addAttribute("faqList", list);
 		
 	}
-	
+
 	@GetMapping("/faqRegisterForm")
 	public void faqRegisterForm() {
-		
+
+	}
+
+	// 자주하는 질문 작성
+	@PostMapping("/faqRegister")
+	public String faqRegister(FaqVo faqVo, RedirectAttributes rttr) {
+		boolean result = faqService.faqRegister(faqVo);
+		rttr.addAttribute("faqresult", result);
+		return "redirect:/hn/manager/faqList";
 	}
 	
-	@PostMapping("/faqRegister")
-	public void faqRegister() {
+	// 자주하는 질문 상세보기
+	@GetMapping("/faqDetail/{f_no}")
+	public String faqDetail(@PathVariable("f_no") int f_no , Model model) {
+		FaqVo faqVo= faqService.selectByFno(f_no);
+		model.addAttribute("faqVo",faqVo);
 		
+		return "hn/manager/faqDetail";
 	}
 
 }

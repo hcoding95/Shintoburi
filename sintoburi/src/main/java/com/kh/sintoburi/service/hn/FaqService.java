@@ -13,7 +13,7 @@ public interface FaqService {
 	public boolean faqRegister(FaqVo faqVo);
 
 	// 수정
-	public boolean faqModify(int f_no);
+	public boolean faqModify(FaqVo faqVo);
 
 	// 삭제
 	public boolean faqRemove(int f_no);
