@@ -7,7 +7,7 @@
  	  <select id="getList" resultType="EnquiryVo">
  	    select * from tbl_enquiry
 	 	where user_id = #{user_id}
-	 	order by eno 
+	 	order by eno desc
  	  </select>
  	  
  	  
@@ -155,7 +155,7 @@
         where eno = #{eno}
     </select>
     
-    <!-- 문의사항 답변 완료 -->
+    <!--상품문의사항 답변 완료 -->
   	<update id="updateStatus">
   		update tbl_enquiry
         set status = '답변완료'
@@ -163,10 +163,10 @@
        
   	</update>
   	
-  	 <!-- 문의사항 답변 완료 -->
+  	 <!-- 등급 문의사항 답변 완료 -->
   	<update id="gradeUpdateStatus">
   		update tbl_enquiry
-        set status = '처리완료'
+        set status = #{status}
         where eno = #{eno} 
         and enquiry_type = '등급문의'
   	</update>

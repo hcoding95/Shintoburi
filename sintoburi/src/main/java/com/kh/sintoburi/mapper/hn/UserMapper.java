@@ -14,18 +14,28 @@ public interface UserMapper {
 
 	// 회원목록
 	public List<UserDto> getList();
+	
+	// 매니저목록
+	public List<UserDto> managerList();
 
 	// 회원 목록 페이징 적용
 	public List<UserDto> getListWithPaging(Criteria criteria);
-
-	// 게시글 갯수
+	
+	// 매니저 목록 페이징 
+	public List<UserDto> managerListPaging(Criteria criteria);
+	
+	
+	// 회원 게시글 갯수
 	public int getTotalCount(Criteria criteria);	
 
+	// 매니저 목록 갯수
+	public int managerTotalCount(Criteria criteria);
+	
 	// 등급수정
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public UserDto selectById(String user_id);
+	public UserDto selectById(@Param("user_id") String user_id);
 
 	// 로그인
 	public UserDto login(LoginDto dto);

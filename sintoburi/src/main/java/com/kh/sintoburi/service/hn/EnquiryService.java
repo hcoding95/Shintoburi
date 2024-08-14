@@ -25,7 +25,7 @@ public interface EnquiryService {
 	public boolean register(EnquiryVo vo);
 
 	// 문의사항수정
-	public boolean modify(int eno);
+	public boolean modify(EnquiryVo vo);
 
 	// 문의사항삭제
 	public boolean remove(int eno);
@@ -38,6 +38,6 @@ public interface EnquiryService {
 	public boolean updateStatus(int eno);
 	
 	// 등급 문의사항 처리완료 
-	public boolean gradeUpdateStatus(int eno);
+	public boolean gradeUpdateStatus(int eno,String status);
 
 }

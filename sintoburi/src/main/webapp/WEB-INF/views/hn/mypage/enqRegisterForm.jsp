@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/hn/manager/include/bs.jsp" %>
+
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -183,9 +183,7 @@ $(function() {
 
                                
                                 <div class="col-md-12 text-right">
-							        <a href="/hn/manager/noticeForm">
-							            <button class="btnMod btn btn-outline-dark btn-sm" type="button">작성하기</button>
-							        </a>
+							            <button class="btnMod btn btn-success" type="submit">작성하기</button>
 						    	</div>
                             </form>
                         </div>

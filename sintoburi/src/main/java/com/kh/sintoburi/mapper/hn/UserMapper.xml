@@ -5,11 +5,17 @@
   <mapper namespace="com.kh.sintoburi.mapper.hn.UserMapper">
   
   <!-- 회원목록 -->
-  <select id="getList" resultType="UserDto">
-  	select * from tbl_users
-  </select>
+	  <select id="getList" resultType="UserDto">
+	  	select * from tbl_users
+	  </select>
   
-  <!--  페이징처리 -->
+	<!-- 매니저목록 -->
+	  <select id="managerList" resultType="UserDto">
+	  	select * from tbl_users
+	  	where grade = '관리자'
+	  </select>
+  
+  <!--  회원페이징처리 -->
  <select id="getListWithPaging" resultType="UserDto">
     select *
     from (
@@ -19,6 +25,7 @@
             email,
             grade,
             last_login,
+            business,
             row_number() over (order by last_login desc) as rn
         from tbl_users
         <where>
@@ -45,7 +52,7 @@
       AND rn &lt;= #{pageNum} * #{amount}
 </select>
 
- <!-- 게시글 갯수 -->
+<!-- 게시글 갯수 -->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from tbl_users
 		<where>
@@ -71,10 +78,76 @@
 		</where>
 	</select> 
 
+<!--  매니저페이징처리 -->
+ <select id="managerListPaging" resultType="UserDto">
+    select *
+    from (
+        select
+            user_id,
+            user_name,
+            email,
+            grade,
+            last_login,
+            business,
+            row_number() over (order by last_login desc) as rn
+        from tbl_users
+        <where>
+            <if test="typeArr != null and typeArr.length > 0">
+                <trim prefix="(" suffix=")" prefixOverrides="or">
+                    <foreach item="type" collection="typeArr" separator="or">
+                        <choose>
+                            <when test="type == 'I'.toString()">
+                                user_id LIKE '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'E'.toString()">
+                                email LIKE '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'G'.toString()">
+                                grade LIKE '%' || #{keyword} || '%'
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </where>
+    ) subquery
+    where rn &gt; (#{pageNum} - 1) * #{amount}
+      and rn &lt;= #{pageNum} * #{amount}
+      and grade ='관리자'
+</select>
+
+<!-- 매니저게시글 갯수 -->
+	<select id="managerTotalCount" resultType="int">
+		select count(*) from tbl_users
+		where grade= '관리자'
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'I'.toString()">
+                                    user_id like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'E'.toString()">
+                                    email like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'G'.toString()">
+                               		 grade LIKE '%' || #{keyword} || '%'
+                           		 </when>
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+</select> 
+ 
+	
+
 			
    
 <!-- 회원 등급 수정 --> 
-
     <update id="updateGrade">
         update tbl_users
         set grade = #{grade}
@@ -83,7 +156,7 @@
   
   <!--  회원 데이터 1개 -->
    <select id="selectById" resultType="UserDto">
-  	select user_id,user_name,grade,email,last_login 
+  	select user_id,user_name,grade,email,last_login,business
   	from tbl_users
   	where user_id = #{user_id}
   </select>
