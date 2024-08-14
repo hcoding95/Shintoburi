@@ -16,8 +16,10 @@ import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.ReplyDto;
 import com.kh.sintoburi.domain.hc.UserVo;
 import com.kh.sintoburi.service.hc.BlogService;
+import com.kh.sintoburi.service.hc.FollowService;
 import com.kh.sintoburi.service.hc.InjectionService;
 import com.kh.sintoburi.service.hc.ReplyService;
+import com.kh.sintoburi.service.hc.UserService;
 
 @Controller
 @RequestMapping("/hc/blog/*")
@@ -32,9 +34,17 @@ public class BlogController {
 	@Autowired
 	private InjectionService injectionService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private FollowService followService;
+	
 	@GetMapping("/blog")
 	public void blog(String user_id, HttpSession session,Model model) {
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
+		UserVo blog_userVo = userService.searchByUserId(user_id);
+		blog_userVo.setSumFollow(followService.getCountFollower(user_id));
 		UserVo loginUser = (UserVo)session.getAttribute("login");
 		String login_id = "";
 		if(loginUser != null) {
@@ -42,6 +52,7 @@ public class BlogController {
 		}
 		list = injectionService.checkListFollowAndLike(list, login_id);
 		model.addAttribute("list", list);
+		model.addAttribute("blog_userVo", blog_userVo);
 	}
 	
 	@Transactional

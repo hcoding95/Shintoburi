@@ -130,6 +130,45 @@ $(function () {
 			});
 		}
 	});
+	
+	$("#followBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let followed_id = that.attr("data-followedId");
+		let check = that.attr("data-check");
+		let sData = {
+			'user_follower' : login_id,
+			'user_following' : followed_id
+		};
+		console.log(sData);
+		console.log(check);
+		if (check == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/follow/removeFollow",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("팔로우 취소");
+					location.reload();
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/follow/addFollow",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("팔로우 클릭");
+					location.reload();
+				} 
+			});
+		}
+	});
+	
+	
+	
 });
 
 
@@ -394,14 +433,16 @@ body {
 			 <div class="profile head-profile">
 					  <div class="profile profile-header ">
 				          <h3><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_name})님의 스토리</h3>
+				          <c:if test="${blogVo.user_id ne login.user_id }">
 				          <c:choose>
 				          <c:when test="${blogVo.checkFollow eq true }">
-				          	<button id="followBtn" class="btn btn-danger"><i class="fa fa-handshake">취소(${blogVo.sumFollower })</i></button>
+				          	<button id="followBtn" class="btn btn-danger" data-followedId="${blogVo.user_id}" data-check="${blogVo.checkFollow }"><i class="fa fa-handshake">취소(<span>${blogVo.sumFollower }</span>)</i></button>
 				          </c:when>
 				          <c:otherwise>
-				          	<button id="followBtn" class="btn btn-primary"><i class="fa fa-handshake">팔로우(${blogVo.sumFollower })</i></button>
+				          	<button id="followBtn" class="btn btn-primary" data-followedId="${blogVo.user_id}" data-check="${blogVo.checkFollow }"><i class="fa fa-handshake">팔로우(<span>${blogVo.sumFollower }</span>)</i></button>
 				          </c:otherwise>
 				          </c:choose>
+				          </c:if>
 					  </div>
 			      </div>
 			      <!-- 본문 내용  -->

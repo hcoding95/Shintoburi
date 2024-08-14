@@ -8,6 +8,7 @@ public interface FollowService {
 	public boolean isCheckFollow(FollowDto followDto);
 	public boolean addFollow(FollowDto followDto);
 	public boolean removeFollow(FollowDto followDto);
+	public int getCountFollower(String user_id);
 	
 	
 

@@ -341,16 +341,14 @@ $(function () {
     <div class="header-content">
         <div class="profile-picture">사진</div>
         <div class="profile-info">
-            <h2>이름</h2>
+            <h2>${blog_userVo.user_name}(blog_userVo.user_id})님</h2>
             <div class="profile-text">
-                <p>좋아요 갯수 <span>12</span></p>
-                <p>팔로워 갯수 <span>121</span></p>
+                <p>팔로워 수 <span>${blog_userVo.sumFollower}</span></p>
             </div>
         </div>
         <div class="profile-actions ">
-             <button>글쓰기</button>
              <button>쪽지 보내기</button>
-             <button>좋아요</button>
+             <c:if test="${list[0].user_id ne login.user_id }"><button>팔로우</button></c:if> 
         </div>
     </div>
 	<div class="profile-end">
@@ -493,18 +491,18 @@ $(function () {
 							 <div class="profile-end">
 							 	<!-- 프로필 -->
 								 <div class="profile-section">
-						            <h3 class="text-end">(유저)님의 프로필</h3>
+						            <h3 class="text-end">(${blog_userVo.user_name})님의 프로필</h3>
 						            <div><span>유저 계급:</span> 계급명</div>
 						            <div><span>주요 작물:</span> 작물명</div>
 						            <div><span>출생연도:</span> 1990년</div>
 						            <div><span>생일:</span> 1월 1일</div>
-						            <div><span>성별:</span> 여성</div>
+						            <div><span>성별:</span>여성</div>
 						        </div>
 						        <div class="profile-section">
 						            <h3 class="text-end">연락처</h3>
 						            <div><span>전화 번호:</span> 010-1234-5678</div>
 						            <div><span>이메일:</span> jane.doe@example.com</div>
-						            <div><span>주소:</span> 서울시 강남구</div>
+						            <div><span>주소:</span>${blog_userVo.address}</div>
 						        </div>
 						        <div class="profile-section">
 						            <h3 class="text-end">웹사이트 및 소셜 링크</h3>

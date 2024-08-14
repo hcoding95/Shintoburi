@@ -11,5 +11,10 @@
   		and user_password = #{user_password}
   	</select>
   	
+  	<select id="searchByUserId" resultType="UserVo">
+  		select * from tbl_user
+  		where user_id = #{user_id}
+  	</select>
+  	
   
   </mapper>

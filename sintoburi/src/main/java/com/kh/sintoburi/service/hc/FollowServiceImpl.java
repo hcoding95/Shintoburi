@@ -40,5 +40,11 @@ public class FollowServiceImpl implements FollowService {
 		int count = followMapper.removeFollow(followDto);
 		return (count > 0)? true : false;
 	}
+
+
+	@Override
+	public int getCountFollower(String user_id) {
+		return followMapper.getFollowCount(user_id);
+	}
 	
 }

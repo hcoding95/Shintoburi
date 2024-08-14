@@ -18,6 +18,12 @@ public class UserServiceImpl implements UserService {
 		UserVo userVo = userMapper.login(dto);
 		return userVo;
 	}
+
+	@Override
+	public UserVo searchByUserId(String user_id) {
+		UserVo userVo = userMapper.searchByUserId(user_id);
+		return userVo;
+	}
 	
 	
 	
