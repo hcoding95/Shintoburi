@@ -48,7 +48,6 @@ public class MainController {
 	
 	@PostMapping("/loginAction")
 	public String loginAction(LoginDto dto, HttpSession session) {
-		System.out.println("내가 받은 dto는?" + dto);
 		UserVo loginVo = userService.login(dto);
 		String path = "";
 		if(loginVo != null) {

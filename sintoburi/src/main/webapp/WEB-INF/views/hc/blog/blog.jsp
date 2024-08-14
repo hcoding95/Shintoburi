@@ -459,6 +459,7 @@ $(function () {
 				            <!-- 메인의 내용 시작 -->
 							<c:forEach items="${list}" var="vo" varStatus="status">
 							<div class="post-container">
+								<c:if test="${not empty vo.fileList }">
 							     <!-- 카루셀 시작 -->
 							     <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
 							     <div id="imageCarousel2${status.index }"  class="carousel slide" data-ride="carousel" data-interval="false">
@@ -481,6 +482,7 @@ $(function () {
 							         </a>
 							     </div>
 							     <!-- 카루셀 끝 -->
+							     </c:if>
 							     <c:if test="${not empty vo.productTagList }">
 							     <div class="post-icons">
 							     	<c:forEach items="${vo.productTagList }" var="tag" >
@@ -526,6 +528,18 @@ $(function () {
 							</div>
 							<c:set var="detailVo" value="${vo}"></c:set>
 							<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
+							<script type="text/javascript">
+							// 모달창이 실행될때마다 초기화 해줌 좋아요반응
+							$(function() {
+							    // 모달이 열릴 때마다 실행
+							    $('#myModal${detailVo.blog_no}').on('show.bs.modal', function () {
+							        let iframe = $(this).find('iframe');
+							        let src = iframe.attr('src'); // 현재 src를 가져와서
+							        iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
+							        iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
+							    });
+							});
+							</script>
 							</c:forEach> 
 							<!-- 메인 내용 끝 -->
 				            </div>

@@ -7,7 +7,7 @@ public interface FollowMapper {
 	public int getFollowCount (String user_following);
 	public int addFollow(FollowDto followDto);
 	public int removeFollow(FollowDto followDto);
-	public FollowDto isCheckLike(FollowDto followDto);
+	public FollowDto isCheckFollow(FollowDto followDto);
 	
 	
 }

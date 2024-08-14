@@ -45,15 +45,15 @@ public class BlogController {
 	public void blog(String user_id, HttpSession session,Model model) {
 		UserVo loginUser = (UserVo)session.getAttribute("login");
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
-		
+		System.out.println("로그인한 user정보는?" + loginUser);
 		UserVo blog_userVo = userService.searchByUserId(user_id);
 		blog_userVo.setSumFollow(followService.getCountFollower(user_id));
-		FollowDto followDto = new FollowDto();
-		followDto.setUser_follower(loginUser.getUser_id());
-		followDto.setUser_following(blog_userVo.getUser_id());
-		blog_userVo.setCheckFollow(followService.isCheckFollow(followDto));
 		String login_id = "";
 		if(loginUser != null) {
+			FollowDto followDto = new FollowDto();
+			followDto.setUser_follower(loginUser.getUser_id());
+			followDto.setUser_following(blog_userVo.getUser_id());
+			blog_userVo.setCheckFollow(followService.isCheckFollow(followDto));
 			login_id = loginUser.getUser_id();
 		}
 		list = injectionService.checkListFollowAndLike(list, login_id);

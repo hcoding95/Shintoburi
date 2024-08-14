@@ -21,9 +21,9 @@
   		where user_following = #{user_following}
   	</select>
   	
-  	<select id="isCheckLike" resultType="FollowDto">
+  	<select id="isCheckFollow" resultType="FollowDto">
   		select * from tbl_user_follow
-  		where user_following = #{user_following} 
+  		where user_follower = #{user_follower} 
   		and
   		user_following = #{user_following}
   	</select>

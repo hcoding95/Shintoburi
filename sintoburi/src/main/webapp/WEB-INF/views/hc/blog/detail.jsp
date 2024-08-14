@@ -28,6 +28,10 @@ $(function () {
 });
 
 $(function () {
+	
+	
+	
+	
 	$("#replyBtn").click(function () {
 		let replyer = '${login.user_id}';
 		let comment = $("#comment-textarea").val();
@@ -404,6 +408,7 @@ body {
 </head>
 <body>
 	<div class="main">
+	<c:if test="${not empty blogVo.fileList }">
     <!-- 카루셀 시작 -->
     <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
     <div id="imageCarousel"  class="carousel slide" data-ride="carousel" data-interval="false">
@@ -425,6 +430,7 @@ body {
         </a>
     </div>
     <!-- 카루셀 끝 -->
+    </c:if>
         </div>
         <div class="side-bar">
             <div class="container">
