@@ -55,6 +55,44 @@ $(function () {
 			});
 		}
 	});
+	
+	$("#followBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let followed_id = that.attr("data-followedId");
+		let check = that.attr("data-check");
+		let sData = {
+			'user_follower' : login_id,
+			'user_following' : followed_id
+		};
+		console.log(sData);
+		console.log(check);
+		if (check == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/follow/removeFollow",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("팔로우 취소");
+					location.reload();
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/follow/addFollow",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("팔로우 클릭");
+					location.reload();
+				} 
+			});
+		}
+	});
+	
+	
 });
 </script>
 <style>
@@ -341,14 +379,23 @@ $(function () {
     <div class="header-content">
         <div class="profile-picture">사진</div>
         <div class="profile-info">
-            <h2>${blog_userVo.user_name}(blog_userVo.user_id})님</h2>
+            <h2>${blog_userVo.user_name}(${blog_userVo.user_id})님</h2>
             <div class="profile-text">
-                <p>팔로워 수 <span>${blog_userVo.sumFollower}</span></p>
+                <p>팔로워 수 <span>${blog_userVo.sumFollow}</span></p>
             </div>
         </div>
         <div class="profile-actions ">
              <button>쪽지 보내기</button>
-             <c:if test="${list[0].user_id ne login.user_id }"><button>팔로우</button></c:if> 
+             <c:if test="${blog_userVo.user_id ne login.user_id }">
+             	<c:choose>
+		          <c:when test="${blog_userVo.checkFollow eq true }">
+		          	<button id="followBtn" class="btn btn-danger" data-followedId="${blog_userVo.user_id}" data-check="${blog_userVo.checkFollow }"><i class="fa fa-handshake">취소(<span>${blog_userVo.sumFollow}</span>)</i></button>
+		          </c:when>
+		          <c:otherwise>
+		          	<button id="followBtn" class="btn btn-primary" data-followedId="${blog_userVo.user_id}" data-check="${blog_userVo.checkFollow }"><i class="fa fa-handshake">팔로우(<span>${blog_userVo.sumFollow}</span>)</i></button>
+		          </c:otherwise>
+	         	</c:choose>
+             </c:if> 
         </div>
     </div>
 	<div class="profile-end">
@@ -493,7 +540,6 @@ $(function () {
 								 <div class="profile-section">
 						            <h3 class="text-end">(${blog_userVo.user_name})님의 프로필</h3>
 						            <div><span>유저 계급:</span> 계급명</div>
-						            <div><span>주요 작물:</span> 작물명</div>
 						            <div><span>출생연도:</span> 1990년</div>
 						            <div><span>생일:</span> 1월 1일</div>
 						            <div><span>성별:</span>여성</div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.sintoburi.domain.hc.BlogVo;
+import com.kh.sintoburi.domain.hc.FollowDto;
 import com.kh.sintoburi.domain.hc.ReplyDto;
 import com.kh.sintoburi.domain.hc.UserVo;
 import com.kh.sintoburi.service.hc.BlogService;
@@ -42,10 +43,15 @@ public class BlogController {
 	
 	@GetMapping("/blog")
 	public void blog(String user_id, HttpSession session,Model model) {
+		UserVo loginUser = (UserVo)session.getAttribute("login");
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
+		
 		UserVo blog_userVo = userService.searchByUserId(user_id);
 		blog_userVo.setSumFollow(followService.getCountFollower(user_id));
-		UserVo loginUser = (UserVo)session.getAttribute("login");
+		FollowDto followDto = new FollowDto();
+		followDto.setUser_follower(loginUser.getUser_id());
+		followDto.setUser_following(blog_userVo.getUser_id());
+		blog_userVo.setCheckFollow(followService.isCheckFollow(followDto));
 		String login_id = "";
 		if(loginUser != null) {
 			login_id = loginUser.getUser_id();

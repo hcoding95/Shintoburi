@@ -17,5 +17,6 @@ public class UserVo {
 	private int user_point;
 	private String address;
 	private int sumFollow;
+	private boolean checkFollow;
 
 }
