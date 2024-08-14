@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +21,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.PageDto;
 import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.service.hn.EnquiryService;
+import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.NoticeService;
 import com.kh.sintoburi.service.hn.ReplyService;
 import com.kh.sintoburi.util.hn.MyFileUtil;
@@ -47,6 +48,9 @@ public class MypageController {
 	
 	@Autowired
 	private ReplyService replyService;
+	
+	@Autowired
+	private FaqService faqService;
 
 	@GetMapping("/myPageMain")
 	public void myPageMain() {
@@ -218,7 +222,7 @@ public class MypageController {
 		List<NoticeVo> list = noticeService.getListNotice();
 		model.addAttribute("noticeList", list);
 	}
-	
+	// 공지사항 상세보기 
 	@GetMapping("/noticeRead")
 	public String notiveRead(@RequestParam("n_no") int n_no , Model model) {
 		NoticeVo noticeVo = noticeService.selectByNno(n_no);
@@ -226,9 +230,10 @@ public class MypageController {
 		return "hn/mypage/noticeRead";
 	}
 
-	// 자주하는질문
-	@GetMapping("/questionList")
-	public void questionList() {
-
+	// 자주하는질문 
+	@GetMapping("/faqList")
+	public void questionList(Model model) {
+		List<FaqVo> list = faqService.faqList();
+		model.addAttribute("faqList",list);
 	}
 }

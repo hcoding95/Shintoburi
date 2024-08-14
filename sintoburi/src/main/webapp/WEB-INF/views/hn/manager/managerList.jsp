@@ -52,7 +52,7 @@ $(function() {
 </script>
 
 <div class="row">
-s
+
      <!-- Area Chart -->
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">

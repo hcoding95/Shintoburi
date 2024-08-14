@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.sintoburi.mapper.hn.FaqMapper">
+<!-- 자주하는질문 등록 -->
+<insert id="insertFaq">
+	insert into tbl_faq(f_no,title,content)
+	values (seq_faq.nextVal,#{title} ,#{content})
+</insert>
+
+<!--  자주하는질문 목록 -->
+<select id="selectFaq" resultType="FaqVo">
+	select * from tbl_faq
+</select>
+
+<!-- 데이터1개 -->
+<select id="selectByFno" resultType="FaqVo">
+	select * from tbl_faq
+	where f_no = #{f_no}
+</select>
+
+<!-- 수정 -->
+<update id="updateFaq">
+	update tbl_faq set
+	title = #{title},
+	content = #{content}
+	where f_no = #{f_no}
+</update>
+
+<!-- 삭제 -->
+
+<delete id="deleteFaq">
+	delete from tbl_faq
+	where f_no = #{f_no}
+</delete>
+
+</mapper>

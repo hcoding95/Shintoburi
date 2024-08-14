@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sintoburi.domain.hn.Criteria;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.LoginDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.PageDto;
@@ -17,6 +18,7 @@ import com.kh.sintoburi.domain.hn.ReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
+import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
 import com.kh.sintoburi.mapper.hn.ReplyMapper;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
@@ -44,6 +46,9 @@ public class mapperTest {
 
 	@Autowired
 	private NoticeMapper noticeMapper;
+	
+	@Autowired
+	private FaqMapper faqMapper;
 
 	@Test
 	public void testInstance() {
@@ -169,8 +174,23 @@ public class mapperTest {
 		log.info(list);
 	}
 	
-
 	
+	@Test
+	public void faqList() {
+		List<FaqVo> list = faqMapper.selectFaq();
+		log.info(list);
+	}
+
+	@Test
+	public void noticeMod() {
+		NoticeVo noticeVo = NoticeVo.builder()
+				.n_no(30)
+				.title("dd-수정")
+				.content("수정완료")
+				.build();
+	int count =	noticeMapper.updateNotice(noticeVo);
+	log.info(count);
+	}
 	
 
 }

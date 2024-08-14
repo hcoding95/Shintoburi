@@ -18,7 +18,7 @@ public interface NoticeMapper {
 	public int insertNotice(NoticeVo noticeVo);
 	
 	// 공지사항 수정
-	public int updateNotice(@Param("n_no") int n_no);
+	public int updateNotice(NoticeVo noticeVo);
 	
 	// 공지사항 삭제
 	public int deleteNotice(@Param("n_no") int n_no);

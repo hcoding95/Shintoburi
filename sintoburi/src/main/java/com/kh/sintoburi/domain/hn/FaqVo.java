@@ -8,15 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class NoticeVo {
+public class FaqVo {
 	
-	private int n_no;
+	private int f_no;
 	private String title;
 	private String content;
-	private String image;
 	private Date write_date;
 
 }

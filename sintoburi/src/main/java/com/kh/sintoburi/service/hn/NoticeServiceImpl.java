@@ -33,8 +33,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public boolean modifyNotice(int n_no) {
-		int count = noticeMapper.updateNotice(n_no);
+	public boolean modifyNotice(NoticeVo noticeVo) {
+		int count = noticeMapper.updateNotice(noticeVo);
 		return (count == 1) ? true : false;
 	}
 

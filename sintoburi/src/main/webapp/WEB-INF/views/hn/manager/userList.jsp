@@ -16,7 +16,6 @@ $(function() {
 					"user_id" : user_id,
 					"grade" : grade
 			};
-		
 
 		$.ajax({
 			type: "post",
@@ -45,8 +44,6 @@ $(function() {
 	        $("#actionForm").submit();
 	    });
 
-	
-	
 	
 });
 </script>
@@ -89,7 +86,7 @@ $(function() {
 			</thead>
 			<tbody>
 			<c:forEach items="${userList}" var="vo">
-			 <c:if test="${vo.grade != '관리자'}">
+			 <c:if test="${vo.grade != '관리자' && vo.grade != '마스터'}">
 				<tr class="col-md-8 text-center">
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>
@@ -148,6 +145,10 @@ $(function() {
         </div>
     </div>
 </div>
+
+
+
+
 
 
 

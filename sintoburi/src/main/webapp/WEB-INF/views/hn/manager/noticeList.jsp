@@ -32,7 +32,7 @@
 
 				<tr class="col-md-8 text-center">
 					<td>${vo.n_no}</td>
-					<td>${vo.title}</td>
+					<td><a href="/hn/manager/noticeDetail/${vo.n_no}">${vo.title}</a></td>
 
 					<td><fmt:formatDate value="${vo.write_date}"
 							pattern="yyyy-MM-dd" /></td>

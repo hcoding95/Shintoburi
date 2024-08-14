@@ -45,12 +45,16 @@ $(function() {
 						        <label for="content">내용</label>
 						        <textarea rows="10" class="form-control editable" id="content" name="content" readonly>${enquiryVo.content}</textarea>
 						    </div>
+						    
+						    
 						    <div class="form-group">
 						        <label for="image">첨부파일</label>
 						        <input class="form-control editable" type="file" id="image" name="image">
 						    </div>
+						    
+						    
 						    <div class="row">
-						        <div class="col-md-12 text-end">
+						        <div class="col-md-12 text-right">
 						            <button id="btnMod" type="button" class="btn btn-warning btn-submit">수정</button>
 						            <button id="btnModOk" type="submit" class="btn btn-warning btn-submit" style="display:none">수정완료</button>
 						            <button id="btnDel" type="button" class="btn btn-danger btn-submit">삭제</button>
