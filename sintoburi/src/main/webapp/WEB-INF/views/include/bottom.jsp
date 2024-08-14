@@ -6,7 +6,6 @@
     background-color: D6EFD8;
     padding: 20px 0;
     border-top: 1px solid #e7e7e7;
-    margin-top: 20px;
 }
 
 .footer .footer-container {
