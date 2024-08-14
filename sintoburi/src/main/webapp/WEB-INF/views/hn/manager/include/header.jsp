@@ -124,12 +124,19 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/userList">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>회원관리</span>
                 </a>
-
-            </li>
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar" style="">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                       
+                        <a class="collapse-item" href="/hn/manager/userList">회원목록</a>
+                        <a class="collapse-item" href="/hn/manager/managerList">매니저목록</a>
+                       
+                        </div>
+                </div>
+            </li>  
             
               <li class="nav-item">
                 <a class="nav-link" href="/hn/manager/noticeList">

@@ -161,7 +161,7 @@ body, html {
 }
 
 main {
-    padding-top: 200px; /* 헤더 높이만큼 여백 추가 */
+    padding-top: 170px; /* 헤더 높이만큼 여백 추가 */
 }
 
 
@@ -174,7 +174,7 @@ main {
                     <a href="#" class="btn ">공지사항[24/07/22] 당첨자발표 | 7월 고기데이 기획전 경품 당첨자</a>
                 </div>
                 <div class="user-menu">
-                    <a href="#" class="btn ">로그인</a>
+                    <a href="/hc/main/login" class="btn ">로그인</a>
                     <a href="#" class="btn">회원가입</a>
                     <a href="#" class="btn">마이페이지</a>
                     <a href="#" class="btn">주문조회</a>
@@ -185,7 +185,7 @@ main {
         <div class="middle-bar">
             <div class="main-container">
                 <div class="logo">
-                    <a href="/"><img src="/resources/images/logo.png" alt="농사랑 로고"></a>
+                    <a href="/hc/main/home"><img src="/resources/images/logo.png" alt="신토불이 로고"></a>
                 </div>
             </div>
         </div>

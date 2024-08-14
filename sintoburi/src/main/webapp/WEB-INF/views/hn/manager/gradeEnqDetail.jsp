@@ -38,6 +38,7 @@ $(function() {
 	    let eno = '${enquiryVo.eno}'; 
 	    let user_id = '${enquiryVo.user_id}'; 
 	    let manager_id = 'manager';
+	    let selectedStatus = $("#status").val();
 		
 		let sData = {
 				"eno": eno,
@@ -59,9 +60,9 @@ $(function() {
 				$.ajax({
 				  	 type: "post",
                      url: "/hn/manager/gradeupdateStatus",
-                     data: { eno: eno },
+                     data: { eno: eno , status: selectedStatus},
                      success: function() {
-                         alert("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
+                    	 alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
                         
                          location.href = "/hn/manager/gradeEnqList";
                      }
@@ -142,9 +143,14 @@ $(function() {
 
 <div class="row">
 
-     <!-- Area Chart -->
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
+             <!-- Card Header - Dropdown -->
+             <div
+                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                 <h6 class="m-0 font-weight-bold text-primary">답변</h6>
+                 
+             </div>
            
              <div class="card-body"> 
 
@@ -152,17 +158,23 @@ $(function() {
 	<div class="col-md-12">
 
 				<!-- 답변 입력 -->
-
+				
 					<div class="form-group">
-					    <label for="content">답변</label>
-					    <textarea class="form-control" id="replyContent" name="replyContent" rows="5"
+					 	
+					    <textarea class="form-control" id="replyContent" name="replyContent" rows="3"
 					    <c:if test="${enquiryVo.status == '처리완료'}">readonly</c:if>
 					    ><c:if test="${enquiryVo.status == '처리완료'}">${replyVo.reply_content}</c:if></textarea>
 					</div>
-					<div class="col-md-2" style="padding-left: 0px;">
-					    <button id="btnReplyOk" type="button" class="btn btn-outline-dark"
-					        <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>처리 완료</button>
-					</div>
+				
+					<div class="form-group">
+                    <select class="form-select" id="status" name="status" >
+                   	  	<option value="처리완료">처리완료</option>
+					    <option value="보류상태">보류상태</option>
+                    </select>
+                    <button id="btnReplyOk" type="button" class="btn btn-outline-dark btn-sm"
+					            <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>답변완료</button>
+                </div>
+					
 						
 				<!-- // 답변 입력 -->
 	</div>
