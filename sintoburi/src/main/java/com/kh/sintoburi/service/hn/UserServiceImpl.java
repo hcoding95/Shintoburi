@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 
+	// 회원 목록
 	@Override
 	public List<UserDto> getList(Criteria criteria) {
 //		List<UserDto> list = userMapper.getList();
@@ -23,9 +24,25 @@ public class UserServiceImpl implements UserService {
 		return list;
 	}
 
+	// 회원 목록 갯수
 	@Override
 	public int getTotal(Criteria criteria) {
 		int count = userMapper.getTotalCount(criteria);
+		return count;
+	}
+
+	// 매니저 목록
+	@Override
+	public List<UserDto> managerList(Criteria criteria) {
+//		List<UserDto> list = userMapper.managerList();
+		List<UserDto> list = userMapper.managerListPaging(criteria);
+		return list;
+	}
+
+	// 매니저 목록 갯수 
+	@Override
+	public int managerTotalCount(Criteria criteria) {
+		int count = userMapper.managerTotalCount(criteria);
 		return count;
 	}
 
