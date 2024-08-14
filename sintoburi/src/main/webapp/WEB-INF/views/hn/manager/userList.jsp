@@ -39,9 +39,9 @@ $(function() {
 	        e.preventDefault(); // 브라우저의 기본 기능 막기
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
-	        $("#actionForm > input[name=pageNum]").val(pageNum);
-	        $("#actionForm").attr("action", "/hn/manager/userList");
-	        $("#actionForm").submit();
+	        $("#userActionForm > input[name=pageNum]").val(pageNum);
+	        $("#userActionForm").attr("action", "/hn/manager/userList");
+	        $("#userActionForm").submit();
 	    });
 
 	
@@ -119,23 +119,21 @@ $(function() {
 				<div class="col-md-12">
 					<nav>
 						<ul class="pagination justify-content-center">
-							<c:if test="${pageMaker.prev == true}">
-							<li class="page-item">
-								<a  id ="userpage" class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a>
-							</li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}" 
-									   end="${pageMaker.endPage}" 
-									   var="v">
-							<li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link userPage" href="${v}">${v}</a>
-							</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next == true}">
-							<li class="page-item">
-								<a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a>
-							</li>
-							</c:if>
+							<c:if test="${pageMaker.prev}">
+						    <li class="page-item">
+						        <a class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a>
+						    </li>
+						</c:if>
+						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
+						    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
+						        <a class="page-link userPage" href="${v}">${v}</a>
+						    </li>
+						</c:forEach>
+						<c:if test="${pageMaker.next}">
+						    <li class="page-item">
+						        <a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a>
+						    </li>
+						</c:if>
 						</ul>
 					</nav>
 				</div>

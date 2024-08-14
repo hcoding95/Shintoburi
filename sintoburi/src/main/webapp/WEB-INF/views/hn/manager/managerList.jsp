@@ -40,9 +40,9 @@ $(function() {
 	        e.preventDefault(); // 브라우저의 기본 기능 막기
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
-	        $("#actionForm > input[name=pageNum]").val(pageNum);
-	        $("#actionForm").attr("action", "/hn/manager/userList");
-	        $("#actionForm").submit();
+	        $("#managerActionForm > input[name=pageNum]").val(pageNum);
+	        $("#managerActionForm").attr("action", "/hn/manager/managerList");
+	        $("#managerActionForm").submit();
 	    });
 	
 	

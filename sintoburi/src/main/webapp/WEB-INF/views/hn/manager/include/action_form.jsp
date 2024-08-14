@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<form id="actionForm" action="/hn/manager/managerList" method="get">
+
+<form id="userActionForm" action="/hn/manager/userList" method="get">
 	<input type="hidden" name="pageNum" 
 		value="${criteria.pageNum}" />
 	<input type="hidden" name="amount" 
