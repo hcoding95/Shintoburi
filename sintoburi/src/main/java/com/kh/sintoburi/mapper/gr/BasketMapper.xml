@@ -5,16 +5,16 @@
   
   <mapper namespace="com.kh.sintoburi.mapper.gr.BasketMapper">
  
- 	<select id="getList" resultType="BasketDetailDto">
-	select k.user_id, b.pno, p.name, i.img_path, b.p_count, p.price, 
-			b.p_count*p.price	total_price, b.put_date, b.bdno, k.bno
-	from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k
-	where b.bno = k.bno
-		and k.user_id = #{user_id}
-		and b.pno = p.pno
-		and p.pno = i.pno
-		order by b.put_date desc
-	  </select>
+<!--  	<select id="getList" resultType="BasketDetailDto"> -->
+<!-- 	select k.user_id, b.pno, p.name, i.img_path, b.p_count, p.price,  -->
+<!-- 			b.p_count*p.price	total_price, b.put_date, b.bdno, k.bno -->
+<!-- 	from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k -->
+<!-- 	where b.bno = k.bno -->
+<!-- 		and k.user_id = #{user_id} -->
+<!-- 		and b.pno = p.pno -->
+<!-- 		and p.pno = i.pno -->
+<!-- 		order by b.put_date desc -->
+<!-- 	  </select> -->
 	  
 	  <insert id="insertSelectKey">
 	  	<selectKey keyProperty="bno" order="BEFORE"	resultType="int">
@@ -68,5 +68,38 @@
 	  		delete from tbl_basket
 	  		where bno = #{bno}
 	  </delete>
+	  
+	  <!-- 글목록 (페이징) --> 
+	<select id="getListWithPaging" resultType="BasketDetailDto">
+		select * from (
+			select k.user_id, b.pno, p.name, i.img_path, b.p_count, p.price, b.p_count*p.price total_price, B.PUT_DATE,
+                row_number() over (order by put_date desc) as rn
+	        from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k
+	        where b.bno = k.bno
+	        and k.user_id = #{user_id}
+	        and b.pno = p.pno
+	        and p.pno = i.pno
+	        order by B.PUT_DATE desc
+	        ) 
+		where rn &gt; (#{pageNum} - 1) * #{amount}
+		and rn &lt;= #{pageNum} * #{amount}
+	</select> 
+
+	 <!-- 게시글 개수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_basket_detail
+	</select> 
+	
+	
+	<select id="getSumPrice" resultType="int">
+		select sum(total_price)  sum_price
+		from (	select d.p_count cnt, p.price price,  d.p_count*p.price total_price
+				from tbl_basket_detail d, tbl_product p
+				where d.pno = p.pno
+				and d.bno	= (	select bno 
+								from tbl_basket
+                  				where user_id = #{user_id}))
+	
+	</select>
  
   </mapper>

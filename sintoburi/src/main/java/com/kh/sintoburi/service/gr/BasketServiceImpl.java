@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.sintoburi.domain.gr.BasketCriteria;
 import com.kh.sintoburi.domain.gr.BasketDetailDto;
 import com.kh.sintoburi.domain.gr.BasketDetailVo;
 import com.kh.sintoburi.domain.gr.BasketVo;
@@ -16,11 +17,11 @@ public class BasketServiceImpl implements BasketService{
 	@Autowired
 	private BasketMapper basketMapper;
 	
-	@Override
-	public List<BasketDetailDto> getList(String user_id) {
-		List<BasketDetailDto> list = basketMapper.getList(user_id);
-		return list;
-	}
+//	@Override
+//	public List<BasketDetailDto> getList(String user_id) {
+//		List<BasketDetailDto> list = basketMapper.getList(user_id);
+//		return list;
+//	}
 
 	@Override
 	public boolean getBasketKey(BasketVo basketVo) {
@@ -57,5 +58,23 @@ public class BasketServiceImpl implements BasketService{
 		int count = basketMapper.deleteAll(bno); // 장바구니 내용물 모두 삭제
 		count += basketMapper.deleteBasket(bno); // 장바구니 삭제
 		return (count == 2) ? true : false;
+	}
+
+	@Override
+	public List<BasketDetailDto> getListWithPaging(BasketCriteria criteria) {
+		List<BasketDetailDto> listPage = basketMapper.getListWithPaging(criteria);
+		return listPage;
+	}
+
+	@Override
+	public int getTotalCount(BasketCriteria criteria) {
+		int count = basketMapper.getTotalCount(criteria);
+		return count;
+	}
+
+	@Override
+	public int getSumPrice(String user_id) {
+		int sumPrice = basketMapper.getSumPrice(user_id);
+		return sumPrice;
 	}
 }

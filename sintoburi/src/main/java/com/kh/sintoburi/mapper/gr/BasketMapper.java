@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.gr.BasketCriteria;
 import com.kh.sintoburi.domain.gr.BasketDetailDto;
 import com.kh.sintoburi.domain.gr.BasketDetailVo;
 import com.kh.sintoburi.domain.gr.BasketVo;
@@ -13,7 +14,7 @@ import com.kh.sintoburi.domain.gr.BasketVo;
 public interface BasketMapper {
 
 	//목록 검색
-	public List<BasketDetailDto> getList(@Param("user_id") String user_id);
+	//public List<BasketDetailDto> getList(@Param("user_id") String user_id);
 	
 	//장바구니 키
 	public int insertSelectKey(BasketVo basketVo);
@@ -32,10 +33,17 @@ public interface BasketMapper {
 	
 	//장바구니 비우기 - 장바구니 상세에 있는 상품들 모두 제거 -> 장바구니 제거
 	public int deleteAll(@Param("bno") int bno);
-	//장바구니 상세보기
-	
-	
+			
 	// 장바구니 지우기
 	public int deleteBasket(@Param("bno") int bno);
+	
+	//게시글 개수
+	public int getTotalCount(BasketCriteria criteria);
+	
+	// 글목록 -  페이징 적용 
+	public List<BasketDetailDto> getListWithPaging(BasketCriteria ci);
+	
+	//가격 합계
+	public int getSumPrice(@Param("user_id") String user_id);
 	
 }
