@@ -21,22 +21,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.sintoburi.domain.hn.HnCriteria;
-import com.kh.sintoburi.domain.hn.EnquiryFormDto;
+import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.hn.HnPageDto;
+import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
-import com.kh.sintoburi.domain.hn.HnPageDto;
-import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
-import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.service.hn.FaqService;
-import com.kh.sintoburi.service.hn.NoticeService;
-import com.kh.sintoburi.service.hn.EnquiryReplyService;
-import com.kh.sintoburi.service.hn.ReportPostService;
 import com.kh.sintoburi.service.hn.HnUserService;
+import com.kh.sintoburi.service.hn.NoticeService;
+import com.kh.sintoburi.service.hn.ReportPostService;
 import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
@@ -284,7 +283,7 @@ public class ManagerController {
 		return "redirect:/hn/manager/noticeList";
 
 	}
-	
+
 	// 공지사항 상세보기
 	@GetMapping("/noticeDetail/{n_no}")
 	public String noticeDetail(@PathVariable("n_no") int n_no, Model model) {
@@ -293,10 +292,10 @@ public class ManagerController {
 
 		return "hn/manager/noticeDetail";
 	}
-	
+
 	// 공지사항 수정
 	@PostMapping("/noticeMod")
-	public String noticeMod (NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
+	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
 //		log.info("image:" + image);
 		log.info("vo:" + dto);
 		MultipartFile multi = dto.getImage();
@@ -316,13 +315,8 @@ public class ManagerController {
 		String folderName = folder.getName();
 //		log.info("folderName: " + folderName);
 
-		NoticeVo vo = NoticeVo.builder()
-				.title(dto.getTitle())
-				.content(dto.getContent())
-				.write_date(dto.getWrite_date())
-				.image(folderName)
-				.n_no(dto.getN_no())
-				.build();
+		NoticeVo vo = NoticeVo.builder().title(dto.getTitle()).content(dto.getContent()).write_date(dto.getWrite_date())
+				.image(folderName).n_no(dto.getN_no()).build();
 		log.info("vo:" + vo);
 
 		// 파일을 디스크에 저장
@@ -343,27 +337,26 @@ public class ManagerController {
 			thumbnail.close();
 		}
 		multi.transferTo(f);
-		
+
 		boolean result = noticeService.modifyNotice(vo);
-		rttr.addFlashAttribute("noticeMod",result);
+		rttr.addFlashAttribute("noticeMod", result);
 		return "redirect:/hn/manager/noticeList";
 	}
-	
+
 	// 공지사항 삭제
 	@PostMapping("/noticeDel")
 	public String noticeDel(@RequestParam("n_no") int n_no, RedirectAttributes rttr) {
 		boolean result = noticeService.removeNotice(n_no);
-		rttr.addFlashAttribute("noticeDel",result);
+		rttr.addFlashAttribute("noticeDel", result);
 		return "redirect:/hn/manager/noticeList";
 	}
-	
-	
+
 	// 자주하는 질문
 	@GetMapping("/faqList")
 	public void faqList(Model model) {
 		List<FaqVo> list = faqService.faqList();
 		model.addAttribute("faqList", list);
-		
+
 	}
 
 	@GetMapping("/faqRegisterForm")
@@ -378,14 +371,31 @@ public class ManagerController {
 		rttr.addAttribute("faqresult", result);
 		return "redirect:/hn/manager/faqList";
 	}
-	
+
 	// 자주하는 질문 상세보기
 	@GetMapping("/faqDetail/{f_no}")
-	public String faqDetail(@PathVariable("f_no") int f_no , Model model) {
-		FaqVo faqVo= faqService.selectByFno(f_no);
-		model.addAttribute("faqVo",faqVo);
-		
+	public String faqDetail(@PathVariable("f_no") int f_no, Model model) {
+		FaqVo faqVo = faqService.selectByFno(f_no);
+		model.addAttribute("faqVo", faqVo);
+
 		return "hn/manager/faqDetail";
+	}
+
+	// 자주하는 질문 수정
+	@PostMapping("/faqMod")
+	public String faqMod(FaqVo faqVo, RedirectAttributes rttr) {
+
+		boolean result = faqService.faqModify(faqVo);
+		rttr.addFlashAttribute("faqMod", result);
+		return "redirect:/hn/manager/faqList";
+	}
+
+	// 자주하는 질문 삭제
+	@PostMapping("/faqDel")
+	public String faqDel(@RequestParam("f_no") int f_no , RedirectAttributes rttr) {
+		boolean result = faqService.faqRemove(f_no);
+		rttr.addFlashAttribute("faqDel",result);
+		return "redirect:/hn/manager/faqList";
 	}
 
 }

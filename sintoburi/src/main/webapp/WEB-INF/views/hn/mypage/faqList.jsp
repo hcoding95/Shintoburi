@@ -67,7 +67,7 @@
 			            <div class="card-header" id="heading${vo.f_no}">
 			                <h5 class="mb-0">
 			                    <div class="accordion-toggle" data-toggle="collapse" data-target="#collapse${vo.f_no}" aria-expanded="true" aria-controls="collapse${vo.f_no}">
-			                     <label>top 10</label> ${vo.title}
+			                     ${vo.title}
 			                    </div>
 			                </h5>
 			            </div>

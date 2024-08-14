@@ -12,6 +12,7 @@
 <!--  자주하는질문 목록 -->
 <select id="selectFaq" resultType="FaqVo">
 	select * from tbl_faq
+	order by f_no desc
 </select>
 
 <!-- 데이터1개 -->
