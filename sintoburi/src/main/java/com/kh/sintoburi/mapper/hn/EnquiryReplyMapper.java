@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kh.sintoburi.domain.hn.ReplyVo;
 
-public interface ReplyMapper {
+public interface EnquiryReplyMapper {
 	
 	// 문의사항 답변 등록
 	public int insertReply(ReplyVo replyVo);

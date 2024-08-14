@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.hn.ReplyVo;
-import com.kh.sintoburi.mapper.hn.ReplyMapper;
+import com.kh.sintoburi.mapper.hn.EnquiryReplyMapper;
 
 @Service
 public class ReplyServiceImpl implements ReplyService {
 
 	@Autowired
-	private ReplyMapper replyMapper;
+	private EnquiryReplyMapper replyMapper;
 	
 	// 답변 등록
 	@Override

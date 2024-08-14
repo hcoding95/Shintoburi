@@ -20,7 +20,7 @@ import com.kh.sintoburi.domain.hn.UserDto;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
-import com.kh.sintoburi.mapper.hn.ReplyMapper;
+import com.kh.sintoburi.mapper.hn.EnquiryReplyMapper;
 import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 import com.kh.sintoburi.mapper.hn.UserMapper;
 import com.kh.sintoburi.service.hn.UserService;
@@ -36,7 +36,7 @@ public class mapperTest {
 	private EnquiryMapper enquiryMapper;
 
 	@Autowired
-	private ReplyMapper replyMapper;
+	private EnquiryReplyMapper replyMapper;
 
 	@Autowired
 	private ReportPostMapper reportPostMapper;
