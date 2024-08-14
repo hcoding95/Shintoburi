@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
-<%@ include file="../include/top.jsp"%>
-
+<%-- <%@ include file="../include/top.jsp"%> --%>
+<%@ include file="../test/top2.jsp"%>
 
 
         <!-- Product section-->
@@ -135,5 +135,6 @@
 			</div>
 		</div> -->
         
-<%@ include file="../include/bottom.jsp"%>
+<%-- <%@ include file="../include/bottom.jsp"%> --%>
+<%@ include file="../test/bottom2.jsp"%>
 </html>

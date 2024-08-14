@@ -1,6 +1,7 @@
 package com.kh.sintoburi.controller.ji;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ import com.kh.sintoburi.service.ji.ProductService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/product/*")
+@RequestMapping("/ji/product/*")
 @Log4j
 public class ProductController {
 
@@ -33,27 +34,27 @@ public class ProductController {
 	private ImageService imageService;
 	
 	// 쇼핑몰 메인 (원본)
-//	@GetMapping("/productMain")
-//	public String list(Model model) {
-//	    List<ProductVo> productList = productService.getProducts();
-//	    List<ImageVo> imageList = new ArrayList<>();
-//	    log.info("productList:" + productList);
-//	    
-//	    for (ProductVo product : productList) {
-//	        ImageVo imageVo = imageService.getImageByProductNo(product.getPno());
-//	        log.info("imageVo:" + imageVo);
-//	        if (imageVo != null) {
-//	            imageList.add(imageVo);
-//	        } else {
-//	            log.info("이미지 찾기 실패: " + product.getPno());
-//	        }
-//	    }
-//	    model.addAttribute("list", productList); 
-//	    model.addAttribute("imageList", imageList); 
-//	    log.info("imageList: " + imageList);
-//	    
-//	    return "product/productMain";
-//	}
+	@GetMapping("/productMain")
+	public String list(Model model) {
+	    List<ProductVo> productList = productService.getProducts();
+	    List<ImageVo> imageList = new ArrayList<>();
+	    log.info("productList:" + productList);
+	    
+	    for (ProductVo product : productList) {
+	        ImageVo imageVo = imageService.getImageByProductNo(product.getPno());
+	        log.info("imageVo:" + imageVo);
+	        if (imageVo != null) {
+	            imageList.add(imageVo);
+	        } else {
+	            log.info("이미지 찾기 실패: " + product.getPno());
+	        }
+	    }
+	    model.addAttribute("list", productList); 
+	    model.addAttribute("imageList", imageList); 
+	    log.info("imageList: " + imageList);
+	    
+	    return "product/productMain";
+	}
 	
 	@GetMapping("/productMainCate")
 	public String productMainCate(Model model) {
@@ -62,13 +63,67 @@ public class ProductController {
 		List<ProductVo> cate3List = productService.selectProductsByCate(3);
 		List<ProductVo> cate4List = productService.selectProductsByCate(4);
 		
+		List<ImageVo> imageList1 = new ArrayList<>();
+		List<ImageVo> imageList2 = new ArrayList<>();
+		List<ImageVo> imageList3 = new ArrayList<>();
+		List<ImageVo> imageList4 = new ArrayList<>();
+		
+		for (ProductVo vo : cate1List) {
+			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
+			log.info("imageVo:" + imageVo);
+			if (imageVo != null) {
+				imageList1.add(imageVo);
+			} else {
+				log.info("이미지 불러오기 실패:" + vo.getPno());
+			}
+		}
+		
+		for (ProductVo vo : cate2List) {
+			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
+			log.info("imageVo:" + imageVo);
+			if (imageVo != null) {
+				imageList2.add(imageVo);
+			} else {
+				log.info("이미지 불러오기 실패:" + vo.getPno());
+			}
+		}
+		
+		for (ProductVo vo : cate3List) {
+			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
+			log.info("imageVo:" + imageVo);
+			if (imageVo != null) {
+				imageList3.add(imageVo);
+			} else {
+				log.info("이미지 불러오기 실패:" + vo.getPno());
+			}
+		}
+		
+		for (ProductVo vo : cate4List) {
+			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
+			log.info("imageVo:" + imageVo);
+			if (imageVo != null) {
+				imageList4.add(imageVo);
+			} else {
+				log.info("이미지 불러오기 실패:" + vo.getPno());
+			}
+		}
 		model.addAttribute("cate1List", cate1List);
+		model.addAttribute("imageList1", imageList1);
+		
 		model.addAttribute("cate2List", cate2List);
+		model.addAttribute("imageList2", imageList2);
+		
 		model.addAttribute("cate3List", cate3List);
+		model.addAttribute("imageList3", imageList3);
+		
 		model.addAttribute("cate4List", cate4List);
+		model.addAttribute("imageList4", imageList4);
 		
 		return "product/productMainCate";
 	}
+	
+	
+	
 	
 	// 상품 상세보기 
 //	@GetMapping("/productDetail")
