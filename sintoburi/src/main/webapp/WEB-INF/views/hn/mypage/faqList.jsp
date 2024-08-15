@@ -7,9 +7,10 @@
  <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
 <style>
-/* 아코디언 카드 전체 테두리 제거 */
 .card {
     border: none; /* 카드의 테두리 제거 */
+    background-color: #ffffff; /* 전체 배경색을 하얀색으로 설정 */
+    margin-bottom: 10px; /* 카드 사이 간격 설정 */
 }
 
 /* 카드 헤더의 가로 옆 테두리 제거 */
@@ -18,6 +19,7 @@
     border-right: none; /* 오른쪽 테두리 제거 */
     border-top: none; /* 위쪽 테두리 제거 (선택적) */
     border-bottom: 1px solid #ddd; /* 아래쪽 테두리만 유지 (선택적) */
+    padding: 0.75rem 1.25rem; /* 카드 헤더 패딩 조정 */
 }
 
 /* 아코디언 토글 스타일 조정 */
@@ -30,10 +32,14 @@
     border: none; /* 테두리 제거 */
     box-shadow: none; /* 그림자 제거 (선택적) */
     font-size: 14px; /* 글씨 크기 조정 */
+    display: block; /* 블록 레벨 요소로 설정 */
+    width: 100%; /* 너비를 100%로 설정 */
 }
 
-.accordion-toggle:hover {
-    background-color: #f8f9fa; /* 호버 시 배경색 변경 */
+/* 아코디언 바디의 여백과 패딩 조정 */
+.card-body {
+    padding: 1rem; /* 카드 바디 패딩 조정 */
+    background-color: #ffffff; /* 카드 바디 배경색 하얀색 */
 }
 
 </style>

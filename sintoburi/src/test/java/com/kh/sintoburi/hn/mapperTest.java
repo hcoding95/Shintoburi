@@ -192,5 +192,16 @@ public class mapperTest {
 	log.info(count);
 	}
 	
+	@Test
+	public void preNotice() {
+		NoticeVo noticeVo = noticeMapper.getPreviousNotice(21);
+		log.info(noticeVo);
+	}
+	
+	@Test
+	public void nextNotice() {
+		NoticeVo noticeVo = noticeMapper.getNextNotice(21);
+		log.info(noticeVo);
+	}
 
 }

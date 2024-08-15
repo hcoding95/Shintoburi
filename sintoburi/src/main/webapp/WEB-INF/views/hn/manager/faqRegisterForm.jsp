@@ -4,7 +4,32 @@
 <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<script>
+$(function() {
+		
+	$("form").submit(function(e) {
+        e.preventDefault(); // 폼의 기본 제출 동작을 방지
+        
+        let formData = new FormData(this); // 폼 데이터를 FormData 객체로 변환
 
+        $.ajax({
+            type: "post",
+            url: $(this).attr("action"),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                alert("자주하는 질문이 등록되었습니다.");
+                
+                window.location.href = '/hn/manager/faqList'; 
+            },
+            error: function() {
+                alert("등록 실패 , 다시 시도해 주세요.");
+            }
+        });
+    });
+});
+</script>
 
 
 

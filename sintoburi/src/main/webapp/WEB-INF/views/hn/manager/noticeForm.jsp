@@ -4,6 +4,37 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
+<script>
+$(function() {
+    $("#noticeForm").submit(function(e) {
+        e.preventDefault(); // 폼의 기본 제출 동작을 방지
+
+        let formData = new FormData(this); // 폼 데이터를 FormData 객체로 변환
+
+        $.ajax({
+            type: "post",
+            url: $(this).attr("action"),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                
+                alert("공지사항이 등록되었습니다.");
+              
+                window.location.href = '/hn/manager/noticeList'; 
+            },
+            error: function(xhr, status, error) {
+               
+                console.error("등록 실패:", xhr.responseText);
+                alert("등록 실패. 다시 시도해 주세요.");
+            }
+        });
+    });
+});
+</script>
+
+
+
 <div class="row">
 
     <div class="col-xl-12 col-lg-12">
@@ -16,7 +47,8 @@
             <div class="card-body"> 
                 <div class="row">
                     <div class="col-md-12">
-                        <form role="form" action="/hn/manager/noticeRegister" method="post" enctype="multipart/form-data">
+                        <form id="noticeForm" role="form" action="/hn/manager/noticeRegister" method="post" enctype="multipart/form-data">
+                          
                             <div class="form-group">
                                 <label for="title">제목</label>
                                 <input type="text" class="form-control" id="title" name="title" />
@@ -33,7 +65,7 @@
                             </div>
 
                             <div class="col-md-12 text-right">
-                                <button class="btnMod btn btn-outline-dark btn-sm" type="submit">작성하기</button>
+                                <button id="btnNotice" class="btnMod btn btn-outline-dark btn-sm" type="submit">작성하기</button>
                             </div>
                         </form>
                     </div>

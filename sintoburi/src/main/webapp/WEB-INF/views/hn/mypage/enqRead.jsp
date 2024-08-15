@@ -16,17 +16,46 @@ $(function() {
 
 	// 삭제폼전송
 	$("#btnDel").click(function () {
-		$("#frmDel").submit();
+		 if (confirm("삭제하시겠습니까?")) {
+	            // 확인 버튼 클릭 시 삭제 폼 제출
+	            $("#frmDel").submit();
+	        }
 	});
+	
+	  $("#enqModForm").submit(function(e) {
+	        e.preventDefault(); 
+	        
+	        let formData = new FormData(this); 
+
+	        $.ajax({
+	            type: "post",
+	            url: $(this).attr("action"),
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function(response) {
+	                
+	                alert("문의사항이 수정되었습니다.");
+	                
+	                window.location.href = '/hn/mypage/enqList'; 
+	            },
+	            error: function(xhr, status, error) {
+	                // 요청이 실패한 경우
+	                console.error("등록 실패:", xhr.responseText);
+	                alert("등록 실패. 다시 시도해 주세요.");
+	            }
+	        });
+	    });
 	 
 });
-  
+ 
 </script>
+
 	<div id="page-content-wrapper">
 		<div class="container-fluid">
 		    <div class="row">
 		        <div class="col-md-12">
-		           <form role="form" action="/hn/mypage/enqMod" method="post" enctype="multipart/form-data">
+		           <form id="enqModForm" role="form" action="/hn/mypage/enqMod" method="post" enctype="multipart/form-data">
 		          	 <input type="hidden" name="eno" value="${enquiryVo.eno}"/>
 						    <div class="form-group">
 						        <label for="user_id">작성자</label>
@@ -55,9 +84,15 @@ $(function() {
 						    
 						    <div class="row">
 						        <div class="col-md-12 text-right">
-						            <button id="btnMod" type="button" class="btn btn-warning btn-submit">수정</button>
-						            <button id="btnModOk" type="submit" class="btn btn-warning btn-submit" style="display:none">수정완료</button>
-						            <button id="btnDel" type="button" class="btn btn-danger btn-submit">삭제</button>
+						     <c:if test="${enquiryVo.status != '처리완료' && enquiryVo.status != '답변완료'}">
+					            <button id="btnMod" type="button" class="btn btn-warning btn">수정</button>
+					            <button id="btnModOk" type="submit" class="btn btn-warning btn-submit" style="display:none">수정완료</button>
+					            <button id="btnDel" type="button" class="btn btn-danger btn">삭제</button>
+					        </c:if>
+					        <c:if test="${enquiryVo.status == '처리완료' || enquiryVo.status == '답변완료'}">
+					           <button type="button" class="btn btn-success btn" onclick="window.location.href='/hn/mypage/enqList'">답변이 완료되었습니다</button>
+							
+					        </c:if>	
 						        </div>
 						    </div>
 						</form>

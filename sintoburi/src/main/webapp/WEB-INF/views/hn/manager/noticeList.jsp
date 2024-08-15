@@ -3,6 +3,45 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
+<script>
+$(function(){
+	$(".btnMod").click(function(){
+		 let $button = $(this);
+		let n_no = $(this).data('n_no');
+	    let important = $(this).closest('tr').find('select').val();
+	    console.log(n_no);
+	    console.log(important);
+		let sData = {
+			"n_no" : n_no,
+			"important" :important
+		};
+		
+		
+		$.ajax({
+			type: "post",
+			url : "/hn/manager/updateImportant",
+			data : JSON.stringify(sData),
+			contentType: "application/json; charset=utf-8",
+			 success: function(result) {
+	                if (result) {
+	                    alert("공지사항 항목이 변경 되었습니다.");
+	                } else {
+	                    alert("변경 실패 , 다시 시도해 주세요.");
+	                }
+	            }
+		});
+		
+		
+	});
+	
+	
+	
+});
+
+
+</script>
+
+
 
  <div class="row">
 
@@ -24,6 +63,8 @@
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성일</th>
+					<th>항목</th>
+					<th>수정</th>
 					
 				</tr>
 			</thead>
@@ -36,7 +77,15 @@
 
 					<td><fmt:formatDate value="${vo.write_date}"
 							pattern="yyyy-MM-dd" /></td>
-					
+					<td>
+                       <select>
+						  <option value="N" ${vo.important == 'N' ? 'selected' : 'N'}>일반</option>
+    					  <option value="Y" ${vo.important == 'Y' ? 'selected' : 'N'}>중요</option>   
+                       </select>
+                       </td >
+                       <td>
+                       <button class="btnMod btn btn-outline-dark btn-sm" data-n_no="${vo.n_no}" style="padding-bottom: 1px; padding-top: 1px;" type=button>수정</button>
+					</td>
 				</tr>
 			</c:forEach>	 
 			</tbody>
@@ -44,7 +93,7 @@
 		<div class="row">
     <div class="col-md-12 text-right">
         <a href="/hn/manager/noticeForm">
-            <button class="btnMod btn btn-outline-dark btn-sm" type="button">작성하기</button>
+            <button class="btn btn-primary btn" type="button">작성하기</button>
         </a>
     </div>
 </div>

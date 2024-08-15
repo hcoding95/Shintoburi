@@ -38,4 +38,38 @@
 		delete from tbl_notice
 		where n_no = #{n_no}
 	</delete>
+	
+	<!--  공지사항 이전 게시글 -->
+	<select id="getPreviousNotice" resultType="NoticeVo">
+		 select * 
+    from (
+        select * 
+        from tbl_notice 
+        where n_no &lt; #{n_no} 
+        order by n_no desc
+    ) 
+    where rownum = 1
+	
+	</select>
+	
+	
+	<!--  공지사항 다음 게시글 -->
+	<select id="getNextNotice" resultType="NoticeVo">
+	  select * 
+        from (
+            select * 
+            from tbl_notice 
+            where n_no &gt; #{n_no} 
+            order by n_no asc
+        ) 
+        where rownum = 1
+	
+	</select>
+	
+	<!--  공지사항 항목 업데이트 -->
+	<update id="updateImportant">
+		update tbl_notice
+		set important = #{important}
+		where n_no = #{n_no}
+	</update>
 </mapper>

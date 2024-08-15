@@ -225,8 +225,16 @@ public class MypageController {
 	// 공지사항 상세보기 
 	@GetMapping("/noticeRead")
 	public String notiveRead(@RequestParam("n_no") int n_no , Model model) {
+		// 상세
 		NoticeVo noticeVo = noticeService.selectByNno(n_no);
 		model.addAttribute("noticeVo",noticeVo);
+		// 이전게시글
+		NoticeVo previousNotice = noticeService.getPreviousNotice(n_no);
+		model.addAttribute("previousNotice",previousNotice);
+		// 다음게시글
+		NoticeVo nextNotice = noticeService.getNextNotice(n_no);
+		model.addAttribute("nextNotice",nextNotice);
+		
 		return "hn/mypage/noticeRead";
 	}
 

@@ -18,5 +18,6 @@ public class NoticeVo {
 	private String content;
 	private String image;
 	private Date write_date;
+	private String important;
 
 }

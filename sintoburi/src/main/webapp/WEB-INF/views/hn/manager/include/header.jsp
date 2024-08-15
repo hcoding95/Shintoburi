@@ -7,7 +7,17 @@
 
 
 <head>
+<style>
+.alert.alert-info {
+    padding: 0.5rem 1rem; /* 상하 패딩을 줄여서 세로 폭을 줄입니다 */
+    line-height: 1.2; /* 줄 간격을 줄여서 세로 폭을 줄입니다 */
+   
 
+}
+
+
+
+</style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -210,20 +220,29 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+<!--                     Topbar Search -->
+<!--                     <form -->
+<!--                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"> -->
+<!--                         <div class="input-group"> -->
+<!--                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." -->
+<!--                                 aria-label="Search" aria-describedby="basic-addon2"> -->
+<!--                             <div class="input-group-append"> -->
+<!--                                 <button class="btn btn-primary" type="button"> -->
+<!--                                     <i class="fas fa-search fa-sm"></i> -->
+<!--                                 </button> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </form> -->
+				<div class="container-fluid" style="
+				    width: 900px;
+				    margin-left: 0px;
+				    margin-right: 0px;
+				">
+			    <div class="alert alert-info" role="alert">
+			        <strong>공지사항:</strong> 중요한 공지사항 표시
+			    </div>
+			    
+			</div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 

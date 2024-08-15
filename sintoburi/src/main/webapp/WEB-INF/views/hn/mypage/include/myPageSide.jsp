@@ -100,6 +100,7 @@
                         마이쇼핑
                     </div>
                     <ul class="sub-menu">
+                        <li><a href="#!">장바구니</a></li>
                         <li><a href="#!">주문/배송 조회</a></li>
                         <li><a href="#!">취소/반품/교환 내역</a></li>
                     </ul>
@@ -116,7 +117,6 @@
                     </div>
                     <ul class="sub-menu">
                         <li><a href="#!">회원정보 수정</a></li>
-                        <li><a href="#!">배송지/환불계좌</a></li>
                         <li><a href="#!">회원탈퇴</a></li>
                     </ul>
                 </div>

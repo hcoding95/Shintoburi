@@ -69,8 +69,8 @@ public class ManagerController {
 	// 회원목록
 	@GetMapping("/userList")
 	public void userList(Model model, HnCriteria criteria) {
-		System.out.println("Page Number: " + criteria.getPageNum());
-		System.out.println("Amount per Page: " + criteria.getAmount());
+	    System.out.println("Page Number: " + criteria.getPageNum());
+	    System.out.println("Amount per Page: " + criteria.getAmount());
 
 		// 회원목록
 		List<HnUserDto> list = userService.getList(criteria);
@@ -78,7 +78,7 @@ public class ManagerController {
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("userList", list);
-
+		model.addAttribute("criteria", criteria);
 	}
 
 	// 매니저목록
@@ -92,6 +92,7 @@ public class ManagerController {
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("managerList", managerList);
+		model.addAttribute("criteria", criteria);
 	}
 
 	// 등급수정
@@ -105,6 +106,8 @@ public class ManagerController {
 		boolean result = userService.modifyGrade(user_id, grade);
 		return result;
 	}
+	
+
 
 	// 상품리스트
 
@@ -136,7 +139,7 @@ public class ManagerController {
 
 	// 상품문의사항, 답변 상세보기
 	@GetMapping("/enquiryDetail/{eno}")
-	public String enquiryDetail(@PathVariable("eno") int eno, Model model) {
+	public String enquiryDetail(@PathVariable("eno") int eno, Model model) { 
 		System.out.println("enquiryDetail...");
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
 		model.addAttribute("enquiryVo", enquiryVo);
@@ -224,6 +227,7 @@ public class ManagerController {
 	public void noticeList(Model model) {
 		List<NoticeVo> list = noticeService.getListNotice();
 		model.addAttribute("noticeList", list);
+		
 	}
 
 	// 공지사항등록폼
@@ -349,6 +353,16 @@ public class ManagerController {
 		boolean result = noticeService.removeNotice(n_no);
 		rttr.addFlashAttribute("noticeDel", result);
 		return "redirect:/hn/manager/noticeList";
+	}
+	
+	//공지사항 항목 수정
+	@PostMapping("/updateImportant")
+	@ResponseBody
+	public boolean updateImportant(@RequestBody NoticeVo vo) {
+		String important = vo.getImportant();
+		int n_no = vo.getN_no();
+		boolean result = noticeService.updateImportant(n_no, important);
+		return result;
 	}
 
 	// 자주하는 질문

@@ -22,4 +22,13 @@ public interface NoticeMapper {
 	
 	// 공지사항 삭제
 	public int deleteNotice(@Param("n_no") int n_no);
+	
+	// 이전게시글
+	public NoticeVo getPreviousNotice(@Param("n_no") int n_no);
+	
+	// 다음 게시글
+	public NoticeVo getNextNotice(@Param("n_no") int n_no);
+	
+	// 공지사항 항목 업데이트
+	public int updateImportant(@Param("n_no") int n_no , @Param("important") String important);
 }

@@ -44,4 +44,22 @@ public class NoticeServiceImpl implements NoticeService {
 		return (count == 1) ? true : false;
 	}
 
+	@Override
+	public NoticeVo getPreviousNotice(int n_no) {
+		NoticeVo noticeVo = noticeMapper.getPreviousNotice(n_no);
+		return noticeVo;
+	}
+
+	@Override
+	public NoticeVo getNextNotice(int n_no) {
+		NoticeVo noticeVo = noticeMapper.getNextNotice(n_no);
+		return noticeVo;
+	}
+
+	@Override
+	public boolean updateImportant(int n_no, String important) {
+		int count = noticeMapper.updateImportant(n_no, important);
+		return (count == 1)? true : false;
+	}
+
 }

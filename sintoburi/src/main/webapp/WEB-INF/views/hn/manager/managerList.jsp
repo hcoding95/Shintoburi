@@ -26,9 +26,9 @@ $(function() {
 	                if (result) {
 	                    let updatedGrade = grade; // 업데이트된 등급
 	                    $(this).closest('tr').find('.current-grade').text(updatedGrade);
-	                    alert("수정 완료");
+	                    alert(grade + "로 변경 되었습니다.");
 	                } else {
-	                    alert("수정 실패");
+	                    alert("변경 실패 , 다시 시도해 주세요.");
 	                }
 	            }
 		});
@@ -110,19 +110,19 @@ $(function() {
 						<ul class="pagination justify-content-center">
 							<c:if test="${pageMaker.prev == true}">
 							<li class="page-item">
-								<a  id ="managerpage" class="Page-link managerPage" href="${pageMaker.startPage - 1}">&laquo;</a>
+								<a  class="Page-link managerPage" href="${pageMaker.startPage - 1}">&laquo;</a>
 							</li>
 							</c:if>
 							<c:forEach begin="${pageMaker.startPage}" 
 									   end="${pageMaker.endPage}" 
 									   var="v">
-							<li class="page-item managerPage ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link" href="${v}">${v}</a>
+							<li class="page-item  ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
+								<a class="page-link managerPage" href="${v}">${v}</a>
 							</li>
 							</c:forEach>
 							<c:if test="${pageMaker.next == true}">
-							<li class="page-item managerPage">
-								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
+							<li class="page-item ">
+								<a class="page-link managerPage" href="${pageMaker.endPage + 1}">&raquo;</a>
 							</li>
 							</c:if>
 						</ul>
@@ -134,5 +134,17 @@ $(function() {
         </div>
     </div>
 </div>
-<%@ include file="/WEB-INF/views/hn/manager/include/action_form.jsp" %>
+
+<form id="managerActionForm" action="/hn/manager/managerList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
+
+<%-- <%@ include file="/WEB-INF/views/hn/manager/include/action_form.jsp" %> --%>
 <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>
