@@ -22,10 +22,8 @@ public class FollowServiceImpl implements FollowService {
 
 	@Override
 	public boolean isCheckFollow(FollowDto followDto) {
-		System.out.println("내가받은 팔로우 dto는?" + followDto);
 		FollowDto follow = followMapper.isCheckFollow(followDto);
 		if(follow != null) {
-			System.out.println("팔로우 되어있음" + follow); 
 			return true;
 		}
 		return false;

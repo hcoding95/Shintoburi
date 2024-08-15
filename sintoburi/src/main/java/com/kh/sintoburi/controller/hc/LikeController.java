@@ -25,5 +25,11 @@ public class LikeController {
 	public boolean removeLike(@RequestBody LikeDto likeDto) {
 		return likeService.removeLike(likeDto);
 	}
+	
+	@PostMapping("/getSumLike")
+	public int getSumLike(int blog_no) {
+		int sumLike = likeService.getLikeCount(blog_no);
+		return sumLike;
+	}
 
 }

@@ -502,8 +502,8 @@ $(function () {
 							       </div>
 							     </div>
 							     <div class="user-stats">
-							       <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike">${vo.sumLike }</span></i></div>
-							       <div><i class="fa fa-handshake">팔로워<span class="sumFollow">${vo.sumFollower }</span></i></div>
+							       <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike" id="sumLike${vo.blog_no }">${vo.sumLike }</span></i></div>
+							       <div><i class="fa fa-handshake">팔로워<span class="sumFollow" id="sumFollow${vo.blog_no }">${vo.sumFollower }</span></i></div>
 							     </div>
 							</div>
 							    <div class="post-content">

@@ -118,7 +118,16 @@ $(function () {
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
 					alert("좋아요 취소");
+					$.ajax({
+						type : "post",
+						url : "/hc/like/getSumLike",
+						data : { 'blog_no' : blog_no},
+						success : function (rData) {
+							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+						}
+					})
 					location.reload();
+					
 				} 
 			});
 		} else {
@@ -129,6 +138,14 @@ $(function () {
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
 					alert("좋아요 클릭");
+					$.ajax({
+						type : "post",
+						url : "/hc/like/getSumLike",
+						data : { 'blog_no' : blog_no},
+						success : function (rData) {
+							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+						}
+					})
 					location.reload();
 				} 
 			});
@@ -154,7 +171,16 @@ $(function () {
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
 					alert("팔로우 취소");
+					$.ajax({
+						type : "post",
+						url : "/hc/follow/getSumFollow",
+						data : { 'follow_id' : followed_id},
+						success : function (rData) {
+							$(window.parent.document).find("#sumFollow" + ${blogVo.blog_no}).text(rData);
+						}
+					})
 					location.reload();
+					
 				} 
 			});
 		} else {
@@ -165,11 +191,21 @@ $(function () {
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
 					alert("팔로우 클릭");
+					$.ajax({
+						type : "post",
+						url : "/hc/follow/getSumFollow",
+						data : { 'follow_id' : followed_id},
+						success : function (rData) {
+							$(window.parent.document).find("#sumFollow" + ${blogVo.blog_no}).text(rData);
+						}
+					})
 					location.reload();
 				} 
 			});
 		}
 	});
+	
+	
 	
 	
 	

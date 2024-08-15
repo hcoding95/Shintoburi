@@ -25,5 +25,10 @@ public class FollowController {
 	public boolean removeFollow (@RequestBody FollowDto followDto) {
 		return followService.removeFollow(followDto);
 	}
-
+	
+	@PostMapping("/getSumFollow")
+	public int getSumFollow (String follow_id) {
+		int sumFollow = followService.getCountFollower(follow_id);
+		return sumFollow;
+	}
 }
