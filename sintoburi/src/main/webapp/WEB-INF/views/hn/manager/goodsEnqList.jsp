@@ -151,7 +151,16 @@ $(function() {
             </div> <!-- card-body -->
         </div>
 
-
+<form id="actionForm" action="/hn/manager/goodsEnqList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
 
 
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

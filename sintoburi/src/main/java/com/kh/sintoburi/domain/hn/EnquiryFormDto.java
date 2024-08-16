@@ -1,5 +1,7 @@
 package com.kh.sintoburi.domain.hn;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -16,5 +18,5 @@ public class EnquiryFormDto {
 	private String user_id;
 	private String enquiry_type;
 	private String content;
-	private MultipartFile image;
+	private List<MultipartFile> image;
 }

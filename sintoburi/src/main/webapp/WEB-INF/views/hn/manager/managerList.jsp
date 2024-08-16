@@ -5,49 +5,43 @@
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
 <script>
 $(function() {
-	$(".btnMod").click(function() {
-		  let user_id = $(this).attr("data-user-id");
-	      let grade = $(this).closest('tr').find('select').val();
-	      console.log(user_id);
-	      console.log(grade);
-	      
-			let sData ={
-					"user_id" : user_id,
-					"grade" : grade
-			};
-		
+    // 페이지 이동 핸들러를 페이지 로드 후 바로 바인딩
+    $(".managerPage").click(function(e) {
+        e.preventDefault(); // 브라우저의 기본 기능 막기
+        let pageNum = $(this).attr("href"); // href 값이 페이지 번호임을 가정
+        console.log(pageNum);
+        $("#managerActionForm > input[name=pageNum]").val(pageNum);
+        $("#managerActionForm").attr("action", "/hn/manager/managerList");
+        $("#managerActionForm").submit();
+    });
 
-		$.ajax({
-			type: "post",
-			url : "/hn/manager/modGrade",
-			data : JSON.stringify(sData),
-			contentType: "application/json; charset=utf-8",
-			 success: function(result) {
-	                if (result) {
-	                    let updatedGrade = grade; // 업데이트된 등급
-	                    $(this).closest('tr').find('.current-grade').text(updatedGrade);
-	                    alert(grade + "로 변경 되었습니다.");
-	                } else {
-	                    alert("변경 실패 , 다시 시도해 주세요.");
-	                }
-	            }
-		});
-	
+    $(".btnMod").click(function() {
+        let user_id = $(this).attr("data-user-id");
+        let grade = $(this).closest('tr').find('select').val();
+        console.log(user_id);
+        console.log(grade);
+        
+        let sData = {
+            "user_id": user_id,
+            "grade": grade
+        };
 
-
-	// 매니저페이지 블럭
-	 $(".managerPage").click(function(e) {
-	        e.preventDefault(); // 브라우저의 기본 기능 막기
-	        let pageNum = $(this).attr("href");
-	        console.log(pageNum);
-	        $("#managerActionForm > input[name=pageNum]").val(pageNum);
-	        $("#managerActionForm").attr("action", "/hn/manager/managerList");
-	        $("#managerActionForm").submit();
-	    });
-	
-	
-	
-	});
+        $.ajax({
+            type: "post",
+            url: "/hn/manager/modGrade",
+            data: JSON.stringify(sData),
+            contentType: "application/json; charset=utf-8",
+            success: function(result) {
+                if (result) {
+                    let updatedGrade = grade; // 업데이트된 등급
+                    $(this).closest('tr').find('.current-grade').text(updatedGrade);
+                    alert(grade + "로 변경 되었습니다.");
+                } else {
+                    alert("변경 실패 , 다시 시도해 주세요.");
+                }
+            }
+        });
+    });
 });
 </script>
 
@@ -104,32 +98,30 @@ $(function() {
 </div>
 
 <!-- Pagination -->
-            <div class="row">
-				<div class="col-md-12">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<c:if test="${pageMaker.prev == true}">
-							<li class="page-item">
-								<a  class="Page-link managerPage" href="${pageMaker.startPage - 1}">&laquo;</a>
-							</li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}" 
-									   end="${pageMaker.endPage}" 
-									   var="v">
-							<li class="page-item  ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link managerPage" href="${v}">${v}</a>
-							</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next == true}">
-							<li class="page-item ">
-								<a class="page-link managerPage" href="${pageMaker.endPage + 1}">&raquo;</a>
-							</li>
-							</c:if>
-						</ul>
-					</nav>
-				</div>
-			</div>
-            <!-- // Pagination -->
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item">
+                        <a class="page-link managerPage" href="${pageMaker.startPage - 1}">&laquo;</a>
+                    </li>
+                </c:if>
+                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
+                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
+                        <a class="page-link managerPage" href="${v}">${v}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageMaker.next}">
+                    <li class="page-item">
+                        <a class="page-link managerPage" href="${pageMaker.endPage + 1}">&raquo;</a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- // Pagination -->
             </div> <!-- card-body -->
         </div>
     </div>
@@ -146,5 +138,5 @@ $(function() {
 		value="${criteria.keyword}"/>
 </form>
 
-<%-- <%@ include file="/WEB-INF/views/hn/manager/include/action_form.jsp" %> --%>
+
 <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

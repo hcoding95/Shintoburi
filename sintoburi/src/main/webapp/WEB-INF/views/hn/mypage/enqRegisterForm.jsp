@@ -205,7 +205,7 @@ $(function() {
 
                                 <div class="form-group">
                                     <label for="image">첨부파일</label>
-                                    <input  type="file" id="image" name="image">
+                                    <input  type="file" id="image" name="image" multiple>
                                 </div>
 
                                

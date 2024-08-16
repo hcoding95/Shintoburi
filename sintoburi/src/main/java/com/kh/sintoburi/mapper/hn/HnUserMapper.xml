@@ -29,7 +29,7 @@
             row_number() over (order by last_login desc) as rn
         from tbl_users
         <where>
-            <if test="typeArr != null and typeArr.length > 0">
+           <if test="type != null">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>

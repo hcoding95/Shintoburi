@@ -3,14 +3,17 @@ package com.kh.sintoburi.controller.hn;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,14 +66,28 @@ public class ManagerController {
 
 	@Autowired
 	private FaqService faqService;
+	
+	// <img src="/display?fileName="/>
+	@ResponseBody
+	@GetMapping("/display")
+	public ResponseEntity<byte[]> getFile(String fileName) throws Exception {
+		File f = new File(fileName);
+		// binary data
+		byte[] data = FileCopyUtils.copyToByteArray(f);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", Files.probeContentType(f.toPath())); // image/png
+		ResponseEntity<byte[]> entity =
+				new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+		return entity;
+	}
 
 	// 회원리스트
 
 	// 회원목록
 	@GetMapping("/userList")
 	public void userList(Model model, HnCriteria criteria) {
-	    System.out.println("Page Number: " + criteria.getPageNum());
-	    System.out.println("Amount per Page: " + criteria.getAmount());
+		System.out.println("Page Number: " + criteria.getPageNum());
+		System.out.println("Amount per Page: " + criteria.getAmount());
 
 		// 회원목록
 		List<HnUserDto> list = userService.getList(criteria);
@@ -84,11 +101,8 @@ public class ManagerController {
 	// 매니저목록
 	@GetMapping("/managerList")
 	public void managerList(Model model, HnCriteria criteria) {
-
 		List<HnUserDto> managerList = userService.managerList(criteria);
-		System.out.println("managerList" + managerList);
 		int total = userService.managerTotalCount(criteria);
-
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("managerList", managerList);
@@ -106,8 +120,6 @@ public class ManagerController {
 		boolean result = userService.modifyGrade(user_id, grade);
 		return result;
 	}
-	
-
 
 	// 상품리스트
 
@@ -127,11 +139,11 @@ public class ManagerController {
 	public void goodsEnqList(Model model, HnCriteria criteria) {
 		List<EnquiryVo> list = enquiryService.goodsGetList(criteria);
 
-		int total = enquiryService.getTotalCount(criteria);
+		int total = enquiryService.goodsTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("goodsEnqList", list);
-
+		model.addAttribute("criteria", criteria);
 		// 답변 리스트
 		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("replyList", replyLisy);
@@ -139,12 +151,15 @@ public class ManagerController {
 
 	// 상품문의사항, 답변 상세보기
 	@GetMapping("/enquiryDetail/{eno}")
-	public String enquiryDetail(@PathVariable("eno") int eno, Model model) { 
+	public String enquiryDetail(@PathVariable("eno") int eno, Model model) {
 		System.out.println("enquiryDetail...");
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
+		log.info("EnquiryVo: " + enquiryVo); 
 		model.addAttribute("enquiryVo", enquiryVo);
 
 		EnquiryReplyVo replyVo = replyService.selectByReplyEno(eno);
+		// 문의 이미지 
+//		enquiryService. -> 이미지 리스트(List<EnquiryVo>를 리턴하는 메서드
 		model.addAttribute("replyVo", replyVo);
 		return "hn/manager/enquiryDetail";
 	}
@@ -168,11 +183,12 @@ public class ManagerController {
 	public void gradeEnqList(Model model, HnCriteria criteria) {
 		List<EnquiryVo> list = enquiryService.gradeGetList(criteria);
 
-		int total = enquiryService.getTotalCount(criteria);
+		int total = enquiryService.gradeTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("gradeEnqList", list);
-
+		model.addAttribute("criteria", criteria);
+		
 		// 답변리스트
 		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("gradeReplyList", replyLisy);
@@ -227,7 +243,7 @@ public class ManagerController {
 	public void noticeList(Model model) {
 		List<NoticeVo> list = noticeService.getListNotice();
 		model.addAttribute("noticeList", list);
-		
+
 	}
 
 	// 공지사항등록폼
@@ -280,6 +296,7 @@ public class ManagerController {
 			thumbnail.close();
 		}
 		multi.transferTo(f);
+		
 
 		boolean result = noticeService.registerNotice(vo);
 		log.info("result:" + result);
@@ -354,8 +371,8 @@ public class ManagerController {
 		rttr.addFlashAttribute("noticeDel", result);
 		return "redirect:/hn/manager/noticeList";
 	}
-	
-	//공지사항 항목 수정
+
+	// 공지사항 항목 수정
 	@PostMapping("/updateImportant")
 	@ResponseBody
 	public boolean updateImportant(@RequestBody NoticeVo vo) {
@@ -406,9 +423,9 @@ public class ManagerController {
 
 	// 자주하는 질문 삭제
 	@PostMapping("/faqDel")
-	public String faqDel(@RequestParam("f_no") int f_no , RedirectAttributes rttr) {
+	public String faqDel(@RequestParam("f_no") int f_no, RedirectAttributes rttr) {
 		boolean result = faqService.faqRemove(f_no);
-		rttr.addFlashAttribute("faqDel",result);
+		rttr.addFlashAttribute("faqDel", result);
 		return "redirect:/hn/manager/faqList";
 	}
 

@@ -15,7 +15,7 @@ $(function() {
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
 	        $("#actionForm > input[name=pageNum]").val(pageNum);
-	        $("#actionForm").attr("action", "/hn/manager/goodsEnqList");
+	        $("#actionForm").attr("action", "/hn/mypage/enqList");
 	        $("#actionForm").submit();
 	    });
 	
@@ -158,6 +158,16 @@ $(function() {
                </div>
            </div>
       
+<form id="actionForm" action="/hn/mypage/enqList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
 
 
 

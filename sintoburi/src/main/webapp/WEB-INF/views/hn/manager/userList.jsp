@@ -38,6 +38,7 @@ $(function() {
 		    let pageNum = $(this).attr("href"); // href 값이 페이지 번호임을 가정
 		    console.log(pageNum);
 		    $("#userActionForm > input[name=pageNum]").val(pageNum);
+		    $("#userActionForm > input[name=amount]").val('${criteria.amount}');
 		    $("#userActionForm").attr("action", "/hn/manager/userList");
 		    $("#userActionForm").submit();
 		});
@@ -185,5 +186,5 @@ $(function() {
 
 
 
-<%-- <%@ include file="/WEB-INF/views/hn/manager/include/action_form.jsp" %> --%>
+
 <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

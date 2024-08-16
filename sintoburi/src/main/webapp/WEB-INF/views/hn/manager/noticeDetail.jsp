@@ -51,11 +51,7 @@ $(function() {
                                     <textarea rows="10" class="form-control editable" id="content" name="content" readonly>${noticeVo.content}</textarea>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="image">첨부파일</label>
-                                    <input type="file" id="image" name="image">
-                                </div>
-
+                             
                                  <div class="row">
 						        <div class="col-md-12 text-right">
 						            <button id="btnMod" type="button" class="btn btn-warning btn-submit">수정</button>

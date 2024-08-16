@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 
 public interface EnquiryMapper {
@@ -12,21 +13,30 @@ public interface EnquiryMapper {
 	// 로그인 문의사항 목록
 	public List<EnquiryVo> getList(@Param("user_id") String user_id);
 
-	// 게시글 갯수
-	public int getTotalCount(HnCriteria criteria);
-
 	// 상품문의사항목록
 	public List<EnquiryVo> goodsGetList();
-	
+
 	// 등급문의사항
 	public List<EnquiryVo> gradeGetList();
 
+	// 전체문의사항페이징
+	public List<EnquiryVo> getWithPaging(HnCriteria criteria);
+
+	// 전체 게시글 갯수
+	public int getTotalCount(HnCriteria criteria);
+
 	// 상품목록페이징
 	public List<EnquiryVo> getGoodsWithPaging(HnCriteria criteria);
-	
+
+	// 상품 게시글 갯수
+	public int goodsTotalCount(HnCriteria criteria);
+
 	// 등급목록페이징
 	public List<EnquiryVo> getGradeWithPaging(HnCriteria criteria);
-	
+
+	// 등급 게시글 갯수
+	public int gradeTotalCount(HnCriteria criteria);
+
 	// 문의사항등록
 	public int insert(EnquiryVo vo);
 
@@ -43,5 +53,14 @@ public interface EnquiryMapper {
 	public int updateStatus(@Param("eno") int eno);
 
 	// 등급 문의사항 처리완료
-	public int gradeUpdateStatus(@Param("eno") int eno , @Param("status") String status);
+	public int gradeUpdateStatus(@Param("eno") int eno, @Param("status") String status);
+
+	// 첨부파일 등록
+	public int imageInsert(EnquiryImageVo imageVo);
+
+	// 해당 글 첨부파일 가져오기
+	public List<EnquiryImageVo> getImage(@Param("eno") int eno);
+
+	// 삭제
+	public int imageDelete(@Param("eno") int eno);
 }

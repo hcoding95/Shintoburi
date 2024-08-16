@@ -142,18 +142,7 @@ public class mapperTest {
 		log.info(list);
 	}
 
-	@Test
-	public void enqMod() {
-		EnquiryVo vo = EnquiryVo.builder()
-				.user_id("user00")
-				.enquiry_type("상품문의")
-				.content("상품문의 - 수정완료")
-				.image("enquiry")
-				.eno(30).build();
 
-		int count = enquiryMapper.update(vo);
-		log.info(count);
-	}
 	
 	@Test
 	public void managerList() {

@@ -24,7 +24,6 @@ public interface HnUserMapper {
 	// 매니저 목록 페이징 
 	public List<HnUserDto> managerListPaging(HnCriteria criteria);
 	
-	
 	// 회원 게시글 갯수
 	public int getTotalCount(HnCriteria criteria);	
 

@@ -124,8 +124,14 @@ $(function() {
                     <textarea class="form-control" id="content" name="content" rows="10" readonly>${reportPostVo.post_content}</textarea>
                 </div>
                 
-                    <label for="image">이미지</label>
-                    <input type="file"  id="image" name="image">
+                       <!-- 첨부파일 리스트 -->
+				<div class="form-group" id="uploadedList">
+				<c:forEach items="${enquiryVo.imageList}" var="vo">
+					<li>
+						<img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}"/>
+					</li>
+				</c:forEach>
+				</div>
                
             
         </div>
@@ -149,7 +155,11 @@ $(function() {
      <!-- Area Chart -->
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
-           
+            <div
+                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                 <h6 class="m-0 font-weight-bold text-primary">답변</h6>
+                 
+             </div>
              <div class="card-body"> 
 
 <div class="row">
@@ -158,13 +168,12 @@ $(function() {
 				<!-- 답변 입력 -->
 
 					<div class="form-group">
-					    <label for="content">답변</label>
 					    <textarea class="form-control" id="replyContent" name="replyContent" rows="5"
 					    <c:if test="${enquiryVo.status == '처리완료'}">readonly</c:if>
 					    ><c:if test="${enquiryVo.status == '처리완료'}">${replyVo.reply_content}</c:if></textarea>
 					</div>
-					<div class="col-md-2" style="padding-left: 0px;">
-					    <button id="btnReplyOk" type="button" class="btn btn-outline-dark"
+					<div class="col-md-12 text-right">
+					    <button id="btnReplyOk" type="button" class="btn btn-primary btn"
 					        <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>처리 완료</button>
 					</div>
 						

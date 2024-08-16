@@ -121,9 +121,14 @@ $(function() {
                     <textarea class="form-control" id="content" name="content" rows="10" readonly>${enquiryVo.content}</textarea>
                 </div>
                 
-                    <label for="image">이미지</label>
-                    <input type="file"  id="image" name="image">
-               
+                    <!-- 첨부파일 리스트 -->
+				<div class="form-group" id="uploadedList">
+				<c:forEach items="${enquiryVo.imageList}" var="vo">
+					<li>
+						<img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}"/>
+					</li>
+				</c:forEach>
+				</div>
             
         </div>
         <div class="col-md-2"></div>
@@ -166,15 +171,16 @@ $(function() {
 					    ><c:if test="${enquiryVo.status == '처리완료'}">${replyVo.reply_content}</c:if></textarea>
 					</div>
 				
-					<div class="form-group">
+					<div class="col-md-12 text-right">
                     <select class="form-select" id="status" name="status" >
                    	  	<option value="처리완료">처리완료</option>
 					    <option value="보류상태">보류상태</option>
                     </select>
-                    <button id="btnReplyOk" type="button" class="btn btn-outline-dark btn-sm"
+                    <button id="btnReplyOk" type="button" class="btn btn btn-primary btn"
 					            <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>답변완료</button>
-                </div>
+               		 </div>
 					
+						
 						
 				<!-- // 답변 입력 -->
 	</div>

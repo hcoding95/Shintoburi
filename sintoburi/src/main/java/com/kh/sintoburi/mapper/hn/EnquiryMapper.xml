@@ -10,6 +10,51 @@
 	 	order by eno desc
  	  </select>
  	  
+<!-- 로그인한 유저 문의사항 페이징처리 -->
+ <select id="getWithPaging" resultType="EnquiryVo">
+    select *
+    from (
+        select
+            eno,
+            user_id,
+            enquiry_type,
+            status,
+            write_date,
+            row_number() over (order by eno desc) as rn
+        from tbl_enquiry
+        
+    ) subquery
+    where rn &gt; (#{pageNum} - 1) * #{amount}
+      and rn &lt;= #{pageNum} * #{amount}
+      and user_id = #{user_id}
+</select>
+
+<!-- 전체 게시글 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_enquiry
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'E'.toString()">
+                                    eno like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'I'.toString()">
+                                    user_id like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'S'.toString()">
+	                                status like '%' || #{keyword} || '%'
+	                            </when>
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
+ 	  
  	  
  	  <!-- 상품 페이징처리 -->
  <select id="getGoodsWithPaging" resultType="EnquiryVo">
@@ -24,7 +69,7 @@
             row_number() over (order by eno desc) as rn
         from tbl_enquiry
         <where>
-            <if test="typeArr != null and typeArr.length > 0">
+            <if test="type != null">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
@@ -45,6 +90,33 @@
       and enquiry_type != '등급문의'
 </select>
 
+ <!-- 상품문의 게시글 갯수 -->
+	<select id="goodsTotalCount" resultType="int">
+		select count(*) from tbl_enquiry
+		where enquiry_type != '등급문의'
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'E'.toString()">
+                                    eno like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'I'.toString()">
+                                    user_id like '%' || #{keyword} || '%'
+                                </when>
+                                <when test="type == 'S'.toString()">
+	                                status like '%' || #{keyword} || '%'
+	                            </when>
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
+
 <!-- 등급 페이징처리 -->
  <select id="getGradeWithPaging" resultType="EnquiryVo">
     select *
@@ -58,7 +130,7 @@
             row_number() over (order by eno desc) as rn
         from tbl_enquiry
         <where>
-            <if test="typeArr != null and typeArr.length > 0">
+           <if test="type != null">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
@@ -82,9 +154,10 @@
       and enquiry_type = '등급문의'
 </select>
 
- <!-- 게시글 갯수 -->
-	<select id="getTotalCount" resultType="int">
+ <!-- 등급문의 게시글 갯수 -->
+	<select id="gradeTotalCount" resultType="int">
 		select count(*) from tbl_enquiry
+		where enquiry_type = '등급문의'
 		<where>
 			<if test="type != null">
 				<trim prefix="(" suffix=")" prefixOverrides="or">
@@ -127,10 +200,14 @@
   
    <!-- 문의사항 등록 --> 
     <insert id="insert">
+    	<selectKey keyProperty="eno" order="BEFORE"
+			resultType="int">
+			select seq_enquiry.nextval from dual
+		</selectKey>
     insert into tbl_enquiry
-    (eno, user_id, enquiry_type, content, image)
+    (eno, user_id, enquiry_type, content)
     values
-    (seq_enquiry.nextval, #{user_id}, #{enquiry_type}, #{content}, #{image})
+    (#{eno}, #{user_id}, #{enquiry_type}, #{content})
 </insert>
    
     <!-- 문의사항 수정 -->
@@ -139,7 +216,6 @@
         set user_id = #{user_id},
             enquiry_type = #{enquiry_type},
             content = #{content},
-            image = #{image}
         where eno = #{eno}
     </update>
   
@@ -171,6 +247,24 @@
         and enquiry_type = '등급문의'
   	</update>
     
-    
+    <!--  첨부파일등록 -->
+      <insert id="imageInsert">
+		insert into tbl_enquiry_image
+			(uuid, eno, upload_path, image_name)
+		values
+			(#{uuid}, #{eno}, #{upload_path}, #{image_name})
+	</insert>
+	
+	<!-- 문의사항 첨부파일  -->
+	<select id="getImage" resultType="EnquiryImageVo">
+		select * from tbl_enquiry_image
+		where eno = #{eno}
+	</select>
+	
+	<!-- 첨부파일 삭제 -->
+	<delete id="imageDelete">
+		delete from tbl_enquiry_image
+		where eno = #{eno}
+	</delete>
   
   </mapper>
