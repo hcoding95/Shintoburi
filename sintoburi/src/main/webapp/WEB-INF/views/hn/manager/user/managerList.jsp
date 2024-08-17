@@ -11,7 +11,7 @@ $(function() {
         let pageNum = $(this).attr("href"); // href 값이 페이지 번호임을 가정
         console.log(pageNum);
         $("#managerActionForm > input[name=pageNum]").val(pageNum);
-        $("#managerActionForm").attr("action", "/hn/manager/managerList");
+        $("#managerActionForm").attr("action", "/hn/manager/user/managerList");
         $("#managerActionForm").submit();
     });
 
@@ -28,7 +28,7 @@ $(function() {
 
         $.ajax({
             type: "post",
-            url: "/hn/manager/modGrade",
+            url: "/hn/manager/user/modGrade",
             data: JSON.stringify(sData),
             contentType: "application/json; charset=utf-8",
             success: function(result) {
@@ -127,7 +127,7 @@ $(function() {
     </div>
 </div>
 
-<form id="managerActionForm" action="/hn/manager/managerList" method="get">
+<form id="managerActionForm" action="/hn/manager/user/managerList" method="get">
 	<input type="hidden" name="pageNum" 
 		value="${criteria.pageNum}" />
 	<input type="hidden" name="amount" 

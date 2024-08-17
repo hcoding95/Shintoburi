@@ -39,7 +39,7 @@ $(function() {
 
 				<div class="row">
                         <div class="col-md-12">
-                            <form role="form" action="/hn/manager/noticeMod" method="post" enctype="multipart/form-data">
+                            <form role="form" action="/hn/manager/notice/noticeMod" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="n_no" value="${noticeVo.n_no}"/>
                                 <div class="form-group">
                                     <label for="title">제목</label>
@@ -50,6 +50,15 @@ $(function() {
                                     <label for="content">내용</label>
                                     <textarea rows="10" class="form-control editable" id="content" name="content" readonly>${noticeVo.content}</textarea>
                                 </div>
+                                
+                                <!-- 첨부파일 리스트 -->
+								<div class="form-group" id="uploadedList">
+								<c:forEach items="${noticeVo.imageList}" var="vo">
+									<li>
+										<img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}"/>
+									</li>
+								</c:forEach>
+								</div>
 
                              
                                  <div class="row">
@@ -61,7 +70,7 @@ $(function() {
 						    </div>
                             </form>
                             <!-- 삭제 폼 -->
-							<form id="frmDel" action="/hn/manager/noticeDel" method="post">
+							<form id="frmDel" action="/hn/manager/notice/noticeDel" method="post">
 								<input type="hidden" name="n_no" value="${noticeVo.n_no}"/>
 							</form>
 						<!-- // 삭제 폼 -->

@@ -68,6 +68,15 @@
         </div>
     </div>
     
+     <!-- 첨부파일 리스트 -->
+<div class="form-group" id="uploadedList">
+<c:forEach items="${noticeVo.imageList}" var="vo">
+	<li>
+		<img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}"/>
+	</li>
+</c:forEach>
+</div>
+    
     <hr class="section-divider-bottom">
     
     <div class="navigation-links">

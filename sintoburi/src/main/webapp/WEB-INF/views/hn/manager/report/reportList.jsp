@@ -15,7 +15,7 @@ $(function() {
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
 	        $("#actionForm > input[name=pageNum]").val(pageNum);
-	        $("#actionForm").attr("action", "/hn/manager/reportList");
+	        $("#actionForm").attr("action", "/hn/manager/report/reportList");
 	        $("#actionForm").submit();
 	    });
 	
@@ -72,7 +72,7 @@ $(function() {
                 <td>${vo.re_no}</td>
                 <td>${vo.post_no}</td>
                 <td>${vo.post_id}</td>
-                <td><a href="/hn/manager/reportDetail/${vo.re_no}">${vo.re_reason}</a></td>
+                <td><a href="/hn/manager/report/reportDetail/${vo.re_no}">${vo.re_reason}</a></td>
                 <td><fmt:formatDate value="${vo.re_date}" pattern="yyyy-MM-dd"/></td>
                 <td>${vo.status}</td>
                 <td>

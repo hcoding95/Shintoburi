@@ -5,10 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.sintoburi.domain.hn.EnquiryImageVo;
+import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
 
+import lombok.extern.log4j.Log4j;
+
 @Service
+@Log4j
 public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
@@ -23,13 +28,28 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public NoticeVo selectByNno(int n_no) {
 		NoticeVo vo = noticeMapper.selectByNno(n_no);
+		List<NoticeImageVo> list = noticeMapper.getImage(n_no);
+		vo.setImageList(list);
 		return vo;
 	}
 
 	@Override
-	public boolean registerNotice(NoticeVo noticeVo) {
-		int count = noticeMapper.insertNotice(noticeVo);
-		return (count == 1) ? true : false;
+	public int registerNotice(NoticeVo vo) {
+		int count = noticeMapper.insertNotice(vo);
+
+		List<NoticeImageVo> list = vo.getImageList();
+		if (list != null && list.size() > 0) {
+			list.forEach(imageVo -> {
+				imageVo.setN_no(vo.getN_no());
+				log.info("Inserting image: " + imageVo);
+				noticeMapper.imageInsert(imageVo);
+			});
+		}
+
+		if (count > 0) {
+			return vo.getN_no();
+		}
+		return 0;
 	}
 
 	@Override
@@ -59,7 +79,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public boolean updateImportant(int n_no, String important) {
 		int count = noticeMapper.updateImportant(n_no, important);
-		return (count == 1)? true : false;
+		return (count == 1) ? true : false;
 	}
 
 }

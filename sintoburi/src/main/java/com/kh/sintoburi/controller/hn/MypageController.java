@@ -65,7 +65,7 @@ public class MypageController {
 		// 로그인 상태 확인
 		if (login == null) {
 			// 로그인되지 않은 경우 로그인 페이지로 리다이렉트
-			return "redirect:/hn/user/login";
+			return "redirect:/hn/main/login";
 		}
 
 		String user_id = login.getUser_id();
@@ -94,7 +94,6 @@ public class MypageController {
 	// 문의사항 작성
 	@PostMapping("/enqRegister")
 	public String enqRegister(EnquiryFormDto dto, RedirectAttributes rttr) throws IOException {
-//		log.info("image:" + image);
 		log.info("dto:" + dto);
 		List<MultipartFile> imageFiles = dto.getImage();
 
@@ -104,13 +103,6 @@ public class MypageController {
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
-		
-
-		
-		
-
-		
-		
 
 		List<EnquiryImageVo> imageList = new ArrayList<>();
 		
@@ -140,14 +132,9 @@ public class MypageController {
 				.imageList(imageList)
 				.build();
 		
-		// 서비스 호출
-		int eno = enquiryService.register(enquiryVo);
-//		enquiryVo.setEno(eno);
 		
-//		enquiryService.register(enquiryVo);
-
+		int eno = enquiryService.register(enquiryVo);
 		rttr.addFlashAttribute("enqRegister", eno);
-
 		return "redirect:/hn/mypage/enqList";
 	}
 

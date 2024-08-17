@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.hn.EnquiryImageVo;
+import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 
 public interface NoticeMapper {
@@ -31,4 +33,13 @@ public interface NoticeMapper {
 	
 	// 공지사항 항목 업데이트
 	public int updateImportant(@Param("n_no") int n_no , @Param("important") String important);
+	
+	// 첨부파일 등록
+	public int imageInsert(NoticeImageVo noticeImageVo);
+
+	// 해당 글 첨부파일 가져오기
+	public List<NoticeImageVo> getImage(@Param("n_no") int n_no);
+
+	// 삭제
+	public int imageDelete(@Param("n_no") int n_no);
 }

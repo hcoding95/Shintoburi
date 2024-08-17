@@ -20,8 +20,12 @@
 	
 	<!-- 공지사항 등록 -->
 	<insert id="insertNotice">
+	<selectKey keyProperty="n_no" order="BEFORE"
+			resultType="int">
+			select seq_notice.nextval from dual
+		</selectKey>
 		insert into tbl_notice (n_no,title,content)
-		values (seq_notice.nextVal,#{title},#{content})
+		values (#{n_no},#{title},#{content})
 	</insert>
 
 	<!-- 공지사항 수정 -->
@@ -72,4 +76,24 @@
 		set important = #{important}
 		where n_no = #{n_no}
 	</update>
+	
+	   <!--  첨부파일등록 -->
+      <insert id="imageInsert">
+		insert into tbl_notice_image
+			(uuid, n_no, upload_path, image_name)
+		values
+			(#{uuid}, #{n_no}, #{upload_path}, #{image_name})
+	</insert>
+	
+	<!-- 문의사항 첨부파일  -->
+	<select id="getImage" resultType="NoticeImageVo">
+		select * from tbl_notice_image
+		where n_no = #{n_no}
+	</select>
+	
+	<!-- 첨부파일 삭제 -->
+	<delete id="imageDelete">
+		delete from tbl_notice_image
+		where n_no = #{n_no}
+	</delete>
 </mapper>

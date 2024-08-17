@@ -39,7 +39,7 @@ $(function() {
 
 				<div class="row">
                         <div class="col-md-12">
-                            <form role="form" action="/hn/manager/faqMod" method="post" >
+                            <form role="form" action="/hn/manager/faq/faqMod" method="post" >
                                 <input type="hidden" name="f_no" value="${faqVo.f_no}"/>
                                 <div class="form-group">
                                     <label for="title">제목</label>
@@ -60,7 +60,7 @@ $(function() {
 						    </div>
                             </form>
                             <!-- 삭제 폼 -->
-							<form id="frmDel" action="/hn/manager/faqDel" method="post">
+							<form id="frmDel" action="/hn/manager/faq/faqDel" method="post">
 								<input type="hidden" name="f_no" value="${faqVo.f_no}"/>
 							</form>
 						<!-- // 삭제 폼 -->

@@ -19,7 +19,7 @@ $(function() {
 
 		$.ajax({
 			type: "post",
-			url : "/hn/manager/modGrade",
+			url : "/hn/manager/user/modGrade",
 			data : JSON.stringify(sData),
 			contentType: "application/json; charset=utf-8",
 			 success: function(result) {
@@ -39,7 +39,7 @@ $(function() {
 		    console.log(pageNum);
 		    $("#userActionForm > input[name=pageNum]").val(pageNum);
 		    $("#userActionForm > input[name=amount]").val('${criteria.amount}');
-		    $("#userActionForm").attr("action", "/hn/manager/userList");
+		    $("#userActionForm").attr("action", "/hn/manager/user/userList");
 		    $("#userActionForm").submit();
 		});
 	
@@ -82,7 +82,7 @@ $(function() {
              <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">회원 목록</h6>
-			    <form id="searchForm" action="/hn/manager/userList" method="get" style="display: flex; align-items: center;">
+			    <form id="searchForm" action="/hn/manager/user/userList" method="get" style="display: flex; align-items: center;">
 			        <select id="selectSearch" name="type" style="margin-right: 10px;">
 			        	<option value="W" ${criteria.type == 'W' ? 'selected' : ''}>전체</option>
 			            <option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
@@ -169,7 +169,7 @@ $(function() {
     </div>
 </div>
 
-<form id="userActionForm" action="/hn/manager/userList" method="get">
+<form id="userActionForm" action="/hn/manager/user/userList" method="get">
 	<input type="hidden" name="pageNum" 
 		value="${criteria.pageNum}" />
 	<input type="hidden" name="amount" 

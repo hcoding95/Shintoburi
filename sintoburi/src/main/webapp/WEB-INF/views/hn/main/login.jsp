@@ -134,7 +134,7 @@
             <div class="col-md-12">
                 <div class="login-container" >
                     <h2>LOGIN</h2>
-                    <form action="/hn/user/loginPost" method="post">
+                    <form action="/hn/main/loginPost" method="post">
                         <div class="form-group">
                             <input type="text" value="user00" class="form-control form-control-user" id="user_id" name="user_id" placeholder="아이디" required>
                         </div>

@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script>
 $(function() {
-    $("#noticeForm").submit(function(e) {
+		
+	$("form").submit(function(e) {
         e.preventDefault(); // 폼의 기본 제출 동작을 방지
-
+        
         let formData = new FormData(this); // 폼 데이터를 FormData 객체로 변환
 
         $.ajax({
@@ -18,15 +19,12 @@ $(function() {
             contentType: false,
             processData: false,
             success: function(response) {
+                alert("자주하는 질문이 등록되었습니다.");
                 
-                alert("공지사항이 등록되었습니다.");
-              
-                window.location.href = '/hn/manager/noticeList'; 
+                window.location.href = '/hn/manager/faq/faqList'; 
             },
-            error: function(xhr, status, error) {
-               
-                console.error("등록 실패:", xhr.responseText);
-                alert("등록 실패. 다시 시도해 주세요.");
+            error: function() {
+                alert("등록 실패 , 다시 시도해 주세요.");
             }
         });
     });
@@ -41,14 +39,13 @@ $(function() {
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">공지 사항</h6>
+                <h6 class="m-0 font-weight-bold text-primary">자주하는 질문</h6>
             </div>
             <!-- Card Body -->
             <div class="card-body"> 
                 <div class="row">
                     <div class="col-md-12">
-                        <form id="noticeForm" role="form" action="/hn/manager/noticeRegister" method="post" enctype="multipart/form-data">
-                          
+                        <form role="form" action="/hn/manager/faq/faqRegister" method="post">
                             <div class="form-group">
                                 <label for="title">제목</label>
                                 <input type="text" class="form-control" id="title" name="title" />
@@ -58,14 +55,9 @@ $(function() {
                                 <label for="content">내용</label>
                                 <textarea rows="10" class="form-control" id="content" name="content"></textarea>
                             </div>
-
-                            <div class="form-group">
-                                <label for="image">첨부파일</label>
-                                <input type="file" id="image" name="image">
-                            </div>
-
+                            
                             <div class="col-md-12 text-right">
-                                <button id="btnNotice" class="btnMod btn btn-outline-dark btn-sm" type="submit">작성하기</button>
+                                <button class="btnMod btn btn-outline-dark btn-sm" type="submit">작성하기</button>
                             </div>
                         </form>
                     </div>
@@ -74,7 +66,6 @@ $(function() {
         </div>
     </div>
 </div>
-
 
 
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

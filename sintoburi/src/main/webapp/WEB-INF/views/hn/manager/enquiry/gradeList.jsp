@@ -4,7 +4,7 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%--   <%@ include file ="/WEB-INF/views/hn/manager/include/bs.jsp" %> --%>
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
- 
+
 <script>
 $(function() {
 		
@@ -15,7 +15,7 @@ $(function() {
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
 	        $("#actionForm > input[name=pageNum]").val(pageNum);
-	        $("#actionForm").attr("action", "/hn/manager/goodsEnqList");
+	        $("#actionForm").attr("action", "/hn/manager/enquiry/gradeList");
 	        $("#actionForm").submit();
 	    });
 	
@@ -32,29 +32,31 @@ $(function() {
              <!-- Card Header - Dropdown -->
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">상품 게시글</h6>
-              	 <form method="get">
+                 <h6 class="m-0 font-weight-bold text-primary">등급 게시글</h6>
+               <form method="get">
 	            		<select name="type">
 	            			<option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
 	            			<option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
 	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
-	            			
 	            		</select>
 	            		<input type="text" name="keyword"
 	            			value="${criteria.keyword}">
 	            		
 	            		<button type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
-            	 </form>
+            		</form>
+            	
              </div>
+             <!-- Card Body -->
+             <div class="card-body"> 
+
 <div class="row">
 	<div class="col-md-12">
 		
 		<table class="table">
     <thead>
         <tr class="text-center">
-            <th>번호</th>
+         <th>번호</th>
             <th>작성 아이디</th>
-            <th>상품</th>
             <th>제목</th>
             <th>작성일</th>
             <th>답변상태</th>
@@ -63,18 +65,17 @@ $(function() {
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${goodsEnqList}" var="vo">
+        <c:forEach items="${gradeEnqList}" var="vo">
             <tr class="text-center">
                 <td>${vo.eno}</td>
                 <td>${vo.user_id}</td>
-                <td>상품</td>
-                <td><a href="/hn/manager/enquiryDetail/${vo.eno}">${vo.enquiry_type}</a></td>
+                <td><a href="/hn/manager/enquiry/gradeDetail/${vo.eno}">${vo.enquiry_type}</a></td>
                 <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
                 <td>${vo.status}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${vo.status == '답변완료'}">
-                           <button class="btn btn-sm" type="button" data-toggle="collapse" 
+                        <c:when test="${vo.status == '처리완료'}">
+                            <button class="btn btn-sm" type="button" data-toggle="collapse" 
                             data-target="#collapse${vo.eno}" aria-expanded="false">
                                 ▼
                             </button>
@@ -87,7 +88,7 @@ $(function() {
             </tr>
             <!-- 답변 아코디언 -->
             <tr>
-                <td colspan="10"> <!-- Adjust the colspan value as needed -->
+                <td colspan="7"> <!-- Adjust the colspan value as needed -->
                     <div id="collapse${vo.eno}" class="collapse">
                         <div class="card card-body">
                             <table class="table mb-0">
@@ -99,7 +100,7 @@ $(function() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${replyList}" var="reply">
+                                    <c:forEach items="${gradeReplyList}" var="reply">
                                          <c:if test="${reply.eno == vo.eno}">
                                             <tr class="text-center">
                                                 <td>${reply.rno}</td>
@@ -150,8 +151,10 @@ $(function() {
     </div>
             </div> <!-- card-body -->
         </div>
+    </div>
+</div>
 
-<form id="actionForm" action="/hn/manager/goodsEnqList" method="get">
+<form id="actionForm" action="/hn/manager/enquiry/gradeList" method="get">
 	<input type="hidden" name="pageNum" 
 		value="${criteria.pageNum}" />
 	<input type="hidden" name="amount" 
@@ -161,6 +164,8 @@ $(function() {
 	<input type="hidden" name="keyword"
 		value="${criteria.keyword}"/>
 </form>
+
+
 
 
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

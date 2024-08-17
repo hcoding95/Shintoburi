@@ -1,5 +1,7 @@
 package com.kh.sintoburi.controller.hn;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,74 +10,75 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
+import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/hn/user/*")
+@RequestMapping("/hn/manager/user/")
 @Log4j
 public class HnUserController {
 
 	@Autowired
 	private HnUserService userService;
 
-	@GetMapping("/login")
-	public void login() {
+	// 회원목록
+	@GetMapping("/userList")
+	public void userList(Model model, HnCriteria criteria) {
+		System.out.println("Page Number: " + criteria.getPageNum());
+		System.out.println("Amount per Page: " + criteria.getAmount());
 
+		// 회원목록
+		List<HnUserDto> list = userService.getList(criteria);
+		int total = userService.getTotal(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("userList", list);
+		model.addAttribute("criteria", criteria);
 	}
 
-	@PostMapping("/loginPost")
-	public String loginPost(HnLoginDto dto, HttpServletRequest request, Model model) throws Exception {
-	    System.out.println("dto: " + dto);
-	    HnUserDto userDto = userService.login(dto);
-	    System.out.println("userDto: " + userDto);
-
-	    if (userDto != null) {
-	        // 로그인 성공
-	        HttpSession session = request.getSession();
-	        session.setAttribute("login", userDto); 
-
-	       
-	        String location = null;
-	        switch (userDto.getGrade()) {
-	        case "판매자":
-	            location = "/hn/mypage/myPageMain";
-	            break;
-	        case "구매자":
-	            location = "/hn/mypage/myPageMain";
-	            break;
-	        case "관리자":
-	            location = "/hn/manager/userList";
-	            break;
-	        default:
-	            location = "/";
-	            break;
-	        }
-
-	        return "redirect:" + location;
-	    } else {
-	       // 로그인실패
-	        model.addAttribute("loginError", "아이디 또는 비밀번호가 잘못되었습니다.");
-	        return "/hn/user/login"; 
-	    }
+	// 매니저목록
+	@GetMapping("/managerList")
+	public void managerList(Model model, HnCriteria criteria) {
+		List<HnUserDto> managerList = userService.managerList(criteria);
+		int total = userService.managerTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("managerList", managerList);
+		model.addAttribute("criteria", criteria);
 	}
+
+	// 등급수정
+	@PostMapping("/modGrade")
+	@ResponseBody
+	public boolean modGrade(@RequestBody HnUserDto dto) {
+		System.out.println("modGrade...");
+		String user_id = dto.getUser_id();
+		String grade = dto.getGrade();
+
+		boolean result = userService.modifyGrade(user_id, grade);
+		return result;
+	}
+
+//		로그인한 유저 문의사항
+//		@GetMapping("/enqList")
+//		public void list(Model model) {
+//			List<EnquiryVo> enquiryList = enquiryService.getList();
+//			model.addAttribute("enquiryList", enquiryList);
+//			// 답변 리스트
+//			List<ReplyVo> replyLisy = replyService.replyList();
+//			model.addAttribute("replyList", replyLisy);
+	//
+//		}
 
 	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/hn/user/login";
-
-	}
-
-	@GetMapping("/join")
-	public void join() {
-
-	}
 
 }

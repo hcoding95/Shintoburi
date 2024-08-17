@@ -141,8 +141,8 @@
 			    </a>
 			    <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
 			        <div class="bg-white py-2 collapse-inner rounded">
-			            <a class="collapse-item" href="/hn/manager/userList">회원목록</a>
-			            <a class="collapse-item" href="/hn/manager/managerList">매니저목록</a>
+			            <a class="collapse-item" href="/hn/manager/user/userList">회원목록</a>
+			            <a class="collapse-item" href="/hn/manager/user/managerList">매니저목록</a>
 			        </div>
 			    </div>
 			</li>
@@ -155,8 +155,8 @@
 			    </a>
 			    <div id="collapseInquiry" class="collapse" aria-labelledby="headingInquiry" data-parent="#accordionSidebar">
 			        <div class="bg-white py-2 collapse-inner rounded">
-			            <a class="collapse-item" href="/hn/manager/goodsEnqList">상품문의</a>
-			            <a class="collapse-item" href="/hn/manager/gradeEnqList">등급문의</a>
+			            <a class="collapse-item" href="/hn/manager/enquiry/goodsList">상품문의</a>
+			            <a class="collapse-item" href="/hn/manager/enquiry/gradeList">등급문의</a>
 			        </div>
 			    </div>
 			</li>   
@@ -164,7 +164,7 @@
 			
             
               <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/noticeList">
+                <a class="nav-link" href="/hn/manager/notice/noticeList">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>공지사항</span>
                 </a>
@@ -172,7 +172,7 @@
             </li>
             
              <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/faqList">
+                <a class="nav-link" href="/hn/manager/faq/faqList">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>자주하는질문</span>
                 </a>
@@ -184,7 +184,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/reportList">
+                <a class="nav-link" href="/hn/manager/report/reportList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>신고게시글</span></a>
             </li>

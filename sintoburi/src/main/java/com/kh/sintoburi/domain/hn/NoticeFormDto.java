@@ -1,6 +1,7 @@
 package com.kh.sintoburi.domain.hn;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,7 @@ public class NoticeFormDto {
 	private int n_no;
 	private String title;
 	private String content;
-	private MultipartFile image;
+	private List<MultipartFile> image;
 	private Date write_date;
 
 }

@@ -14,7 +14,7 @@ public interface NoticeService {
 	public NoticeVo selectByNno(int n_no);
 
 	// 공지사항 등록
-	public boolean registerNotice(NoticeVo noticeVo);
+	public int registerNotice(NoticeVo noticeVo);
 
 	// 공지사항 수정
 	public boolean modifyNotice(NoticeVo noticeVo);
