@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
@@ -117,4 +118,11 @@ public class EnquiryController {
 		}
 	}
 
+	// 문의사항 알람
+	@GetMapping("/statusAlarm")
+	@ResponseBody
+	public List<EnquiryVo> statusAlarm () {
+		List<EnquiryVo> list = enquiryService.statusAlarm();
+		return list;
+	}
 }

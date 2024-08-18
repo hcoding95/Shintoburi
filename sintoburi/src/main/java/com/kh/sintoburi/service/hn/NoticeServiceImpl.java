@@ -9,6 +9,7 @@ import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
+import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -60,6 +61,13 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public boolean removeNotice(int n_no) {
+		List<NoticeImageVo> list = noticeMapper.getImage(n_no);
+		list.forEach(vo -> {
+			String fileName = vo.getUpload_path() + "/" + vo.getUuid() + "_" + vo.getImage_name();
+			MyFileUtil.delete(fileName);
+		});
+		noticeMapper.imageDelete(n_no);
+		
 		int count = noticeMapper.deleteNotice(n_no);
 		return (count == 1) ? true : false;
 	}
@@ -80,6 +88,12 @@ public class NoticeServiceImpl implements NoticeService {
 	public boolean updateImportant(int n_no, String important) {
 		int count = noticeMapper.updateImportant(n_no, important);
 		return (count == 1) ? true : false;
+	}
+
+	@Override
+	public NoticeVo importantNotice() {
+		NoticeVo noticeVo = noticeMapper.importantNotice();
+		return noticeVo;
 	}
 
 }

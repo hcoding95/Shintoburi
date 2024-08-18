@@ -72,6 +72,10 @@ public class NoticeController {
 			// UUID를 이용해 고유한 파일 이름 생성
 			String uuid = UUID.randomUUID().toString();
 			String originalFileName = multi.getOriginalFilename(); // 이미지이름
+			
+			if (originalFileName == null || originalFileName.trim().isEmpty()) {
+				continue; // 이미지 이름이 없으면 처리하지 않음
+			}
 			String savedFileName = uuid + "_" + multi.getOriginalFilename(); 
 			File savedFile = new File(uploadPath, savedFileName);
 
@@ -125,7 +129,7 @@ public class NoticeController {
 		return "redirect:/hn/manager/notice/noticeList";
 	}
 
-	// 공지사항 항목 수정
+	// 공지사항 항목 업데이트 "Y(중요)"/"N(일반)"
 	@PostMapping("/updateImportant")
 	@ResponseBody
 	public boolean updateImportant(@RequestBody NoticeVo vo) {
@@ -134,5 +138,15 @@ public class NoticeController {
 		boolean result = noticeService.updateImportant(n_no, important);
 		return result;
 	}
+	
+	// 중요 공지사항 보여주기
+	@GetMapping("/importantShow")
+	@ResponseBody
+	public NoticeVo importantShow() {
+	 return noticeService.importantNotice();
+	}
+	
+	
+	
 
 }

@@ -34,6 +34,9 @@ public interface NoticeMapper {
 	// 공지사항 항목 업데이트
 	public int updateImportant(@Param("n_no") int n_no , @Param("important") String important);
 	
+	// 중요공지사항
+	public NoticeVo importantNotice();
+	
 	// 첨부파일 등록
 	public int imageInsert(NoticeImageVo noticeImageVo);
 

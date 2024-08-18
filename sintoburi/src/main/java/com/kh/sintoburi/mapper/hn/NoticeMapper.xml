@@ -43,6 +43,7 @@
 		where n_no = #{n_no}
 	</delete>
 	
+	
 	<!--  공지사항 이전 게시글 -->
 	<select id="getPreviousNotice" resultType="NoticeVo">
 		 select * 
@@ -76,6 +77,12 @@
 		set important = #{important}
 		where n_no = #{n_no}
 	</update>
+	
+	<!--  중요 공지사항 -->
+	<select id="importantNotice" resultType="NoticeVo">
+		select * from tbl_notice
+		where important = 'Y'
+	</select>
 	
 	   <!--  첨부파일등록 -->
       <insert id="imageInsert">

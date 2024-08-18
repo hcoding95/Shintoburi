@@ -266,5 +266,17 @@
 		delete from tbl_enquiry_image
 		where eno = #{eno}
 	</delete>
+	
+	<!--미처리답변알림 -->
+	<select id="statusAlarm" resultType="EnquiryVo">
+		 select * 
+        from (
+            select *
+            from tbl_enquiry
+            where status = '미처리'
+            order by eno desc
+        )
+        where rownum &lt;= 4
+	</select>
   
   </mapper>

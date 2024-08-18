@@ -10,6 +10,7 @@ import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
+import com.kh.sintoburi.util.hn.MyFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -100,6 +101,15 @@ public class EnquriyServiceImpl implements EnquiryService {
 	// 문의사항삭제
 	@Override
 	public boolean remove(int eno) {
+		
+		List<EnquiryImageVo> list = enquiryMapper.getImage(eno);
+		list.forEach(vo -> {
+			String fileName = vo.getUpload_path() + "/" + vo.getUuid() + "_" + vo.getImage_name();
+			MyFileUtil.delete(fileName);
+		});
+		enquiryMapper.imageDelete(eno);
+		
+		
 		int count = enquiryMapper.delete(eno);
 		return (count == 1) ? true : false;
 	}
@@ -128,6 +138,12 @@ public class EnquriyServiceImpl implements EnquiryService {
 	public boolean gradeUpdateStatus(int eno, String status) {
 		int count = enquiryMapper.gradeUpdateStatus(eno, status);
 		return (count == 1) ? true : false;
+	}
+
+	@Override
+	public List<EnquiryVo> statusAlarm() {
+		List<EnquiryVo> list = enquiryMapper.statusAlarm();
+		return list;
 	}
 
 }

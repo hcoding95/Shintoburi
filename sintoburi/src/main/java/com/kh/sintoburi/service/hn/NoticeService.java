@@ -29,5 +29,8 @@ public interface NoticeService {
 	public NoticeVo getNextNotice(int n_no);
 
 	// 공지사항 항목 업데이트
-	public boolean updateImportant(int n_no , String important);
+	public boolean updateImportant(int n_no, String important);
+
+	// 중요공지사항
+	public NoticeVo importantNotice();
 }

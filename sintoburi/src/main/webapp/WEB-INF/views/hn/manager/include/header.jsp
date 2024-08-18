@@ -49,11 +49,34 @@
 
 <!--     <script src="/resources/js/demo/chart-area-demo.js"></script> -->
 <!--     <script src="/resources/js/demo/chart-pie-demo.js"></script> -->
-    
+ 
+</head>
+
 <script>
 
-</script>
-</head>
+$(function() {
+    $.ajax({
+        url: '/hn/manager/notice/importantShow',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+//             console.log(data);
+            console.log(data.title)
+            let detailUrl = `/hn/mypage/noticeRead/${data.n_no}`;
+            $("#noticeShow").html(
+                `<strong>공지사항:</strong> <a href="${detailUrl}" target="_blank">수정하기</a>`
+            );
+        }
+    });
+    
+    $("#messageShow").click(function(){
+    	alert("Dd");
+    }
+    
+    
+});
+</script>   
+
 
 <body id="page-top">
 
@@ -234,15 +257,18 @@
 <!--                         </div> -->
 <!--                     </form> -->
 				<div class="container-fluid" style="
-				    width: 900px;
-				    margin-left: 0px;
-				    margin-right: 0px;
-				">
-			    <div class="alert alert-info" role="alert">
+				    width: 900px; 
+			    	margin-left: 0px; 
+			    	margin-right: 0px; 
+					">
+			    <div id="noticeShow" class="alert alert-info" role="alert">
 			        <strong>공지사항:</strong> 중요한 공지사항 표시
 			    </div>
 			    
 			</div>
+			
+			
+			
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -271,10 +297,10 @@
                         </li>
 
                         <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
+                        <li  id="messageShow" class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i  class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
@@ -425,7 +451,7 @@
                         	</c:when>
                         	<c:otherwise>
                         		 <li class="nav-item dropdown no-arrow">
-                        		 	<a href="/hn/user/login" class="btn btn-primary my-3">로그인</a>
+                        		 	<a href="/hn/main/login" class="btn btn-primary my-3">로그인</a>
                         		 </li>
                         	</c:otherwise>
                         </c:choose>

@@ -76,10 +76,14 @@ $(function() {
 						    </div>
 						    
 						    
-						    <div class="form-group">
-						        <label for="image">첨부파일</label>
-						        <input class="form-control editable" type="file" id="image" name="image">
-						    </div>
+						    <!-- 첨부파일 리스트 -->
+							<div class="form-group" id="uploadedList">
+							<c:forEach items="${enquiryVo.imageList}" var="vo">
+								<li>
+									<img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}"/>
+								</li>
+							</c:forEach>
+							</div>
 						    
 						    
 						    <div class="row">

@@ -43,6 +43,8 @@
 }
 
 </style>
+
+
             <!-- Main Content -->
             <div id="page-content-wrapper">
                 <div class="container-fluid">
@@ -65,7 +67,9 @@
 					        </a>
 					    </div>
 					</div>
-			
+					
+					
+								
 			
 			<div id="accordion">
 			    <c:forEach items="${faqList}" var="vo">

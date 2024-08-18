@@ -44,7 +44,8 @@ public interface EnquiryService {
 
 	// 등급 문의사항 처리완료
 	public boolean gradeUpdateStatus(int eno, String status);
-	
-	
+
+	// 미답변 알람
+	public List<EnquiryVo> statusAlarm();
 
 }

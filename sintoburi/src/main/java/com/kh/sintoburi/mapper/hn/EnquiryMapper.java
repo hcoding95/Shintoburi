@@ -63,4 +63,7 @@ public interface EnquiryMapper {
 
 	// 삭제
 	public int imageDelete(@Param("eno") int eno);
+	
+	// 미답변 알람
+	public List<EnquiryVo> statusAlarm();
 }

@@ -105,34 +105,29 @@ public class MypageController {
 		}
 
 		List<EnquiryImageVo> imageList = new ArrayList<>();
-		
+
 		for (MultipartFile multi : imageFiles) {
-			// UUID를 이용해 고유한 파일 이름 생성
+			// UUID를 이용해 파일 이름 생성
 			String uuid = UUID.randomUUID().toString();
 			String originalFileName = multi.getOriginalFilename(); // 이미지이름
-			String savedFileName = uuid + "_" + multi.getOriginalFilename(); 
+			if (originalFileName == null || originalFileName.trim().isEmpty()) {
+				continue; // 이미지 이름이 없으면 처리하지 않음
+			}
+			String savedFileName = uuid + "_" + multi.getOriginalFilename();
 			File savedFile = new File(uploadPath, savedFileName);
 
 			multi.transferTo(savedFile);
 
-			EnquiryImageVo imageVo = EnquiryImageVo.builder()
-					.uuid(uuid)
-					.upload_path(uploadPath)
-					.image_name(originalFileName)
-					.build();
+			EnquiryImageVo imageVo = EnquiryImageVo.builder().uuid(uuid).upload_path(uploadPath)
+					.image_name(originalFileName).build();
 			imageList.add(imageVo);
 			System.out.println("imageVo: " + imageVo);
 
 		}
-		
-		EnquiryVo enquiryVo = EnquiryVo.builder()
-				.content(dto.getContent())
-				.enquiry_type(dto.getEnquiry_type())
-				.user_id(dto.getUser_id())
-				.imageList(imageList)
-				.build();
-		
-		
+
+		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
+				.user_id(dto.getUser_id()).imageList(imageList).build();
+
 		int eno = enquiryService.register(enquiryVo);
 		rttr.addFlashAttribute("enqRegister", eno);
 		return "redirect:/hn/mypage/enqList";
@@ -149,51 +144,39 @@ public class MypageController {
 	// 수정
 	@PostMapping("/enqMod")
 	public String enqMod(EnquiryFormDto dto, RedirectAttributes rttr) throws IOException {
-////		log.info("image:" + image);
-//		log.info("dto:" + dto);
-//		MultipartFile multi = dto.getImage();
-//
-//		String uploadPath = "D:/upload/sintoburi/enquiry"; // 이미지 저장
-//
-//		File folder = new File(uploadPath);
-//		if (!folder.exists()) {
-//			folder.mkdirs();
-//		}
-//
-//		// 이미지 이름 얻어오기
-//		String fileName = multi.getOriginalFilename();
-////		log.info("fileName:" + fileName);
-//		String image = dto.getImage().getOriginalFilename();
-//
-//		// 폴더이름 얻어오기
-//		String folderName = folder.getName();
-////		log.info("folderName: " + folderName);
-//
-//		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
-//				.user_id(dto.getUser_id()).image(folderName).eno(dto.getEno()).build();
-//		log.info("enquiryVo:" + enquiryVo);
-//
-//		// 파일을 디스크에 저장
-//
-//		String uuid = UUID.randomUUID().toString();
-//		String savedFileName = uuid + "_" + multi.getOriginalFilename();
-//		File f = new File(uploadPath, savedFileName);
-//		// 업로드된 파일이 이미지라면 썸네일 이미지 생성
-//		// 썸네일 파일명: s_원본이미지명
-//
-//		boolean isImage = MyFileUtil.checkImageType(f);
-//
-//		if (isImage) {
-//			// 원본 파일을 읽어서 -> 썸네일 파일로 출력
-//			FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + savedFileName));
-//
-//			Thumbnailator.createThumbnail(multi.getInputStream(), thumbnail, 100, 100);
-//			thumbnail.close();
-//		}
-//		multi.transferTo(f);
+		log.info("dto:" + dto);
+		List<MultipartFile> imageFiles = dto.getImage();
 
-//		boolean result = enquiryService.modify(enquiryVo);
-//		rttr.addFlashAttribute("resultMod", result);
+		String uploadPath = "D:/upload/sintoburi/enquiry";
+
+		File folder = new File(uploadPath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
+		List<EnquiryImageVo> imageList = new ArrayList<>();
+
+		for (MultipartFile multi : imageFiles) {
+			// UUID를 이용해 고유한 파일 이름 생성
+			String uuid = UUID.randomUUID().toString();
+			String originalFileName = multi.getOriginalFilename(); // 이미지이름
+			String savedFileName = uuid + "_" + multi.getOriginalFilename();
+			File savedFile = new File(uploadPath, savedFileName);
+
+			multi.transferTo(savedFile);
+
+			EnquiryImageVo imageVo = EnquiryImageVo.builder().uuid(uuid).upload_path(uploadPath)
+					.image_name(originalFileName).build();
+			imageList.add(imageVo);
+			System.out.println("imageVo: " + imageVo);
+
+		}
+
+		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
+				.user_id(dto.getUser_id()).imageList(imageList).build();
+
+		boolean result = enquiryService.modify(enquiryVo);
+		rttr.addFlashAttribute("resultMod", result);
 		return "redirect:/hn/mypage/enqList";
 	}
 
