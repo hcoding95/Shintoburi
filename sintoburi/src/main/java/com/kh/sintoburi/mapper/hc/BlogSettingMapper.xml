@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 매퍼 인터페이스 경로와 같게 지정  -->
+  <mapper namespace="com.kh.sintoburi.mapper.hc.BlogSettingMapper">
+  	
+  	<insert id="insertSetting">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="priority">
+  			select blog_priority from tbl_blog_setting
+  			where blog_category = #{blog_category} 
+  			and user_id = #{user_id}
+  		</selectKey>
+  		insert into tbl_blog_setting 
+  			(user_id, blog_category, config_name, config_value, blog_priority )
+  		vlaues (#{user_id}, #{blog_category}, #{config_name}, #{config_value}, #{priority} + 1 )
+  	</insert>
+  	
+  	<select id="getBlogSettingList" resultType="BlogSettingVo">
+  		select * from tbl_blog_setting
+  		where user_id = #{user_id}
+  	</select>
+  	
+  	<update id="modifySetting">
+  		update tbl_blog_setting
+  		set isMain = #{isMain}, isVisible = #{isVisible}, blog_category = #{blog_category}, config_value = #{config_value}, blog_priority = #{blog_priority}
+  		where user_id = #{user_id} and config_name = #{config_name}
+  	</update>
+  	
+  	<delete id="deleteSetting">
+  		delete from tbl_blog_setting
+  		where user_id = #{user_id} and config_name = #{config_name}
+  	</delete>
+  
+  </mapper>

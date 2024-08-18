@@ -552,19 +552,19 @@ $(function () {
 							 <div class="profile-end">
 							 	<!-- 프로필 -->
 								 <div class="profile-section">
-						            <h3 class="text-end">(${blog_userVo.user_name})님의 프로필</h3>
+						            <h3 id="profile-top" class="text-end">(${blog_userVo.user_name})님의 프로필</h3>
 						            <div><span>유저 계급:</span> 계급명</div>
 						            <div><span>출생연도:</span> 1990년</div>
 						            <div><span>생일:</span> 1월 1일</div>
 						            <div><span>성별:</span>여성</div>
+						            <div><span>주소:</span>${blog_userVo.address}</div>
 						        </div>
-						        <div class="profile-section">
+						        <div id="profile-middle" class="profile-section">
 						            <h3 class="text-end">연락처</h3>
 						            <div><span>전화 번호:</span> 010-1234-5678</div>
 						            <div><span>이메일:</span> jane.doe@example.com</div>
-						            <div><span>주소:</span>${blog_userVo.address}</div>
 						        </div>
-						        <div class="profile-section">
+						        <div id="profile-bottom" class="profile-section">
 						            <h3 class="text-end">웹사이트 및 소셜 링크</h3>
 						            <div><a href="https://example.com" target="_blank">어쩌구 저쩌구 사이트</a></div>
 						        </div>

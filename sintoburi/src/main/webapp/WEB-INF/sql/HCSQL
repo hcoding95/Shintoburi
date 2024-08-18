@@ -100,3 +100,14 @@ Create Table Tbl_Blog_Like(
     Constraint Tbl_Blog_Like_Pk Primary Key (Blog_No, User_Id)
     
 );
+
+CREATE TABLE tbl_blog_setting (
+    user_id VARCHAR2(40) REFERENCES tbl_user(user_id),
+    ismain CHAR(1) DEFAULT 'F' CHECK (ismain IN ('T','F')),
+    isvisible CHAR(1) DEFAULT 'F'  CHECK (isvisible IN ('T','F')),
+    blog_category VARCHAR2(50),
+    config_name VARCHAR2(50),
+    config_value VARCHAR2(255),
+    blog_priority NUMBER,
+    CONSTRAINT pk_blog_setting PRIMARY KEY (user_id, config_name)
+);
