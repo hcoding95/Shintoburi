@@ -7,7 +7,7 @@
   	
   	<insert id="insertSetting">
   		<selectKey order="BEFORE" resultType="int" keyProperty="priority">
-  			select blog_priority from tbl_blog_setting
+  			select max(blog_priority) from tbl_blog_setting
   			where blog_category = #{blog_category} 
   			and user_id = #{user_id}
   		</selectKey>
@@ -19,6 +19,14 @@
   	<select id="getBlogSettingList" resultType="BlogSettingVo">
   		select * from tbl_blog_setting
   		where user_id = #{user_id}
+  		order by 
+	    case blog_category
+	        when 'T' then 1
+	        when 'M' then 2
+	        when 'B' then 3
+	        else 4
+	    end, 
+	    blog_priority asc
   	</select>
   	
   	<update id="modifySetting">

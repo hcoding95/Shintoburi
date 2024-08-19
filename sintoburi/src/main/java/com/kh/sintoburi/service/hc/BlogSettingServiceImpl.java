@@ -21,6 +21,7 @@ public class BlogSettingServiceImpl implements BlogSettingService {
 
 	@Override
 	public boolean insertSetting(BlogSettingVo settingVo) {
+		System.out.println("내가 추가할 블로그 vo는?" + settingVo);
 		int count = blogSettingMapper.insertSetting(settingVo);
 		return (count > 0)? true : false;
 	}

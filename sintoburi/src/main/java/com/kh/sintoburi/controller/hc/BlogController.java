@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.sintoburi.domain.hc.BlogSettingVo;
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.FollowDto;
 import com.kh.sintoburi.domain.hc.ReplyDto;
 import com.kh.sintoburi.domain.hc.UserVo;
 import com.kh.sintoburi.service.hc.BlogService;
+import com.kh.sintoburi.service.hc.BlogServiceImpl;
+import com.kh.sintoburi.service.hc.BlogSettingService;
 import com.kh.sintoburi.service.hc.FollowService;
 import com.kh.sintoburi.service.hc.InjectionService;
 import com.kh.sintoburi.service.hc.ReplyService;
@@ -41,6 +44,9 @@ public class BlogController {
 	@Autowired
 	private FollowService followService;
 	
+	@Autowired
+	private BlogSettingService blogSettingService;
+	
 	@GetMapping("/blog")
 	public void blog(String user_id, HttpSession session,Model model) {
 		UserVo loginUser = (UserVo)session.getAttribute("login");
@@ -57,8 +63,10 @@ public class BlogController {
 			login_id = loginUser.getUser_id();
 		}
 		list = injectionService.checkListFollowAndLike(list, login_id);
+		List<BlogSettingVo> blog_setting = blogSettingService.getSettingList(user_id);
 		model.addAttribute("list", list);
 		model.addAttribute("blog_userVo", blog_userVo);
+		model.addAttribute("blog_setting", blog_setting);
 	}
 	
 	@Transactional

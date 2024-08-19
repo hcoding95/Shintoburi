@@ -105,7 +105,7 @@ CREATE TABLE tbl_blog_setting (
     user_id VARCHAR2(40) REFERENCES tbl_user(user_id),
     ismain CHAR(1) DEFAULT 'F' CHECK (ismain IN ('T','F')),
     isvisible CHAR(1) DEFAULT 'F'  CHECK (isvisible IN ('T','F')),
-    blog_category VARCHAR2(50),
+    blog_category char(1) DEFAULT 'T' CHECK(blog_category IN ('T', 'M', 'B')),
     config_name VARCHAR2(50),
     config_value VARCHAR2(255),
     blog_priority NUMBER,

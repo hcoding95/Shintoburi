@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <!-- 글리피콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+<!-- 스윗 얼럿  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(function () {
 	$(".likeBtn").click(function () {
@@ -92,6 +93,47 @@ $(function () {
 		}
 	});
 	
+	$(".btn-setting-insert").click(function () {
+		let area = $(this).data("area");
+		//let user_id = "${login.user_id}";
+		let user_id = "user02";
+		Swal.fire({
+		  title: '카테고리 추가',
+		  html:
+		    '<input id="config-name" class="swal2-input" placeholder="세팅 이름">' +
+		    '<input id="config-value" class="swal2-input" placeholder="세팅 내용">',
+		  focusConfirm: false,
+		  preConfirm: () => {
+		    let config_name = Swal.getPopup().querySelector('#config-name').value;
+		    let config_value = Swal.getPopup().querySelector('#config-value').value;
+		    if (!config_name || !config_value) {
+		      Swal.showValidationMessage(`빈칸없이 둘다 입력하세요`);
+		    }
+		    return { config_name : config_name, config_value : config_value };
+		  }
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		    let { config_name, config_value } = result.value;
+		    let sData = {
+		    	"user_id" : user_id,
+		    	"blog_category" : area,
+		    	"config_name" : config_name,
+		    	"config_value" : config_value
+		    };
+		    $.ajax({
+		    	type : "post",
+		    	url : "/blogSetting/insert",
+		    	data : JSON.stringify(sData),
+		    	contentType : "application/json; charset=utf-8",
+		    	success : function (rData) {
+					alert("등록완료");
+				}
+		    })
+		  }
+		});
+		
+	})
+
 	
 });
 </script>
@@ -349,23 +391,65 @@ $(function () {
 
 /* 프로필 부분 */
  .profile-section {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            background-color: #f8f9fa;
-        }
-        .profile-section h3 {
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .profile-section div {
-            margin-bottom: 10px;
-        }
-        .profile-section span {
-            font-weight: bold;
-        }
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+}
+.profile-section h3 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.profile-section div {
+    margin-bottom: 1px;
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 각 요소를 양 끝으로 정렬 */
+}
+
+
+.profile-content input {
+    margin-left: 10px; /* 체크박스와 텍스트 사이의 간격 */
+    transform: scale(1.2); /* 체크박스 크기 조정 (선택 사항) */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 체크박스 그룹 간의 간격 조절 */
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.checkbox-group input {
+    margin-right: 5px; /* 체크박스와 라벨 텍스트 사이의 간격 */
+}
+
+.config-name {
+	font-weight: bold;
+}
+
+.config-value {
+	flex-grow: 1; /* 계급명이 남은 공간을 차지하도록 설정 */
+    margin-right: auto; /* 계급명을 왼쪽에 고정 */
+    margin-left: 5px;
+}
+
+.config-modify-btn, .config-delete-btn {
+    font-size: 14px;
+    padding: 2px 5px; /* 버튼의 패딩을 줄여 크기를 조정 */
+    line-height: 1.5; /* 버튼 내 텍스트의 높이를 조정 */
+}
+
 
 </style>
     
@@ -425,9 +509,14 @@ $(function () {
 				        <div class="sidebar">
 				        	<div class="blog-control">
 					            <h3 class="text-end">소개<div class="filters"><a id="filterBtn" href="#tab2" data-toggle="tab" data-tab="#main-tab2" class="btn btn-primary btn-standard">더보기</a></div></h3>
-					            <p>출신</p>
-					            <p>위치</p>
-					            <p>이메일</p>
+					            <c:forEach items="${blog_setting}" var="set">
+					            <c:if test="${set.isMain eq 'T' and set.isvisible eq 'T' }">
+					            <div class="profile-content">
+						            <span class="config-name">${set.config_name } : </span>
+						            <span class="config-value">${set.config_value }</span>
+					            </div>
+					            </c:if>
+					            </c:forEach>
 				        	</div>
 				        	<div class="blog-control">
 					            <h3 class="text-end">사진<div class="filters"><a id="filterBtn" href="#tab3" data-toggle="tab" data-tab="#main-tab3" class="btn btn-primary btn-standard">더보기</a></div></h3>
@@ -552,21 +641,79 @@ $(function () {
 							 <div class="profile-end">
 							 	<!-- 프로필 -->
 								 <div class="profile-section">
-						            <h3 id="profile-top" class="text-end">(${blog_userVo.user_name})님의 프로필</h3>
-						            <div><span>유저 계급:</span> 계급명</div>
-						            <div><span>출생연도:</span> 1990년</div>
-						            <div><span>생일:</span> 1월 1일</div>
-						            <div><span>성별:</span>여성</div>
-						            <div><span>주소:</span>${blog_userVo.address}</div>
+						            <h3 id="profile-top" class="text-end">(${blog_userVo.user_name})님의 프로필
+						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
+						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="top"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            </h3>
+						            <c:forEach items="${blog_setting}" var="set">
+						            <c:if test="${set.blog_category eq 'T' }">
+						            <div class="profile-content">
+							            <span class="config-name">${set.config_name } : </span>
+							            <span class="config-value">${set.config_value }</span>
+							            <span class="checkbox-group">
+									        <label><input type="checkbox" 
+									        <c:if test="${set.isvisible eq 'T' }">checked="checked"</c:if> 
+									        > 숨기기</label>
+									        <label><input type="checkbox"
+									        <c:if test="${set.ismain eq 'T' }">checked="checked"</c:if> 
+									        > 메인노출여부</label>
+									        <label><button class="btn btn-success config-modify-btn">수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn">삭제</button></label>
+									    </span>
+						            </div>
+						            </c:if>
+						            </c:forEach>
 						        </div>
 						        <div id="profile-middle" class="profile-section">
-						            <h3 class="text-end">연락처</h3>
-						            <div><span>전화 번호:</span> 010-1234-5678</div>
-						            <div><span>이메일:</span> jane.doe@example.com</div>
+						            <h3 class="text-end">연락처
+						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
+						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="middle"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            </h3>
+						            <c:forEach items="${blog_setting}" var="set">
+						            <c:if test="${set.blog_category eq 'M' }">
+						            <div class="profile-content">
+							            <span class="config-name">${set.config_name } : </span>
+							            <span class="config-value">${set.config_value }</span>
+							            <span class="checkbox-group">
+									        <label><input type="checkbox" 
+									        <c:if test="${set.isvisible eq 'T' }">checked="checked"</c:if> 
+									        > 숨기기</label>
+									        <label><input type="checkbox"
+									        <c:if test="${set.ismain eq 'T' }">checked="checked"</c:if> 
+									        > 메인노출여부</label>
+									        <label><button class="btn btn-success config-modify-btn">수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn">삭제</button></label>
+									    </span>
+						            </div>
+						            </c:if>
+						            </c:forEach>
 						        </div>
 						        <div id="profile-bottom" class="profile-section">
-						            <h3 class="text-end">웹사이트 및 소셜 링크</h3>
-						            <div><a href="https://example.com" target="_blank">어쩌구 저쩌구 사이트</a></div>
+						            <h3 class="text-end">웹사이트 및 소셜 링크
+						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
+						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="bottom"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            </h3>
+						            <c:forEach items="${blog_setting}" var="set">
+						            <c:if test="${set.blog_category eq 'B' }">
+						            <div class="profile-content">
+							            <span class="config-name">${set.config_name } : </span>
+							            <span class="config-value"><a href="${set.config_value }">${set.config_value }</a></span>
+							            <span class="checkbox-group">
+									        <label><input type="checkbox" 
+									        <c:if test="${set.isvisible eq 'T' }">checked="checked"</c:if> 
+									        > 숨기기</label>
+									        <label><input type="checkbox"
+									        <c:if test="${set.ismain eq 'T' }">checked="checked"</c:if> 
+									        > 메인노출여부</label>
+									        <label><button class="btn btn-success config-modify-btn">수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn">삭제</button></label>
+									    </span>
+						            </div>
+						            </c:if>
+						            </c:forEach>
 						        </div>
 								<!-- 프로필 끝  -->
 							</div>
