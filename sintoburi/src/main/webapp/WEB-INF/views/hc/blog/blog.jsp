@@ -133,6 +133,37 @@ $(function () {
 		});
 		
 	})
+	
+	$(".config-modify-btn").click(function () {
+		let that = $(this).closest(".profile-content");
+		let c_name = that.find(".config-name").text().trim();
+		let c_value = that.find(".config-value").text().trim();
+		Swal.fire({
+		  title: '카테고리 수정',
+		  html:
+		    `<input id="config-name" class="swal2-input" value="\${c_name}" placeholder="세팅 이름">` +
+		    `<input id="config-value" class="swal2-input" value="\${c_value}" placeholder="세팅 내용">`,
+		  focusConfirm: false,
+		  preConfirm: () => {
+		    let config_name = Swal.getPopup().querySelector('#config-name').value;
+		    let config_value = Swal.getPopup().querySelector('#config-value').value;
+		    if (!config_name || !config_value) {
+		      Swal.showValidationMessage(`빈칸없이 둘다 입력하세요`);
+		    }
+		    return { config_name : config_name, config_value : config_value };
+		  }
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		    let { config_name, config_value } = result.value;
+		    
+		    that.find(".config-name").text(config_name);
+		    that.find(".config-value").text(config_value);
+		  }
+		});
+	
+		
+		
+	});
 
 	
 });
@@ -510,9 +541,10 @@ $(function () {
 				        	<div class="blog-control">
 					            <h3 class="text-end">소개<div class="filters"><a id="filterBtn" href="#tab2" data-toggle="tab" data-tab="#main-tab2" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <c:forEach items="${blog_setting}" var="set">
-					            <c:if test="${set.isMain eq 'T' and set.isvisible eq 'T' }">
+					            <c:if test="${set.isMain eq 'T' and set.isVisible eq 'T' }">
 					            <div class="profile-content">
-						            <span class="config-name">${set.config_name } : </span>
+						            <span class="config-name">${set.config_name }</span>
+						            <span> : </span>
 						            <span class="config-value">${set.config_value }</span>
 					            </div>
 					            </c:if>
@@ -644,22 +676,23 @@ $(function () {
 						            <h3 id="profile-top" class="text-end">(${blog_userVo.user_name})님의 프로필
 						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
 						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="top"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="T"><i class="fa fa-pen-to-square">추가하기</i></button>
 						            </h3>
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'T' }">
 						            <div class="profile-content">
-							            <span class="config-name">${set.config_name } : </span>
+							            <span class="config-name">${set.config_name }</span>
+							            <span> : </span>
 							            <span class="config-value">${set.config_value }</span>
 							            <span class="checkbox-group">
 									        <label><input type="checkbox" 
-									        <c:if test="${set.isvisible eq 'T' }">checked="checked"</c:if> 
+									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
 									        <label><input type="checkbox"
-									        <c:if test="${set.ismain eq 'T' }">checked="checked"</c:if> 
+									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
-									        <label><button class="btn btn-success config-modify-btn">수정</button></label>
-									        <label><button class="btn btn-danger config-delete-btn">삭제</button></label>
+									        <label><button class="btn btn-success config-modify-btn" data-area="${set.blog_category }">수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn" data-user_id="${set.user_id}" data-config_name="${set.config_name}">삭제</button></label>
 									    </span>
 						            </div>
 						            </c:if>
@@ -669,22 +702,23 @@ $(function () {
 						            <h3 class="text-end">연락처
 						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
 						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="middle"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="M"><i class="fa fa-pen-to-square">추가하기</i></button>
 						            </h3>
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'M' }">
 						            <div class="profile-content">
-							            <span class="config-name">${set.config_name } : </span>
+							            <span class="config-name">${set.config_name }</span>
+							            <span> : </span>
 							            <span class="config-value">${set.config_value }</span>
 							            <span class="checkbox-group">
 									        <label><input type="checkbox" 
-									        <c:if test="${set.isvisible eq 'T' }">checked="checked"</c:if> 
+									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
 									        <label><input type="checkbox"
-									        <c:if test="${set.ismain eq 'T' }">checked="checked"</c:if> 
+									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
-									        <label><button class="btn btn-success config-modify-btn">수정</button></label>
-									        <label><button class="btn btn-danger config-delete-btn">삭제</button></label>
+									        <label><button class="btn btn-success config-modify-btn" data-area="${set.blog_category }">수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn" data-user_id="${set.user_id}" data-config_name="${set.config_name}">삭제</button></label>
 									    </span>
 						            </div>
 						            </c:if>
@@ -694,22 +728,23 @@ $(function () {
 						            <h3 class="text-end">웹사이트 및 소셜 링크
 						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
 						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="bottom"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="B"><i class="fa fa-pen-to-square">추가하기</i></button>
 						            </h3>
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'B' }">
 						            <div class="profile-content">
-							            <span class="config-name">${set.config_name } : </span>
+							            <span class="config-name">${set.config_name }</span>
+							            <span> : </span>
 							            <span class="config-value"><a href="${set.config_value }">${set.config_value }</a></span>
 							            <span class="checkbox-group">
 									        <label><input type="checkbox" 
-									        <c:if test="${set.isvisible eq 'T' }">checked="checked"</c:if> 
+									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
 									        <label><input type="checkbox"
-									        <c:if test="${set.ismain eq 'T' }">checked="checked"</c:if> 
+									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
-									        <label><button class="btn btn-success config-modify-btn">수정</button></label>
-									        <label><button class="btn btn-danger config-delete-btn">삭제</button></label>
+									        <label><button class="btn btn-success config-modify-btn" data-area="${set.blog_category }">수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn" data-user_id="${set.user_id}" data-config_name="${set.config_name}">삭제</button></label>
 									    </span>
 						            </div>
 						            </c:if>

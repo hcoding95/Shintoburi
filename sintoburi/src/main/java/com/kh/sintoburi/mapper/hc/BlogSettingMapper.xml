@@ -6,14 +6,14 @@
   <mapper namespace="com.kh.sintoburi.mapper.hc.BlogSettingMapper">
   	
   	<insert id="insertSetting">
-  		<selectKey order="BEFORE" resultType="int" keyProperty="priority">
-  			select max(blog_priority) from tbl_blog_setting
+  		<selectKey order="BEFORE" resultType="int" keyProperty="blog_priority">
+  			select coalesce(max(blog_priority),0) from tbl_blog_setting
   			where blog_category = #{blog_category} 
   			and user_id = #{user_id}
   		</selectKey>
   		insert into tbl_blog_setting 
   			(user_id, blog_category, config_name, config_value, blog_priority )
-  		vlaues (#{user_id}, #{blog_category}, #{config_name}, #{config_value}, #{priority} + 1 )
+  		values (#{user_id}, #{blog_category}, #{config_name}, #{config_value}, #{blog_priority} + 1 )
   	</insert>
   	
   	<select id="getBlogSettingList" resultType="BlogSettingVo">
