@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 
 public interface NoticeService {
 	// 공지사항 목록
-	public List<NoticeVo> getListNotice();
+	public List<NoticeVo> getListNotice(HnCriteria criteria);
+
+	// 공지사항 게시글 갯수
+	public int getTotalCount(HnCriteria criteria);
 
 	// 공지사항 한개데이터
 	public NoticeVo selectByNno(int n_no);

@@ -9,12 +9,13 @@
 $(function() {
 		
 	// 페이지 블럭
-	 $("a.page-link").click(function(e) {
+	 $(".reportPage").click(function(e) {
 	        e.preventDefault(); // 브라우저의 기본 기능 막기
 	        
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
 	        $("#actionForm > input[name=pageNum]").val(pageNum);
+	        $("#userActionForm > input[name=amount]").val('${criteria.amount}');
 	        $("#actionForm").attr("action", "/hn/manager/report/reportList");
 	        $("#actionForm").submit();
 	    });
@@ -31,22 +32,20 @@ $(function() {
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
-             <div
-                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">신고 게시글</h6>
-              	 <form method="get">
-	            		<select name="type">
+             
+             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">신고 게시글</h6>
+			    <form id="searchForm" action="/hn/manager/user/userList" method="get" style="display: flex; align-items: center;">
+			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
+			         <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
 	            			<option value="N" ${criteria.type == 'N' ? 'selected' : ''}>게시글번호</option>
 	            			<option value="W" ${criteria.type == 'W' ? 'selected' : ''}>게시글작성자</option>
 	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
-	            		</select>
-	            		<input type="text" name="keyword"
-	            			value="${criteria.keyword}">
-	            		
-	            		<button type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
-            		</form>
-            	
-             </div>
+			        </select>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" value="" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="button" class="btnMod btn btn-primary btn-sm">검색</button>
+			    </form>
+			</div>
              <!-- Card Body -->
              <div class="card-body"> 
 
@@ -126,38 +125,45 @@ $(function() {
 	</div>
 </div>
 <!-- Pagination -->
-            <div class="row">
-				<div class="col-md-12">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<c:if test="${pageMaker.prev == true}">
-							<li class="page-item">
-								<a class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
-							</li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}" 
-									   end="${pageMaker.endPage}" 
-									   var="v">
-							<li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link" href="${v}">${v}</a>
-							</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next == true}">
-							<li class="page-item">
-								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
-							</li>
-							</c:if>
-						</ul>
-					</nav>
-				</div>
-			</div>
-            <!-- // Pagination -->
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item">
+                        <a class="page-link reportPage" href="${pageMaker.startPage - 1}">&laquo;</a>
+                    </li>
+                </c:if>
+                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
+                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
+                        <a class="page-link reportPage" href="${v}">${v}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageMaker.next}">
+                    <li class="page-item">
+                        <a class="page-link reportPage" href="${pageMaker.endPage + 1}">&raquo;</a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- // Pagination -->
     </div>
             </div> <!-- card-body -->
         </div>
     </div>
 </div>
-
+<form id="actionForm" action="/hn/manager/report/reportList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
 
 
 

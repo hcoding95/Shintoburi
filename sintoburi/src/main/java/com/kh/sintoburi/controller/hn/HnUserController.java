@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
@@ -33,16 +35,17 @@ public class HnUserController {
 	// 회원목록
 	@GetMapping("/userList")
 	public void userList(Model model, HnCriteria criteria) {
-		System.out.println("Page Number: " + criteria.getPageNum());
-		System.out.println("Amount per Page: " + criteria.getAmount());
 
-		// 회원목록
 		List<HnUserDto> list = userService.getList(criteria);
+		model.addAttribute("userList", list);
 		int total = userService.getTotal(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		
+		System.out.println("Criteria: " + criteria);
+		
 		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("userList", list);
 		model.addAttribute("criteria", criteria);
+		
 	}
 
 	// 매니저목록
@@ -55,18 +58,39 @@ public class HnUserController {
 		model.addAttribute("managerList", managerList);
 		model.addAttribute("criteria", criteria);
 	}
-
+	
+	// 회원 상세보기
+	@PostMapping("/userDetail/{user_id}")
+	@ResponseBody
+	public HnUserVo userDetail(@PathVariable("user_id") String user_id , Model model) {
+		HnUserVo hnUserVo = userService.selectById(user_id);
+		return hnUserVo;
+	}
+	
+	// 사업자번호업데이트
+	@PostMapping("/modBusinessNum")
+	@ResponseBody
+	public boolean modBusinessNum(@RequestBody HnUserVo hnUserVo) {
+		String user_id = hnUserVo.getUser_id();
+		String business_num = hnUserVo.getBusiness_num();
+		boolean result = userService.modifyBusinessNum(user_id, business_num);
+		return result;
+	}
+	
+	
 	// 등급수정
 	@PostMapping("/modGrade")
 	@ResponseBody
 	public boolean modGrade(@RequestBody HnUserDto dto) {
-		System.out.println("modGrade...");
+		System.out.println("modGrade...dto:" + dto);
 		String user_id = dto.getUser_id();
 		String grade = dto.getGrade();
 
 		boolean result = userService.modifyGrade(user_id, grade);
+		System.out.println("modGrade...result:" + result);
 		return result;
 	}
+	
 
 //		로그인한 유저 문의사항
 //		@GetMapping("/enqList")

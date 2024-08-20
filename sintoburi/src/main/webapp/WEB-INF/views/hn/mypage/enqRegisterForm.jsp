@@ -185,7 +185,7 @@ $(function() {
                             <form id="enquiryForm" role="form" action="/hn/mypage/enqRegister" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="user_id">작성자</label>
-                                    <input value="user00" type="text" class="form-control" id="user_id" name="user_id" readonly />
+                                    <input value="${login.user_id}" type="text" class="form-control" id="user_id" name="user_id" readonly />
                                 </div>
 
                                 <div class="form-group">

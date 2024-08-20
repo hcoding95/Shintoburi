@@ -9,6 +9,7 @@ $(function() {
 	// 수정버튼
 	$("#btnMod").click(function () {
 		$(".editable").prop("readonly", false);
+		$(".sEditable").prop("disabled",false);
 		$(this).hide();
 		$(this).next().show();
 	});
@@ -45,6 +46,14 @@ $(function() {
                                     <label for="title">제목</label>
                                     <input  type="text" class="form-control editable" id="title" name="title" value="${noticeVo.title}" readonly />
                                 </div>
+                                
+                                <div class="form-group">
+			                    <label for="notice_type">항목</label>
+			                     <select id="notice_type" name="notice_type " class="form-control sEditable" style="width: 150px;" disabled>
+			                         <option value="N" <c:if test="${noticeVo.important == 'N'}">selected</c:if>>일반</option>
+   									 <option value="Y" <c:if test="${noticeVo.important == 'Y'}">selected</c:if>>중요</option>
+			                    </select>
+			               	 </div>
 
                                 <div class="form-group">
                                     <label for="content">내용</label>

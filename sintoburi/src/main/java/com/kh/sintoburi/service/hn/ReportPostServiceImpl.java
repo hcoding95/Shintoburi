@@ -18,7 +18,7 @@ public class ReportPostServiceImpl implements ReportPostService{
 	@Override
 	public List<ReportPostVo> ReportList(HnCriteria criteria) {
 //		List<ReportPostVo> list = reportPostMapper.selectReport();
-		List<ReportPostVo> list = reportPostMapper.getListWithPaging(criteria);
+		List<ReportPostVo> list = reportPostMapper.getReportPaging(criteria);
 		return list;
 	}
 

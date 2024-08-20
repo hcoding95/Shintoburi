@@ -190,9 +190,16 @@ public class MypageController {
 
 	// 공지사항
 	@GetMapping("/noticeList")
-	public void noticeList(Model model) {
-		List<NoticeVo> list = noticeService.getListNotice();
+	public void noticeList(Model model, HnCriteria criteria) {
+		List<NoticeVo> list = noticeService.getListNotice(criteria);
 		model.addAttribute("noticeList", list);
+		
+		int total = noticeService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
+		
 	}
 
 	// 공지사항 상세보기
@@ -213,8 +220,14 @@ public class MypageController {
 
 	// 자주하는질문
 	@GetMapping("/faqList")
-	public void questionList(Model model) {
-		List<FaqVo> list = faqService.faqList();
+	public void questionList(Model model,HnCriteria criteria) {
+		List<FaqVo> list = faqService.faqList(criteria);
 		model.addAttribute("faqList", list);
+		
+		int total = faqService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
 	}
 }

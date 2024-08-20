@@ -72,7 +72,7 @@ $(function() {
                                        <td>${vo.status}</td>
                                         <td>
 				                    <c:choose>
-				                       <c:when test="${vo.status == '답변완료' || vo.status == '처리완료'}">
+				                       <c:when test="${vo.status == '답변완료' || vo.status == '처리완료' || vo.status == '보류상태'}">
 				                           <button class="btn btn-sm" type="button" data-toggle="collapse" 
 				                            data-target="#collapse${vo.eno}" aria-expanded="false">
 				                                ▼

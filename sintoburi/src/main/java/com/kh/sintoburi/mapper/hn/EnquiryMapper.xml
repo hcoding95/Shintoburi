@@ -68,6 +68,7 @@
             write_date,
             row_number() over (order by eno desc) as rn
         from tbl_enquiry
+        where enquiry_type != '등급문의'
         <where>
             <if test="type != null">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
@@ -87,7 +88,6 @@
     ) subquery
     where rn &gt; (#{pageNum} - 1) * #{amount}
       and rn &lt;= #{pageNum} * #{amount}
-      and enquiry_type != '등급문의'
 </select>
 
  <!-- 상품문의 게시글 갯수 -->
@@ -129,6 +129,7 @@
             write_date,
             row_number() over (order by eno desc) as rn
         from tbl_enquiry
+         where enquiry_type = '등급문의'
         <where>
            <if test="type != null">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
@@ -151,7 +152,7 @@
     ) subquery
     where rn &gt; (#{pageNum} - 1) * #{amount}
       and rn &lt;= #{pageNum} * #{amount}
-      and enquiry_type = '등급문의'
+     
 </select>
 
  <!-- 등급문의 게시글 갯수 -->

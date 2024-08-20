@@ -20,6 +20,7 @@ import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.EnquiryService;
+import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -30,9 +31,12 @@ public class EnquiryController {
 
 	@Autowired
 	private EnquiryService enquiryService;
-	
+
 	@Autowired
 	private EnquiryReplyService replyService;
+
+	@Autowired
+	private HnUserService userService;
 
 	// 상품문의사항목록
 	@GetMapping("/goodsList")
@@ -41,6 +45,7 @@ public class EnquiryController {
 
 		int total = enquiryService.goodsTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
+
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("goodsEnqList", list);
 		model.addAttribute("criteria", criteria);
@@ -97,10 +102,11 @@ public class EnquiryController {
 	// 등급문의사항, 답변 상세보기
 	@GetMapping("/gradeDetail/{eno}")
 	public String gradeEnqDetail(@PathVariable("eno") int eno, Model model) {
+		// 등급 상세
 		System.out.println("enquiryDetail...");
 		EnquiryVo enquiryVo = enquiryService.selectByEno(eno);
 		model.addAttribute("enquiryVo", enquiryVo);
-
+		// 답변등록
 		EnquiryReplyVo replyVo = replyService.selectByReplyEno(eno);
 		model.addAttribute("replyVo", replyVo);
 		return "hn/manager/enquiry/gradeDetail";
@@ -118,10 +124,22 @@ public class EnquiryController {
 		}
 	}
 
+	// 등급 처리완료시 Business 1로 변경
+	@PostMapping("/updateBusiness/{user_id}")
+	public ResponseEntity<String> updateBusiness(@PathVariable("user_id") String user_id) {
+
+		boolean result = userService.updateBusiness(user_id);
+		if (result) {
+			return ResponseEntity.ok("비즈니스 값이 1로 업데이트되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비즈니스 값 업데이트에 실패했습니다.");
+		}
+	}
+
 	// 문의사항 알람
 	@GetMapping("/statusAlarm")
 	@ResponseBody
-	public List<EnquiryVo> statusAlarm () {
+	public List<EnquiryVo> statusAlarm() {
 		List<EnquiryVo> list = enquiryService.statusAlarm();
 		return list;
 	}

@@ -54,27 +54,27 @@
 
 <script>
 
-$(function() {
-    $.ajax({
-        url: '/hn/manager/notice/importantShow',
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-//             console.log(data);
-            console.log(data.title)
-            let detailUrl = `/hn/mypage/noticeRead/${data.n_no}`;
-            $("#noticeShow").html(
-                `<strong>공지사항:</strong> <a href="${detailUrl}" target="_blank">수정하기</a>`
-            );
-        }
-    });
+// $(function() {
+//     $.ajax({
+//         url: '/hn/manager/notice/importantShow',
+//         type: 'GET',
+//         dataType: 'json',
+//         success: function(data) {
+// //             console.log(data);
+//             console.log(data.title)
+//             let detailUrl = `/hn/mypage/noticeRead/${data.n_no}`;
+//             $("#noticeShow").html(
+//                 `<strong>공지사항:</strong> <a href="${detailUrl}" target="_blank">수정하기</a>`
+//             );
+//         }
+//     });
     
-    $("#messageShow").click(function(){
-    	alert("Dd");
-    }
+//     $("#messageShow").click(function(){
+//     	alert("Dd");
+//     }
     
     
-});
+// });
 </script>   
 
 
@@ -165,7 +165,7 @@ $(function() {
 			    <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
 			        <div class="bg-white py-2 collapse-inner rounded">
 			            <a class="collapse-item" href="/hn/manager/user/userList">회원목록</a>
-			            <a class="collapse-item" href="/hn/manager/user/managerList">매니저목록</a>
+			            <a class="collapse-item" href="/hn/manager/user/managerList">관리자목록</a>
 			        </div>
 			    </div>
 			</li>

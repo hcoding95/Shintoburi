@@ -15,6 +15,7 @@ $(function() {
 	        let pageNum = $(this).attr("href");
 	        console.log(pageNum);
 	        $("#actionForm > input[name=pageNum]").val(pageNum);
+	        $("#actionForm > input[name=amount]").val('${criteria.amount}');
 	        $("#actionForm").attr("action", "/hn/manager/enquiry/goodsList");
 	        $("#actionForm").submit();
 	    });
@@ -30,22 +31,20 @@ $(function() {
      <div class="col-xl-12 col-lg-12">
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
-             <div
-                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">상품 게시글</h6>
-              	 <form method="get">
-	            		<select name="type">
-	            			<option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
+             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">상품 문의사항</h6>
+			    <form id="searchForm" action="/hn/manager/enquiry/goodsList" method="get" style="display: flex; align-items: center;">
+			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
+			         <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
 	            			<option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
 	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
-	            			
-	            		</select>
-	            		<input type="text" name="keyword"
-	            			value="${criteria.keyword}">
-	            		
-	            		<button type="button" class="btnMod btn btn-outline-dark btn-sm">검색</button>
-            	 </form>
-             </div>
+			        </select>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" value="" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="button" class="btnMod btn btn-primary btn-sm">검색</button>
+			    </form>
+			</div>
+             
+            
 <div class="row">
 	<div class="col-md-12">
 		

@@ -10,7 +10,7 @@
   </select>
   
    <!--  페이징처리 -->
- <select id="getListWithPaging" resultType="ReportPostVo">
+ <select id="getReportPaging" resultType="ReportPostVo">
     select *
     from (
         select
@@ -34,8 +34,8 @@
                                 post_id LIKE '%' || #{keyword} || '%'
                             </when>
                               <when test="type == 'S'.toString()">
-	                                status like '%' || #{keyword} || '%'
-	                            </when>
+	                            status like '%' || #{keyword} || '%'
+	                          </when>
                         </choose>
                     </foreach>
                 </trim>

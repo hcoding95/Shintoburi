@@ -34,6 +34,17 @@ $(function(){
 		
 	});
 	
+	// 페이지 블럭
+	 $(".noticePage").click(function(e) {
+		    e.preventDefault(); // 브라우저의 기본 기능 막기
+		    let pageNum = $(this).attr("href"); 
+		    console.log(pageNum);
+		    $("#actionForm > input[name=pageNum]").val(pageNum);
+		    $("#actionForm > input[name=amount]").val('${criteria.amount}');
+		    $("#actionForm").attr("action", "/hn/manager/notice/noticeList");
+		    $("#actionForm").submit();
+		});
+	
 	
 	
 });
@@ -62,9 +73,9 @@ $(function(){
 				<tr class="col-md-8 text-center">
 					<th>번호</th>
 					<th>제목</th>
-					<th>작성일</th>
 					<th>항목</th>
-					<th>수정</th>
+					<th>작성일</th>
+				
 					
 				</tr>
 			</thead>
@@ -74,18 +85,24 @@ $(function(){
 				<tr class="col-md-8 text-center">
 					<td>${vo.n_no}</td>
 					<td><a href="/hn/manager/notice/noticeDetail/${vo.n_no}">${vo.title}</a></td>
-
+                     
+					<td>
+				    <c:choose>
+				        <c:when test="${vo.important == 'N'}">
+				            일반 공지사항
+				        </c:when>
+				        <c:when test="${vo.important == 'Y'}">
+				            중요 공지사항
+				        </c:when>
+				        <c:otherwise>
+				           
+				        </c:otherwise>
+				    </c:choose>
+				</td>
 					<td><fmt:formatDate value="${vo.write_date}"
 							pattern="yyyy-MM-dd" /></td>
-					<td>
-                       <select>
-						  <option value="N" ${vo.important == 'N' ? 'selected' : 'N'}>일반</option>
-    					  <option value="Y" ${vo.important == 'Y' ? 'selected' : 'N'}>중요</option>   
-                       </select>
-                       </td >
-                       <td>
-                       <button class="btnMod btn btn-outline-dark btn-sm" data-n_no="${vo.n_no}" style="padding-bottom: 1px; padding-top: 1px;" type=button>수정</button>
-					</td>
+					
+                       
 				</tr>
 			</c:forEach>	 
 			</tbody>
@@ -101,35 +118,44 @@ $(function(){
 </div>
 
 <!-- Pagination -->
-            <div class="row">
-				<div class="col-md-12">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<c:if test="${pageMaker.prev == true}">
-							<li class="page-item">
-								<a  id ="page" class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
-							</li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}" 
-									   end="${pageMaker.endPage}" 
-									   var="v">
-							<li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link" href="${v}">${v}</a>
-							</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next == true}">
-							<li class="page-item">
-								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
-							</li>
-							</c:if>
-						</ul>
-					</nav>
-				</div>
-			</div>
-            <!-- // Pagination -->
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item">
+                        <a class="page-link noticePage" href="${pageMaker.startPage - 1}">&laquo;</a>
+                    </li>
+                </c:if>
+                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
+                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
+                        <a class="page-link noticePage" href="${v}">${v}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageMaker.next}">
+                    <li class="page-item">
+                        <a class="page-link noticePage" href="${pageMaker.endPage + 1}">&raquo;</a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- // Pagination -->
             </div> <!-- card-body -->
         </div>
     </div>
 </div>
+
+<form id="actionForm" action="/hn/manager/notice/noticeList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
 
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

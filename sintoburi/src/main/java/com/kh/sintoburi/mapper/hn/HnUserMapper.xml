@@ -8,7 +8,7 @@
 	  <select id="getList" resultType="HnUserDto">
 	  	select * from tbl_users
 	  </select>
-  
+
 	<!-- 매니저목록 -->
 	  <select id="managerList" resultType="HnUserDto">
 	  	select * from tbl_users
@@ -29,8 +29,9 @@
             row_number() over (order by last_login desc) as rn
         from tbl_users
         <where>
+           grade not in('관리자', '마스터') 
            <if test="type != null">
-                <trim prefix="(" suffix=")" prefixOverrides="or">
+                <trim prefix="and (" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
                             <when test="type == 'I'.toString()">
@@ -42,14 +43,18 @@
                             <when test="type == 'G'.toString()">
                                 grade LIKE '%' || #{keyword} || '%'
                             </when>
+                            <when test="type == 'B'.toString()">
+                                business = #{keyword} and grade != '판매자'
+                            </when>
                         </choose>
                     </foreach>
                 </trim>
             </if>
         </where>
+        order by business desc, last_login desc
     ) subquery
-    WHERE rn &gt; (#{pageNum} - 1) * #{amount}
-      AND rn &lt;= #{pageNum} * #{amount}
+  where rn &gt; (#{pageNum} - 1) * #{amount}
+		and rn &lt;= #{pageNum} * #{amount}
 </select>
 
 <!-- 게시글 갯수 -->
@@ -91,6 +96,7 @@
             business,
             row_number() over (order by last_login desc) as rn
         from tbl_users
+          where grade ='관리자'
         <where>
             <if test="typeArr != null and typeArr.length > 0">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
@@ -113,7 +119,7 @@
     ) subquery
     where rn &gt; (#{pageNum} - 1) * #{amount}
       and rn &lt;= #{pageNum} * #{amount}
-      and grade ='관리자'
+    
 </select>
 
 <!-- 매니저게시글 갯수 -->
@@ -143,21 +149,24 @@
 		</where>
 </select> 
  
-	
 
-			
-   
 <!-- 회원 등급 수정 --> 
     <update id="updateGrade">
         update tbl_users
         set grade = #{grade}
         where user_id = #{user_id}
     </update>
+    
+    <!-- 등급 처리 완료시 business 1로 업데이트 -->
+    <update id="updateBusiness">
+    	update tbl_users
+    	set business = 1
+    	where user_id = #{user_id}
+    </update>
   
   <!--  회원 데이터 1개 -->
-   <select id="selectById" resultType="HnUserDto">
-  	select user_id,user_name,grade,email,last_login,business
-  	from tbl_users
+   <select id="selectById" resultType="HnUserVo">
+  	select * from tbl_users
   	where user_id = #{user_id}
   </select>
   
@@ -191,6 +200,11 @@
 		where user_id = #{user_id}	
 	</update>
   
-  
+  <!-- 사업자번호 업데이트 -->
+  <update id="updateBusinessNum">
+	  update tbl_users set
+	business_num = #{business_num}
+	where user_id = #{user_id}
+  </update>
   
   </mapper>

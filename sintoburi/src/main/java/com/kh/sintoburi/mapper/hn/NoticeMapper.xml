@@ -11,6 +11,66 @@
 		order by n_no desc
 	</select>
 	
+	<!--  공지사항 페이징 -->
+	<select id="getNoticePaging" resultType="NoticeVo">
+    select *
+    from (
+        select
+            n_no,
+			title,
+			content,
+			write_date,
+			image,
+			important,
+            row_number() over (order by n_no desc) as rn
+        from tbl_notice
+        <where>
+            
+           <if test="type != null">
+                <trim prefix="(" suffix=")" prefixOverrides="or">
+                    <foreach item="type" collection="typeArr" separator="or">
+                        <choose>
+                            <when test="type == 'T'.toString()">
+                                title LIKE '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'N'.toString()">
+                                    n_no like '%' || #{keyword} || '%'
+                                </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </where>
+    ) subquery
+  where rn &gt; (#{pageNum} - 1) * #{amount}
+		and rn &lt;= #{pageNum} * #{amount}
+</select>
+
+<!-- 게시글 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_notice
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                               <when test="type == 'T'.toString()">
+                                title LIKE '%' || #{keyword} || '%'
+                            </when>
+                                <when test="type == 'N'.toString()">
+                                    n_no like '%' || #{keyword} || '%'
+                                </when>
+                                
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
+	
+	
 	<!-- 공지사항 한개데이터 -->
 	<select id="selectByNno" resultType="NoticeVo">
 		select * from tbl_notice
@@ -24,8 +84,8 @@
 			resultType="int">
 			select seq_notice.nextval from dual
 		</selectKey>
-		insert into tbl_notice (n_no,title,content)
-		values (#{n_no},#{title},#{content})
+		insert into tbl_notice (n_no,title,content,important)
+		values (#{n_no},#{title},#{content}, #{important})
 	</insert>
 
 	<!-- 공지사항 수정 -->
@@ -33,6 +93,7 @@
 		update tbl_notice set
 		title = #{title},
 		content = #{content}
+		important = #{important}
 		where n_no = #{n_no}
 	</update>
 

@@ -53,6 +53,14 @@ $(function() {
                                 <label for="title">제목</label>
                                 <input type="text" class="form-control" id="title" name="title" />
                             </div>
+                            
+                            <div class="form-group">
+			                    <label for="notice_type">항목</label>
+			                     <select id=important name="important" class="form-control" style="width: 150px;">
+			                        <option value="N" >일반</option>
+			                        <option value="Y" >중요</option>
+			                    </select>
+			                </div>
 
                             <div class="form-group">
                                 <label for="content">내용</label>

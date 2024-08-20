@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.hn.EnquiryImageVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
@@ -21,8 +22,9 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeMapper noticeMapper;
 
 	@Override
-	public List<NoticeVo> getListNotice() {
-		List<NoticeVo> list = noticeMapper.selectNotice();
+	public List<NoticeVo> getListNotice(HnCriteria criteria) {
+//		List<NoticeVo> list = noticeMapper.selectNotice();
+		List<NoticeVo> list = noticeMapper.getNoticePaging(criteria);
 		return list;
 	}
 
@@ -94,6 +96,12 @@ public class NoticeServiceImpl implements NoticeService {
 	public NoticeVo importantNotice() {
 		NoticeVo noticeVo = noticeMapper.importantNotice();
 		return noticeVo;
+	}
+
+	@Override
+	public int getTotalCount(HnCriteria criteria) {
+		int count = noticeMapper.getTotalCount(criteria);
+		return count;
 	}
 
 }

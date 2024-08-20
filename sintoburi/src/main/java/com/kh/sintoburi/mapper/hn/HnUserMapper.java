@@ -34,7 +34,7 @@ public interface HnUserMapper {
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public HnUserDto selectById(@Param("user_id") String user_id);
+	public HnUserVo selectById(@Param("user_id") String user_id);
 
 	// 로그인
 	public HnUserDto login(HnLoginDto dto);
@@ -50,5 +50,10 @@ public interface HnUserMapper {
 
 	// 비밀번호변경
 	public int updatePw(Map<String, String> map);
-
+	
+	// 사업자번호 업데이트
+	public int updateBusinessNum(@Param("user_id") String user_id, @Param("business_num") String business_num);
+	
+	// 등급 처리완료시 business 1로업데이트
+	public int updateBusiness(@Param("user_id") String user_id);
 }

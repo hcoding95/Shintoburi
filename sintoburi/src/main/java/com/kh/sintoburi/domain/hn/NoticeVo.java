@@ -19,6 +19,7 @@ public class NoticeVo {
 	private String content;
 	private Date write_date;
 	private String important;
+
 	
 	private List<NoticeImageVo> imageList;
 

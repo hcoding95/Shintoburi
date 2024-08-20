@@ -3,7 +3,27 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
  <%@ include file="/WEB-INF/views/hn/manager/include/header.jsp" %>
+<script>
+$(function(){
+	
+	
+	// 페이지 블럭
+	 $(".faqPage").click(function(e) {
+		    e.preventDefault(); // 브라우저의 기본 기능 막기
+		    let pageNum = $(this).attr("href"); 
+		    console.log(pageNum);
+		    $("#actionForm > input[name=pageNum]").val(pageNum);
+		    $("#actionForm > input[name=amount]").val('${criteria.amount}');
+		    $("#actionForm").attr("action", "/hn/manager/faq/faqList");
+		    $("#actionForm").submit();
+		});
+	
+	
+	
+});
 
+
+</script>
  <div class="row">
 
      <!-- Area Chart -->
@@ -49,35 +69,44 @@
 </div>
 
 <!-- Pagination -->
-            <div class="row">
-				<div class="col-md-12">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<c:if test="${pageMaker.prev == true}">
-							<li class="page-item">
-								<a  id ="page" class="page-link" href="${pageMaker.startPage - 1}">&laquo;</a>
-							</li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}" 
-									   end="${pageMaker.endPage}" 
-									   var="v">
-							<li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> <!-- li -->
-								<a class="page-link" href="${v}">${v}</a>
-							</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next == true}">
-							<li class="page-item">
-								<a class="page-link" href="${pageMaker.endPage + 1}">&raquo;</a>
-							</li>
-							</c:if>
-						</ul>
-					</nav>
-				</div>
-			</div>
-            <!-- // Pagination -->
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item">
+                        <a class="page-link faqPage" href="${pageMaker.startPage - 1}">&laquo;</a>
+                    </li>
+                </c:if>
+                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
+                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
+                        <a class="page-link faqPage" href="${v}">${v}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageMaker.next}">
+                    <li class="page-item">
+                        <a class="page-link faqPage" href="${pageMaker.endPage + 1}">&raquo;</a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- // Pagination -->
             </div> <!-- card-body -->
         </div>
     </div>
 </div>
+
+<form id="actionForm" action="/hn/manager/faq/faqList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
 
  <%@ include file="/WEB-INF/views/hn/manager/include/footer.jsp" %>

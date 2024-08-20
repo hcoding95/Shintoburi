@@ -106,7 +106,7 @@ $(function() {
                 </div>
                 <div class="form-group">
                     <label for="enquiry_type">문의 유형</label>
-                    <select class="form-select" id="enquiry_type" name="enquiry_type" disabled>
+                     <select id="enquiry_type" name="enquiry_type" class="form-control" style="width: 150px;" disabled>
                         <option value="상품문의" <c:if test="${enquiryVo.enquiry_type =='상품문의'}">selected</c:if>>상품문의</option>
                         <option value="배송문의" <c:if test="${enquiryVo.enquiry_type =='배송문의'}">selected</c:if>>배송문의</option>
                         <option value="결제문의" <c:if test="${enquiryVo.enquiry_type =='결제문의'}">selected</c:if>>결제문의</option>

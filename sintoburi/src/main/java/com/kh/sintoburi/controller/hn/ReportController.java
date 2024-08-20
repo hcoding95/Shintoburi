@@ -31,10 +31,12 @@ public class ReportController {
 	@GetMapping("/reportList")
 	public void reportList(Model model, HnCriteria criteria) {
 		List<ReportPostVo> list = reportPostService.ReportList(criteria);
+		model.addAttribute("reportList", list);
+		
 		int total = reportPostService.getTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("reportList", list);
+		model.addAttribute("criteria", criteria);
 	}
 
 	// 신고게시글상세보기

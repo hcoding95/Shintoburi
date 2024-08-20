@@ -13,7 +13,7 @@ public interface ReportPostMapper {
 	public List<ReportPostVo> selectReport ();
 	
 	// 페이징처리
-	public List<ReportPostVo> getListWithPaging(HnCriteria criteria);
+	public List<ReportPostVo> getReportPaging(HnCriteria criteria);
 	
 	// 게시글 갯수
 	public int getTotalCount(HnCriteria criteria);

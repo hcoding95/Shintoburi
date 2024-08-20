@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
@@ -40,9 +42,15 @@ public class NoticeController {
 
 	// 공지사항
 	@GetMapping("/noticeList")
-	public void noticeList(Model model) {
-		List<NoticeVo> list = noticeService.getListNotice();
+	public void noticeList(Model model, HnCriteria criteria) {
+		List<NoticeVo> list = noticeService.getListNotice(criteria);
 		model.addAttribute("noticeList", list);
+		
+		int total = noticeService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
 
 	}
 
@@ -95,6 +103,7 @@ public class NoticeController {
 				.content(dto.getContent())
 				.title(dto.getTitle())
 				.imageList(imageList)
+				.important(dto.getImportant())
 				.build();
 
 		int n_no = noticeService.registerNotice(noticeVo);
@@ -114,10 +123,9 @@ public class NoticeController {
 
 	// 공지사항 수정
 	@PostMapping("/noticeMod")
-	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
-
-//		boolean result = noticeService.modifyNotice(vo);
-//		rttr.addFlashAttribute("noticeMod", result);
+	public String noticeMod(NoticeVo noticeVo, RedirectAttributes rttr) throws IOException {
+		boolean result = noticeService.modifyNotice(noticeVo);
+		rttr.addFlashAttribute("noticeMod", result);
 		return "redirect:/hn/manager/notice/noticeList";
 	}
 
