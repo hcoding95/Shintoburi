@@ -94,9 +94,8 @@ $(function () {
 	});
 	
 	$(".btn-setting-insert").click(function () {
-		let area = $(this).data("area");
-		//let user_id = "${login.user_id}";
-		let user_id = "user02";
+		let parentSection = $(this).closest(".profile-section");
+		let contentBox = parentSection.find('.profile-content-box');
 		Swal.fire({
 		  title: '카테고리 추가',
 		  html:
@@ -109,35 +108,46 @@ $(function () {
 		    if (!config_name || !config_value) {
 		      Swal.showValidationMessage(`빈칸없이 둘다 입력하세요`);
 		    }
+		    let existingNames = contentBox.find('.config-name').map(function() {
+                return $(this).text().trim();
+            }).get();
+
+            if (existingNames.includes(config_name)) {
+                Swal.showValidationMessage(`이미 존재하는 이름입니다. 다른 이름을 입력하세요.`);
+                return false;
+            }
 		    return { config_name : config_name, config_value : config_value };
 		  }
 		}).then((result) => {
 		  if (result.isConfirmed) {
 		    let { config_name, config_value } = result.value;
-		    let sData = {
-		    	"user_id" : user_id,
-		    	"blog_category" : area,
-		    	"config_name" : config_name,
-		    	"config_value" : config_value
-		    };
-		    $.ajax({
-		    	type : "post",
-		    	url : "/blogSetting/insert",
-		    	data : JSON.stringify(sData),
-		    	contentType : "application/json; charset=utf-8",
-		    	success : function (rData) {
-					alert("등록완료");
-				}
-		    })
+		    let tag =`<div class="profile-content">
+	            <span class="config-name">\${config_name}</span>
+	            <span> : </span>
+	            <span class="config-value">\${config_value}</span>
+	            <span class="checkbox-group">
+	            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
+	            	<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
+			        <label><input type="checkbox" 
+			        > 숨기기</label>
+			        <label><input type="checkbox"
+			        > 메인노출여부</label>
+			        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
+			        <label><button class="btn btn-danger config-delete-btn" >삭제</button></label>
+			    </span>
+	        </div>`;
+		    
+		    contentBox.append(tag);
 		  }
 		});
 		
 	})
-	
-	$(".config-modify-btn").click(function () {
+	$(".profile-content-box").on("click", ".config-modify-btn", function () {
+		console.log("클릭됨");
 		let that = $(this).closest(".profile-content");
 		let c_name = that.find(".config-name").text().trim();
 		let c_value = that.find(".config-value").text().trim();
+		let contentBox = $(this).closest(".profile-content-box");
 		Swal.fire({
 		  title: '카테고리 수정',
 		  html:
@@ -150,6 +160,15 @@ $(function () {
 		    if (!config_name || !config_value) {
 		      Swal.showValidationMessage(`빈칸없이 둘다 입력하세요`);
 		    }
+		    
+		    let existingNames = contentBox.find('.config-name').map(function() {
+                return $(this).text().trim();
+            }).get();
+
+            if (existingNames.includes(config_name)) {
+                Swal.showValidationMessage(`이미 존재하는 이름입니다. 다른 이름을 입력하세요.`);
+                return false;
+            }
 		    return { config_name : config_name, config_value : config_value };
 		  }
 		}).then((result) => {
@@ -162,27 +181,68 @@ $(function () {
 		});
 	});
 	
-	$(".config-delete-btn").click(function () {
+	$(".profile-content-box").on("click", ".config-delete-btn", function () {
 		$(this).closest(".profile-content").remove();
-	})
-	
+	});
 	
 	  // Move up
-    $('.move-up').click(function() {
+	$(".profile-content-box").on("click", ".move-up", function () {
         var div = $(this).closest('.profile-content');
         var prevDiv = div.prev('.profile-content');
         if (prevDiv.length) {
             div.insertBefore(prevDiv);
         }
-    });
-
+	});
     // Move down
-    $('.move-down').click(function() {
+    $(".profile-content-box").on("click", ".move-down", function () {
         var div = $(this).closest('.profile-content');
         var nextDiv = div.next('.profile-content');
         if (nextDiv.length) {
             div.insertAfter(nextDiv);
         }
+		
+	});
+    
+    $(".btn-setting-modifyOk").click(function () {
+        let parentSection = $(this).closest(".profile-section"); // 클릭한 버튼의 최상위 섹션을 찾음
+        //let user_id = '${login.user_id}';
+        let user_id = 'user02';
+        let blog_category = parentSection.data("area"); 
+        let contents = []; // 서버로 보낼 데이터를 담을 배열
+
+        // 모든 profile-content를 순회하면서 순번 부여 및 데이터 수집
+        parentSection.find(".profile-content").each(function (index) {
+            let configName = $(this).find(".config-name").text().trim(); // 이름
+            let configValue = $(this).find(".config-value").text().trim(); // 값
+            let isVisible = $(this).find(".config-visible").is(":checked") ? "T" : "F"; // 숨기기 여부
+            let isMain = $(this).find(".config-main").is(":checked") ? "T" : "F"; // 메인 노출 여부
+            let order = index + 1; // 순번 (index는 0부터 시작하므로 1을 더해줌)
+
+            contents.push({
+            	"user_id" : user_id,
+            	"blog_category" : blog_category,
+                "config_name": configName,
+                "config_value": configValue,
+                "isVisible": isVisible,
+                "isMain": isMain,
+                "blog_priority": order // 순번 추가
+            });
+        });
+
+        // 서버로 데이터 전송
+        $.ajax({
+            type: "POST",
+            url: "/blogSetting/updateOrder",  // 서버에서 처리할 엔드포인트 설정
+            data: JSON.stringify(contents),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                alert("수정 완료");
+                // 성공 시 추가 작업 수행 가능
+            },
+            error: function (xhr, status, error) {
+                alert("수정 실패: " + error);
+            }
+        });
     });
 
 	
@@ -692,12 +752,13 @@ $(function () {
 						<div class="container">
 							 <div class="profile-end">
 							 	<!-- 프로필 -->
-								 <div class="profile-section">
-						            <h3 id="profile-top" class="text-end">(${blog_userVo.user_name})님의 프로필
-						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
-						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
+								 <div class="profile-section" data-area="T">
+						            <h3 class="text-end">(${blog_userVo.user_name})님의 프로필
+						            <button class="btn btn-primary blog-setting-btn btn-setting-modify" ><i class="fa fa-pen-to-square">수정</i></button>
+						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk"><i class="fa fa-pen-to-square">수정완료</i></button>
 						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="T"><i class="fa fa-pen-to-square">추가하기</i></button>
 						            </h3>
+						            <div class="profile-content-box">
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'T' }">
 						            <div class="profile-content">
@@ -713,19 +774,21 @@ $(function () {
 									        <label><input type="checkbox"
 									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
-									        <label><button class="btn btn-success config-modify-btn" data-area="${set.blog_category }">수정</button></label>
-									        <label><button class="btn btn-danger config-delete-btn" data-user_id="${set.user_id}" data-config_name="${set.config_name}">삭제</button></label>
+									        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn" >삭제</button></label>
 									    </span>
 						            </div>
 						            </c:if>
 						            </c:forEach>
+						            </div>
 						        </div>
-						        <div id="profile-middle" class="profile-section">
+						        <div class="profile-section" data-area="M">
 						            <h3 class="text-end">연락처
-						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
-						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="M"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-primary blog-setting-btn btn-setting-modify" ><i class="fa fa-pen-to-square">수정</i></button>
+						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" ><i class="fa fa-pen-to-square">추가하기</i></button>
 						            </h3>
+						            <div class="profile-content-box">
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'M' }">
 						            <div class="profile-content">
@@ -739,19 +802,21 @@ $(function () {
 									        <label><input type="checkbox"
 									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
-									        <label><button class="btn btn-success config-modify-btn" data-area="${set.blog_category }">수정</button></label>
-									        <label><button class="btn btn-danger config-delete-btn" data-user_id="${set.user_id}" data-config_name="${set.config_name}">삭제</button></label>
+									        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn" >삭제</button></label>
 									    </span>
 						            </div>
 						            </c:if>
 						            </c:forEach>
+						            </div>
 						        </div>
-						        <div id="profile-bottom" class="profile-section">
+						        <div class="profile-section" data-area="B">
 						            <h3 class="text-end">웹사이트 및 소셜 링크
-						            <button class="btn btn-primary blog-setting-btn" ><i class="fa fa-pen-to-square">수정</i></button>
-						            <button class="btn btn-success blog-setting-btn"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-primary blog-setting-btn btn-setting-modify" ><i class="fa fa-pen-to-square">수정</i></button>
+						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk"><i class="fa fa-pen-to-square">수정완료</i></button>
 						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="B"><i class="fa fa-pen-to-square">추가하기</i></button>
 						            </h3>
+						            <div class="profile-content-box">
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'B' }">
 						            <div class="profile-content">
@@ -765,12 +830,13 @@ $(function () {
 									        <label><input type="checkbox"
 									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
-									        <label><button class="btn btn-success config-modify-btn" data-area="${set.blog_category }">수정</button></label>
-									        <label><button class="btn btn-danger config-delete-btn" data-user_id="${set.user_id}" data-config_name="${set.config_name}">삭제</button></label>
+									        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
+									        <label><button class="btn btn-danger config-delete-btn" >삭제</button></label>
 									    </span>
 						            </div>
 						            </c:if>
 						            </c:forEach>
+						            </div>
 						        </div>
 								<!-- 프로필 끝  -->
 							</div>
