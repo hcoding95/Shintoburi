@@ -160,10 +160,30 @@ $(function () {
 		    that.find(".config-value").text(config_value);
 		  }
 		});
-	
-		
-		
 	});
+	
+	$(".config-delete-btn").click(function () {
+		$(this).closest(".profile-content").remove();
+	})
+	
+	
+	  // Move up
+    $('.move-up').click(function() {
+        var div = $(this).closest('.profile-content');
+        var prevDiv = div.prev('.profile-content');
+        if (prevDiv.length) {
+            div.insertBefore(prevDiv);
+        }
+    });
+
+    // Move down
+    $('.move-down').click(function() {
+        var div = $(this).closest('.profile-content');
+        var nextDiv = div.next('.profile-content');
+        if (nextDiv.length) {
+            div.insertAfter(nextDiv);
+        }
+    });
 
 	
 });
@@ -685,6 +705,8 @@ $(function () {
 							            <span> : </span>
 							            <span class="config-value">${set.config_value }</span>
 							            <span class="checkbox-group">
+							            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
+							            	<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
 									        <label><input type="checkbox" 
 									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
