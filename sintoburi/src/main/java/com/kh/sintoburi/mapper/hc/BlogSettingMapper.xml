@@ -6,14 +6,9 @@
   <mapper namespace="com.kh.sintoburi.mapper.hc.BlogSettingMapper">
   	
   	<insert id="insertSetting">
-  		<selectKey order="BEFORE" resultType="int" keyProperty="blog_priority">
-  			select coalesce(max(blog_priority),0) from tbl_blog_setting
-  			where blog_category = #{blog_category} 
-  			and user_id = #{user_id}
-  		</selectKey>
   		insert into tbl_blog_setting 
-  			(user_id, blog_category, config_name, config_value, blog_priority )
-  		values (#{user_id}, #{blog_category}, #{config_name}, #{config_value}, #{blog_priority} + 1 )
+  			(user_id, blog_category, config_name, config_value, blog_priority, isMain, isVisible )
+  		values (#{user_id}, #{blog_category}, #{config_name}, #{config_value}, #{blog_priority}, #{isMain}, #{isVisible} )
   	</insert>
   	
   	<select id="getBlogSettingList" resultType="BlogSettingVo">
@@ -29,6 +24,10 @@
 	    blog_priority asc
   	</select>
   	
+	<delete id="deleteBlogSettingListByCategory">
+		delete from tbl_blog_setting
+		where user_id = #{user_id} and blog_category = #{blog_category}
+	</delete>
   	<update id="modifySetting">
   		update tbl_blog_setting
   		set isMain = #{isMain}, isVisible = #{isVisible}, blog_category = #{blog_category}, config_value = #{config_value}, blog_priority = #{blog_priority}

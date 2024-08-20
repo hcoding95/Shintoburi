@@ -21,18 +21,10 @@ public class BlogSettingController {
 	
 	
 	@PostMapping("/insert")
-	public boolean insert(@RequestBody BlogSettingVo vo) {
-		return blogSettingService.insertSetting(vo);
+	public boolean insert(@RequestBody List<BlogSettingVo> list) {
+		
+		return blogSettingService.insertSettingList(list);
 	}
 	
-	@PostMapping("/update")
-	public boolean update(@RequestBody BlogSettingVo vo) {
-		return blogSettingService.modifySetting(vo);
-	}
-	
-	@PostMapping("/delete")
-	public boolean delete(@RequestBody BlogSettingVo vo) {
-		return blogSettingService.deleteSetting(vo);
-	}
 
 }

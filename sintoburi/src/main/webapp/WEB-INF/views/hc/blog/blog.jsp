@@ -94,6 +94,7 @@ $(function () {
 	});
 	
 	$(".btn-setting-insert").click(function () {
+		let blog_category = $(this).data("area");
 		let parentSection = $(this).closest(".profile-section");
 		let contentBox = parentSection.find('.profile-content-box');
 		Swal.fire({
@@ -121,10 +122,20 @@ $(function () {
 		}).then((result) => {
 		  if (result.isConfirmed) {
 		    let { config_name, config_value } = result.value;
+		    
+		    let html;
+	    	if(blog_category == 'B'){
+	    		html = `<a href="https://\${config_value }">\${config_value }</a>`;
+	    	}else {
+	    		html = `\${config_value}`;
+	    	}
+		    
 		    let tag =`<div class="profile-content">
 	            <span class="config-name">\${config_name}</span>
 	            <span> : </span>
-	            <span class="config-value">\${config_value}</span>
+	            <span class="config-value">
+	            \${html}
+	            </span>
 	            <span class="checkbox-group">
 	            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
 	            	<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
@@ -143,8 +154,10 @@ $(function () {
 		
 	})
 	$(".profile-content-box").on("click", ".config-modify-btn", function () {
+		let blog_category = $(this).closest(".profile-section").data("area");
 		console.log("클릭됨");
 		let that = $(this).closest(".profile-content");
+		let original_name = that.find(".config-name").text().trim(); // 기존 이름을 저장
 		let c_name = that.find(".config-name").text().trim();
 		let c_value = that.find(".config-value").text().trim();
 		let contentBox = $(this).closest(".profile-content-box");
@@ -165,7 +178,7 @@ $(function () {
                 return $(this).text().trim();
             }).get();
 
-            if (existingNames.includes(config_name)) {
+            if (config_name !== original_name  && existingNames.includes(config_name)) {
                 Swal.showValidationMessage(`이미 존재하는 이름입니다. 다른 이름을 입력하세요.`);
                 return false;
             }
@@ -174,9 +187,13 @@ $(function () {
 		}).then((result) => {
 		  if (result.isConfirmed) {
 		    let { config_name, config_value } = result.value;
-		    
-		    that.find(".config-name").text(config_name);
-		    that.find(".config-value").text(config_value);
+		    if(blog_category === "B") {
+		    	that.find(".config-name").text(config_name);
+			    that.find(".config-value").html(`<a href="https://\${config_value }">\${config_value }</a>`);
+		    } else {
+			    that.find(".config-name").text(config_name);
+			    that.find(".config-value").text(config_value);
+		    }
 		  }
 		});
 	});
@@ -203,10 +220,11 @@ $(function () {
 		
 	});
     
+    //수정완료 버튼 클릭 시
     $(".btn-setting-modifyOk").click(function () {
         let parentSection = $(this).closest(".profile-section"); // 클릭한 버튼의 최상위 섹션을 찾음
-        //let user_id = '${login.user_id}';
-        let user_id = 'user02';
+        let user_id = '${login.user_id}';
+        //let user_id = 'user02';
         let blog_category = parentSection.data("area"); 
         let contents = []; // 서버로 보낼 데이터를 담을 배열
 
@@ -232,7 +250,7 @@ $(function () {
         // 서버로 데이터 전송
         $.ajax({
             type: "POST",
-            url: "/blogSetting/updateOrder",  // 서버에서 처리할 엔드포인트 설정
+            url: "/blogSetting/insert",  // 서버에서 처리할 엔드포인트 설정
             data: JSON.stringify(contents),
             contentType: "application/json; charset=utf-8",
             success: function (response) {
@@ -244,6 +262,15 @@ $(function () {
             }
         });
     });
+    
+    $(".btn-setting-modify").click(function () {
+    	let parentSection = $(this).closest(".profile-section");
+    	parentSection.find(".blog-setting-btn").show();
+    	parentSection.find(".checkbox-group").show();
+    	parentSection.find(".profile-content").show();
+    	$(this).hide();
+		
+	});
 
 	
 });
@@ -621,11 +648,22 @@ $(function () {
 				        	<div class="blog-control">
 					            <h3 class="text-end">소개<div class="filters"><a id="filterBtn" href="#tab2" data-toggle="tab" data-tab="#main-tab2" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <c:forEach items="${blog_setting}" var="set">
-					            <c:if test="${set.isMain eq 'T' and set.isVisible eq 'T' }">
+					            <c:if test="${set.isMain eq 'T' and set.isVisible eq 'F' }">
 					            <div class="profile-content">
-						            <span class="config-name">${set.config_name }</span>
-						            <span> : </span>
-						            <span class="config-value">${set.config_value }</span>
+					            	<c:choose>
+					            		<c:when test="${set.blog_category eq 'B' }">
+					            			<span class="config-name">${set.config_name }</span>
+								            <span> : </span>
+								            <span class="config-value">
+								            <a href="https://${set.config_value }">${set.config_value }</a>
+								            </span>
+					            		</c:when>
+					            		<c:otherwise>
+								            <span class="config-name">${set.config_name }</span>
+								            <span> : </span>
+								            <span class="config-value">${set.config_value }</span>
+					            		</c:otherwise>
+					            	</c:choose>
 					            </div>
 					            </c:if>
 					            </c:forEach>
@@ -754,24 +792,28 @@ $(function () {
 							 	<!-- 프로필 -->
 								 <div class="profile-section" data-area="T">
 						            <h3 class="text-end">(${blog_userVo.user_name})님의 프로필
+						            <c:if test="${login.user_id eq blog_userVo.user_id }">
 						            <button class="btn btn-primary blog-setting-btn btn-setting-modify" ><i class="fa fa-pen-to-square">수정</i></button>
-						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="T"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk" style="display: none;"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="T" style="display: none;"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            </c:if>
 						            </h3>
 						            <div class="profile-content-box">
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'T' }">
-						            <div class="profile-content">
+						            <div class="profile-content" 
+						            	<c:if test="${set.isVisible eq 'T' }">style="display: none;"</c:if>
+						            >
 							            <span class="config-name">${set.config_name }</span>
 							            <span> : </span>
 							            <span class="config-value">${set.config_value }</span>
-							            <span class="checkbox-group">
+							            <span class="checkbox-group" style="display: none;">
 							            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
 							            	<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
-									        <label><input type="checkbox" 
+									        <label><input type="checkbox" class="config-visible"
 									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
-									        <label><input type="checkbox"
+									        <label><input type="checkbox" class="config-main"
 									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
 									        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
@@ -784,22 +826,28 @@ $(function () {
 						        </div>
 						        <div class="profile-section" data-area="M">
 						            <h3 class="text-end">연락처
+						            <c:if test="${login.user_id eq blog_userVo.user_id }">
 						            <button class="btn btn-primary blog-setting-btn btn-setting-modify" ><i class="fa fa-pen-to-square">수정</i></button>
-						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" ><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk" style="display: none;"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" style="display: none;" ><i class="fa fa-pen-to-square">추가하기</i></button>
+						            </c:if>
 						            </h3>
 						            <div class="profile-content-box">
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'M' }">
-						            <div class="profile-content">
+						            <div class="profile-content"
+						            	<c:if test="${set.isVisible eq 'T' }">style="display: none;"</c:if>
+						            >
 							            <span class="config-name">${set.config_name }</span>
 							            <span> : </span>
 							            <span class="config-value">${set.config_value }</span>
-							            <span class="checkbox-group">
-									        <label><input type="checkbox" 
+							            <span class="checkbox-group" style="display: none;">
+							            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
+	            							<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
+									        <label><input type="checkbox" class="config-visible"
 									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
-									        <label><input type="checkbox"
+									        <label><input type="checkbox" class="config-main"
 									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
 									        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
@@ -812,22 +860,30 @@ $(function () {
 						        </div>
 						        <div class="profile-section" data-area="B">
 						            <h3 class="text-end">웹사이트 및 소셜 링크
+						            <c:if test="${login.user_id eq blog_userVo.user_id }">
 						            <button class="btn btn-primary blog-setting-btn btn-setting-modify" ><i class="fa fa-pen-to-square">수정</i></button>
-						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk"><i class="fa fa-pen-to-square">수정완료</i></button>
-						            <button class="btn btn-info blog-setting-btn btn-setting-insert" data-area="B"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            <button class="btn btn-success blog-setting-btn btn-setting-modifyOk" style="display: none;"><i class="fa fa-pen-to-square">수정완료</i></button>
+						            <button class="btn btn-info blog-setting-btn btn-setting-insert" style="display: none;" data-area="B"><i class="fa fa-pen-to-square">추가하기</i></button>
+						            </c:if>
 						            </h3>
 						            <div class="profile-content-box">
 						            <c:forEach items="${blog_setting}" var="set">
 						            <c:if test="${set.blog_category eq 'B' }">
-						            <div class="profile-content">
+						            <div class="profile-content"
+						            	<c:if test="${set.isVisible eq 'T' }">style="display: none;"</c:if>
+						            >
 							            <span class="config-name">${set.config_name }</span>
 							            <span> : </span>
-							            <span class="config-value"><a href="${set.config_value }">${set.config_value }</a></span>
-							            <span class="checkbox-group">
-									        <label><input type="checkbox" 
+							            <span class="config-value">
+							            <a href="https://${set.config_value }">${set.config_value }</a>
+							            </span>
+							            <span class="checkbox-group" style="display: none;">
+							            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
+	            							<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
+									        <label><input type="checkbox" class="config-visible"
 									        <c:if test="${set.isVisible eq 'T' }">checked="checked"</c:if> 
 									        > 숨기기</label>
-									        <label><input type="checkbox"
+									        <label><input type="checkbox" class="config-main"
 									        <c:if test="${set.isMain eq 'T' }">checked="checked"</c:if> 
 									        > 메인노출여부</label>
 									        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
