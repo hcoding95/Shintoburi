@@ -44,6 +44,31 @@ $(function(){
 		    $("#actionForm").attr("action", "/hn/manager/notice/noticeList");
 		    $("#actionForm").submit();
 		});
+
+	
+	$("#selectSearch").change(function(){
+		let v = $(this).val();
+		console.log(v);
+		
+		if(v === "I"){
+			$("#selectImportant").show();
+			$("#inputSearch").hide();
+			$("#inputSearch").removeAttr("name");		
+			$("#selectImportant").attr("name","keyword");
+			
+		}else {
+			$("#inputSearch").show();
+			$("#selectImportant").hide();
+			$("#selectImportant").removeAttr("name");		
+			$("#inputSearch").attr("name","keyword");
+			
+		}
+		
+		
+		
+		
+	});
+
 	
 	
 	
@@ -61,9 +86,24 @@ $(function(){
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">공지사항</h6>
-			   
+			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">회원 목록</h6>
+			   <form id="searchForm" action="/hn/manager/notice/noticeList" method="get" style="display: flex; align-items: center;">
+			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
+			            <option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
+			            <option value="N" ${criteria.type == 'N' ? 'selected' : ''}>게시글번호</option>
+			            <option value="T" ${criteria.type == 'T' ? 'selected' : ''}>제목</option>
+			            <option value="I" ${criteria.type == 'I' ? 'selected' : ''}>항목</option>
+			        </select>
+			        <select id="selectImportant" class="form-control " 
+			        	style="width: 150px; margin-right: 10px; display:none">
+			            <option value="N">일반</option>
+			            <option value="Y">중요</option>
+			        </select>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="submit" class=" btn btn-primary btn-sm">검색</button>
+			    </form>
 			</div>
+			
              <!-- Card Body -->
              <div class="card-body"> 
 <div class="row">
@@ -89,10 +129,10 @@ $(function(){
 					<td>
 				    <c:choose>
 				        <c:when test="${vo.important == 'N'}">
-				            일반 공지사항
+				            일반
 				        </c:when>
 				        <c:when test="${vo.important == 'Y'}">
-				            중요 공지사항
+				            중요
 				        </c:when>
 				        <c:otherwise>
 				           

@@ -25,17 +25,22 @@
             row_number() over (order by n_no desc) as rn
         from tbl_notice
         <where>
-            
            <if test="type != null">
                 <trim prefix="(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
+                         <when test="type == 'A'.toString()">
+                                   1=1
+                              </when>
                             <when test="type == 'T'.toString()">
                                 title LIKE '%' || #{keyword} || '%'
                             </when>
                             <when test="type == 'N'.toString()">
                                     n_no like '%' || #{keyword} || '%'
-                                </when>
+                               </when>
+                              <when test="type == 'I'.toString()">
+                                   important = #{keyword}
+                              </when>
                         </choose>
                     </foreach>
                 </trim>

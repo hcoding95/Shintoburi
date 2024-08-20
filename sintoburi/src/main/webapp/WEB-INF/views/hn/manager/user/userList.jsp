@@ -190,18 +190,19 @@ $(function() {
 			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">회원 목록</h6>
 			    <form id="searchForm" action="/hn/manager/user/userList" method="get" style="display: flex; align-items: center;">
 			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
+			            <option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
 			            <option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
 			            <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>이메일</option>
 			            <option value="G" ${criteria.type == 'G' ? 'selected' : ''}>등급</option>
-			            <option value="B" ${criteria.type == 'B' ? 'selected' : ''}>처리상태</option>
+			            <option value="B" ${criteria.type == 'B' ? 'selected' : ''}>등급변경요청</option>
 			        </select>
-			        <select id="selectBusiness" class="form-control ml-4" 
+			        <select id="selectBusiness" class="form-control " 
 			        	style="width: 150px; margin-right: 10px; display:none">
 			            <option value="1">완료</option>
 			            <option value="0">미완료</option>
 			        </select>
-			      <input class="form-control" id="inputSearch" type="text" name="keyword" value="" style="margin-right: 10px;width: 226px;">
-			        <button id="btnSearch" type="submit" class="btnMod btn btn-primary btn-sm">검색</button>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="submit" class=" btn btn-primary btn-sm">검색</button>
 			    </form>
 			</div>
              <!-- Card Body -->
