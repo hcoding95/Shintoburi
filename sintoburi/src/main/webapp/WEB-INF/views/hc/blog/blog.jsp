@@ -256,6 +256,7 @@ $(function () {
             success: function (response) {
                 alert("수정 완료");
                 // 성공 시 추가 작업 수행 가능
+                location.reload();
             },
             error: function (xhr, status, error) {
                 alert("수정 실패: " + error);
