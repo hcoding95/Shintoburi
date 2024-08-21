@@ -5,29 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.hc.ReplyDto;
-import com.kh.sintoburi.mapper.hc.ReplyMapper;
+import com.kh.sintoburi.domain.hc.HcReplyDto;
+import com.kh.sintoburi.mapper.hc.HcReplyMapper;
 
 @Service
-public class ReplyServiceImpl implements ReplyService {
+public class HcReplyServiceImpl implements HcReplyService {
 	
 	@Autowired
-	private ReplyMapper replyMapper;
+	private HcReplyMapper replyMapper;
 
 	@Override
-	public List<ReplyDto> getReplyListByBlog_no(int blog_no) {
-		List<ReplyDto> list = replyMapper.getReplyListByBlog_no(blog_no);
+	public List<HcReplyDto> getReplyListByBlog_no(int blog_no) {
+		List<HcReplyDto> list = replyMapper.getReplyListByBlog_no(blog_no);
 		return list;
 	}
 
 	@Override
-	public boolean insertReply(ReplyDto replyDto) {
+	public boolean insertReply(HcReplyDto replyDto) {
 		int count = replyMapper.insertReply(replyDto);
 		return (count >0)? true : false;
 	}
 
 	@Override
-	public boolean modifyReply(ReplyDto replyDto) {
+	public boolean modifyReply(HcReplyDto replyDto) {
 		int count = replyMapper.modifyReply(replyDto);
 		return (count >0)? true : false;
 	}

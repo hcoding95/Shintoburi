@@ -7,8 +7,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
 <!-- 글리피콘 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script>
+$(function () {
+	$(".likeBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let blog_no = that.attr("data-blog_no");
+		let liked = that.attr("data-liked");
+		let sData = {
+			'user_id' : login_id,
+			'blog_no' : blog_no
+		};
+		console.log(sData);
+		console.log(liked);
+		if (liked == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/removeLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 취소");
+					let container = that.closest(".post-container");
+					let countLike = container.find(".sumLike");
+					let count = parseInt(countLike.text(), 10);
+					countLike.text(count - 1);
+					that.attr("data-liked", "false"); // data-liked 값을 "false"로 변경
+					that.html('<i class="fa-regular fa-thumbs-up">좋아요</i>');
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/addLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 클릭");
+					let container = that.closest(".post-container");
+					let countLike = container.find(".sumLike");
+					let count = parseInt(countLike.text(), 10);
+					countLike.text(count + 1);
+					that.attr("data-liked", "true"); // data-liked 값을 "true"로 변경
+					that.html('<i class="fa-solid fa-thumbs-up">좋아요</i>');
+				} 
+			});
+		}
+	});
+});
+</script>
 <!-- 이벤트  -->
 <div class="row">
 	<div class="col-md-12">
@@ -137,6 +185,7 @@
 <!-- 메인의 내용 시작 -->
 <c:forEach items="${list}" var="vo" varStatus="status">
 <div class="post-container">
+	<c:if test="${not empty vo.fileList }">
      <!-- 카루셀 시작 -->
      <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
      <div id="imageCarousel2${status.index }"  class="carousel slide" data-ride="carousel" data-interval="false">
@@ -159,6 +208,7 @@
          </a>
      </div>
      <!-- 카루셀 끝 -->
+     </c:if>
      <c:if test="${not empty vo.productTagList }">
      <div class="post-icons">
      	<c:forEach items="${vo.productTagList }" var="tag" >
@@ -170,34 +220,56 @@
   	  <div class="user-details">
        <img src="/resources/images/logo.png" alt="User Image">
        <div class="user-info-text">
-           <div><a href="/hc/blog/blog?user_id=${vo.user_id}">${vo.user_id}</a></div>
+           <div><a href="/hc/blog/blog?user_id=${vo.user_id}">${vo.user_name}</a></div>
            <div><c:choose> <c:when test="${empty vo.updatedate}"><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd hh:mm"/></c:when>
            	<c:otherwise><fmt:formatDate value="${vo.updatedate}" pattern="yyyy.MM.dd hh:mm"/>수정</c:otherwise>
             </c:choose></div>
        </div>
      </div>
      <div class="user-stats">
-       <div><i class="fa fa-thumbs-up">좋아요</i><span>1000</span></div>
-       <!-- 좋아요 눌렀을때 <i class="fa-solid fa-thumbs-up"></i> -->
-       <div><i class="fa fa-handshake">팔로워</i><span>10000</span></div>
-       <!-- 팔로우 눌렀을때<i class="fa-solid fa-handshake"></i> -->
+       <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike" id="sumLike${vo.blog_no }">${vo.sumLike }</span></i></div>
+       <div><i class="fa fa-handshake">팔로워<span class="sumFollow" id="sumFollow${vo.blog_no }">${vo.sumFollower }</span></i></div>
      </div>
 </div>
     <div class="post-content">
          ${vo.blog_content} <a href="#">더보기</a>
     </div>
     <div class="post-actions">
-        <button><i class="fa-solid fa-thumbs-up">좋아요</i> </button>
+        <button class="likeBtn" data-blog_no="${vo.blog_no}" data-liked="${vo.checkLike}"><c:choose>
+        	<c:when test="${vo.checkLike eq true }">
+        	<i class="fa-solid fa-thumbs-up">좋아요</i>
+        	</c:when>
+        	<c:otherwise>
+        	<i class="fa-regular fa-thumbs-up">좋아요</i>
+        	</c:otherwise>
+        	</c:choose></button>
         <button><a data-toggle="modal" data-target="#myModal${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
         <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
         <button><c:choose>
-        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
-        	<c:otherwise><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></c:otherwise>
+        	<c:when test="${vo.user_id eq login.user_id }">
+        	<a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a>
+        	</c:when>
+        	<c:otherwise>
+        	<a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a>
+        	</c:otherwise>
         </c:choose></button>
     </div>
 </div>
 <c:set var="detailVo" value="${vo}"></c:set>
 <%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
+
+<script type="text/javascript">
+// 모달창이 실행될때마다 초기화 해줌 좋아요반응
+$(function() {
+    // 모달이 열릴 때마다 실행
+    $('#myModal${detailVo.blog_no}').on('show.bs.modal', function () {
+        let iframe = $(this).find('iframe');
+        let src = iframe.attr('src'); // 현재 src를 가져와서
+        iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
+        iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
+    });
+});
+</script>
 </c:forEach>    
 <!-- 메인 내용 끝 -->
 

@@ -4,6 +4,8 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
+<!-- 글리피콘 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -26,6 +28,10 @@ $(function () {
 });
 
 $(function () {
+	
+	
+	
+	
 	$("#replyBtn").click(function () {
 		let replyer = '${login.user_id}';
 		let comment = $("#comment-textarea").val();
@@ -47,11 +53,18 @@ $(function () {
 			}
 		});
 	});
-	
-	
 	$(".replyModifyBtn").click(function () {
+		let commentBox = $(this).closest(".comment-box");
+		commentBox.find(".modify-comment").hide();
+		commentBox.find(".modify-input").show();
+		commentBox.find(".replyModifyOkBtn").show();
+		$(this).hide();
+	})
+	
+	
+	$(".replyModifyOkBtn").click(function () {
 		let replyer = '${login.user_id}';
-		let comment = $("#comment-textarea").val();
+		let comment = $(this).closest(".comment-box").find(".modify-input").val();
 		let blog_rno = $(this).data("blog_rno");
 		let sData = {
 				'replyer' : replyer,
@@ -70,7 +83,6 @@ $(function () {
 				}
 			}
 		});
-		
 	});
 	
 	$(".replyDeleteBtn").click(function () {
@@ -84,11 +96,115 @@ $(function () {
 					location.reload();
 				}
 			}
-			
 		});
-		
-		
 	});
+	
+	$("#likeBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let blog_no = that.attr("data-blog_no");
+		let liked = that.attr("data-liked");
+		let sData = {
+			'user_id' : login_id,
+			'blog_no' : blog_no
+		};
+		console.log(sData);
+		console.log(liked);
+		if (liked == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/removeLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 취소");
+					$.ajax({
+						type : "post",
+						url : "/hc/like/getSumLike",
+						data : { 'blog_no' : blog_no},
+						success : function (rData) {
+							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+						}
+					})
+					location.reload();
+					
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/like/addLike",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("좋아요 클릭");
+					$.ajax({
+						type : "post",
+						url : "/hc/like/getSumLike",
+						data : { 'blog_no' : blog_no},
+						success : function (rData) {
+							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+						}
+					})
+					location.reload();
+				} 
+			});
+		}
+	});
+	
+	$("#followBtn").click(function () {
+		let that = $(this);
+		let login_id = '${login.user_id}';
+		let followed_id = that.attr("data-followedId");
+		let check = that.attr("data-check");
+		let sData = {
+			'user_follower' : login_id,
+			'user_following' : followed_id
+		};
+		console.log(sData);
+		console.log(check);
+		if (check == "true") {
+			$.ajax({
+				type : "post",
+				url : "/hc/follow/removeFollow",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("팔로우 취소");
+					$.ajax({
+						type : "post",
+						url : "/hc/follow/getSumFollow",
+						data : { 'follow_id' : followed_id},
+						success : function (rData) {
+							$(window.parent.document).find("#sumFollow" + ${blogVo.blog_no}).text(rData);
+						}
+					})
+					location.reload();
+					
+				} 
+			});
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/hc/follow/addFollow",
+				data : JSON.stringify(sData),
+				contentType : "application/json; charset=utf-8",
+				success : function (rData) {
+					alert("팔로우 클릭");
+					$.ajax({
+						type : "post",
+						url : "/hc/follow/getSumFollow",
+						data : { 'follow_id' : followed_id},
+						success : function (rData) {
+							$(window.parent.document).find("#sumFollow" + ${blogVo.blog_no}).text(rData);
+						}
+					})
+					location.reload();
+				} 
+			});
+		}
+	});
+	
 	
 	
 	
@@ -114,6 +230,9 @@ body {
     box-sizing: border-box;
 }
 
+#followBtn{
+	margin-right: 10px;
+}
 
 .side-bar {
     /* width: 40%; */
@@ -202,6 +321,7 @@ body {
     object-fit: cover;
 }
 
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: black; /* 화살표 배경색 설정 */
@@ -232,6 +352,11 @@ body {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+.profile-header {
+	display: flex;
+    justify-content: space-between; /* 공간을 양쪽으로 분산하여 버튼이 오른쪽에 위치 */
+    align-items: center; /* 버튼과 텍스트가 중앙에 맞춰지도록 정렬 */
+}
 .profile-section div {
     margin-bottom: 10px;
 }
@@ -241,6 +366,9 @@ body {
 
 .text-end {
 	border-bottom: 2px solid #ddd; /* 테두리 추가 */
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .comment-box {
     display: flex;
@@ -316,6 +444,7 @@ body {
 </head>
 <body>
 	<div class="main">
+	<c:if test="${not empty blogVo.fileList }">
     <!-- 카루셀 시작 -->
     <!-- 카루셀 아이디에 특정값을 넣을것 같으면 삑남 -->
     <div id="imageCarousel"  class="carousel slide" data-ride="carousel" data-interval="false">
@@ -337,20 +466,41 @@ body {
         </a>
     </div>
     <!-- 카루셀 끝 -->
+    </c:if>
         </div>
         <div class="side-bar">
             <div class="container">
 			<div class="profile-end">
 				<!-- 프로필 -->
 			 <div class="profile head-profile">
-					  <div class="profile ">
-				          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_id})님의 스토리</h3>
+					  <div class="profile profile-header ">
+				          <h3><img src="/resources/images/logo.png" alt="프로필 사진">(${blogVo.user_name})님의 스토리</h3>
+				          <c:if test="${blogVo.user_id ne login.user_id }">
+				          <c:choose>
+				          <c:when test="${blogVo.checkFollow eq true }">
+				          	<button id="followBtn" class="btn btn-danger" data-followedId="${blogVo.user_id}" data-check="${blogVo.checkFollow }"><i class="fa fa-handshake">취소(<span>${blogVo.sumFollower }</span>)</i></button>
+				          </c:when>
+				          <c:otherwise>
+				          	<button id="followBtn" class="btn btn-primary" data-followedId="${blogVo.user_id}" data-check="${blogVo.checkFollow }"><i class="fa fa-handshake">팔로우(<span>${blogVo.sumFollower }</span>)</i></button>
+				          </c:otherwise>
+				          </c:choose>
+				          </c:if>
 					  </div>
 			      </div>
 			      <!-- 본문 내용  -->
 			      <div class="profile-section main-content">
-			          <h3 class="text-end">본문내용</h3>
-			          <div>${blogVo.blog_content }</div>
+			      	<div class="content-hearder">
+			          <h3 class="text-end">본문내용
+			          <c:choose>
+				          <c:when test="${blogVo.checkLike eq true}">
+				          <button id="likeBtn" class="btn btn-danger" data-blog_no="${blogVo.blog_no }" data-liked="${blogVo.checkLike}"><i class="fa-solid fa-thumbs-up">취소(${blogVo.sumLike })</i></button>
+				          </c:when>
+				          <c:otherwise>
+				          <button id="likeBtn" class="btn btn-primary" data-blog_no="${blogVo.blog_no }" data-liked="${blogVo.checkLike}"><i class="fa-regular fa-thumbs-up">좋아요(${blogVo.sumLike })</i></button>
+				          </c:otherwise>
+				      </c:choose></h3>
+			      	</div>
+			        <div>${blogVo.blog_content }</div>
 			      </div>
 			      <!-- 본문 내용끝  -->
 			        <div class="profile-section reply">
@@ -370,10 +520,14 @@ body {
 			                       </div>
 			                       <c:if test="${login.user_id eq reply.replyer }">
 			                       <div><button class="btn btn-primary btn-reply replyModifyBtn"  data-blog_rno="${reply.blog_rno}">수정</button></div>
+			                       <div><button class="btn btn-success btn-reply replyModifyOkBtn" style="display: none;"  data-blog_rno="${reply.blog_rno}">수정완료</button></div>
 			                       <div><button class="btn btn-danger btn-reply replyDeleteBtn"  data-blog_rno="${reply.blog_rno}">삭제</button></div>
 			                       </c:if>
 		                     	</div>
-		                       <p><input readonly="readonly" value="${reply.reply_content }"></p>
+		                       <p>
+		                       <div class="modify-comment">${reply.reply_content }</div>
+		                       <input style="display: none;" class="modify-input" value="${reply.reply_content }">
+		                       </p>
 		                     </div>
 		                     </div>
 			              <!-- 댓글 끝 -->

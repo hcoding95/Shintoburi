@@ -9,12 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserVo {
+public class HcUserVo {
 	
 	private String user_id;
 	private String user_password;
 	private String user_name;
 	private int user_point;
 	private String address;
+	private int sumFollow;
+	private boolean checkFollow;
 
 }

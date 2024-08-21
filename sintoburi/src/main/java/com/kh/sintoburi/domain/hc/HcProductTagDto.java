@@ -4,7 +4,7 @@ package com.kh.sintoburi.domain.hc;
 import lombok.Data;
 
 @Data
-public class ProductTagDto {
+public class HcProductTagDto {
 	private int blog_no;
 	private int product_id;
 	private String product_name;

@@ -3,7 +3,7 @@ package com.kh.sintoburi.domain.hc;
 import lombok.Data;
 
 @Data
-public class AttachFileDto {
+public class HcAttachFileDto {
 	private String file_path; // yyyy/MM/dd
 	private String uuid;       // random string
 	private String file_name;   //1.png

@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.sintoburi.domain.hc.AttachFileDto;
+import com.kh.sintoburi.domain.hc.HcAttachFileDto;
 import com.kh.sintoburi.util.hc.MyfileUtil;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-public class UploadController {
+public class HcUploadController {
 	
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -40,7 +40,7 @@ public class UploadController {
 	
 	@ResponseBody
 	@PostMapping("/uploadFormAction")
-	public List<AttachFileDto> uploadFormAction(MultipartFile[] uploadFiles) throws Exception {
+	public List<HcAttachFileDto> uploadFormAction(MultipartFile[] uploadFiles) throws Exception {
 		String uploadPath = "D:/upload/"+ getFolder();
 		// E:/upload/2024/07/23 ...
 		File folder = new File(uploadPath);
@@ -48,7 +48,7 @@ public class UploadController {
 			folder.mkdirs();
 		}
 		
-		List<AttachFileDto> list = new ArrayList<AttachFileDto>();
+		List<HcAttachFileDto> list = new ArrayList<HcAttachFileDto>();
 		
 		for (MultipartFile file : uploadFiles) {
 			//AttachFileDto attachDto = new AttachFileDto();
@@ -56,7 +56,7 @@ public class UploadController {
 			String savedName = uuid + "_" + file.getOriginalFilename();
 			File f = new File(uploadPath, savedName);
 			boolean isImage = MyfileUtil.checkImageType(f);
-			AttachFileDto attachDto = new AttachFileDto();
+			HcAttachFileDto attachDto = new HcAttachFileDto();
 			attachDto.setFile_name(file.getOriginalFilename());
 			attachDto.setUuid(uuid);
 			attachDto.setFile_path(uploadPath);

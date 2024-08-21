@@ -9,21 +9,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.sintoburi.domain.hc.ProductTagDto;
-import com.kh.sintoburi.service.hc.ProductService;
+import com.kh.sintoburi.domain.hc.HcProductTagDto;
+import com.kh.sintoburi.service.hc.HcProductService;
 
 @Controller
 @RequestMapping("/hc/product/*")
-public class ProductController {
+public class HcProductController {
 
 	@Autowired
-	private ProductService productService;
+	private HcProductService productService;
 	
 	@PostMapping("/getList")
 	@ResponseBody
-	public List<ProductTagDto> getList(@RequestBody ProductTagDto dto){
+	public List<HcProductTagDto> getList(@RequestBody HcProductTagDto dto){
 		System.out.println("내가받은 productTagDto는?" + dto);
-		List<ProductTagDto> list = productService.getProductList(dto);
+		List<HcProductTagDto> list = productService.getProductList(dto);
 		return list;
 	}
 	

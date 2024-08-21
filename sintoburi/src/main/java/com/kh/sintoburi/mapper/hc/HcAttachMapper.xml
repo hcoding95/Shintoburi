@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <!-- 매퍼 인터페이스 경로와 같게 지정  -->
-  <mapper namespace="com.kh.sintoburi.mapper.hc.AttachMapper">
+  <mapper namespace="com.kh.sintoburi.mapper.hc.HcAttachMapper">
   
   	<insert id="insert">
   		insert into tbl_blog_img(uuid, file_name, file_path, blog_no)
   		values (#{uuid}, #{file_name}, #{file_path}, #{blog_no})
   	</insert>
   	
-  	<select id="getAttachList" resultType="AttachFileDto">
+  	<select id="getAttachList" resultType="HcAttachFileDto">
   		select * from tbl_blog_img
   		where blog_no = #{blog_no}
   	</select>
@@ -31,7 +31,7 @@
   		where uuid = #{uuid}
   	</update>
   	
-  	<select id="getOldAttachList" resultType="AttachFileDto">
+  	<select id="getOldAttachList" resultType="HcAttachFileDto">
   		select * from tbl_blog_img
 		where file_path = 'E:/upload/' ||
 		 (select TO_CHAR(sysdate - 1, 'YYYY/MM/DD') from dual)

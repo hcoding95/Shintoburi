@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <!-- 매퍼 인터페이스 경로와 같게 지정  -->
-  <mapper namespace="com.kh.sintoburi.mapper.hc.ReplyMapper">
+  <mapper namespace="com.kh.sintoburi.mapper.hc.HcReplyMapper">
   	
-  	<select id="getReplyListByBlog_no" resultType="ReplyDto">
+  	<select id="getReplyListByBlog_no" resultType="HcReplyDto">
   		select * from tbl_blog_reply
   		where blog_no = #{blog_no}
   	</select>

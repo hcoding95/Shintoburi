@@ -158,7 +158,6 @@ $(function () {
 			let file_name = $(this).data("file_name");
 			let file_path = $(this).data("file_path");
 			let uuid = $(this).data("uuid");
-			
 			let inputTag = `
 				<input type="hidden" name="fileList[\${i}].file_name" value="\${file_name}" >
 			    <input type="hidden" name="fileList[\${i}].file_path" value="\${file_path}" >
@@ -296,7 +295,7 @@ $(function () {
 	
  <div class="profile head-profile">
 		  <div class="profile ">
-	          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진"><input name="user_id" value="${login.user_id}" type="hidden">${login.user_name}님의 스토리</input></h3>
+	          <h3 ><img src="/resources/images/logo.png" alt="프로필 사진"><input name="user_id" value="${login.user_id}" type="hidden">${login.user_name}님의 스토리<input name="user_name" value="${login.user_name}" type="hidden"></input></h3>
 		  </div>
       </div>
       <!-- 본문 내용  -->
