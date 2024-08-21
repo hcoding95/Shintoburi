@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.sintoburi.domain.hc.BlogSettingVo;
 import com.kh.sintoburi.domain.hc.BlogVo;
-import com.kh.sintoburi.domain.hc.FollowDto;
-import com.kh.sintoburi.domain.hc.ReplyDto;
-import com.kh.sintoburi.domain.hc.UserVo;
+import com.kh.sintoburi.domain.hc.HcFollowDto;
+import com.kh.sintoburi.domain.hc.HcReplyDto;
+import com.kh.sintoburi.domain.hc.HcUserVo;
 import com.kh.sintoburi.service.hc.BlogService;
 import com.kh.sintoburi.service.hc.BlogServiceImpl;
 import com.kh.sintoburi.service.hc.BlogSettingService;
-import com.kh.sintoburi.service.hc.FollowService;
-import com.kh.sintoburi.service.hc.InjectionService;
-import com.kh.sintoburi.service.hc.ReplyService;
-import com.kh.sintoburi.service.hc.UserService;
+import com.kh.sintoburi.service.hc.HcFollowService;
+import com.kh.sintoburi.service.hc.HcInjectionService;
+import com.kh.sintoburi.service.hc.HcReplyService;
+import com.kh.sintoburi.service.hc.HcUserService;
 
 @Controller
 @RequestMapping("/hc/blog/*")
@@ -33,30 +33,30 @@ public class BlogController {
 	private BlogService blogService;
 	
 	@Autowired
-	private ReplyService replyService;
+	private HcReplyService replyService;
 	
 	@Autowired
-	private InjectionService injectionService;
+	private HcInjectionService injectionService;
 	
 	@Autowired
-	private UserService userService;
+	private HcUserService userService;
 	
 	@Autowired
-	private FollowService followService;
+	private HcFollowService followService;
 	
 	@Autowired
 	private BlogSettingService blogSettingService;
 	
 	@GetMapping("/blog")
 	public void blog(String user_id, HttpSession session,Model model) {
-		UserVo loginUser = (UserVo)session.getAttribute("login");
+		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
 		System.out.println("로그인한 user정보는?" + loginUser);
-		UserVo blog_userVo = userService.searchByUserId(user_id);
+		HcUserVo blog_userVo = userService.searchByUserId(user_id);
 		blog_userVo.setSumFollow(followService.getCountFollower(user_id));
 		String login_id = "";
 		if(loginUser != null) {
-			FollowDto followDto = new FollowDto();
+			HcFollowDto followDto = new HcFollowDto();
 			followDto.setUser_follower(loginUser.getUser_id());
 			followDto.setUser_following(blog_userVo.getUser_id());
 			blog_userVo.setCheckFollow(followService.isCheckFollow(followDto));
@@ -73,8 +73,8 @@ public class BlogController {
 	@GetMapping("/detail")
 	public void detail(int blog_no, HttpSession session, Model model) {
 		BlogVo blogVo = blogService.readByBlogNo(blog_no);
-		List<ReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
-		UserVo loginUser = (UserVo)session.getAttribute("login");
+		List<HcReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
+		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
 		String login_id = "";
 		if(loginUser != null) {
 			login_id = loginUser.getUser_id();

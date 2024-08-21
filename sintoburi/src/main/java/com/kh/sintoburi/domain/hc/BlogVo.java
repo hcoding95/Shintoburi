@@ -14,8 +14,8 @@ public class BlogVo {
 	private String blog_content;
 	private Date regdate;
 	private Date updatedate;
-	private List<AttachFileDto> fileList;
-	private List<ProductTagDto> productTagList;
+	private List<HcAttachFileDto> fileList;
+	private List<HcProductTagDto> productTagList;
 	private int sumLike;
 	private boolean checkLike;
 	private int sumFollower;
