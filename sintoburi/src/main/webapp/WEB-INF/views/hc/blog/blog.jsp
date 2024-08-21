@@ -272,10 +272,41 @@ $(function () {
     	$(this).hide();
 		
 	});
+    
+    $(document).on("click",".open-modal",function(){
+		let blog_no = $(this).data("blog_no");
+		$("#myIframe").attr("src", "/hc/blog/detail?blog_no=" + blog_no);
+		$(".modal-left").empty();
+		$.ajax({
+			type : "get",
+			url : "/hc/product/getListByBlogNo",
+			data : {"blog_no" : blog_no},
+			success : function (rData) {
+				
+				$.each(rData, function (index, obj) {
+					let tag = `
+						<div class="cover">
+	            			<a href="#"><img src="/resources/images/logo.png" alt="Icon 1">\${obj.product_id}</a>
+	            		</div>`;
+					$(".modal-left").append(tag);
+				})
+			}
+		});
+		$("#myModal").modal("show");
+	});
+	
+	// 모달이 열릴 때마다 실행 
+    $('#myModal').on('show.bs.modal', function () {
+        let iframe = $(this).find('iframe');
+        let src = iframe.attr('src'); // 현재 src를 가져와서
+        iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
+        iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
+    });
 
 	
 });
 </script>
+<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
 <style>
 .header-top {
     
@@ -608,7 +639,7 @@ $(function () {
             </div>
         </div>
         <div class="profile-actions ">
-             <button>쪽지 보내기</button>
+             <!-- <button>쪽지 보내기</button> -->
              <c:if test="${blog_userVo.user_id ne login.user_id }">
              	<c:choose>
 		          <c:when test="${blog_userVo.checkFollow eq true }">
@@ -707,7 +738,7 @@ $(function () {
 							             <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
 							             <c:forEach items="${vo.fileList}" var="file" varStatus="innerstatus">
 							             <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
-							                 <a data-toggle="modal" data-target="#myModal${vo.blog_no}"><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a>
+							                 <a class="open-modal" data-blog_no="${vo.blog_no}"><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a>
 							             </div>
 							             </c:forEach>
 							         </div>
@@ -750,7 +781,7 @@ $(function () {
 							         ${vo.blog_content} <a href="#">더보기</a>
 							    </div>
 							    <div class="post-actions">
-							        <button class="likeBtn" data-blog_no="${vo.blog_no}" data-liked="${vo.checkLike}"><c:choose>
+							        <button id="likeBtn${vo.blog_no}" class="likeBtn" data-blog_no="${vo.blog_no}" data-liked="${vo.checkLike}"><c:choose>
 							        	<c:when test="${vo.checkLike eq true }">
 							        	<i class="fa-solid fa-thumbs-up">좋아요</i>
 							        	</c:when>
@@ -758,7 +789,7 @@ $(function () {
 							        	<i class="fa-regular fa-thumbs-up">좋아요</i>
 							        	</c:otherwise>
 							        	</c:choose></button>
-							        <button><a data-toggle="modal" data-target="#myModal${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
+							        <button><a class="open-modal" data-blog_no="${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
 							        <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
 							        <button><c:choose>
 							        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>

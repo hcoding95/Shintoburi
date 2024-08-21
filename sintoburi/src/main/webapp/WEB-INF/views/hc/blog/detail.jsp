@@ -124,6 +124,9 @@ $(function () {
 						data : { 'blog_no' : blog_no},
 						success : function (rData) {
 							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+							$(window.parent.document).find("#likeBtn" + blog_no).attr("data-liked", false);
+							$(window.parent.document).find("#likeBtn" + blog_no).html('<i class="fa-regular fa-thumbs-up">좋아요</i>');
+							
 						}
 					})
 					location.reload();
@@ -144,6 +147,8 @@ $(function () {
 						data : { 'blog_no' : blog_no},
 						success : function (rData) {
 							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+							$(window.parent.document).find("#likeBtn" + blog_no).attr("data-liked", true);
+							$(window.parent.document).find("#likeBtn" + blog_no).html('<i class="fa-solid fa-thumbs-up">좋아요</i>');
 						}
 					})
 					location.reload();
