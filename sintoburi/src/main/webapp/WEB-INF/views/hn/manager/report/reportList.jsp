@@ -20,6 +20,54 @@ $(function() {
 	        $("#actionForm").submit();
 	    });
 	
+	 $("#selectSearch").change(function() {
+		 let v = $(this).val();
+		 console.log("v:", v);
+		 if (v == "S") {
+			 $("#selectStatus").show();
+			 $("#inputSearch").hide();
+			 $("#inputSearch").removeAttr("name");
+			 $("#selectStatus").attr("name", "keyword")
+		 } else {
+			 $("#selectStatus").hide();
+			 $("#inputSearch").show();
+			 $("#selectStatus").removeAttr("name");
+			 $("#inputSearch").attr("name", "keyword")
+		 }
+		 
+	 });
+	 
+	 // 삭제시 처리권한변경
+	 $(".btnDelete").click(function() {
+		
+		 let re_no = $(this).data("re-no"); 
+		 let delete_url = $(this).data("delete-url");
+		 let num = $(this).data("num");
+		 let cate = $(this).data("cate");
+		 let sData = {cate : num};
+		 
+		 $.ajax({
+		  	 type: "post",
+		  	url: delete_url,
+		  	 data: sData,
+             success: function() {
+                 
+            	 $.ajax({
+				  	 type: "post",
+                     url: "/hn/manager/report/updateStatus",
+                     data: { "re_no" : re_no },
+                     success: function() {
+                         alert("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
+                        
+                         location.href = "/hn/manager/report/reportList";
+                     }
+			
+				});
+             }
+	
+		});
+		 
+	});
 	
 	
 });
@@ -35,15 +83,20 @@ $(function() {
              
              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">신고 게시글</h6>
-			    <form id="searchForm" action="/hn/manager/user/userList" method="get" style="display: flex; align-items: center;">
+			    <form id="searchForm" action="/hn/manager/report/reportList" method="get" style="display: flex; align-items: center;">
 			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
-			         <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
-	            			<option value="N" ${criteria.type == 'N' ? 'selected' : ''}>게시글번호</option>
-	            			<option value="W" ${criteria.type == 'W' ? 'selected' : ''}>게시글작성자</option>
-	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
+			            <option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
+			            <option value="N" ${criteria.type == 'N' ? 'selected' : ''}>게시글번호</option>
+			            <option value="W" ${criteria.type == 'W' ? 'selected' : ''}>작성자아이디</option>
+			            <option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
 			        </select>
-			      <input class="form-control" id="inputSearch" type="text" name="keyword" value="" style="margin-right: 10px;width: 226px;">
-			        <button id="btnSearch" type="button" class="btnMod btn btn-primary btn-sm">검색</button>
+			         <select id="selectStatus" class="form-control " 
+			        	style="width: 150px; margin-right: 10px; display:none">
+			            <option value="처리완료">답변완료</option>
+			            <option value="미처리">미처리</option>
+			        </select>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="submit" class=" btn btn-primary btn-sm">검색</button>
 			    </form>
 			</div>
              <!-- Card Body -->
@@ -61,62 +114,23 @@ $(function() {
             <th>신고유형</th>
             <th>신고일</th>
             <th>처리상태</th>
-            <th>답변확인</th>
-            <th></th>
+            <th>권한</th>
+            
         </tr>
     </thead>
     <tbody>
         <c:forEach items="${reportList}" var="vo">
             <tr class="text-center">
                 <td>${vo.re_no}</td>
-                <td>${vo.post_no}</td>
+                <td><a href="">${vo.post_url}</a></td>
                 <td>${vo.post_id}</td>
-                <td><a href="/hn/manager/report/reportDetail/${vo.re_no}">${vo.re_reason}</a></td>
+                <td>${vo.re_reason}</td>
                 <td><fmt:formatDate value="${vo.re_date}" pattern="yyyy-MM-dd"/></td>
                 <td>${vo.status}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${vo.status == '처리완료'}">
-                            <button class="btn btn-sm" type="button" data-toggle="collapse" 
-                            data-target="#collapse${vo.eno}" aria-expanded="false">
-                                ▼
-                            </button>
-                        </c:when>
-                        <c:otherwise>
-                            미처리
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td></td>
-            </tr>
-            <!-- 답변 아코디언 -->
-            <tr>
-                <td colspan="10"> <!-- Adjust the colspan value as needed -->
-                    <div id="collapse${vo.re_no}" class="collapse">
-                        <div class="card card-body">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th>답변 번호</th>
-                                        <th>답변 내용</th>
-                                        <th>답변 날짜</th>
-                                    </tr>
-                                </thead>
-<!--                                 <tbody> -->
-<%--                                     <c:forEach items="${replyList}" var="reply"> --%>
-<%--                                          <c:if test="${reply.eno == vo.eno}"> --%>
-<!--                                             <tr class="text-center"> -->
-<%--                                                 <td>${reply.rno}</td> --%>
-<%--                                                 <td>${reply.reply_content}</td> --%>
-<%--                                                 <td><fmt:formatDate value="${reply.reply_date}" pattern="yyyy-MM-dd"/></td> --%>
-<!--                                             </tr> -->
-<%--                                         </c:if> --%>
-<%--                                     </c:forEach> --%>
-<!--                                 </tbody> -->
-                            </table>
-                        </div>
-                    </div>
-                </td>
+               <td>
+				<button class="btn-sm btn-danger btnDelete" data-delete-url="${vo.delete_url}" 
+					data-num="1" data-cate="test" data-re-no="${vo.re_no}"	type="button">삭제</button>
+				</td>
             </tr>
         </c:forEach>
     </tbody>

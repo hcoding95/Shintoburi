@@ -41,6 +41,7 @@ $(function() {
 				<div class="row">
                         <div class="col-md-12">
                             <form role="form" action="/hn/manager/notice/noticeMod" method="post" enctype="multipart/form-data">
+                                
                                 <input type="hidden" name="n_no" value="${noticeVo.n_no}"/>
                                 <div class="form-group">
                                     <label for="title">제목</label>

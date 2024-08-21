@@ -15,11 +15,12 @@
     from (
         select
             re_no,
-            post_no,
+            post_url,
             post_id,
             re_reason,
             re_date,
             status,
+            delete_url,
             row_number() over (order by re_no desc) as rn
         from tbl_reportPost
         <where>
@@ -27,6 +28,9 @@
                 <trim prefix="(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
+                       	  <when test="type == 'A'.toString()">
+                               1=1
+                            </when>
                             <when test="type == 'N'.toString()">
                                re_no LIKE '%' || #{keyword} || '%'
                             </when>
@@ -73,10 +77,14 @@
 	</select> 
   
   <insert id="insertReport">
+  <selectKey keyProperty="re_no" order="BEFORE"
+			resultType="int">
+			select seq_reportpost.nextval from dual
+		</selectKey>
   	insert into tbl_reportPost 
-	(re_no, post_no, post_content, post_id, re_reason, re_id, status) 
-	values (seq_reportpost.nextval, #{post_no}, #{post_content},
-	#{post_id},  #{re_reason},   #{re_id}, #{status});
+	(re_no, post_no, post_url, post_id, re_reason, re_id, status,delete_url) 
+	values (seq_reportpost.nextval, #{post_no}, #{post_url}, 
+	#{post_id},  #{re_reason},#{re_id}, #{status}, #{delete_url});
 
   </insert>
 <!-- 신고게시글한개 -->  
@@ -85,5 +93,13 @@
 	  where re_no = #{re_no}
   </select>
   
+  
+   <!--신고사항 답변 완료 -->
+  	<update id="updateStatus">
+  		update tbl_reportPost
+        set status = '처리완료'
+        where re_no = #{re_no} 
+       
+  	</update>
   
 </mapper>

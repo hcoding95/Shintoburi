@@ -31,8 +31,16 @@ $(function(){
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">자주하는질문</h6>
-			   
+			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">자주하는 질문</h6>
+			    <form id="searchForm" action="/hn/manager/faq/faqList" method="get" style="display: flex; align-items: center;">
+			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
+			            <option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
+			            <option value="F" ${criteria.type == 'F' ? 'selected' : ''}>게시글번호</option>
+			            <option value="T" ${criteria.type == 'T' ? 'selected' : ''}>제목</option>
+			        </select>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="submit" class=" btn btn-primary btn-sm">검색</button>
+			    </form>
 			</div>
              <!-- Card Body -->
              <div class="card-body"> 

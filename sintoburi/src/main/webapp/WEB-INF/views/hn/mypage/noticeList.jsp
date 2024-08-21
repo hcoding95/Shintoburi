@@ -6,6 +6,23 @@
  <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
+<script>
+$(function() {
+	// 페이지 블럭
+	 $(".noticePage").click(function(e) {
+		    e.preventDefault(); // 브라우저의 기본 기능 막기
+		    let pageNum = $(this).attr("href"); 
+		    console.log(pageNum);
+		    $("#actionForm > input[name=pageNum]").val(pageNum);
+		    $("#actionForm > input[name=amount]").val('${criteria.amount}');
+		    $("#actionForm").attr("action", "/hn/mypage/noticeList");
+		    $("#actionForm").submit();
+		});
+});
+
+
+</script>
+
             <!-- Main Content -->
             <div id="page-content-wrapper">
                 <div class="container-fluid">
@@ -50,18 +67,48 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                        <div class="row">
-                            <div class="col-md-10"></div>
-                            <div class="col-md-2">
-                               
-                            </div>
-                        </div>
+                        
                     </div>
+                  	<!-- Pagination -->
+				<div class="row">
+				    <div class="col-md-12">
+				        <nav>
+				            <ul class="pagination pagination-sm justify-content-center">
+				                <c:if test="${pageMaker.prev}">
+				                    <li class="page-item">
+				                        <a class="page-link noticePage" href="${pageMaker.startPage - 1}">&laquo;</a>
+				                    </li>
+				                </c:if>
+				                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
+				                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
+				                        <a class="page-link noticePage" href="${v}">${v}</a>
+				                    </li>
+				                </c:forEach>
+				                <c:if test="${pageMaker.next}">
+				                    <li class="page-item">
+				                        <a class="page-link noticePage" href="${pageMaker.endPage + 1}">&raquo;</a>
+				                    </li>
+				                </c:if>
+				            </ul>
+				        </nav>
+				    </div>
+				</div>
+				<!-- // Pagination -->
+  
                 </div>
             </div>
  
  
- 
+ <form id="actionForm" action="/hn/mypage/noticeList" method="get">
+	<input type="hidden" name="pageNum" 
+		value="${criteria.pageNum}" />
+	<input type="hidden" name="amount" 
+		value="${criteria.amount}" />
+	<input type="hidden" name="type"
+		value="${criteria.type}"/>
+	<input type="hidden" name="keyword"
+		value="${criteria.keyword}"/>
+</form>
  
  
 

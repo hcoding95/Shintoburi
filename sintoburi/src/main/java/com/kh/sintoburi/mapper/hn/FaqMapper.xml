@@ -32,6 +32,9 @@
                 <trim prefix="(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
+                        	 <when test="type == 'A'.toString()">
+                                1=1
+                            </when>
                             <when test="type == 'T'.toString()">
                                 title LIKE '%' || #{keyword} || '%'
                             </when>
@@ -57,12 +60,15 @@
 					<foreach item="type" collection="typeArr">
 						<trim prefix="or">
 							<choose>
-                               <when test="type == 'T'.toString()">
+                                <when test="type == 'A'.toString()">
+                                1=1
+                            </when>
+                            <when test="type == 'T'.toString()">
                                 title LIKE '%' || #{keyword} || '%'
                             </when>
-                                <when test="type == 'F'.toString()">
-                                    f_no like '%' || #{keyword} || '%'
-                                </when>
+                            <when test="type == 'F'.toString()">
+                                    f_no LIKE '%' || #{keyword} || '%'
+                               </when>
                                 
                             </choose>
 						</trim>

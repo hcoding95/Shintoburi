@@ -20,6 +20,23 @@ $(function() {
 	        $("#actionForm").submit();
 	    });
 	
+	 $("#selectSearch").change(function() {
+		 let v = $(this).val();
+		 console.log("v:", v);
+		 if (v == "S") {
+			 $("#selectStatus").show();
+			 $("#inputSearch").hide();
+			 $("#inputSearch").removeAttr("name");
+			 $("#selectStatus").attr("name", "keyword")
+		 } else {
+			 $("#selectStatus").hide();
+			 $("#inputSearch").show();
+			 $("#selectStatus").removeAttr("name");
+			 $("#inputSearch").attr("name", "keyword")
+		 }
+		 
+	 });
+	
 	
 	
 });
@@ -36,13 +53,19 @@ $(function() {
 			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">등급 문의사항</h6>
 			    <form id="searchForm" action="/hn/manager/enquiry/gradeList" method="get" style="display: flex; align-items: center;">
 			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
-			         <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
+	            			<option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
 	            			<option value="E" ${criteria.type == 'E' ? 'selected' : ''}>게시글번호</option>
 	            			<option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
 	            			<option value="S" ${criteria.type == 'S' ? 'selected' : ''}>답변상태</option>
 			        </select>
+			         <select id="selectStatus" class="form-control " 
+			        	style="width: 150px; margin-right: 10px; display:none">
+			            <option value="처리완료">처리완료</option>
+			            <option value="미처리">미처리</option>
+			            <option value="보류상태">보류상태</option>
+			        </select>
 			      <input class="form-control" id="inputSearch" type="text" name="keyword" value="" style="margin-right: 10px;width: 226px;">
-			        <button id="btnSearch" type="button" class="btnMod btn btn-primary btn-sm">검색</button>
+			        <button id="btnSearch" type="submit" class="btnMod btn btn-primary btn-sm">검색</button>
 			    </form>
 			</div>
              <!-- Card Body -->

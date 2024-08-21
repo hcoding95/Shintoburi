@@ -121,7 +121,7 @@ $(function() {
                 </div>
                 <div class="form-group">
                     <label for="content">내용</label>
-                    <textarea class="form-control" id="content" name="content" rows="10" readonly>${reportPostVo.post_content}</textarea>
+                    <textarea class="form-control" id="content" name="content" rows="10" readonly></textarea>
                 </div>
                 
                        <!-- 첨부파일 리스트 -->

@@ -21,5 +21,6 @@ public interface ReportPostMapper {
 	// 신고한 게시글 1개
 	public ReportPostVo selectByReNo(@Param("re_no") int re_no);
 	
-	
+	// 처리완료
+	public int updateStatus(@Param("re_no") int re_no);
 }

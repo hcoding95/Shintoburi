@@ -3,11 +3,15 @@ package com.kh.sintoburi.controller.hn;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
@@ -47,6 +51,18 @@ public class ReportController {
 		model.addAttribute("reportPostVo", reportPostVo);
 
 		return "hn/manager/report/reportDetail";
+	}
+	
+	// 신고게시글 처리완료
+	@PostMapping("/updateStatus")
+	public ResponseEntity<String> updateStatus(@RequestParam int re_no) {
+		boolean result = reportPostService.updateStatus(re_no);
+
+		if (result) {
+			return ResponseEntity.ok("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문의사항 상태 업데이트에 실패했습니다.");
+		}
 	}
 
 }

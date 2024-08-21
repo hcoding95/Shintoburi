@@ -34,6 +34,13 @@ public class ReportPostServiceImpl implements ReportPostService{
 		return count;
 	}
 
+	// 처리완료
+	@Override
+	public boolean updateStatus(int re_no) {
+		int count = reportPostMapper.updateStatus(re_no);
+		return (count == 1)? true : false;
+	}
+
 
 
 }
