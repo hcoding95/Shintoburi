@@ -86,6 +86,40 @@ $(function () {
         iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
     });
 	
+    $('.post-content').each(function() {
+        let contentText = $(this).find('.content-text');
+        let moreLink = $(this).find('.more-link');
+
+        // 초기 높이 저장
+        let originalHeight = contentText.outerHeight();
+
+        // 클램프 적용
+        contentText.css({
+            "-webkit-line-clamp": "3",
+            "display": "-webkit-box"
+        });
+
+        // 클램프 적용 후 높이 계산
+        let clampedHeight = contentText.outerHeight();
+
+        // 높이 비교
+        if (originalHeight == clampedHeight) {
+            moreLink.show(); // 원래 높이가 클램프된 높이보다 크다면 "더보기" 링크를 표시
+        }
+
+        // "더보기" 클릭 이벤트
+        moreLink.click(function(event) {
+            event.preventDefault(); // 링크 기본 동작 막기
+            contentText.css({
+                "overflow": "visible",
+                "-webkit-line-clamp": "unset",
+                "-webkit-box-orient": "unset",
+                "display": "block"
+            });
+            $(this).hide(); // "더보기" 링크 숨기기
+        });
+    });
+	
 	
 	
 	
@@ -269,7 +303,8 @@ $(function () {
      </div>
 </div>
     <div class="post-content">
-         ${vo.blog_content} <a href="#">더보기</a>
+         <span class="content-text">${vo.blog_content}</span> 
+    	 <a href="#" class="more-link" style="display: none;">더보기</a>
     </div>
     <div class="post-actions">
         <button id="likeBtn${vo.blog_no}" class="likeBtn" data-blog_no="${vo.blog_no}" data-liked="${vo.checkLike}"><c:choose>

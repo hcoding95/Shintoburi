@@ -114,6 +114,25 @@
     border-radius: 5px;
     border: 1px solid #e9ecef;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    
+}
+
+.content-text{
+	position: relative;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 최대 3줄 */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.more-link {
+    display: block;
+    margin-top: 10px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* 액션 버튼 */

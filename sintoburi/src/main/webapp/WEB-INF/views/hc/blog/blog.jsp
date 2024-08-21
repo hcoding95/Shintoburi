@@ -778,7 +778,8 @@ $(function () {
 							     </div>
 							</div>
 							    <div class="post-content">
-							         ${vo.blog_content} <a href="#">더보기</a>
+							         <span class="content-text">${vo.blog_content}</span> 
+    	 							 <a href="#" class="more-link" style="display: none;">더보기</a>
 							    </div>
 							    <div class="post-actions">
 							        <button id="likeBtn${vo.blog_no}" class="likeBtn" data-blog_no="${vo.blog_no}" data-liked="${vo.checkLike}"><c:choose>
