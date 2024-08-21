@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -188,18 +190,29 @@ public class MypageController {
 		return "redirect:/hn/mypage/enqList";
 	}
 
+	// 선택 이미지 삭제
+	@PostMapping("/deleteImage")
+	public ResponseEntity<String> deleteImage(@RequestParam("uuid") String uuid) {
+		boolean success = enquiryService.choiceImageDelete(uuid);
+		if (success) {
+			return ResponseEntity.ok("이미지가 성공적으로 삭제되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미지 삭제 실패. 다시 시도해 주세요.");
+		}
+	}
+
 	// 공지사항
 	@GetMapping("/noticeList")
 	public void noticeList(Model model, HnCriteria criteria) {
 		List<NoticeVo> list = noticeService.getListNotice(criteria);
 		model.addAttribute("noticeList", list);
-		
+
 		int total = noticeService.getTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		System.out.println("Criteria: " + criteria);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("criteria", criteria);
-		
+
 	}
 
 	// 공지사항 상세보기
@@ -220,10 +233,10 @@ public class MypageController {
 
 	// 자주하는질문
 	@GetMapping("/faqList")
-	public void questionList(Model model,HnCriteria criteria) {
+	public void questionList(Model model, HnCriteria criteria) {
 		List<FaqVo> list = faqService.faqList(criteria);
 		model.addAttribute("faqList", list);
-		
+
 		int total = faqService.getTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		System.out.println("Criteria: " + criteria);

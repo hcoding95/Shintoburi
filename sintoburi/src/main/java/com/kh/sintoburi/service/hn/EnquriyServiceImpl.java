@@ -146,4 +146,10 @@ public class EnquriyServiceImpl implements EnquiryService {
 		return list;
 	}
 
+	@Override
+	public boolean choiceImageDelete(String uuid) {
+		int count = enquiryMapper.choiceImageDelete(uuid);
+		return (count == 1)? true : false;
+	}
+
 }

@@ -64,6 +64,9 @@ public interface EnquiryMapper {
 	// 삭제
 	public int imageDelete(@Param("eno") int eno);
 	
+	//선택 이미지 삭제
+	public int choiceImageDelete(@Param("uuid") String uuid);
+	
 	// 미답변 알람
 	public List<EnquiryVo> statusAlarm();
 }

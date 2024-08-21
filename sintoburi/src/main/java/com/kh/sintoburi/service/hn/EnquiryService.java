@@ -48,4 +48,7 @@ public interface EnquiryService {
 	// 미답변 알람
 	public List<EnquiryVo> statusAlarm();
 
+	// 선택 이미지 삭제
+	public boolean choiceImageDelete(String uuid);
+	
 }

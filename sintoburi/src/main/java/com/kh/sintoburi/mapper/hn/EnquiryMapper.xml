@@ -283,6 +283,12 @@
 		where eno = #{eno}
 	</delete>
 	
+	<!-- 이미지 1개 삭제 -->
+	<delete id="choiceImageDelete">
+	delete from tbl_enquiry_image
+		where uuid = #{uuid}
+	</delete>
+	
 	<!--미처리답변알림 -->
 	<select id="statusAlarm" resultType="EnquiryVo">
 		 select * 
