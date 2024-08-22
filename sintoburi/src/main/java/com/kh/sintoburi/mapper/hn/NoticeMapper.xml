@@ -97,7 +97,7 @@
 	<update id="updateNotice">
 		update tbl_notice set
 		title = #{title},
-		content = #{content}
+		content = #{content},
 		important = #{important}
 		where n_no = #{n_no}
 	</update>
@@ -169,4 +169,12 @@
 		delete from tbl_notice_image
 		where n_no = #{n_no}
 	</delete>
+	
+	<!-- 이미지 1개 삭제 -->
+	<delete id="choiceImageDelete">
+		delete from tbl_notice_image
+		where uuid = #{uuid}
+	</delete>
+	
+	
 </mapper>

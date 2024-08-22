@@ -1,5 +1,6 @@
 package com.kh.sintoburi.service.hn;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,52 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public boolean modifyNotice(NoticeVo noticeVo) {
-		int count = noticeMapper.updateNotice(noticeVo);
-		return (count == 1) ? true : false;
+	public int modifyNotice(NoticeVo vo) {
+		
+		log.info("modify, before vo:" + vo);
+		List<String> imageDel = vo.getImageDel();
+		
+		log.info("after vo:" + vo);
+		// 선택한 이미지 삭제 
+		if (imageDel != null && !imageDel.isEmpty()) {
+			for (String image : imageDel) {
+				int slashIndex = image.lastIndexOf("/");
+				int underIndex = image.indexOf("_");
+				String uuid = image.substring(slashIndex + 1, underIndex);
+
+				int deleteCount = noticeMapper.choiceImageDelete(uuid);
+				log.info("uuid:" + uuid);
+				if (deleteCount == 1) {
+					File imageDelete = new File(image);
+					
+					if (imageDelete.exists()) {
+						imageDelete.delete();
+					}
+				}
+
+			}
+		}
+		
+		List<NoticeImageVo> list = vo.getImageList();
+		
+		if (list != null && !list.isEmpty()) {
+			for (NoticeImageVo imageVo : list) {
+				imageVo.setN_no(vo.getN_no());
+				
+				int insertCount = noticeMapper.imageInsert(imageVo);
+				if (insertCount != 1) {
+					
+					return 0;
+				}
+			}
+		}
+		log.info("list.." + list); 
+		
+		int count = noticeMapper.updateNotice(vo);
+		if (count > 0) {
+			return vo.getN_no();
+		}
+		return 0;
 	}
 
 	@Override
@@ -102,6 +146,12 @@ public class NoticeServiceImpl implements NoticeService {
 	public int getTotalCount(HnCriteria criteria) {
 		int count = noticeMapper.getTotalCount(criteria);
 		return count;
+	}
+
+	@Override
+	public boolean choiceImageDelete(String uuid) {
+		int count = noticeMapper.choiceImageDelete(uuid);
+		return (count == 1)? true : false;
 	}
 
 }

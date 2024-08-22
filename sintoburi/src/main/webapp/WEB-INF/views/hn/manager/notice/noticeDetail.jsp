@@ -12,6 +12,8 @@ $(function() {
 		$(".sEditable").prop("disabled",false);
 		$(this).hide();
 		$(this).next().show();
+		$(".btnImageDelete").show();
+		$("#imageUpload").show();
 	});
 
 	// 삭제폼전송
@@ -19,6 +21,44 @@ $(function() {
 		$("#frmDel").submit();
 	});
 	 
+	 $("#enqModForm").submit(function(e) {
+	        e.preventDefault(); 
+	        
+	        let formData = new FormData(this); 
+
+	        $.ajax({
+	            type: "post",
+	            url: $(this).attr("action"),
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function(response) {
+	                
+	                alert("문의사항이 수정되었습니다.");
+	                
+	                window.location.href = '/hn/manager/enquiry/enqList'; 
+	            }
+	        });
+	    });
+	 
+	 $(".btnImageDelete").click(function(){
+//		  	let uuid = $(this).data("uuid");
+			let src = $(this).prev().attr("src");
+			let imagePath = src.substring(src.indexOf("=") + 1);
+			
+		  	console.log(imagePath);
+			let input = $("<input>").attr({
+	        	type: "hidden",
+	            name: "imageDel",  
+	            value: imagePath
+	        });
+	        
+			$("#noticeForm").append(input);
+			
+			$(this).parent().remove();
+
+	  });
+	
 });
   
 </script>
@@ -40,8 +80,7 @@ $(function() {
 
 				<div class="row">
                         <div class="col-md-12">
-                            <form role="form" action="/hn/manager/notice/noticeMod" method="post" enctype="multipart/form-data">
-                                
+                            <form id="noticeForm" role="form" action="/hn/manager/notice/noticeMod" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="n_no" value="${noticeVo.n_no}"/>
                                 <div class="form-group">
                                     <label for="title">제목</label>
@@ -61,14 +100,21 @@ $(function() {
                                     <textarea rows="10" class="form-control editable" id="content" name="content" readonly>${noticeVo.content}</textarea>
                                 </div>
                                 
-                                <!-- 첨부파일 리스트 -->
-								<div class="form-group" id="uploadedList">
-								<c:forEach items="${noticeVo.imageList}" var="vo">
-									<li>
-										<img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}"/>
-									</li>
-								</c:forEach>
-								</div>
+								
+								 <!-- 첨부파일 리스트 -->
+							<div class="form-group" id="uploadedList">
+							    <c:forEach items="${noticeVo.imageList}" var="vo">
+							        <li  class="d-inline-block mr-2" style="position: relative; display: inline-block;">
+							            <img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}" class="img-thumbnail" style="width: 100px; height: auto;"/>
+							            <button type="button" class="btn btn-danger btn-sm btnImageDelete" data-uuid="${vo.uuid}" style="position: absolute; top: 0; right: 0; display: none;">x</button>
+							        </li>
+							    </c:forEach>
+							</div>
+							
+							<div class="form-group" id= "imageUpload" style="display: none;">
+                                    <label for="image">첨부파일</label>
+                                    <input  type="file" id="image" name="image" multiple>
+                                </div>
 
                              
                                  <div class="row">

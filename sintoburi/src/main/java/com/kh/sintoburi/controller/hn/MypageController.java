@@ -131,7 +131,7 @@ public class MypageController {
 		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
 				.user_id(dto.getUser_id()).imageList(imageList).build();
 
-		System.out.println("enquiryVo...:"+ enquiryVo);
+		System.out.println("enquiryVo...:" + enquiryVo);
 		int eno = enquiryService.register(enquiryVo);
 		rttr.addFlashAttribute("enqRegister", eno);
 		return "redirect:/hn/mypage/enqList";
@@ -154,29 +154,27 @@ public class MypageController {
 
 		List<String> imageDel = dto.getImageDel();
 		System.out.println("imageDel:" + imageDel);
-		
-	
+
 		List<EnquiryImageVo> imageList = new ArrayList<>();
 
-		for (MultipartFile multi : imageFiles) {
-			// UUID를 이용해 고유한 파일 이름 생성
-			String uuid = UUID.randomUUID().toString();
-			String originalFileName = multi.getOriginalFilename(); // 이미지이름
-			String savedFileName = uuid + "_" + multi.getOriginalFilename();
-			File savedFile = new File(uploadPath, savedFileName);
+		if (imageFiles != null && !imageFiles.isEmpty()) {
+			for (MultipartFile multi : imageFiles) {
+				if (multi.isEmpty()) {
+	                continue; // 빈 파일은 무시
+	            }
+				// UUID를 이용해 고유한 파일 이름 생성
+				String uuid = UUID.randomUUID().toString();
+				String originalFileName = multi.getOriginalFilename(); // 이미지이름
+				String savedFileName = uuid + "_" + multi.getOriginalFilename();
+				File savedFile = new File(uploadPath, savedFileName);
 
-			multi.transferTo(savedFile);
+				multi.transferTo(savedFile);
 
-			EnquiryImageVo imageVo = EnquiryImageVo
-					.builder()
-					.uuid(uuid)
-					.upload_path(uploadPath)
-					.image_name(originalFileName)
-					.eno(dto.getEno())
-					.build();
-			imageList.add(imageVo);
-			System.out.println("imageVo: " + imageVo);
-
+				EnquiryImageVo imageVo = EnquiryImageVo.builder().uuid(uuid).upload_path(uploadPath)
+						.image_name(originalFileName).eno(dto.getEno()).build();
+				imageList.add(imageVo);
+				System.out.println("imageVo: " + imageVo);
+			}
 		}
 		EnquiryVo enquiryVo = EnquiryVo.builder()
 				.content(dto.getContent())
@@ -186,7 +184,9 @@ public class MypageController {
 				.imageList(imageList)
 				.eno(dto.getEno())
 				.build();
-		System.out.println("after imageList, enquiryVo...:"+ enquiryVo);
+		System.out.println("after imageList, enquiryVo...:" + enquiryVo);
+		
+		
 		int eno = enquiryService.modify(enquiryVo);
 		rttr.addFlashAttribute("resultMod", eno);
 		return "redirect:/hn/mypage/enqList";

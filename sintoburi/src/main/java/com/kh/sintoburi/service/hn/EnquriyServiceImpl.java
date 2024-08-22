@@ -100,9 +100,6 @@ public class EnquriyServiceImpl implements EnquiryService {
 		log.info("modify, before vo:" + vo);
 		List<String> imageDel = vo.getImageDel();
 		
-		
-		
-		
 		log.info("after vo:" + vo);
 		// 선택한 이미지 삭제 
 		if (imageDel != null && !imageDel.isEmpty()) {
@@ -112,6 +109,7 @@ public class EnquriyServiceImpl implements EnquiryService {
 				String uuid = image.substring(slashIndex + 1, underIndex);
 
 				int deleteCount = enquiryMapper.choiceImageDelete(uuid);
+				log.info("uuid:" + uuid);
 				if (deleteCount == 1) {
 					File imageDelete = new File(image);
 					

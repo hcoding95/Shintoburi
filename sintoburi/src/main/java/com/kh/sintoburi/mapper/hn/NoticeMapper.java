@@ -50,6 +50,9 @@ public interface NoticeMapper {
 	// 해당 글 첨부파일 가져오기
 	public List<NoticeImageVo> getImage(@Param("n_no") int n_no);
 
-	// 삭제
+	// 첨부파일삭제
 	public int imageDelete(@Param("n_no") int n_no);
+	
+	//선택한 이미지 삭제
+	public int choiceImageDelete(@Param("uuid") String uuid);
 }

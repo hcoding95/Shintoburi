@@ -21,7 +21,7 @@ public interface NoticeService {
 	public int registerNotice(NoticeVo noticeVo);
 
 	// 공지사항 수정
-	public boolean modifyNotice(NoticeVo noticeVo);
+	public int modifyNotice(NoticeVo noticeVo);
 
 	// 공지사항 삭제
 	public boolean removeNotice(int n_no);
@@ -37,4 +37,7 @@ public interface NoticeService {
 
 	// 중요공지사항
 	public NoticeVo importantNotice();
+
+	// 선택 이미지 삭제
+	public boolean choiceImageDelete(String uuid);
 }

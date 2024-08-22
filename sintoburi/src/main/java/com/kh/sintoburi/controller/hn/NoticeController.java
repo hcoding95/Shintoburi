@@ -123,9 +123,53 @@ public class NoticeController {
 
 	// 공지사항 수정
 	@PostMapping("/noticeMod")
-	public String noticeMod(NoticeVo noticeVo, RedirectAttributes rttr) throws IOException {
-		boolean result = noticeService.modifyNotice(noticeVo);
-		rttr.addFlashAttribute("noticeMod", result);
+	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
+		log.info("dto:" + dto);
+		List<MultipartFile> imageFiles = dto.getImage();
+		String uploadPath = "D:/upload/sintoburi/enquiry";
+
+		List<String> imageDel = dto.getImageDel();
+		System.out.println("imageDel:" + imageDel);
+
+		List<NoticeImageVo> imageList = new ArrayList<>();
+
+		if (imageFiles != null && !imageFiles.isEmpty()) {
+			for (MultipartFile multi : imageFiles) {
+				if (multi.isEmpty()) {
+	                continue; // 빈 파일은 무시
+	            }
+				// UUID를 이용해 고유한 파일 이름 생성
+				String uuid = UUID.randomUUID().toString();
+				String originalFileName = multi.getOriginalFilename(); // 이미지이름
+				String savedFileName = uuid + "_" + multi.getOriginalFilename();
+				File savedFile = new File(uploadPath, savedFileName);
+
+				multi.transferTo(savedFile);
+
+				NoticeImageVo imageVo = NoticeImageVo
+						.builder()
+						.uuid(uuid)
+						.upload_path(uploadPath)
+						.image_name(originalFileName)
+						.n_no(dto.getN_no())
+						.build();
+				imageList.add(imageVo);
+				System.out.println("imageVo: " + imageVo);
+			}
+		}
+
+	
+		NoticeVo noticeVo = NoticeVo.builder()
+				.content(dto.getContent())
+				.title(dto.getTitle())
+				.imageDel(imageDel)
+				.imageList(imageList)
+				.n_no(dto.getN_no())
+				.important(dto.getImportant())
+				.build();
+		
+		int n_no = noticeService.modifyNotice(noticeVo);
+		rttr.addFlashAttribute("noticeMod", n_no);
 		return "redirect:/hn/manager/notice/noticeList";
 	}
 

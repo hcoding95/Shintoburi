@@ -228,7 +228,6 @@
    
     <!-- 문의사항 수정 -->
       <update id="update" >
-      	
         update tbl_enquiry
         set user_id = #{user_id},
             enquiry_type = #{enquiry_type},
