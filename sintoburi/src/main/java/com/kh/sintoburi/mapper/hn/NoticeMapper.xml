@@ -22,7 +22,14 @@
 			write_date,
 			image,
 			important,
-            row_number() over (order by n_no desc) as rn
+            row_number() over (
+				order by 
+                case 
+                    when important = 'Y' then 1 
+                    else 2 
+                end,
+                n_no desc
+		) as rn
         from tbl_notice
         <where>
            <if test="type != null">

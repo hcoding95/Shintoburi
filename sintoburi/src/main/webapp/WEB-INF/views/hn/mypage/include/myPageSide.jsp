@@ -102,15 +102,12 @@
                     <ul class="sub-menu">
                         <li><a href="#!">장바구니</a></li>
                         <li><a href="#!">주문/배송 조회</a></li>
-                        <li><a href="#!">취소/반품/교환 내역</a></li>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
                         마이활동
                     </div>
                     <ul class="sub-menu">
                         <li><a href="/hn/mypage/enqList">1:1문의내역</a></li>
-                        <li><a href="#!">리뷰 (<span class="num_review">0</span>)</a></li>
-                        <li><a href="#!">이벤트 참여 현황</a></li>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
                         마이정보

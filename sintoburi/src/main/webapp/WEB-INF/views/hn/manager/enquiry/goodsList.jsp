@@ -76,7 +76,7 @@ $(function() {
             <th>번호</th>
             <th>작성 아이디</th>
             <th>상품</th>
-            <th>제목</th>
+            <th>문의내용</th>
             <th>작성일</th>
             <th>답변상태</th>
             <th>답변확인</th>

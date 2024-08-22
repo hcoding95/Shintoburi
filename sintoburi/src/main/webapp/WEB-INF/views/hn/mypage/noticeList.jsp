@@ -60,7 +60,7 @@ $(function() {
                                 <c:forEach items="${noticeList}" var="vo">
                                     <tr class="text-center">
                                         <td>${vo.n_no}</td>
-                                        <td><a href="/hn/mypage/noticeRead?n_no=${vo.n_no}" style="color: black;">${vo.title}</a></td>
+                                        <td><span class="badge badge-primary">Primary</span><a href="/hn/mypage/noticeRead?n_no=${vo.n_no}" style="color: black;padding-left: 10px;">${vo.title}</a></td>
                                         <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
                                         
                                     </tr>

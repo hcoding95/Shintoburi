@@ -228,7 +228,9 @@ $(function() {
 					<td>${vo.user_name}</td>
 					<td>${vo.email}</td>
 					 <td class="current-grade">
-                  	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">[up]</c:if>
+                  	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">
+			  			<span style="color: green;">[승인가능]</span>
+						</c:if>
               		  </td>
               		 
 					 <td><fmt:formatDate value="${vo.last_login}"

@@ -21,7 +21,7 @@ $(function() {
 		$("#frmDel").submit();
 	});
 	 
-	 $("#enqModForm").submit(function(e) {
+	 $("#noticeForm").submit(function(e) {
 	        e.preventDefault(); 
 	        
 	        let formData = new FormData(this); 
@@ -34,9 +34,9 @@ $(function() {
 	            processData: false,
 	            success: function(response) {
 	                
-	                alert("문의사항이 수정되었습니다.");
+	                alert("공지사항이 수정되었습니다.");
 	                
-	                window.location.href = '/hn/manager/enquiry/enqList'; 
+	                window.location.href = "/hn/manager/notice/noticeList"; 
 	            }
 	        });
 	    });
@@ -89,7 +89,7 @@ $(function() {
                                 
                                 <div class="form-group">
 			                    <label for="notice_type">항목</label>
-			                     <select id="notice_type" name="notice_type " class="form-control sEditable" style="width: 150px;" disabled>
+			                     <select id="important" name="important " class="form-control sEditable" style="width: 150px;" disabled>
 			                         <option value="N" <c:if test="${noticeVo.important == 'N'}">selected</c:if>>일반</option>
    									 <option value="Y" <c:if test="${noticeVo.important == 'Y'}">selected</c:if>>중요</option>
 			                    </select>

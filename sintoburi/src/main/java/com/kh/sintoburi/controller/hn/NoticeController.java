@@ -126,7 +126,7 @@ public class NoticeController {
 	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
 		log.info("dto:" + dto);
 		List<MultipartFile> imageFiles = dto.getImage();
-		String uploadPath = "D:/upload/sintoburi/enquiry";
+		String uploadPath = "D:/upload/sintoburi/notice";
 
 		List<String> imageDel = dto.getImageDel();
 		System.out.println("imageDel:" + imageDel);
