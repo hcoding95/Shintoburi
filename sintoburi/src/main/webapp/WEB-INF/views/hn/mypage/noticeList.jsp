@@ -60,7 +60,17 @@ $(function() {
                                 <c:forEach items="${noticeList}" var="vo">
                                     <tr class="text-center">
                                         <td>${vo.n_no}</td>
-                                        <td><span class="badge badge-primary">Primary</span><a href="/hn/mypage/noticeRead?n_no=${vo.n_no}" style="color: black;padding-left: 10px;">${vo.title}</a></td>
+                                       <td>
+									    <c:choose>
+									        <c:when test="${vo.important == 'Y'}">
+									            <span class="badge badge-info">중요</span>
+									        </c:when>
+									        <c:otherwise>
+<!-- 									            <span class="badge badge-light">일반</span> -->
+									        </c:otherwise>
+									    </c:choose>
+									    <a href="/hn/mypage/noticeRead?n_no=${vo.n_no}" style="color: black; padding-left: 10px;">${vo.title}</a>
+									</td>
                                         <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
                                         
                                     </tr>

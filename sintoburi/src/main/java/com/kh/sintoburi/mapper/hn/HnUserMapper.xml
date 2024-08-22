@@ -26,7 +26,10 @@
             grade,
             last_login,
             business,
-            row_number() over (order by last_login desc) as rn
+            row_number() over ( order by
+                    case when business = '1' then 0 else 1 end,
+                    case when grade != '판매자' then 0 else 1 end,
+                    last_login desc) as rn
         from tbl_users
         <where>
            grade not in('관리자', '마스터') 
@@ -54,11 +57,11 @@
                 </trim>
             </if>
         </where>
-        order by business desc, last_login desc
     ) subquery
+     
   where rn &gt; (#{pageNum} - 1) * #{amount}
 		and rn &lt;= #{pageNum} * #{amount}
-</select>
+</select>					
 
 <!-- 게시글 갯수 -->
 	<select id="getTotalCount" resultType="int">

@@ -138,9 +138,9 @@ public class EnquiryController {
 
 	// 문의사항 알람
 	@GetMapping("/statusAlarm")
-	@ResponseBody
-	public List<EnquiryVo> statusAlarm() {
+	public String statusAlarm(Model model) {
 		List<EnquiryVo> list = enquiryService.statusAlarm();
-		return list;
+		model.addAttribute("alarmList",list);
+		return "hn/manager/include/header";
 	}
 }

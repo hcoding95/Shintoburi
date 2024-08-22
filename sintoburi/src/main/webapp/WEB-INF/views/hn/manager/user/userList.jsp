@@ -229,7 +229,7 @@ $(function() {
 					<td>${vo.email}</td>
 					 <td class="current-grade">
                   	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">
-			  			<span style="color: green;">[승인가능]</span>
+			  			<span style="color: green;">[승인요청]</span>
 						</c:if>
               		  </td>
               		 

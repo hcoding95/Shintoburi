@@ -113,6 +113,7 @@ $(function() {
 						    <div class="row">
 						        <div class="col-md-12 text-right">
 						     <c:if test="${enquiryVo.status != '처리완료' && enquiryVo.status != '답변완료'}">
+					            <button id="btnList" type="button" class="btn btn-success btn" onclick="window.location.href='/hn/mypage/enqList'">목록</button>
 					            <button id="btnMod" type="button" class="btn btn-warning btn">수정</button>
 					            <button id="btnModOk" type="submit" class="btn btn-warning btn-submit" style="display:none">수정완료</button>
 					            <button id="btnDel" type="button" class="btn btn-danger btn">삭제</button>
