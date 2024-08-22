@@ -33,6 +33,7 @@ import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.NoticeService;
+import com.kh.sintoburi.util.hn.HnFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -130,6 +131,7 @@ public class MypageController {
 		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
 				.user_id(dto.getUser_id()).imageList(imageList).build();
 
+		System.out.println("enquiryVo...:"+ enquiryVo);
 		int eno = enquiryService.register(enquiryVo);
 		rttr.addFlashAttribute("enqRegister", eno);
 		return "redirect:/hn/mypage/enqList";
@@ -148,14 +150,12 @@ public class MypageController {
 	public String enqMod(EnquiryFormDto dto, RedirectAttributes rttr) throws IOException {
 		log.info("dto:" + dto);
 		List<MultipartFile> imageFiles = dto.getImage();
-
 		String uploadPath = "D:/upload/sintoburi/enquiry";
 
-		File folder = new File(uploadPath);
-		if (!folder.exists()) {
-			folder.mkdirs();
-		}
-
+		List<String> imageDel = dto.getImageDel();
+		System.out.println("imageDel:" + imageDel);
+		
+	
 		List<EnquiryImageVo> imageList = new ArrayList<>();
 
 		for (MultipartFile multi : imageFiles) {
@@ -167,18 +167,28 @@ public class MypageController {
 
 			multi.transferTo(savedFile);
 
-			EnquiryImageVo imageVo = EnquiryImageVo.builder().uuid(uuid).upload_path(uploadPath)
-					.image_name(originalFileName).build();
+			EnquiryImageVo imageVo = EnquiryImageVo
+					.builder()
+					.uuid(uuid)
+					.upload_path(uploadPath)
+					.image_name(originalFileName)
+					.eno(dto.getEno())
+					.build();
 			imageList.add(imageVo);
 			System.out.println("imageVo: " + imageVo);
 
 		}
-
-		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
-				.user_id(dto.getUser_id()).imageList(imageList).build();
-
-		boolean result = enquiryService.modify(enquiryVo);
-		rttr.addFlashAttribute("resultMod", result);
+		EnquiryVo enquiryVo = EnquiryVo.builder()
+				.content(dto.getContent())
+				.enquiry_type(dto.getEnquiry_type())
+				.user_id(dto.getUser_id())
+				.imageDel(imageDel)
+				.imageList(imageList)
+				.eno(dto.getEno())
+				.build();
+		System.out.println("after imageList, enquiryVo...:"+ enquiryVo);
+		int eno = enquiryService.modify(enquiryVo);
+		rttr.addFlashAttribute("resultMod", eno);
 		return "redirect:/hn/mypage/enqList";
 	}
 

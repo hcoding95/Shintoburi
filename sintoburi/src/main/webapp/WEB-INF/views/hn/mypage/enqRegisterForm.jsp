@@ -121,11 +121,6 @@ $(function() {
                 alert("문의사항이 등록되었습니다.");
                 
                 window.location.href = '/hn/mypage/enqList'; 
-            },
-            error: function(xhr, status, error) {
-                // 요청이 실패한 경우
-                console.error("등록 실패:", xhr.responseText);
-                alert("등록 실패. 다시 시도해 주세요.");
             }
         });
     });

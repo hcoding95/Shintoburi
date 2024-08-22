@@ -19,4 +19,6 @@ public class EnquiryFormDto {
 	private String enquiry_type;
 	private String content;
 	private List<MultipartFile> image;
+	private List<String> imageDel;
+
 }

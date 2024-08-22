@@ -10,7 +10,7 @@ import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
-import com.kh.sintoburi.util.hn.MyFileUtil;
+import com.kh.sintoburi.util.hn.HnFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -66,7 +66,7 @@ public class NoticeServiceImpl implements NoticeService {
 		List<NoticeImageVo> list = noticeMapper.getImage(n_no);
 		list.forEach(vo -> {
 			String fileName = vo.getUpload_path() + "/" + vo.getUuid() + "_" + vo.getImage_name();
-			MyFileUtil.delete(fileName);
+			HnFileUtil.delete(fileName);
 		});
 		noticeMapper.imageDelete(n_no);
 		

@@ -228,10 +228,11 @@
    
     <!-- 문의사항 수정 -->
       <update id="update" >
+      	
         update tbl_enquiry
         set user_id = #{user_id},
             enquiry_type = #{enquiry_type},
-            content = #{content},
+            content = #{content}
         where eno = #{eno}
     </update>
   
@@ -285,7 +286,7 @@
 	
 	<!-- 이미지 1개 삭제 -->
 	<delete id="choiceImageDelete">
-	delete from tbl_enquiry_image
+		delete from tbl_enquiry_image
 		where uuid = #{uuid}
 	</delete>
 	

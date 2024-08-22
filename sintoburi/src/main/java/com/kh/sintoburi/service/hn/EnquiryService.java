@@ -31,7 +31,7 @@ public interface EnquiryService {
 	public int register(EnquiryVo vo);
 
 	// 문의사항수정
-	public boolean modify(EnquiryVo vo);
+	public int modify(EnquiryVo vo);
 
 	// 문의사항삭제
 	public boolean remove(int eno);

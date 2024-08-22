@@ -8,7 +8,7 @@
 $(function() {
 	// 수정버튼
 	$("#btnMod").click(function () {
-		$(".editable").prop("readonly", false);
+		$("#content").prop("readonly", false);
 		$(".sEditable").prop("disabled", false);
 		$(this).hide();
 		$(this).next().show();
@@ -47,20 +47,21 @@ $(function() {
 	    });
 	  
 	  $(".btnImageDelete").click(function(){
-		  let uuid = $(this).data("uuid");
-			console.log(uuid);
-		  $.ajax({
-				type: "post",
-				url : "/hn/mypage/deleteImage",
-				 data: { uuid: uuid }, 
-				contentType: "application/json; charset=utf-8",
-				 success: function(rData) {
-					 
-					 alert("이미지가 삭제되었습니다.");
-	                   
-		            }
-			});
-		  
+// 		  	let uuid = $(this).data("uuid");
+			let src = $(this).prev().attr("src");
+			let imagePath = src.substring(src.indexOf("=") + 1);
+			
+		  	console.log(imagePath);
+			let input = $("<input>").attr({
+	        	type: "hidden",
+	            name: "imageDel",  
+	            value: imagePath
+	        });
+	        
+			$("#enqModForm").append(input);
+			
+			$(this).parent().remove();
+
 	  });
 	 
 });
@@ -73,7 +74,7 @@ $(function() {
 		        <div class="col-md-12">
 		           <form id="enqModForm" role="form" action="/hn/mypage/enqMod" method="post" enctype="multipart/form-data">
 		          	 <input type="hidden" name="eno" value="${enquiryVo.eno}"/>
-		          	 <input type="hidden" name="image" />
+		          	 
 						    <div class="form-group">
 						        <label for="user_id">작성자</label>
 						        <input value="${enquiryVo.user_id}" type="text" class="form-control editable" id="user_id" name="user_id" readonly />
@@ -96,7 +97,7 @@ $(function() {
 						    <!-- 첨부파일 리스트 -->
 							<div class="form-group" id="uploadedList">
 							    <c:forEach items="${enquiryVo.imageList}" var="vo">
-							        <li class="d-inline-block mr-2" style="position: relative; display: inline-block;">
+							        <li  class="d-inline-block mr-2" style="position: relative; display: inline-block;">
 							            <img src="/hn/manager/display?fileName=${vo.upload_path}/${vo.uuid}_${vo.image_name}" class="img-thumbnail" style="width: 100px; height: auto;"/>
 							            <button type="button" class="btn btn-danger btn-sm btnImageDelete" data-uuid="${vo.uuid}" style="position: absolute; top: 0; right: 0; display: none;">x</button>
 							        </li>
