@@ -21,5 +21,7 @@ public class NoticeFormDto {
 	private String content;
 	private List<MultipartFile> image;
 	private Date write_date;
+	private String important;
+	private List<String> imageDel;
 
 }

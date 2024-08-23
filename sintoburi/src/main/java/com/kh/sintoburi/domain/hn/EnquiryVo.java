@@ -22,5 +22,6 @@ public class EnquiryVo {
 	private Date write_date;
 	
 	private List<EnquiryImageVo> imageList;
+	private List<String> imageDel;
 
 }

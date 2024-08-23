@@ -53,7 +53,7 @@ $(function() {
 
                             <div class="form-group">
                                 <label for="content">내용</label>
-                                <textarea rows="10" class="form-control" id="content" name="content"></textarea>
+                                <textarea rows="10" wrap="hard" class="form-control" id="content" name="content"></textarea>
                             </div>
                             
                             <div class="col-md-12 text-right">

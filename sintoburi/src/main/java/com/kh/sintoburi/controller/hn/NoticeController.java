@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.EnquiryVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
@@ -40,10 +42,20 @@ public class NoticeController {
 
 	// 공지사항
 	@GetMapping("/noticeList")
-	public void noticeList(Model model) {
-		List<NoticeVo> list = noticeService.getListNotice();
+	public void noticeList(Model model, HnCriteria criteria) {
+		List<NoticeVo> list = noticeService.getListNotice(criteria);
 		model.addAttribute("noticeList", list);
 
+		// 관리자용 공지사항
+		List<NoticeVo> managerNoticeList = noticeService.managerNoticeList();
+		model.addAttribute("managerNoticeList",managerNoticeList);
+		
+		// 페이징
+		int total = noticeService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
 	}
 
 	// 공지사항등록폼
@@ -67,35 +79,29 @@ public class NoticeController {
 		}
 
 		List<NoticeImageVo> imageList = new ArrayList<>();
-		
+
 		for (MultipartFile multi : imageFiles) {
 			// UUID를 이용해 고유한 파일 이름 생성
 			String uuid = UUID.randomUUID().toString();
 			String originalFileName = multi.getOriginalFilename(); // 이미지이름
-			
+
 			if (originalFileName == null || originalFileName.trim().isEmpty()) {
 				continue; // 이미지 이름이 없으면 처리하지 않음
 			}
-			String savedFileName = uuid + "_" + multi.getOriginalFilename(); 
+			String savedFileName = uuid + "_" + multi.getOriginalFilename();
 			File savedFile = new File(uploadPath, savedFileName);
 
 			multi.transferTo(savedFile);
 
-			NoticeImageVo imageVo = NoticeImageVo.builder()
-					.uuid(uuid)
-					.upload_path(uploadPath)
-					.image_name(originalFileName)
-					.build();
+			NoticeImageVo imageVo = NoticeImageVo.builder().uuid(uuid).upload_path(uploadPath)
+					.image_name(originalFileName).build();
 			imageList.add(imageVo);
 			System.out.println("imageVo: " + imageVo);
 
 		}
-		
-		NoticeVo noticeVo = NoticeVo.builder()
-				.content(dto.getContent())
-				.title(dto.getTitle())
-				.imageList(imageList)
-				.build();
+
+		NoticeVo noticeVo = NoticeVo.builder().content(dto.getContent()).title(dto.getTitle()).imageList(imageList)
+				.important(dto.getImportant()).build();
 
 		int n_no = noticeService.registerNotice(noticeVo);
 		rttr.addFlashAttribute("registerNotice", n_no);
@@ -115,9 +121,40 @@ public class NoticeController {
 	// 공지사항 수정
 	@PostMapping("/noticeMod")
 	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
+		log.info("dto:" + dto);
+		List<MultipartFile> imageFiles = dto.getImage();
+		String uploadPath = "D:/upload/sintoburi/notice";
 
-//		boolean result = noticeService.modifyNotice(vo);
-//		rttr.addFlashAttribute("noticeMod", result);
+		List<String> imageDel = dto.getImageDel();
+		System.out.println("imageDel:" + imageDel);
+
+		List<NoticeImageVo> imageList = new ArrayList<>();
+
+		if (imageFiles != null && !imageFiles.isEmpty()) {
+			for (MultipartFile multi : imageFiles) {
+				if (multi.isEmpty()) {
+					continue; // 빈 파일은 무시
+				}
+				// UUID를 이용해 고유한 파일 이름 생성
+				String uuid = UUID.randomUUID().toString();
+				String originalFileName = multi.getOriginalFilename(); // 이미지이름
+				String savedFileName = uuid + "_" + multi.getOriginalFilename();
+				File savedFile = new File(uploadPath, savedFileName);
+
+				multi.transferTo(savedFile);
+
+				NoticeImageVo imageVo = NoticeImageVo.builder().uuid(uuid).upload_path(uploadPath)
+						.image_name(originalFileName).n_no(dto.getN_no()).build();
+				imageList.add(imageVo);
+				System.out.println("imageVo: " + imageVo);
+			}
+		}
+
+		NoticeVo noticeVo = NoticeVo.builder().content(dto.getContent()).title(dto.getTitle()).imageDel(imageDel)
+				.imageList(imageList).n_no(dto.getN_no()).important(dto.getImportant()).build();
+
+		int n_no = noticeService.modifyNotice(noticeVo);
+		rttr.addFlashAttribute("noticeMod", n_no);
 		return "redirect:/hn/manager/notice/noticeList";
 	}
 
@@ -138,15 +175,16 @@ public class NoticeController {
 		boolean result = noticeService.updateImportant(n_no, important);
 		return result;
 	}
-	
-	// 중요 공지사항 보여주기
-	@GetMapping("/importantShow")
+
+	// 관리자 공지사항 보여주기
+	@GetMapping("/managerNoticeShow")
 	@ResponseBody
 	public NoticeVo importantShow() {
-	 return noticeService.importantNotice();
+		NoticeVo noticeVo = noticeService.managerNoticeShow();
+		return noticeVo;
 	}
 	
-	
+
 	
 
 }

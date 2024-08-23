@@ -31,7 +31,7 @@ public interface EnquiryService {
 	public int register(EnquiryVo vo);
 
 	// 문의사항수정
-	public boolean modify(EnquiryVo vo);
+	public int modify(EnquiryVo vo);
 
 	// 문의사항삭제
 	public boolean remove(int eno);
@@ -46,6 +46,9 @@ public interface EnquiryService {
 	public boolean gradeUpdateStatus(int eno, String status);
 
 	// 미답변 알람
-	public List<EnquiryVo> statusAlarm();
+	public List<EnquiryVo> noReplyShow();
 
+	// 선택 이미지 삭제
+	public boolean choiceImageDelete(String uuid);
+	
 }

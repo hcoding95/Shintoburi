@@ -1,15 +1,17 @@
 package com.kh.sintoburi.service.hn;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.hn.EnquiryImageVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
-import com.kh.sintoburi.util.hn.MyFileUtil;
+import com.kh.sintoburi.util.hn.HnFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -21,8 +23,15 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeMapper noticeMapper;
 
 	@Override
-	public List<NoticeVo> getListNotice() {
-		List<NoticeVo> list = noticeMapper.selectNotice();
+	public List<NoticeVo> getListNotice(HnCriteria criteria) {
+//		List<NoticeVo> list = noticeMapper.selectNotice();
+		List<NoticeVo> list = noticeMapper.getNoticePaging(criteria);
+		return list;
+	}
+	
+	@Override
+	public List<NoticeVo> managerNoticeList() {
+		List<NoticeVo> list = noticeMapper.selectManagerNotice();
 		return list;
 	}
 
@@ -54,9 +63,52 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public boolean modifyNotice(NoticeVo noticeVo) {
-		int count = noticeMapper.updateNotice(noticeVo);
-		return (count == 1) ? true : false;
+	public int modifyNotice(NoticeVo vo) {
+		
+		log.info("modify, before vo:" + vo);
+		List<String> imageDel = vo.getImageDel();
+		
+		log.info("after vo:" + vo);
+		// 선택한 이미지 삭제 
+		if (imageDel != null && !imageDel.isEmpty()) {
+			for (String image : imageDel) {
+				int slashIndex = image.lastIndexOf("/");
+				int underIndex = image.indexOf("_");
+				String uuid = image.substring(slashIndex + 1, underIndex);
+
+				int deleteCount = noticeMapper.choiceImageDelete(uuid);
+				log.info("uuid:" + uuid);
+				if (deleteCount == 1) {
+					File imageDelete = new File(image);
+					
+					if (imageDelete.exists()) {
+						imageDelete.delete();
+					}
+				}
+
+			}
+		}
+		
+		List<NoticeImageVo> list = vo.getImageList();
+		
+		if (list != null && !list.isEmpty()) {
+			for (NoticeImageVo imageVo : list) {
+				imageVo.setN_no(vo.getN_no());
+				
+				int insertCount = noticeMapper.imageInsert(imageVo);
+				if (insertCount != 1) {
+					
+					return 0;
+				}
+			}
+		}
+		log.info("list.." + list); 
+		
+		int count = noticeMapper.updateNotice(vo);
+		if (count > 0) {
+			return vo.getN_no();
+		}
+		return 0;
 	}
 
 	@Override
@@ -64,7 +116,7 @@ public class NoticeServiceImpl implements NoticeService {
 		List<NoticeImageVo> list = noticeMapper.getImage(n_no);
 		list.forEach(vo -> {
 			String fileName = vo.getUpload_path() + "/" + vo.getUuid() + "_" + vo.getImage_name();
-			MyFileUtil.delete(fileName);
+			HnFileUtil.delete(fileName);
 		});
 		noticeMapper.imageDelete(n_no);
 		
@@ -91,9 +143,23 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public NoticeVo importantNotice() {
-		NoticeVo noticeVo = noticeMapper.importantNotice();
+	public NoticeVo managerNoticeShow() {
+		NoticeVo noticeVo = noticeMapper.managerNoticeShow();
 		return noticeVo;
 	}
+
+	@Override
+	public int getTotalCount(HnCriteria criteria) {
+		int count = noticeMapper.getTotalCount(criteria);
+		return count;
+	}
+
+	@Override
+	public boolean choiceImageDelete(String uuid) {
+		int count = noticeMapper.choiceImageDelete(uuid);
+		return (count == 1)? true : false;
+	}
+
+
 
 }

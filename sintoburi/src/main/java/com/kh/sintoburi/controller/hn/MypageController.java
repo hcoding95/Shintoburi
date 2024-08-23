@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,7 @@ import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.NoticeService;
+import com.kh.sintoburi.util.hn.HnFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -128,6 +131,7 @@ public class MypageController {
 		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
 				.user_id(dto.getUser_id()).imageList(imageList).build();
 
+		System.out.println("enquiryVo...:" + enquiryVo);
 		int eno = enquiryService.register(enquiryVo);
 		rttr.addFlashAttribute("enqRegister", eno);
 		return "redirect:/hn/mypage/enqList";
@@ -146,37 +150,45 @@ public class MypageController {
 	public String enqMod(EnquiryFormDto dto, RedirectAttributes rttr) throws IOException {
 		log.info("dto:" + dto);
 		List<MultipartFile> imageFiles = dto.getImage();
-
 		String uploadPath = "D:/upload/sintoburi/enquiry";
 
-		File folder = new File(uploadPath);
-		if (!folder.exists()) {
-			folder.mkdirs();
-		}
+		List<String> imageDel = dto.getImageDel();
+		System.out.println("imageDel:" + imageDel);
 
 		List<EnquiryImageVo> imageList = new ArrayList<>();
 
-		for (MultipartFile multi : imageFiles) {
-			// UUID를 이용해 고유한 파일 이름 생성
-			String uuid = UUID.randomUUID().toString();
-			String originalFileName = multi.getOriginalFilename(); // 이미지이름
-			String savedFileName = uuid + "_" + multi.getOriginalFilename();
-			File savedFile = new File(uploadPath, savedFileName);
+		if (imageFiles != null && !imageFiles.isEmpty()) {
+			for (MultipartFile multi : imageFiles) {
+				if (multi.isEmpty()) {
+	                continue; // 빈 파일은 무시
+	            }
+				// UUID를 이용해 고유한 파일 이름 생성
+				String uuid = UUID.randomUUID().toString();
+				String originalFileName = multi.getOriginalFilename(); // 이미지이름
+				String savedFileName = uuid + "_" + multi.getOriginalFilename();
+				File savedFile = new File(uploadPath, savedFileName);
 
-			multi.transferTo(savedFile);
+				multi.transferTo(savedFile);
 
-			EnquiryImageVo imageVo = EnquiryImageVo.builder().uuid(uuid).upload_path(uploadPath)
-					.image_name(originalFileName).build();
-			imageList.add(imageVo);
-			System.out.println("imageVo: " + imageVo);
-
+				EnquiryImageVo imageVo = EnquiryImageVo.builder().uuid(uuid).upload_path(uploadPath)
+						.image_name(originalFileName).eno(dto.getEno()).build();
+				imageList.add(imageVo);
+				System.out.println("imageVo: " + imageVo);
+			}
 		}
-
-		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
-				.user_id(dto.getUser_id()).imageList(imageList).build();
-
-		boolean result = enquiryService.modify(enquiryVo);
-		rttr.addFlashAttribute("resultMod", result);
+		EnquiryVo enquiryVo = EnquiryVo.builder()
+				.content(dto.getContent())
+				.enquiry_type(dto.getEnquiry_type())
+				.user_id(dto.getUser_id())
+				.imageDel(imageDel)
+				.imageList(imageList)
+				.eno(dto.getEno())
+				.build();
+		System.out.println("after imageList, enquiryVo...:" + enquiryVo);
+		
+		
+		int eno = enquiryService.modify(enquiryVo);
+		rttr.addFlashAttribute("resultMod", eno);
 		return "redirect:/hn/mypage/enqList";
 	}
 
@@ -188,11 +200,29 @@ public class MypageController {
 		return "redirect:/hn/mypage/enqList";
 	}
 
+	// 선택 이미지 삭제
+	@PostMapping("/deleteImage")
+	public ResponseEntity<String> deleteImage(@RequestParam("uuid") String uuid) {
+		boolean success = enquiryService.choiceImageDelete(uuid);
+		if (success) {
+			return ResponseEntity.ok("이미지가 성공적으로 삭제되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미지 삭제 실패. 다시 시도해 주세요.");
+		}
+	}
+
 	// 공지사항
 	@GetMapping("/noticeList")
-	public void noticeList(Model model) {
-		List<NoticeVo> list = noticeService.getListNotice();
+	public void noticeList(Model model, HnCriteria criteria) {
+		List<NoticeVo> list = noticeService.getListNotice(criteria);
 		model.addAttribute("noticeList", list);
+
+		int total = noticeService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
+
 	}
 
 	// 공지사항 상세보기
@@ -213,8 +243,14 @@ public class MypageController {
 
 	// 자주하는질문
 	@GetMapping("/faqList")
-	public void questionList(Model model) {
-		List<FaqVo> list = faqService.faqList();
+	public void questionList(Model model, HnCriteria criteria) {
+		List<FaqVo> list = faqService.faqList(criteria);
 		model.addAttribute("faqList", list);
+
+		int total = faqService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
 	}
 }

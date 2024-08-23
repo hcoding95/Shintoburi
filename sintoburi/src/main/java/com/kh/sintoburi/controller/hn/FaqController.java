@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.FaqVo;
+import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.service.hn.FaqService;
 
 import lombok.extern.log4j.Log4j;
@@ -27,9 +29,15 @@ public class FaqController {
 
 	// 자주하는 질문
 	@GetMapping("/faqList")
-	public void faqList(Model model) {
-		List<FaqVo> list = faqService.faqList();
+	public void faqList(Model model, HnCriteria criteria) {
+		List<FaqVo> list = faqService.faqList(criteria);
 		model.addAttribute("faqList", list);
+		
+		int total = faqService.getTotalCount(criteria);
+		HnPageDto pageMaker = new HnPageDto(criteria, total);
+		System.out.println("Criteria: " + criteria);
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("criteria", criteria);
 
 	}
 

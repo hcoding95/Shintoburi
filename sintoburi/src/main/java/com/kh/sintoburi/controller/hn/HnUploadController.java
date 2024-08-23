@@ -39,7 +39,7 @@ import com.kh.sintoburi.service.hn.FaqService;
 import com.kh.sintoburi.service.hn.HnUserService;
 import com.kh.sintoburi.service.hn.NoticeService;
 import com.kh.sintoburi.service.hn.ReportPostService;
-import com.kh.sintoburi.util.hn.MyFileUtil;
+import com.kh.sintoburi.util.hn.HnFileUtil;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
