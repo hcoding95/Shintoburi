@@ -219,4 +219,19 @@
 	where user_id = #{user_id}
   </update>
   
+  <!-- 등급 변경해야 할 리스트 알림 -->
+  <select id="gradeUpdateShow" resultType="HnUserDto" >
+  select * 
+from (
+    select * 
+    from tbl_users
+    where business = 1
+      and grade = '구매자'
+    order by last_login desc
+    )
+where rownum &lt; = 4
+  
+  
+  </select>
+  
   </mapper>

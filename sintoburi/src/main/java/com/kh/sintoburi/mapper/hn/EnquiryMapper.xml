@@ -290,7 +290,7 @@
 	</delete>
 	
 	<!--미처리답변알림 -->
-	<select id="statusAlarm" resultType="EnquiryVo">
+	<select id="noReplyShow" resultType="EnquiryVo">
 		 select * 
         from (
             select *

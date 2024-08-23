@@ -11,6 +11,13 @@
 		order by n_no desc
 	</select>
 	
+	<!-- 관리자 공지사항 목록 -->
+	<select id="selectManagerNotice" resultType="NoticeVo">
+		select * from tbl_notice
+		where important = 'M'
+	</select>
+
+	
 	<!--  공지사항 페이징 -->
 	<select id="getNoticePaging" resultType="NoticeVo">
     select *
@@ -32,8 +39,9 @@
 		) as rn
         from tbl_notice
         <where>
+         important not in('M') 
            <if test="type != null">
-                <trim prefix="(" suffix=")" prefixOverrides="or">
+                <trim prefix="and(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
                          <when test="type == 'A'.toString()">
@@ -151,10 +159,10 @@
 		where n_no = #{n_no}
 	</update>
 	
-	<!--  중요 공지사항 -->
-	<select id="importantNotice" resultType="NoticeVo">
+	<!--  관리자 공지사항 보여주기 -->
+	<select id="managerNoticeShow" resultType="NoticeVo">
 		select * from tbl_notice
-		where important = 'Y'
+		where important = 'M'
 	</select>
 	
 	   <!--  첨부파일등록 -->

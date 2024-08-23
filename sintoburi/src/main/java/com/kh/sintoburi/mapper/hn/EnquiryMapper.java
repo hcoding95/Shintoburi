@@ -68,5 +68,5 @@ public interface EnquiryMapper {
 	public int choiceImageDelete(@Param("uuid") String uuid);
 	
 	// 미답변 알람
-	public List<EnquiryVo> statusAlarm();
+	public List<EnquiryVo> noReplyShow();
 }

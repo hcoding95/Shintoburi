@@ -193,5 +193,11 @@ public class mapperTest {
 		NoticeVo noticeVo = noticeMapper.getNextNotice(21);
 		log.info(noticeVo);
 	}
+	
+	@Test
+	public void list() {
+		List<HnUserDto> list=  userMapper.gradeUpdateShow();
+		log.info(list);
+	}
 
 }

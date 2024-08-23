@@ -74,8 +74,6 @@ $(function(){
 
 </script>
 
-
-
  <div class="row">
 
      <!-- Area Chart -->
@@ -112,8 +110,6 @@ $(function(){
 					<th>제목</th>
 					<th>항목</th>
 					<th>작성일</th>
-				
-					
 				</tr>
 			</thead>
 			<tbody>
@@ -179,6 +175,51 @@ $(function(){
     </div>
 </div>
 <!-- // Pagination -->
+            </div> <!-- card-body -->
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+     <!-- Area Chart -->
+     <div class="col-xl-12 col-lg-12">
+         <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">관리자 공지사항</h6>
+			</div>
+			
+             <!-- Card Body -->
+             <div class="card-body"> 
+<div class="row">
+	<div class="col-md-12">
+		<table class="table">
+			<thead>
+				<tr class="col-md-8 text-center">
+					<th>제목</th>
+					<th>작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${managerNoticeList}" var="vo">
+			<c:if test="${vo.important == 'M'}">
+
+				<tr class="col-md-8 text-center">
+					<td><a href="/hn/manager/notice/noticeDetail/${vo.n_no}">${vo.title}</a></td>
+					<td><fmt:formatDate value="${vo.write_date}"
+							pattern="yyyy-MM-dd" /></td>
+				</tr>
+			</c:if> 
+			</c:forEach>	
+			</tbody>
+		</table> 
+		<div class="row">
+  
+</div>
+	</div>
+</div>
+
             </div> <!-- card-body -->
         </div>
     </div>

@@ -2,9 +2,6 @@ package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.sintoburi.domain.hn.HnCriteria;
-import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.domain.hn.HnUserVo;
@@ -89,6 +85,14 @@ public class HnUserController {
 		boolean result = userService.modifyGrade(user_id, grade);
 		System.out.println("modGrade...result:" + result);
 		return result;
+	}
+	
+	// 등급 변경해야하는 회원 리스트
+	@GetMapping("/gradeChangeList")
+	public String gradeUpdateShow(Model model) {
+		List<HnUserDto> list = userService.gradeChangeList();
+		model.addAttribute("gradeChangeList",list);
+		return "hn/manager/include/header";
 	}
 	
 

@@ -185,8 +185,8 @@ public class EnquriyServiceImpl implements EnquiryService {
 	}
 
 	@Override
-	public List<EnquiryVo> statusAlarm() {
-		List<EnquiryVo> list = enquiryMapper.statusAlarm();
+	public List<EnquiryVo> noReplyShow() {
+		List<EnquiryVo> list = enquiryMapper.noReplyShow();
 		return list;
 	}
 

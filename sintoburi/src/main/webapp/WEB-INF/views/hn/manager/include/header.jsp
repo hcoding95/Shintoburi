@@ -51,8 +51,28 @@
 
 <!--     <script src="/resources/js/demo/chart-area-demo.js"></script> -->
 <!--     <script src="/resources/js/demo/chart-pie-demo.js"></script> -->
+<script >
 
+$(function() {
+	
+	// 관리자 중요 공지사항 안내
+	$.ajax({
+	    type: "get",
+	    url: "/hn/manager/notice/managerNoticeShow",
+	    success: function(rData) {
+	        console.log(rData);
+	        $('#noticeShow').html('<strong>관리자 중요 공지사항:</strong> <a href="/hn/manager/notice/noticeDetail/49">' + rData.title + '</a>');
+	    }
+	});
+	
+	
+	// 등급알람
+	$("#alarmShow").click(function() {
+		
+	});
+});
 
+</script>
  
 </head>
 
@@ -70,7 +90,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">관리자 페이지</div>
+                <div class="sidebar-brand-text mx-3">관리자 페이지 </div>
             </a>
 
             <!-- Divider -->
@@ -78,9 +98,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>매출현황</span></a>
+                <a class="nav-link" href="/hn/mypage/enqList">
+               
+                    <span>SINTOBURI MAIN</span></a>
             </li>
 
             <!-- Divider -->
@@ -88,7 +108,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                상품관리
+                상품관리 
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -131,7 +151,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                게시글관리
+                게시글관리 
             </div>
             
            
@@ -241,7 +261,7 @@
 			    	margin-right: 0px; 
 					">
 			    <div id="noticeShow" class="alert alert-info" role="alert">
-			        <strong>공지사항:</strong> 중요한 공지사항 표시
+			        <strong>관리자 중요 공지사항:</strong> 
 			    </div>
 			    
 			</div>
@@ -276,7 +296,7 @@
                         </li>
 
                         <!-- Nav Item - Alerts -->
-                        <li  id="messageShow" class="nav-item dropdown no-arrow mx-1">
+                        <li  id="alarmShow" class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i  class="fas fa-bell fa-fw"></i>

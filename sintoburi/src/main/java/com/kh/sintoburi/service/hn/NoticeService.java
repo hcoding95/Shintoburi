@@ -11,6 +11,12 @@ public interface NoticeService {
 	// 공지사항 목록
 	public List<NoticeVo> getListNotice(HnCriteria criteria);
 
+	// 관리자 공지사항 목록
+	public List<NoticeVo> managerNoticeList();
+
+	// 관리자 공지사항 보여주기
+	public NoticeVo managerNoticeShow();
+
 	// 공지사항 게시글 갯수
 	public int getTotalCount(HnCriteria criteria);
 
@@ -34,9 +40,6 @@ public interface NoticeService {
 
 	// 공지사항 항목 업데이트
 	public boolean updateImportant(int n_no, String important);
-
-	// 중요공지사항
-	public NoticeVo importantNotice();
 
 	// 선택 이미지 삭제
 	public boolean choiceImageDelete(String uuid);

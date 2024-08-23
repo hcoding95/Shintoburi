@@ -35,12 +35,12 @@ $(function() {
 					        </a>
 					    </div>
 					    <div class="col" style="padding: 0;">
-					        <a href="/hn/mypage/enqList" style="text-decoration: none; color: black; background-color: #D6EFD8; padding: 10px; display: block; margin-bottom: -1px;">
+					        <a href="/hn/mypage/enqList" style="text-decoration: none; color: black; background-color: #ffffff; padding: 10px; display: block; margin-bottom: -1px;">
 					            <h3 style="margin: 0;">1:1 문의사항</h3>
 					        </a>
 					    </div>
 					    <div class="col" style="padding: 0;">
-					        <a href="/hn/mypage/faqList" style="text-decoration: none; color: black; background-color: #D6EFD8; padding: 10px; display: block;">
+					        <a href="/hn/mypage/faqList" style="text-decoration: none; color: black; background-color: #ffffff; padding: 10px; display: block;">
 					            <h3 style="margin: 0;">자주하는 질문</h3>
 					        </a>
 					    </div>

@@ -90,11 +90,17 @@
 </head>
 <body>
     <div id="wrapper">
-        <div id="content-wrapper">
-            <div id="sidebar-wrapper">
-                <div class="center-text">
+        <div id="content-wrapper" style="margin-top: 20px;">
+            <div id="sidebar-wrapper" >
+                <div class="center-text" style="margin-top: 25px;">
                     <span>마이페이지</span>
                 </div>
+                 <ul class="sub-menu" style="margin-top: 0px; margin-bottom: 0px;">
+				    <li>
+				        <span style="color: green;font-weight: bold;">${login.user_id}님</span> 반갑습니다.
+				    </li>
+				</ul>
+                      
                 <div class="list-group list-group-flush">
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
                         마이쇼핑

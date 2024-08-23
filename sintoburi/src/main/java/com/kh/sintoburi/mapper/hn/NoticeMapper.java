@@ -14,6 +14,12 @@ public interface NoticeMapper {
 	// 공지사항 목록
 	public List<NoticeVo> selectNotice();
 
+	// 관리자 공지사항 목록
+	public List<NoticeVo> selectManagerNotice();
+
+	// 관리자 공지사항 보여주기
+	public NoticeVo managerNoticeShow();
+
 	// 공지사항 페이징
 	public List<NoticeVo> getNoticePaging(HnCriteria criteria);
 
@@ -41,9 +47,6 @@ public interface NoticeMapper {
 	// 공지사항 항목 업데이트
 	public int updateImportant(@Param("n_no") int n_no, @Param("important") String important);
 
-	// 중요공지사항
-	public NoticeVo importantNotice();
-
 	// 첨부파일 등록
 	public int imageInsert(NoticeImageVo noticeImageVo);
 
@@ -52,7 +55,7 @@ public interface NoticeMapper {
 
 	// 첨부파일삭제
 	public int imageDelete(@Param("n_no") int n_no);
-	
-	//선택한 이미지 삭제
+
+	// 선택한 이미지 삭제
 	public int choiceImageDelete(@Param("uuid") String uuid);
 }

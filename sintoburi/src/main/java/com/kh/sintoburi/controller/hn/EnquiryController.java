@@ -136,10 +136,10 @@ public class EnquiryController {
 		}
 	}
 
-	// 문의사항 알람
-	@GetMapping("/statusAlarm")
-	public String statusAlarm(Model model) {
-		List<EnquiryVo> list = enquiryService.statusAlarm();
+	// 미답변 알림 보여주기
+	@GetMapping("/noReplyShow")
+	public String noReplyShow(Model model) {
+		List<EnquiryVo> list = enquiryService.noReplyShow();
 		model.addAttribute("alarmList",list);
 		return "hn/manager/include/header";
 	}

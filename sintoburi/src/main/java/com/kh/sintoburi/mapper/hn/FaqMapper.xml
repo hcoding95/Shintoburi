@@ -39,8 +39,8 @@
                                 title LIKE '%' || #{keyword} || '%'
                             </when>
                             <when test="type == 'F'.toString()">
-                                    f_no like '%' || #{keyword} || '%'
-                                </when>
+                                f_no like '%' || #{keyword} || '%'
+                            </when>
                         </choose>
                     </foreach>
                 </trim>

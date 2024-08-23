@@ -38,4 +38,7 @@ public interface HnUserService {
 	// 등급 처리완료시 business 1로업데이트
 	public boolean updateBusiness(String user_id);
 
+	// 등급 변경 해야하는 회원 리스트
+	public List<HnUserDto> gradeChangeList();
+
 }

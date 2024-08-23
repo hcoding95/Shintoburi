@@ -68,7 +68,7 @@ $(function(){
 		
 		<div class="row">
 		    <div class="col-md-12 text-right">
-		        <a href="/hn/manager/faqRegisterForm">
+		        <a href="/hn/manager/faq/faqRegisterForm">
 		            <button class="btn btn-primary btn" type="button">작성하기</button>
 		        </a>
 		    </div>

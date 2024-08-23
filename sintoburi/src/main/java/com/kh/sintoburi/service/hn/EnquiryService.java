@@ -46,7 +46,7 @@ public interface EnquiryService {
 	public boolean gradeUpdateStatus(int eno, String status);
 
 	// 미답변 알람
-	public List<EnquiryVo> statusAlarm();
+	public List<EnquiryVo> noReplyShow();
 
 	// 선택 이미지 삭제
 	public boolean choiceImageDelete(String uuid);

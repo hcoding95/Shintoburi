@@ -80,4 +80,11 @@ public class HnUserServiceImpl implements HnUserService {
 		return (count == 1) ? true : false;
 	}
 
+	// 등급 변경해야하는 회원 리스트 
+	@Override
+	public List<HnUserDto> gradeChangeList() {
+		List<HnUserDto> list = userMapper.gradeUpdateShow();
+		return list;
+	}
+
 }

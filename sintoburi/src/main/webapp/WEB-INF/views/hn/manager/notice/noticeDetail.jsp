@@ -72,7 +72,7 @@ $(function() {
              <!-- Card Header - Dropdown -->
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">문의 사항</h6>
+                 <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
                  
              </div>
              <!-- Card Body -->
@@ -92,6 +92,7 @@ $(function() {
 			                     <select id="important" name="important " class="form-control sEditable" style="width: 150px;" disabled>
 			                         <option value="N" <c:if test="${noticeVo.important == 'N'}">selected</c:if>>일반</option>
    									 <option value="Y" <c:if test="${noticeVo.important == 'Y'}">selected</c:if>>중요</option>
+   									 <option value="M" <c:if test="${noticeVo.important == 'M'}">selected</c:if>>관리자</option>
 			                    </select>
 			               	 </div>
 

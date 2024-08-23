@@ -28,6 +28,12 @@ public class NoticeServiceImpl implements NoticeService {
 		List<NoticeVo> list = noticeMapper.getNoticePaging(criteria);
 		return list;
 	}
+	
+	@Override
+	public List<NoticeVo> managerNoticeList() {
+		List<NoticeVo> list = noticeMapper.selectManagerNotice();
+		return list;
+	}
 
 	@Override
 	public NoticeVo selectByNno(int n_no) {
@@ -137,8 +143,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public NoticeVo importantNotice() {
-		NoticeVo noticeVo = noticeMapper.importantNotice();
+	public NoticeVo managerNoticeShow() {
+		NoticeVo noticeVo = noticeMapper.managerNoticeShow();
 		return noticeVo;
 	}
 
@@ -153,5 +159,7 @@ public class NoticeServiceImpl implements NoticeService {
 		int count = noticeMapper.choiceImageDelete(uuid);
 		return (count == 1)? true : false;
 	}
+
+
 
 }
