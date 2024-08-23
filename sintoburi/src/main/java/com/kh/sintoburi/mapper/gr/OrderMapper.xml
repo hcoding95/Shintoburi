@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kh.sintoburi.mapper.gr.OrderMapper">
+  
+  <insert id="insert">
+  	<selectKey keyProperty="ono" order="BEFORE"
+			resultType="int">
+			select seq_order.nextval from dual
+		</selectKey>
+    insert into tbl_order
+		(ono, user_phone, user_name, address, user_id)
+  	values
+  		(#{ono}, #{user_phone}, #{user_name}, #{address}, #{user_id})
+  </insert>
+  
+   
+  <select id="getOrderList" resultType="OrderVo">
+  	select * from tbl_order
+	where user_id = #{user_id}
+	order by ono desc
+  </select>
+  
+  <select id="getDetailList" resultType="OrderDetailDto">
+  	select o.user_id, o.ono, p.pno, p.name, i.img_path, d.p_count, p.price, o.delivery_status, o.order_date
+	from tbl_product p, tbl_img i, tbl_order_detail d , tbl_order o
+		where o.ono =  #{ono}
+	    and o.user_id = #{user_id}
+	    and o.ono= d.ono
+	    and d.pno = p.pno
+	    and p.pno = i.pno
+	order by o.order_date desc
+  </select>
+  
+  
+  <select id="getDeliveryInfo" resultType="DeliveryDto">
+  	select user_name, user_phone, address
+	from tbl_users
+	where user_id = #{user_id}
+  </select>
+  
+  <insert id="insertDetail">
+  	insert into tbl_order_detail
+  		(odno, ono, pno, p_count)
+  	values
+  		(seq_order_detail.nextval, #{ono}, #{pno}, #{p_count})
+  </insert>
+  
+  <update id="updateDeliveryCharge">
+  	update tbl_order set
+	   delivery_charge = (
+	 select CASE WHEN sum_total >= 30000 THEN 0 
+			    ELSE 3000 
+			END AS delivery_charge from
+	 (select  sum(total) sum_total
+	 from (select (p.price * d.p_count) total
+	         from tbl_product p, tbl_order_detail d
+	         where p.pno = d.pno
+	         and d.ono = #{ono})))
+	where ono = #{ono}
+  </update>
+  
+  <update id="updateSumTotal">
+  update tbl_order set
+	sum_total = (
+	select sum(total) 
+ 	from (select (p.price * d.p_count) total
+         from tbl_product p, tbl_order_detail d
+         where p.pno = d.pno
+         and d.ono = #{ono}))
+  where ono = #{ono}
+  </update>
+  
+  <update id="updateTotalOrder">
+  UPDATE tbl_order
+	SET PAY_AMOUNT = sum_total + delivery_charge
+	WHERE ono =  #{ono}
+  </update>
+  
+ </mapper>

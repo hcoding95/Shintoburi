@@ -72,8 +72,8 @@
 	  <!-- 글목록 (페이징) --> 
 	<select id="getListWithPaging" resultType="BasketDetailDto">
 		select * from (
-			select k.user_id, b.pno, p.name, i.img_path, b.p_count, p.price, b.p_count*p.price total_price, B.PUT_DATE,
-                row_number() over (order by put_date desc) as rn
+			select k.user_id, p.name, p.price, i.img_path, b.pno, b.p_count, b.bdno, b.put_date, (b.p_count*p.price) total_price,
+                row_number() over (order by put_date desc) as rn 
 	        from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k
 	        where b.bno = k.bno
 	        and k.user_id = #{user_id}
@@ -85,21 +85,76 @@
 		and rn &lt;= #{pageNum} * #{amount}
 	</select> 
 
+ 	<!-- 글목록 (페이징) -->  
+<!-- 	<select id="getListWithPaging" resultType="BasketDetailDto"> -->
+<!-- 	    select * from ( -->
+<!-- 	        select k.user_id, p.name, p.price, i.img_path, b.pno, b.p_count, b.bdno, b.put_date,  -->
+<!-- 	               CASE  -->
+<!-- 	                   WHEN (b.p_count * p.price) >= 30000 THEN 0  -->
+<!-- 	                   ELSE 3000  -->
+<!-- 	               END as delivery_charge, -->
+<!-- 	               ((b.p_count * p.price) +  -->
+<!-- 	               CASE  -->
+<!-- 	                   WHEN (b.p_count * p.price) >= 30000 THEN 0  -->
+<!-- 	                   ELSE 3000  -->
+<!-- 	               END) as total_price, -->
+<!-- 	               row_number() over (order by put_date desc) as rn  -->
+<!-- 	        from tbl_basket_detail b -->
+<!-- 	        join tbl_product p on b.pno = p.pno -->
+<!-- 	        join tbl_img i on p.pno = i.pno -->
+<!-- 	        join tbl_basket k on b.bno = k.bno -->
+<!-- 	        where k.user_id = #{user_id} -->
+<!-- 	        order by B.PUT_DATE desc -->
+<!-- 	    )  -->
+<!-- 	    where rn &gt; (#{pageNum} - 1) * #{amount} -->
+<!-- 	    and rn &lt;= #{pageNum} * #{amount} -->
+<!-- 	</select> -->
+
+
 	 <!-- 게시글 개수 -->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from tbl_basket_detail
 	</select> 
 	
-	
+	<!-- 장바구니 합계 가격 -->
+<!-- 	<select id="getSumPrice" resultType="int"> -->
+<!-- 		select sum(total_price) sum_price -->
+<!-- 		from (select d.p_count cnt, d.delivery_charge, p.price price,  ((d.p_count*p.price)+d.delivery_charge) total_price -->
+<!-- 				from tbl_basket_detail d, tbl_product p -->
+<!-- 				where d.pno = p.pno -->
+<!-- 				and d.bno	= (	select bno  -->
+<!-- 								from tbl_basket -->
+<!--                   				where user_id = #{user_id})) -->
+<!-- 	</select> -->
+
+	<!-- 장바구니 합계 가격 -->
 	<select id="getSumPrice" resultType="int">
-		select sum(total_price)  sum_price
-		from (	select d.p_count cnt, p.price price,  d.p_count*p.price total_price
-				from tbl_basket_detail d, tbl_product p
-				where d.pno = p.pno
-				and d.bno	= (	select bno 
-								from tbl_basket
-                  				where user_id = #{user_id}))
+	    select nvl(sum(total_price),0) sum_price
+	    from (
+	        select d.p_count cnt, 
+	               CASE 
+	                   WHEN (d.p_count * p.price) >= 30000 THEN 0 
+	                   ELSE 3000 
+	               END as delivery_charge,
+	               p.price price,  
+	               ((d.p_count * p.price) + 
+	               CASE 
+	                   WHEN (d.p_count * p.price) >= 30000 THEN 0 
+	                   ELSE 3000 
+	               END) as total_price
+	        from tbl_basket_detail d
+	        join tbl_product p on d.pno = p.pno
+	        where d.bno = (
+	            select bno 
+	            from tbl_basket
+	            where user_id = #{user_id}
+	        )
+	    )
+	</select>
 	
+	<select id="selectByBdno" resultType="BasketDetailDto">
+		select bdno, pno, p_count from tbl_basket_detail
+ 		where bdno = #{bdno}
 	</select>
  
   </mapper>
