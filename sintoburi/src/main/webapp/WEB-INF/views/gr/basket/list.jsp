@@ -6,8 +6,8 @@
 
 <script>
 $(function() {
-	//개수 수정
 	
+	//개수 수정
 	$(".btnp_count").click(function(){
 		let bdno = $(this).attr("data-bdno");
 		let p_count = $(this).attr("data-pcount");
@@ -103,6 +103,26 @@ $(function() {
 	    });
 	
 	
+	// 체크한 것 주문하기로 넘겨주기
+		$("#btnOrder").click(function(e){
+			e.preventDefault();
+			
+			
+			let checkedItems = $("[name=selectedItems]:checked");
+			console.log("checkedItems:", checkedItems);
+			$.each(checkedItems, function(idx, val) {
+				let bdno = checkedItems.eq(idx).val();
+				console.log("bdno:", bdno);
+				let inputTag = `<input type='hidden' name='bdnos' value='\${bdno}'>`;
+				console.log("inputTag:", inputTag);
+				$("#frm_bdnos").append(inputTag);
+// 				
+			});
+			
+ 			$("#frm_bdnos").submit();
+		
+// 			
+ 		});
 	
 });
 
@@ -116,7 +136,7 @@ $(function() {
 			
 			<c:set var="user_id" value="${detailDto.user_id}" />
 			 <div>
-				${login.user_id}님의 장바구니입니다. (합계 금액: ${sumPrice})
+				${login.user_id}님의 장바구니입니다. (합계 금액: ${sumPrice}) 
 					
 					
 			 </div>
@@ -157,13 +177,15 @@ $(function() {
 				</tbody>
 			</table>
 			
+			<form id="frm_bdnos" action="/gr/order/pre_order" method="post" style="display:none">
+				
+			</form>
 									
 		<div class="container-fluid">
 			<div class="row justify-content-end">
 			    <div class="col-auto">
-			        <a href="http://localhost/gr/basket/orderForm">
-			            <button type="button" id="btnOrder" name="btnOrder" class="btn btn-warning">주문하기</button>
-			        </a>
+			        <a href="/gr/order/order_form"
+			        	id="btnOrder" class="btn btn-warning">주문하기</a>
 			    </div>
 
 			    <div class="col-auto">
@@ -187,7 +209,7 @@ $(function() {
 	
 		<!-- Pagination -->
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-12 mt-4" >
 		<nav>
 			<ul class="pagination justify-content-center">
 

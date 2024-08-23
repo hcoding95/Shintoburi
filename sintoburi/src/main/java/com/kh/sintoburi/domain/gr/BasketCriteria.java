@@ -11,14 +11,14 @@ import lombok.ToString;
 public class BasketCriteria {
 
 	private int pageNum = 1; //페이지 번호
-	private int amount = 10; // 한 페이지 당 보여질 게시물 갯수
+	private int amount = 5; // 한 페이지 당 보여질 게시물 갯수
 	private String user_id;
 //	private String type; // 검색항목(제목/내용/작성자) - TC
 //	private String keyword; // 검색어(사용자 입력값)
 	
 	
 	public BasketCriteria() {
-		this(1,10, null); //1페이지 10개
+		this(1,5, null); //1페이지 10개
 	}
 	
 	public BasketCriteria(String user_id) {

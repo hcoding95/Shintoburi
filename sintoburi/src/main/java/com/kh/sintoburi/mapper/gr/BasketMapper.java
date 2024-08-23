@@ -46,4 +46,6 @@ public interface BasketMapper {
 	//가격 합계
 	public int getSumPrice(@Param("user_id") String user_id);
 	
+	public BasketDetailDto selectByBdno(@Param("bdno") int bdno);
+	
 }

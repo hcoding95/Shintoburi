@@ -28,6 +28,7 @@ import com.kh.sintoburi.service.gr.BasketService;
 public class BasketController {
 	@Autowired
 	private BasketService basketService;
+	
 		
 	// 장바구니 담기
 	@PostMapping("/putBasket")
@@ -57,7 +58,7 @@ public class BasketController {
 	
 	// 장바구니 목록 보기
 	@GetMapping("/list")
-	public String main(Model model, HttpSession session, BasketCriteria criteria) {
+	public String list(Model model, HttpSession session, BasketCriteria criteria) {
 		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
 		LoginUser dto = (LoginUser)session.getAttribute("login");
 		if (dto == null) {
@@ -135,6 +136,6 @@ public class BasketController {
 	
 	
 	
-		
+	
 
 }
