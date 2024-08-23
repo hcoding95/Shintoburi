@@ -21,7 +21,7 @@ public class HnUserVo {
 	private String grade;
 	private int point;
 	private int  business;
-	private int  business_num;
+	private String  business_num;
 	private Date  last_login;
 
 }

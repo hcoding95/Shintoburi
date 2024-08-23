@@ -12,7 +12,72 @@
 <!--  자주하는질문 목록 -->
 <select id="selectFaq" resultType="FaqVo">
 	select * from tbl_faq
+	order by f_no desc
 </select>
+
+<!--  자주하는질문 페이징 -->
+	<select id="getFaqPaging" resultType="FaqVo">
+    select *
+    from (
+        select
+            f_no,
+			title,
+			content,
+			write_date,
+            row_number() over (order by f_no desc) as rn
+        from tbl_faq
+        <where>
+            
+           <if test="type != null">
+                <trim prefix="(" suffix=")" prefixOverrides="or">
+                    <foreach item="type" collection="typeArr" separator="or">
+                        <choose>
+                        	 <when test="type == 'A'.toString()">
+                                1=1
+                            </when>
+                            <when test="type == 'T'.toString()">
+                                title LIKE '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'F'.toString()">
+                                f_no like '%' || #{keyword} || '%'
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </where>
+    ) subquery
+  where rn &gt; (#{pageNum} - 1) * #{amount}
+		and rn &lt;= #{pageNum} * #{amount}
+</select>
+
+<!-- 게시글 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_faq
+		<where>
+			<if test="type != null">
+				<trim prefix="(" suffix=")" prefixOverrides="or">
+					<foreach item="type" collection="typeArr">
+						<trim prefix="or">
+							<choose>
+                                <when test="type == 'A'.toString()">
+                                1=1
+                            </when>
+                            <when test="type == 'T'.toString()">
+                                title LIKE '%' || #{keyword} || '%'
+                            </when>
+                            <when test="type == 'F'.toString()">
+                                    f_no LIKE '%' || #{keyword} || '%'
+                               </when>
+                                
+                            </choose>
+						</trim>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+	</select> 
+	
 
 <!-- 데이터1개 -->
 <select id="selectByFno" resultType="FaqVo">

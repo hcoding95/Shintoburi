@@ -1,13 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 
 <head>
+<style>
+.alert.alert-info {
+    padding: 0.5rem 1rem; /* 상하 패딩을 줄여서 세로 폭을 줄입니다 */
+    line-height: 1.2; /* 줄 간격을 줄여서 세로 폭을 줄입니다 */
+   
 
+}
+
+
+
+</style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,11 +51,31 @@
 
 <!--     <script src="/resources/js/demo/chart-area-demo.js"></script> -->
 <!--     <script src="/resources/js/demo/chart-pie-demo.js"></script> -->
-    
-<script>
+<script >
+
+$(function() {
+	
+	// 관리자 중요 공지사항 안내
+	$.ajax({
+	    type: "get",
+	    url: "/hn/manager/notice/managerNoticeShow",
+	    success: function(rData) {
+	        console.log(rData);
+	        $('#noticeShow').html('<strong>관리자 중요 공지사항:</strong> <a href="/hn/manager/notice/noticeDetail/49">' + rData.title + '</a>');
+	    }
+	});
+	
+	
+	// 등급알람
+	$("#alarmShow").click(function() {
+		
+	});
+});
 
 </script>
+ 
 </head>
+
 
 <body id="page-top">
 
@@ -58,7 +90,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">관리자 페이지</div>
+                <div class="sidebar-brand-text mx-3">관리자 페이지 </div>
             </a>
 
             <!-- Divider -->
@@ -66,9 +98,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>매출현황</span></a>
+                <a class="nav-link" href="/hn/mypage/enqList">
+               
+                    <span>SINTOBURI MAIN</span></a>
             </li>
 
             <!-- Divider -->
@@ -76,7 +108,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                상품관리
+                상품관리 
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -119,7 +151,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                게시글관리
+                게시글관리 
             </div>
             
            
@@ -131,8 +163,8 @@
 			    </a>
 			    <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
 			        <div class="bg-white py-2 collapse-inner rounded">
-			            <a class="collapse-item" href="/hn/manager/userList">회원목록</a>
-			            <a class="collapse-item" href="/hn/manager/managerList">매니저목록</a>
+			            <a class="collapse-item" href="/hn/manager/user/userList">회원목록</a>
+			            <a class="collapse-item" href="/hn/manager/user/managerList">관리자목록</a>
 			        </div>
 			    </div>
 			</li>
@@ -145,8 +177,8 @@
 			    </a>
 			    <div id="collapseInquiry" class="collapse" aria-labelledby="headingInquiry" data-parent="#accordionSidebar">
 			        <div class="bg-white py-2 collapse-inner rounded">
-			            <a class="collapse-item" href="/hn/manager/goodsEnqList">상품문의</a>
-			            <a class="collapse-item" href="/hn/manager/gradeEnqList">등급문의</a>
+			            <a class="collapse-item" href="/hn/manager/enquiry/goodsList">상품문의</a>
+			            <a class="collapse-item" href="/hn/manager/enquiry/gradeList">등급문의</a>
 			        </div>
 			    </div>
 			</li>   
@@ -154,7 +186,7 @@
 			
             
               <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/noticeList">
+                <a class="nav-link" href="/hn/manager/notice/noticeList">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>공지사항</span>
                 </a>
@@ -162,7 +194,7 @@
             </li>
             
              <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/faqList">
+                <a class="nav-link" href="/hn/manager/faq/faqList">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>자주하는질문</span>
                 </a>
@@ -174,7 +206,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="/hn/manager/reportList">
+                <a class="nav-link" href="/hn/manager/report/reportList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>신고게시글</span></a>
             </li>
@@ -210,20 +242,32 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+<!--                     Topbar Search -->
+<!--                     <form -->
+<!--                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"> -->
+<!--                         <div class="input-group"> -->
+<!--                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." -->
+<!--                                 aria-label="Search" aria-describedby="basic-addon2"> -->
+<!--                             <div class="input-group-append"> -->
+<!--                                 <button class="btn btn-primary" type="button"> -->
+<!--                                     <i class="fas fa-search fa-sm"></i> -->
+<!--                                 </button> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </form> -->
+				<div class="container-fluid" style="
+				    width: 900px; 
+			    	margin-left: 0px; 
+			    	margin-right: 0px; 
+					">
+			    <div id="noticeShow" class="alert alert-info" role="alert">
+			        <strong>관리자 중요 공지사항:</strong> 
+			    </div>
+			    
+			</div>
+			
+			
+			
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -252,19 +296,21 @@
                         </li>
 
                         <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
+                        <li  id="alarmShow" class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i  class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
+                            
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
+                                    <c:forEach var="vo" items="${alarmList}">
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-primary">
@@ -272,32 +318,12 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <div class="small text-gray-500">${vo.user_id}</div>
                                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
+                             </c:forEach>
+                               
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
@@ -406,7 +432,7 @@
                         	</c:when>
                         	<c:otherwise>
                         		 <li class="nav-item dropdown no-arrow">
-                        		 	<a href="/hn/user/login" class="btn btn-primary my-3">로그인</a>
+                        		 	<a href="/hn/main/login" class="btn btn-primary my-3 btnLogin">로그인</a>
                         		 </li>
                         	</c:otherwise>
                         </c:choose>

@@ -5,6 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+
+
 <style>
         body, html {
             height: 100%;
@@ -102,6 +104,26 @@ $(function() {
             textarea.attr("placeholder", "");
         }
     });
+    
+    $("#enquiryForm").submit(function(e) {
+        e.preventDefault(); 
+        
+        let formData = new FormData(this); 
+
+        $.ajax({
+            type: "post",
+            url: $(this).attr("action"),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                
+                alert("문의사항이 등록되었습니다.");
+                
+                window.location.href = '/hn/mypage/enqList'; 
+            }
+        });
+    });
 });
 
 </script>
@@ -155,10 +177,10 @@ $(function() {
                     <!-- Form Section -->
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" action="/hn/mypage/enqRegister" method="post" enctype="multipart/form-data">
+                            <form id="enquiryForm" role="form" action="/hn/mypage/enqRegister" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="user_id">작성자</label>
-                                    <input value="user00" type="text" class="form-control" id="user_id" name="user_id" readonly />
+                                    <input value="${login.user_id}" type="text" class="form-control" id="user_id" name="user_id" readonly />
                                 </div>
 
                                 <div class="form-group">
@@ -173,12 +195,12 @@ $(function() {
 
                                 <div class="form-group">
                                     <label for="content">내용</label>
-                                    <textarea rows="10" class="form-control" id="content" name="content"></textarea>
+                                    <textarea rows="10" wrap="hard" class="form-control" id="content" name="content"></textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="image">첨부파일</label>
-                                    <input  type="file" id="image" name="image">
+                                    <input  type="file" id="image" name="image" multiple>
                                 </div>
 
                                

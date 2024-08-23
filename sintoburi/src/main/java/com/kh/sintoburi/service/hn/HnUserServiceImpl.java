@@ -49,19 +49,42 @@ public class HnUserServiceImpl implements HnUserService {
 	@Override
 	public boolean modifyGrade(String user_id, String grade) {
 		int count = userMapper.updateGrade(user_id, grade);
+		System.out.println("count:" + count);
 		return (count == 1) ? true : false;
 	}
 
+	// 회원 전체 데이터 1개
 	@Override
-	public HnUserDto selectById(String user_id) {
-		HnUserDto dto = userMapper.selectById(user_id);
-		return dto;
+	public HnUserVo selectById(String user_id) {
+		HnUserVo vo = userMapper.selectById(user_id);
+		return vo;
 	}
 
 	@Override
 	public HnUserDto login(HnLoginDto dto) {
 		HnUserDto userDto = userMapper.login(dto);
 		return userDto;
+	}
+
+	// 사업자번호 등록
+	@Override
+	public boolean modifyBusinessNum(String user_id, String business_num) {
+		int count = userMapper.updateBusinessNum(user_id, business_num);
+		return (count == 1) ? true : false;
+	}
+
+	// 등급 처리완료시 business 1로 업데이트 
+	@Override
+	public boolean updateBusiness(String user_id) {
+		int count = userMapper.updateBusiness(user_id);
+		return (count == 1) ? true : false;
+	}
+
+	// 등급 변경해야하는 회원 리스트 
+	@Override
+	public List<HnUserDto> gradeChangeList() {
+		List<HnUserDto> list = userMapper.gradeUpdateShow();
+		return list;
 	}
 
 }

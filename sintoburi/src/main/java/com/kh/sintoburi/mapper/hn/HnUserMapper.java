@@ -24,7 +24,6 @@ public interface HnUserMapper {
 	// 매니저 목록 페이징 
 	public List<HnUserDto> managerListPaging(HnCriteria criteria);
 	
-	
 	// 회원 게시글 갯수
 	public int getTotalCount(HnCriteria criteria);	
 
@@ -35,7 +34,7 @@ public interface HnUserMapper {
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public HnUserDto selectById(@Param("user_id") String user_id);
+	public HnUserVo selectById(@Param("user_id") String user_id);
 
 	// 로그인
 	public HnUserDto login(HnLoginDto dto);
@@ -51,5 +50,13 @@ public interface HnUserMapper {
 
 	// 비밀번호변경
 	public int updatePw(Map<String, String> map);
-
+	
+	// 사업자번호 업데이트
+	public int updateBusinessNum(@Param("user_id") String user_id, @Param("business_num") String business_num);
+	
+	// 등급 처리완료시 business 1로업데이트
+	public int updateBusiness(@Param("user_id") String user_id);
+	
+	// 등급 변경 해야하는 회원 리스트
+	public List<HnUserDto> gradeUpdateShow();
 }

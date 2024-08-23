@@ -21,7 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			System.out.println("obj:" + obj);
 
 			if (obj == null) { // 로그인 실패
-				modelAndView.setViewName("redirect:/hn/user/login");
+				modelAndView.setViewName("redirect:/hn/main/login");
 			} else {
 				// 로그인 성공
 				HttpSession session = request.getSession();
@@ -37,7 +37,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 					location = "/hn/";
 					break;
 				case "관리자":
-					location = "/hn/manager/userList";
+					location = "/hn/manager/user/userList";
 					break;
 				default:
 					location = "/";

@@ -18,7 +18,7 @@ public class ReportPostServiceImpl implements ReportPostService{
 	@Override
 	public List<ReportPostVo> ReportList(HnCriteria criteria) {
 //		List<ReportPostVo> list = reportPostMapper.selectReport();
-		List<ReportPostVo> list = reportPostMapper.getListWithPaging(criteria);
+		List<ReportPostVo> list = reportPostMapper.getReportPaging(criteria);
 		return list;
 	}
 
@@ -32,6 +32,13 @@ public class ReportPostServiceImpl implements ReportPostService{
 	public int getTotalCount(HnCriteria criteria) {
 		int count = reportPostMapper.getTotalCount(criteria);
 		return count;
+	}
+
+	// 처리완료
+	@Override
+	public boolean updateStatus(int re_no) {
+		int count = reportPostMapper.updateStatus(re_no);
+		return (count == 1)? true : false;
 	}
 
 

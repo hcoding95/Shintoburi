@@ -12,23 +12,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.sintoburi.domain.hc.BlogVo;
-import com.kh.sintoburi.domain.hc.LoginDto;
-import com.kh.sintoburi.domain.hc.UserVo;
+import com.kh.sintoburi.domain.hc.HcLoginDto;
+import com.kh.sintoburi.domain.hc.HcUserVo;
 import com.kh.sintoburi.service.hc.BlogService;
-import com.kh.sintoburi.service.hc.UserService;
+import com.kh.sintoburi.service.hc.HcInjectionService;
+import com.kh.sintoburi.service.hc.HcUserService;
 
 @Controller
 @RequestMapping("/hc/main/*")
 public class MainController {
 	
 	@Autowired
-	private UserService userService;
+	private HcUserService userService;
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private HcInjectionService injectionService;
 	
 	@GetMapping("/home")
-	public void home(Model model) {
+	public void home(Model model, HttpSession session) {
 		List<BlogVo> list = blogService.getList();
+		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
+		String login_id = "";
+		if(loginUser != null) {
+			login_id = loginUser.getUser_id();
+		}
+		list = injectionService.checkListFollowAndLike(list, login_id);
 		model.addAttribute("list", list);
 	}
 	
@@ -38,9 +47,8 @@ public class MainController {
 	}
 	
 	@PostMapping("/loginAction")
-	public String loginAction(LoginDto dto, HttpSession session) {
-		System.out.println("내가 받은 dto는?" + dto);
-		UserVo loginVo = userService.login(dto);
+	public String loginAction(HcLoginDto dto, HttpSession session) {
+		HcUserVo loginVo = userService.login(dto);
 		String path = "";
 		if(loginVo != null) {
 			session.setAttribute("login", loginVo);

@@ -1,6 +1,7 @@
 package com.kh.sintoburi.domain.hn;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,8 @@ public class NoticeVo {
 	private int n_no;
 	private String title;
 	private String content;
-	private String image;
 	private Date write_date;
-
+	private String important;
+	private List<NoticeImageVo> imageList;
+	private List<String> imageDel;
 }

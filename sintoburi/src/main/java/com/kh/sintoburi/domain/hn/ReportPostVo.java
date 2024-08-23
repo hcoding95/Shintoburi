@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReportPostVo {
 	private int re_no;
-	private int post_no;
-	private String post_content;
+	private String post_url;
 	private String post_id;
 	private String re_reason;
 	private String re_id;
 	private Date re_date;
 	private String status;
+	private String delete_url;
 
 }

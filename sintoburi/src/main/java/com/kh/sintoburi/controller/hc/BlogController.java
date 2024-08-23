@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hc;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.sintoburi.domain.hc.BlogSettingVo;
 import com.kh.sintoburi.domain.hc.BlogVo;
-import com.kh.sintoburi.domain.hc.ReplyDto;
+import com.kh.sintoburi.domain.hc.HcFollowDto;
+import com.kh.sintoburi.domain.hc.HcReplyDto;
+import com.kh.sintoburi.domain.hc.HcUserVo;
 import com.kh.sintoburi.service.hc.BlogService;
-import com.kh.sintoburi.service.hc.ReplyService;
+import com.kh.sintoburi.service.hc.BlogServiceImpl;
+import com.kh.sintoburi.service.hc.BlogSettingService;
+import com.kh.sintoburi.service.hc.HcFollowService;
+import com.kh.sintoburi.service.hc.HcInjectionService;
+import com.kh.sintoburi.service.hc.HcReplyService;
+import com.kh.sintoburi.service.hc.HcUserService;
 
 @Controller
 @RequestMapping("/hc/blog/*")
@@ -23,19 +33,53 @@ public class BlogController {
 	private BlogService blogService;
 	
 	@Autowired
-	private ReplyService replyService;
+	private HcReplyService replyService;
+	
+	@Autowired
+	private HcInjectionService injectionService;
+	
+	@Autowired
+	private HcUserService userService;
+	
+	@Autowired
+	private HcFollowService followService;
+	
+	@Autowired
+	private BlogSettingService blogSettingService;
 	
 	@GetMapping("/blog")
-	public void blog(String user_id, Model model) {
+	public void blog(String user_id, HttpSession session,Model model) {
+		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
+		System.out.println("로그인한 user정보는?" + loginUser);
+		HcUserVo blog_userVo = userService.searchByUserId(user_id);
+		blog_userVo.setSumFollow(followService.getCountFollower(user_id));
+		String login_id = "";
+		if(loginUser != null) {
+			HcFollowDto followDto = new HcFollowDto();
+			followDto.setUser_follower(loginUser.getUser_id());
+			followDto.setUser_following(blog_userVo.getUser_id());
+			blog_userVo.setCheckFollow(followService.isCheckFollow(followDto));
+			login_id = loginUser.getUser_id();
+		}
+		list = injectionService.checkListFollowAndLike(list, login_id);
+		List<BlogSettingVo> blog_setting = blogSettingService.getSettingList(user_id);
 		model.addAttribute("list", list);
-		
+		model.addAttribute("blog_userVo", blog_userVo);
+		model.addAttribute("blog_setting", blog_setting);
 	}
+	
 	@Transactional
 	@GetMapping("/detail")
-	public void detail(int blog_no, Model model) {
+	public void detail(int blog_no, HttpSession session, Model model) {
 		BlogVo blogVo = blogService.readByBlogNo(blog_no);
-		List<ReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
+		List<HcReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
+		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
+		String login_id = "";
+		if(loginUser != null) {
+			login_id = loginUser.getUser_id();
+		}
+		blogVo = injectionService.checkVoFollowAndLike(blogVo, login_id);
 		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("replyList", replyList);
 	}
@@ -48,6 +92,7 @@ public class BlogController {
 	
 	@PostMapping("/registerAction")
 	public String registeraction(BlogVo blogVo) {
+		System.out.println("내가만들 blogVo는?" + blogVo);
 		String path = "";
 		if(blogService.insert(blogVo)) {
 			path="redirect:/hc/main/home";

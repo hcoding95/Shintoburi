@@ -17,6 +17,7 @@ import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
@@ -142,18 +143,7 @@ public class mapperTest {
 		log.info(list);
 	}
 
-	@Test
-	public void enqMod() {
-		EnquiryVo vo = EnquiryVo.builder()
-				.user_id("user00")
-				.enquiry_type("상품문의")
-				.content("상품문의 - 수정완료")
-				.image("enquiry")
-				.eno(30).build();
 
-		int count = enquiryMapper.update(vo);
-		log.info(count);
-	}
 	
 	@Test
 	public void managerList() {
@@ -164,8 +154,8 @@ public class mapperTest {
 	@Test
 	public void selectById() {
 		String user_id = "user00";
-		HnUserDto dto = userMapper.selectById(user_id);
-		log.info(dto);
+		HnUserVo vo = userMapper.selectById(user_id);
+		log.info(vo);
 	}
 	
 	@Test
@@ -192,5 +182,22 @@ public class mapperTest {
 	log.info(count);
 	}
 	
+	@Test
+	public void preNotice() {
+		NoticeVo noticeVo = noticeMapper.getPreviousNotice(21);
+		log.info(noticeVo);
+	}
+	
+	@Test
+	public void nextNotice() {
+		NoticeVo noticeVo = noticeMapper.getNextNotice(21);
+		log.info(noticeVo);
+	}
+	
+	@Test
+	public void list() {
+		List<HnUserDto> list=  userMapper.gradeUpdateShow();
+		log.info(list);
+	}
 
 }
