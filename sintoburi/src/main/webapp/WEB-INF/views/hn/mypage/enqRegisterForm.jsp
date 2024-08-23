@@ -5,8 +5,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-
-
 <style>
         body, html {
             height: 100%;
@@ -160,9 +158,6 @@ $(function() {
                     </ul>
                 </div>
             </div>
-            
-            
- 
 
             <!-- Main Content -->
             <div id="page-content-wrapper">
@@ -185,7 +180,7 @@ $(function() {
 
                                 <div class="form-group">
                                     <label for="enquiry_type">문의 유형</label>
-                                    <select class="form-select" aria-label="Default select example" id="enquiry_type" name="enquiry_type">
+                                    <select class="form-control" aria-label="Default select example" id="enquiry_type" name="enquiry_type">
                                         <option value="상품문의">상품문의</option>
                                         <option value="배송문의">배송문의</option>
                                         <option value="결제문의">결제문의</option>
