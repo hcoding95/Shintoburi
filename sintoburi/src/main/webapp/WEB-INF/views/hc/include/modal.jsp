@@ -82,18 +82,10 @@
     <div class="modal-dialog modal-fullscreen" role="document">
         <div class="modal-content">
             <div class="modal-body">
-<%--                 <iframe id="myIframe" src="/hc/blog/detail?blog_no=${detailVo.blog_no}" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe> --%>
                 <iframe id="myIframe" src="" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe>
             </div>
             <div class="modal-footer">
             	<div class="modal-left">
-	            	<c:if test="${not empty detailVo.productTagList }">
-            		<c:forEach items="${detailVo.productTagList}" var="tag">
-	            		<div class="cover">
-	            			<a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
-	            		</div>
-            		</c:forEach>
-	            	</c:if>
             	</div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
             </div>

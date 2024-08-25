@@ -369,6 +369,10 @@ body {
     font-weight: bold;
 }
 
+.content-text{
+	white-space: pre-line;
+}
+
 .text-end {
 	border-bottom: 2px solid #ddd; /* 테두리 추가 */
 	display: flex;
@@ -505,7 +509,7 @@ body {
 				          </c:otherwise>
 				      </c:choose></h3>
 			      	</div>
-			        <div>${blogVo.blog_content }</div>
+			        <div class="content-text">${blogVo.blog_content }</div>
 			      </div>
 			      <!-- 본문 내용끝  -->
 			        <div class="profile-section reply">

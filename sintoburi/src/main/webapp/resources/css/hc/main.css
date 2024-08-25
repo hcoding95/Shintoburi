@@ -125,6 +125,7 @@
     -webkit-line-clamp: 3; /* 최대 3줄 */
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
+    white-space: pre-line;
 }
 
 .more-link {

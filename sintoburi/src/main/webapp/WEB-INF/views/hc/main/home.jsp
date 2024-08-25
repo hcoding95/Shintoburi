@@ -6,8 +6,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
+<link rel="stylesheet" href="/resources/css/hc/complaint.css">
 <!-- 글리피콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+/* 부모 요소를 화면의 전체 높이를 차지하도록 설정하고, 세로 중앙 정렬 */
+.story-container-wrapper {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 제거 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.story-card {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    width: 400px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.story-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 50%;
+    background-color: #e7f3ff;
+    color: #007bff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.story-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.story-text strong {
+    font-size: 16px;
+    color: #333;
+}
+
+.story-text span {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 검색 바 스타일 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-container form {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-container select,
+.search-container input[type="text"] {
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    margin-right: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+}
+
+.search-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+}
+
+
+
+</style>
 <script>
 $(function () {
 	$(".likeBtn").click(function () {
@@ -78,33 +173,42 @@ $(function () {
 		$("#myModal").modal("show");
 	});
 	
-	// 모달이 열릴 때마다 실행 
+	/* // 모달이 열릴 때마다 실행 
     $('#myModal').on('show.bs.modal', function () {
         let iframe = $(this).find('iframe');
         let src = iframe.attr('src'); // 현재 src를 가져와서
         iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
         iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
-    });
+    }); */
 	
     $('.post-content').each(function() {
         let contentText = $(this).find('.content-text');
         let moreLink = $(this).find('.more-link');
+        contentText.css({
+            "-webkit-line-clamp": "unset",
+            "display": "block",
+            "overflow": "visible"
+        });
 
         // 초기 높이 저장
         let originalHeight = contentText.outerHeight();
+        //	contentText.outerHeight();
 
         // 클램프 적용
         contentText.css({
-            "-webkit-line-clamp": "3",
-            "display": "-webkit-box"
+        	"-webkit-line-clamp": "3",
+            "display": "-webkit-box",
+            "overflow": "hidden"
         });
 
         // 클램프 적용 후 높이 계산
         let clampedHeight = contentText.outerHeight();
 
         // 높이 비교
-        if (originalHeight == clampedHeight) {
+        if (originalHeight > clampedHeight) {
             moreLink.show(); // 원래 높이가 클램프된 높이보다 크다면 "더보기" 링크를 표시
+        } else {
+            moreLink.hide(); // 그렇지 않으면 "더보기" 링크를 숨김
         }
 
         // "더보기" 클릭 이벤트
@@ -119,7 +223,66 @@ $(function () {
             $(this).hide(); // "더보기" 링크 숨기기
         });
     });
+    
+    // 데이터 변수 선언
+    let reportData = {
+        category : "blog_no",
+        delete_url : "/hc/blog/delete",
+        post_url : "/hc/blog/detil?blog_no=",
+        post_id : '',
+        re_id: '',
+        write_num: '',
+        re_reason: ''
+    };
 	
+ 	// 신고하기 버튼 클릭 시 모달 창 열기
+    $('.report-btn').click(function() {
+    	// 버튼에서 data-reg_id와 data-blog_no를 가져와 저장
+        reportData.post_id = $(this).data('reg_id');
+        reportData.write_num = $(this).data('blog_no');
+        
+        $('#reportModal').show();
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 창 닫기
+    $('.close-modal').click(function() {
+        $('#reportModal').hide();
+    });
+
+    // 모달 외부 클릭 시 모달 창 닫기
+    $(window).click(function(event) {
+        if ($(event.target).is('#reportModal')) {
+            $('#reportModal').hide();
+        }
+    });
+
+    // 확인 버튼 클릭 시 처리
+    $('#reportSubmit').click(function() {
+    	reportData.re_reason = $('input[name="reason"]:checked').val();
+    	reportData.re_id = '${login.user_id}';
+        if (reportData.re_reason) {
+            // 서버로 전송하기 위해 데이터를 콘솔에 출력 (여기서 AJAX 등을 사용하여 서버로 전송 가능)
+            console.log('신고 데이터:', reportData);
+
+            // AJAX 요청으로 서버로 데이터 전송 (예시)
+            $.ajax({
+                type: "POST",
+                url: "/hc/report/submit", // 서버에서 처리할 URL
+                data: JSON.stringify(reportData), // JSON 형식으로 전송
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    alert('신고가 접수되었습니다.');
+                    $('#reportModal').hide(); // 모달 창 닫기
+                },
+                error: function (error) {
+                    console.log('에러 발생:', error);
+                }
+            });
+
+        } else {
+            alert('신고할 이유를 선택해주세요.');
+        }
+    });
 	
 	
 	
@@ -127,6 +290,9 @@ $(function () {
 });
 </script>
 <%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
+
+
+
 <!-- 이벤트  -->
 <div class="row">
 	<div class="col-md-12">
@@ -184,56 +350,23 @@ $(function () {
 
 </div>
 <!-- 이벤트  끝 -->
-<style>
-/* 부모 요소를 화면의 전체 높이를 차지하도록 설정하고, 세로 중앙 정렬 */
-.story-container-wrapper {
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 제거 */
-    align-items: center; /* 세로 중앙 정렬 */
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
 
-.story-card {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    width: 400px;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+<!-- 검색 -->
+<div class="search-container">
+    <form action="/board/list" method="get">
+        <div>
+            <select name="type">
+                <option value="T" ${creteria.type == 'T'? 'selected' : '' }>내용</option>
+                <option value="C" ${creteria.type == 'C'? 'selected' : '' }>상품이름</option>
+                <option value="W" ${creteria.type == 'W'? 'selected' : '' }>작성자</option>
+            </select>
+            <input type="text" name="keyword" value="${creteria.keyword}">
+            <button>검색</button>
+        </div>
+    </form>
+</div>
+<!-- 검색끝 -->
 
-.story-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    margin-right: 15px;
-    border-radius: 50%;
-    background-color: #e7f3ff;
-    color: #007bff;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.story-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.story-text strong {
-    font-size: 16px;
-    color: #333;
-}
-
-.story-text span {
-    font-size: 14px;
-    color: #666;
-}
-</style>
 <!-- 글쓰기 탭  -->
 <div class="story-container-wrapper">	
 	<a href="/hc/blog/register">
@@ -263,7 +396,6 @@ $(function () {
              <!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
              <c:forEach items="${vo.fileList}" var="file" varStatus="innerstatus">
              <div class="carousel-item ${innerstatus.index == 0 ? 'active' : '' }">
-<%--                  <a data-toggle="modal" data-target="#myModal${vo.blog_no}"><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a> --%>
                  <a class="open-modal" data-blog_no="${vo.blog_no}"><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a>
              </div>
              </c:forEach>
@@ -316,7 +448,7 @@ $(function () {
         	</c:otherwise>
         	</c:choose></button>
         <button><a class="open-modal" data-blog_no="${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
-        <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
+        <button class="report-btn" data-reg_id="${vo.user_id}" data-blog_no="${vo.blog_no}"><i class="fa fa-exclamation-triangle">신고하기</i></button>
         <button><c:choose>
         	<c:when test="${vo.user_id eq login.user_id }">
         	<a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a>
@@ -330,6 +462,24 @@ $(function () {
 
 </c:forEach>    
 <!-- 메인 내용 끝 -->
+
+<!-- 신고하기 모달 창 -->
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>신고 이유 선택</h2>
+        <form id="reportForm">
+            <label><input type="radio" name="reason" value="욕설"> 부적절한 표현/욕설 </label><br>
+            <label><input type="radio" name="reason" value="홍보"> 제한된 품목을 판매하거나 홍보함</label><br>
+            <label><input type="radio" name="reason" value="사기"> 스캠, 사기 또는 스팸</label><br>
+            <label><input type="radio" name="reason" value="거짓"> 거짓정보</label><br><br>
+            <div class="button-container">
+		        <button type="button" id="reportSubmit">확인</button>
+		        <button type="button" class="close-modal">취소</button>
+		    </div>
+        </form>
+    </div>
+</div>
 
 <script>
     let page = 1;

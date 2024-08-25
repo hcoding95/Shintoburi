@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
+<link rel="stylesheet" href="/resources/css/hc/complaint.css">
 <!-- 글리피콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <!-- 스윗 얼럿  -->
@@ -295,12 +296,55 @@ $(function () {
 		$("#myModal").modal("show");
 	});
 	
-	// 모달이 열릴 때마다 실행 
+	/* // 모달이 열릴 때마다 실행 
     $('#myModal').on('show.bs.modal', function () {
         let iframe = $(this).find('iframe');
         let src = iframe.attr('src'); // 현재 src를 가져와서
         iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
         iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
+    }); */
+	
+    $('.post-content').each(function() {
+        let contentText = $(this).find('.content-text');
+        let moreLink = $(this).find('.more-link');
+        contentText.css({
+            "-webkit-line-clamp": "unset",
+            "display": "block",
+            "overflow": "visible"
+        });
+
+        // 초기 높이 저장
+        let originalHeight = contentText.outerHeight();
+        //	contentText.outerHeight();
+
+        // 클램프 적용
+        contentText.css({
+        	"-webkit-line-clamp": "3",
+            "display": "-webkit-box",
+            "overflow": "hidden"
+        });
+
+        // 클램프 적용 후 높이 계산
+        let clampedHeight = contentText.outerHeight();
+
+        // 높이 비교
+        if (originalHeight > clampedHeight) {
+            moreLink.show(); // 원래 높이가 클램프된 높이보다 크다면 "더보기" 링크를 표시
+        } else {
+            moreLink.hide(); // 그렇지 않으면 "더보기" 링크를 숨김
+        }
+
+        // "더보기" 클릭 이벤트
+        moreLink.click(function(event) {
+            event.preventDefault(); // 링크 기본 동작 막기
+            contentText.css({
+                "overflow": "visible",
+                "-webkit-line-clamp": "unset",
+                "-webkit-box-orient": "unset",
+                "display": "block"
+            });
+            $(this).hide(); // "더보기" 링크 숨기기
+        });
     });
 
 	
@@ -421,7 +465,7 @@ $(function () {
 }
 
 .profile-actions button:last-child {
-    background-color: #28a745;
+    background-color: #E7F3FF;
     margin-right: 0;
 }
 
@@ -649,7 +693,8 @@ $(function () {
 		          	<button id="followBtn" class="btn btn-primary" data-followedId="${blog_userVo.user_id}" data-check="${blog_userVo.checkFollow }"><i class="fa fa-handshake">팔로우(<span>${blog_userVo.sumFollow}</span>)</i></button>
 		          </c:otherwise>
 	         	</c:choose>
-             </c:if> 
+             </c:if>
+             <button><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></button>  
         </div>
     </div>
 	<div class="profile-end">
@@ -791,7 +836,7 @@ $(function () {
 							        	</c:otherwise>
 							        	</c:choose></button>
 							        <button><a class="open-modal" data-blog_no="${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
-							        <button><i class="fa fa-exclamation-triangle">신고하기</i></button>
+							        <button class="report-btn"><i class="fa fa-exclamation-triangle">신고하기</i></button>
 							        <button><c:choose>
 							        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
 							        	<c:otherwise><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></c:otherwise>
@@ -962,10 +1007,88 @@ $(function () {
 <!-- 탭팬 부분끝  -->
 </div>
 
-
+<!-- 신고하기 모달 창 -->
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>신고 이유 선택</h2>
+        <form id="reportForm">
+            <label><input type="radio" name="reason" value="욕설"> 부적절한 표현/욕설 </label><br>
+            <label><input type="radio" name="reason" value="홍보"> 제한된 품목을 판매하거나 홍보함</label><br>
+            <label><input type="radio" name="reason" value="사기"> 스캠, 사기 또는 스팸</label><br>
+            <label><input type="radio" name="reason" value="거짓"> 거짓정보</label><br><br>
+            <div class="button-container">
+		        <button type="button" id="reportSubmit">확인</button>
+		        <button type="button" class="close-modal">취소</button>
+		    </div>
+        </form>
+    </div>
+</div>
 
 <script>
 $(function () {
+	
+	 // 데이터 변수 선언
+    let reportData = {
+        category : "blog_no",
+        delete_url : "/hc/blog/delete",
+        post_url : "/hc/blog/detil?blog_no=",
+        post_id : '',
+        re_id: '',
+        write_num: '',
+        re_reason: ''
+    };
+	
+ 	// 신고하기 버튼 클릭 시 모달 창 열기
+    $('.report-btn').click(function() {
+    	// 버튼에서 data-reg_id와 data-blog_no를 가져와 저장
+        reportData.post_id = $(this).data('reg_id');
+        reportData.write_num = $(this).data('blog_no');
+        
+        $('#reportModal').show();
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 창 닫기
+    $('.close-modal').click(function() {
+        $('#reportModal').hide();
+    });
+
+    // 모달 외부 클릭 시 모달 창 닫기
+    $(window).click(function(event) {
+        if ($(event.target).is('#reportModal')) {
+            $('#reportModal').hide();
+        }
+    });
+
+    // 확인 버튼 클릭 시 처리
+    $('#reportSubmit').click(function() {
+    	reportData.re_reason = $('input[name="reason"]:checked').val();
+    	reportData.re_id = '${login.user_id}';
+        if (reportData.re_reason) {
+            // 서버로 전송하기 위해 데이터를 콘솔에 출력 (여기서 AJAX 등을 사용하여 서버로 전송 가능)
+            console.log('신고 데이터:', reportData);
+
+            // AJAX 요청으로 서버로 데이터 전송 (예시)
+            $.ajax({
+                type: "POST",
+                url: "/hc/report/submit", // 서버에서 처리할 URL
+                data: JSON.stringify(reportData), // JSON 형식으로 전송
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    alert('신고가 접수되었습니다.');
+                    $('#reportModal').hide(); // 모달 창 닫기
+                },
+                error: function (error) {
+                    console.log('에러 발생:', error);
+                }
+            });
+
+        } else {
+            alert('신고할 이유를 선택해주세요.');
+        }
+    });
+    
+    
 	// 더보기 버튼 클릭 이벤트 설정
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
         // 기존 활성화된 탭에서 active 클래스 제거
