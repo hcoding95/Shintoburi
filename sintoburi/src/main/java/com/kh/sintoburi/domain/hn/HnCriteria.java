@@ -26,13 +26,10 @@ public class HnCriteria {
 		this.amount = amount;
 		this.user_id = user_id;
 	}
-	
 	public String[] getTypeArr() {
-		if (type != null) {
-			String[] strs = type.split("");
-			return strs;
-		}
-		return null;
-		
+	    if (type != null && !type.isEmpty()) {
+	        return type.split(",");
+	    }
+	    return new String[0];
 	}
 }

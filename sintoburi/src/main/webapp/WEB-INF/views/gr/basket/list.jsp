@@ -6,17 +6,15 @@
 
 <script>
 $(function() {
-	//개수 수정
 	
+	//상품 개수 수정
 	$(".btnp_count").click(function(){
 		let bdno = $(this).attr("data-bdno");
 		let p_count = $(this).attr("data-pcount");
 		let inputp_count = $(this).siblings(".p_count").val().trim();
-		
 		//console.log("bdno:", bdno);
 		//console.log("p_count:", p_count);
 		//console.log("inputp_count:", inputp_count);	
-		
 		let sData = {
 			"bdno": bdno,
 			"p_count": inputp_count
@@ -102,8 +100,21 @@ $(function() {
 	        $("#actionForm").submit();
 	    });
 	
-	
-	
+	// 체크한 것 주문하기로 넘겨주기
+		$("#btnOrder").click(function(e){
+			e.preventDefault();
+			let checkedItems = $("[name=selectedItems]:checked");
+			console.log("checkedItems:", checkedItems);
+			$.each(checkedItems, function(idx, val) {
+				let bdno = checkedItems.eq(idx).val();
+				console.log("bdno:", bdno);
+				let inputTag = `<input type='hidden' name='bdnos' value='\${bdno}'>`;
+				console.log("inputTag:", inputTag);
+				$("#frm_bdnos").append(inputTag);
+			});
+			
+ 			$("#frm_bdnos").submit();
+ 		});
 });
 
 </script>
@@ -116,9 +127,7 @@ $(function() {
 			
 			<c:set var="user_id" value="${detailDto.user_id}" />
 			 <div>
-				${login.user_id}님의 장바구니입니다. (합계 금액: ${sumPrice})
-					
-					
+				${login.user_id}님의 장바구니입니다. (합계 금액: ${sumPrice}) 
 			 </div>
 			 
 			<table class="table">
@@ -153,17 +162,17 @@ $(function() {
 						<td><fmt:formatDate value="${detailDto.put_date}" pattern="yyyy-MM-dd"/></td> 
 					</tr>
 				</c:forEach>
-					
 				</tbody>
 			</table>
 			
+			<form id="frm_bdnos" action="/gr/order/pre_order" method="post" style="display:none">
+			</form>
 									
 		<div class="container-fluid">
 			<div class="row justify-content-end">
 			    <div class="col-auto">
-			        <a href="http://localhost/gr/basket/orderForm">
-			            <button type="button" id="btnOrder" name="btnOrder" class="btn btn-warning">주문하기</button>
-			        </a>
+			        <a href="/gr/order/order_form"
+			        	id="btnOrder" class="btn btn-warning">주문하기</a>
 			    </div>
 
 			    <div class="col-auto">
@@ -177,20 +186,16 @@ $(function() {
 		</div>
 		</div>
 		
-		
 		<div class="col-md-2">
-	
 		</div>
-		
 	
 	</div>
 	
 		<!-- Pagination -->
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-12 mt-4" >
 		<nav>
 			<ul class="pagination justify-content-center">
-
 				이전
 				<c:if test="${pageMaker.prev == true}">
 					<li class="page-item"><a class="page-link"
@@ -203,7 +208,6 @@ $(function() {
 						<a class="page-link" href="${v}">${v}</a>
 					</li>
 				</c:forEach>
-
 				다음
 				<c:if test="${pageMaker.next == true}">
 					<li class="page-item"><a class="page-link"

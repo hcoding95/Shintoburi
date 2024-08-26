@@ -62,9 +62,22 @@ $(function() {
                      url: "/hn/manager/enquiry/gradeupdateStatus",
                      data: { eno: eno , status: selectedStatus},
                      success: function() {
-                    	 alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
-                        
-                         location.href = "/hn/manager/enquiry/gradeList";
+                    	 
+                    	
+                    	
+                    	 if (selectedStatus === "처리완료") {
+                         $.ajax({
+        				  	 type: "post",
+                             url: "/hn/manager/enquiry/updateBusiness/" + user_id,
+                             data: { user_id : user_id},
+                             success: function() {
+                            	 
+                            	 
+                            	 alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
+                                 location.href = "/hn/manager/enquiry/gradeList";
+                             }
+                         });
+        				}
                      }
 			
 				});
@@ -72,10 +85,7 @@ $(function() {
 			}
 		});
 	});
-		
 	
-
- 
 });
 </script>
 
@@ -89,7 +99,7 @@ $(function() {
              <!-- Card Header - Dropdown -->
              <div
                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">문의 사항</h6>
+                 <h6 class="m-0 font-weight-bold text-primary">등급 문의 사항</h6>
                  
              </div>
              <!-- Card Body -->
@@ -109,7 +119,7 @@ $(function() {
                 </div>
                 <div class="form-group">
                     <label for="enquiry_type">문의 유형</label>
-                    <select class="form-select" id="enquiry_type" name="enquiry_type" disabled>
+                     <select id="enquiry_type" name="enquiry_type" class="form-control" style="width: 150px;" disabled>
                         <option value="상품문의" <c:if test="${enquiryVo.enquiry_type =='상품문의'}">selected</c:if>>상품문의</option>
                         <option value="배송문의" <c:if test="${enquiryVo.enquiry_type =='배송문의'}">selected</c:if>>배송문의</option>
                         <option value="결제문의" <c:if test="${enquiryVo.enquiry_type =='결제문의'}">selected</c:if>>결제문의</option>
@@ -163,7 +173,13 @@ $(function() {
 	<div class="col-md-12">
 
 				<!-- 답변 입력 -->
-				
+				<div class="form-group">
+				  <select class="form-control" style="width: 150px;" id="status" name="status"
+				      <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>
+				      <option value="처리완료" <c:if test="${enquiryVo.status == '처리완료'}">selected</c:if>>처리완료</option>
+				      <option value="보류상태" <c:if test="${enquiryVo.status == '보류상태'}">selected</c:if>>보류상태</option>
+				    </select>
+				</div>
 					<div class="form-group">
 					 	
 					    <textarea class="form-control" id="replyContent" name="replyContent" rows="3"
@@ -171,16 +187,12 @@ $(function() {
 					    ><c:if test="${enquiryVo.status == '처리완료'}">${replyVo.reply_content}</c:if></textarea>
 					</div>
 				
-					<div class="col-md-12 text-right">
-                    <select class="form-select" id="status" name="status" >
-                   	  	<option value="처리완료">처리완료</option>
-					    <option value="보류상태">보류상태</option>
-                    </select>
+					
+                    <div class="form-group">
                     <button id="btnReplyOk" type="button" class="btn btn btn-primary btn"
 					            <c:if test="${enquiryVo.status == '처리완료'}">disabled</c:if>>답변완료</button>
                		 </div>
 					
-						
 						
 				<!-- // 답변 입력 -->
 	</div>

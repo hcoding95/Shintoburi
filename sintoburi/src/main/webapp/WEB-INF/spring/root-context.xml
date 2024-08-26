@@ -72,7 +72,7 @@
 	>
 		<property name="host" value="smtp.gmail.com"></property>
 		<property name="port" value="587"></property>
-		<property name="username" value="sintoburi"></property>
+		<property name="username" value="SINTOBURI"></property>
 		<property name="password" value="1234"></property>
 		<property name="javaMailProperties">
 			<props>

@@ -17,6 +17,7 @@ import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
@@ -153,8 +154,8 @@ public class mapperTest {
 	@Test
 	public void selectById() {
 		String user_id = "user00";
-		HnUserDto dto = userMapper.selectById(user_id);
-		log.info(dto);
+		HnUserVo vo = userMapper.selectById(user_id);
+		log.info(vo);
 	}
 	
 	@Test
@@ -191,6 +192,12 @@ public class mapperTest {
 	public void nextNotice() {
 		NoticeVo noticeVo = noticeMapper.getNextNotice(21);
 		log.info(noticeVo);
+	}
+	
+	@Test
+	public void list() {
+		List<HnUserDto> list=  userMapper.gradeUpdateShow();
+		log.info(list);
 	}
 
 }

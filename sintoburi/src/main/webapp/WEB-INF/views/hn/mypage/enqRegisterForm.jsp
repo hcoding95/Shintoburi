@@ -121,11 +121,6 @@ $(function() {
                 alert("문의사항이 등록되었습니다.");
                 
                 window.location.href = '/hn/mypage/enqList'; 
-            },
-            error: function(xhr, status, error) {
-                // 요청이 실패한 경우
-                console.error("등록 실패:", xhr.responseText);
-                alert("등록 실패. 다시 시도해 주세요.");
             }
         });
     });
@@ -185,7 +180,7 @@ $(function() {
                             <form id="enquiryForm" role="form" action="/hn/mypage/enqRegister" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="user_id">작성자</label>
-                                    <input value="user00" type="text" class="form-control" id="user_id" name="user_id" readonly />
+                                    <input value="${login.user_id}" type="text" class="form-control" id="user_id" name="user_id" readonly />
                                 </div>
 
                                 <div class="form-group">
@@ -200,7 +195,7 @@ $(function() {
 
                                 <div class="form-group">
                                     <label for="content">내용</label>
-                                    <textarea rows="10" class="form-control" id="content" name="content"></textarea>
+                                    <textarea rows="10" wrap="hard" class="form-control" id="content" name="content"></textarea>
                                 </div>
 
                                 <div class="form-group">

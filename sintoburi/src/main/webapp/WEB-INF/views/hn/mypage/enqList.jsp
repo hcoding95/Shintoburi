@@ -32,7 +32,7 @@ $(function() {
                    <!-- Title Section -->
                 	 <div class="row mb-4 text-center" style="margin-left: 0px; margin-right: 0px;">
 				    <div class="col" style="padding: 0;">
-				        <a href="/hn/mypage/noticeList" style="text-decoration: none; color: black; background-color: #D6EFD8; padding: 10px; display: block; margin-bottom: -1px;">
+				        <a href="/hn/mypage/noticeList" style="text-decoration: none; color: black; background-color: #ffffff; padding: 10px; display: block; margin-bottom: -1px;">
 				            <h3 style="margin: 0;">공지사항</h3>
 				        </a>
 				    </div>
@@ -42,7 +42,7 @@ $(function() {
 				        </a>
 				    </div>
 				    <div class="col" style="padding: 0;">
-				        <a href="/hn/mypage/faqList" style="text-decoration: none; color: black; background-color: #D6EFD8; padding: 10px; display: block;">
+				        <a href="/hn/mypage/faqList" style="text-decoration: none; color: black; background-color: #ffffff; padding: 10px; display: block;">
 				            <h3 style="margin: 0;">자주하는 질문</h3>
 				        </a>
 				    </div>
@@ -72,7 +72,7 @@ $(function() {
                                        <td>${vo.status}</td>
                                         <td>
 				                    <c:choose>
-				                       <c:when test="${vo.status == '답변완료' || vo.status == '처리완료'}">
+				                       <c:when test="${vo.status == '답변완료' || vo.status == '처리완료' || vo.status == '보류상태'}">
 				                           <button class="btn btn-sm" type="button" data-toggle="collapse" 
 				                            data-target="#collapse${vo.eno}" aria-expanded="false">
 				                                ▼
@@ -123,7 +123,7 @@ $(function() {
                            <div class="col-md-10"></div>
                            <div class="col-md-2">
                                <a href="/hn/mypage/enqRegisterForm">
-                                   <button type="button" class="btn btn-outline-dark">1:1문의하기</button>
+                                   <button type="button" class="btn btn-success">1:1문의하기</button>
                                </a>
                            </div>
                        </div>

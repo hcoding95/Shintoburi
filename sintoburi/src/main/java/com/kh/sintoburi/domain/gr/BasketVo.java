@@ -16,5 +16,4 @@ import lombok.ToString;
 public class BasketVo {
 	private int bno; //장바구니 번호
 	private String user_id; // 구매자 = 로그인
-	
 }

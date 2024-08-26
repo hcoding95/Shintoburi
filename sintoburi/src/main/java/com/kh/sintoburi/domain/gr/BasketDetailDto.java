@@ -26,5 +26,6 @@ public class BasketDetailDto {
 	private int bno; // 장바구니 번호
 	private String user_id;//로그인한 구매자
 	private Date put_date;
+	private int delivery_charge;
 	
 }

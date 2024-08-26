@@ -64,7 +64,7 @@
     
     <div class="row">
         <div class="col-md-12 text-left">
-            <p>${noticeVo.content}</p>
+            <p><pre>${noticeVo.content}</pre></p>
         </div>
     </div>
     
@@ -92,8 +92,8 @@
     
     <c:if test="${previousNotice != null}">
         <div class="navigation-item">
-            <label> 이전글 </label>
-            <a href="/hn/mypage/noticeRead?n_no=${previousNotice.n_no}" class="navigation-link">${previousNotice.title}</a>
+            <label > 이전글 </label>
+            <a  style="text-align: center; href="/hn/mypage/noticeRead?n_no=${previousNotice.n_no}" class="navigation-link">${previousNotice.title}</a>
         </div>
     </c:if>
 </div>

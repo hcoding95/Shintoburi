@@ -112,7 +112,7 @@ $(function() {
                 </div>
                 <div class="form-group">
                     <label for="enquiry_type">신고 유형</label>
-                    <select class="form-select" id="enquiry_type" name="enquiry_type" disabled>
+                     <select id="report_type" name="report_type" class="form-control" style="width: 150px;" disabled>
                         <option value="스팸" <c:if test="${enquiryVo.enquiry_type =='스팸'}">selected</c:if>>스팸</option>
                         <option value="거짓정보" <c:if test="${enquiryVo.enquiry_type =='거짓정보'}">selected</c:if>>거짓정보</option>
                         <option value="불법또는규제상품판매" <c:if test="${enquiryVo.enquiry_type =='불법또는규제상품판매'}">selected</c:if>>불법또는규제상품판매</option>
@@ -121,7 +121,7 @@ $(function() {
                 </div>
                 <div class="form-group">
                     <label for="content">내용</label>
-                    <textarea class="form-control" id="content" name="content" rows="10" readonly>${reportPostVo.post_content}</textarea>
+                    <textarea class="form-control" id="content" name="content" rows="10" readonly></textarea>
                 </div>
                 
                        <!-- 첨부파일 리스트 -->

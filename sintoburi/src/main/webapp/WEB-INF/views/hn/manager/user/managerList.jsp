@@ -80,15 +80,15 @@ $(function() {
 					 <td class="current-grade"> ${vo.grade} </td>
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
-                       <td>
-                       <select>
+                       <td class="d-flex justify-content-center align-items-center">
+                       <select class="form-control ml-4" style="width: 120px;">
 						  	<option value="관리자" ${vo.grade == '관리자' ? 'selected' : ''}>관리자</option>
 						    <option value="구매자" ${vo.grade == '구매자' ? 'selected' : ''}>구매자</option>
 						    <option value="판매자" ${vo.grade == '판매자' ? 'selected' : ''}>판매자</option>
                        </select>
                        </td >
                        <td>
-                       <button class="btnMod btn btn-outline-dark btn-sm" data-user-id="${vo.user_id}" style="padding-bottom: 1px; padding-top: 1px;" type="button">수정</button>
+                      <button class="btnMod btn btn-outline-dark" data-user-id="${vo.user_id}" type="button">수정</button>
 					</td>
 				</tr>
 			</c:forEach>	
