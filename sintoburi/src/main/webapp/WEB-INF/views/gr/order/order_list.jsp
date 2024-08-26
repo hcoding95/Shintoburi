@@ -29,55 +29,34 @@
 						<th>총상품금액</th>
 						<th>배송비</th>
 						<th>결제금액</th>
-<!-- 						<th>배송상태</th> -->
 						<th>결제상태</th>
-						
 					</tr>
 				</thead>
 
 				<tbody>
-				<c:forEach items="${orderList}" var="orderVo">
+				<c:forEach items="${orderList}" var="orderDto">
 					<tr class="col-md-8 text-center">
 					    <td><a href="http://localhost/gr/order/detail/${orderVo.ono}">${orderVo.ono}</a></td>
 						<td>${orderVo.user_name}</td>
 						<td>${orderVo.user_phone}</td>
 						<td>${orderVo.address}</td>
 						<td>${orderVo.payment_type}</td>
-						<td>${orderVo.total_price}</td>
+						<td>${orderVo.sum_total}</td>
 						<td>${orderVo.delivery_charge}</td>
 						<td>${orderVo.pay_amount}</td>
-<%-- 						<td>${orderVo.delivery_status}</td> --%>
 						<td>${orderVo.payment_state}</td>
 						<td><button type="button" id="btnPayment" name="btnPayment" class="btn btn-warning">결제</button></td>
-						
 					</tr>
 				</c:forEach>
 					
 				</tbody>
 			</table>
-			
 									
-<!-- 		<div class="container-fluid"> -->
-<!-- 			<div class="row justify-content-end"> -->
-<!-- 			    <div class="col-auto"> -->
-<!-- 			        <a href="http://localhost/gr/order/detail"> -->
-<!-- 			            <button type="button" id="btnPayment" name="btnPayment" class="btn btn-warning">상세보기</button> -->
-<!-- 			        </a> -->
-<!-- 			    </div> -->
-			    
-<!-- 			</div> -->
-<!-- 		</div> -->
 		</div>
-		
 		
 		<div class="col-md-2">
-	
 		</div>
-		
-	
 	</div>
-
-
 
 <%@ include file="/WEB-INF/views/gr/include/action_form.jsp" %>
 <%@ include file="/WEB-INF/views/gr/include/bottom.jsp"%>

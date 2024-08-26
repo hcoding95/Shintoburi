@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.sintoburi.domain.gr.DeliveryDto;
 import com.kh.sintoburi.domain.gr.LoginUser;
 import com.kh.sintoburi.domain.gr.OrderDetailDto;
+import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.domain.gr.OrderVo;
 import com.kh.sintoburi.service.gr.OrderService;
 import com.kh.sintoburi.util.gr.GrSessionUtil;
@@ -31,8 +32,8 @@ public class OrderController {
 	@Autowired
 	public OrderService orderService;
 	
-	//체크한 것 주문하기로 넘겨주기, 삭제
-	@PostMapping("/runOrder")
+	//체크한 것 주문하기로 넘겨주기, 장바구니에서 삭제
+	@PostMapping("/run_order")
 	public String runOrder(HttpSession session, OrderVo orderVo) {
 		LoginUser dto = (LoginUser)session.getAttribute("login");
 		
@@ -55,6 +56,7 @@ public class OrderController {
 		return "redirect:/gr/order/order_list";
 	}	
 			
+	//배송정보 입력 폼(더 해야 함: 주문자와 수취인이 다를 경우 입력한 정보 저장하기)
 	@GetMapping("/order_form")
 	public void orderForm(HttpSession session) {
 		 int[] bdnos =(int[])session.getAttribute("bdnos");
@@ -63,21 +65,31 @@ public class OrderController {
 		 }
 	}
 	
+	//주문 전에 bdno 넘겨주기(주문하기에 정보 넘겨주고 장바구니 목록에서는 삭제)
+		@PostMapping("/pre_order")
+		public String preOrder(@RequestParam("bdnos") int[] bdnos, HttpSession session) {
+			session.setAttribute("bdnos", bdnos);
+			return "redirect:/gr/order/order_form";
+		}
+	
+	//배송정보 입력
 	@GetMapping("/getDeliveryInfo")
 	@ResponseBody
 	public DeliveryDto getDeliveryInfo(HttpSession session) {
 		String user_id =  GrSessionUtil.getUserIdInLoginSession(session);
 		DeliveryDto dto = orderService.getDeliveryInfo(user_id);
-//		dto.setUser_name("이규림");
-//		dto.setUser_phone("010-4444-4444");
+//		dto.setUser_name("유저03");
+//		dto.setUser_phone("010-3333-3333");
 //		dto.setAddress("울산시 남구");
-//		dto.setPayment("포인트");
 		return dto;
 	}
 	
+	//주문정보 목록
 	@GetMapping("/order_list")
-	public String orderList(Model model, HttpSession session ){
+	public String orderList(Model model, HttpSession session,  Integer ono ){
 		LoginUser dto = (LoginUser)session.getAttribute("login");
+		System.out.println("ono:" + ono);//ono값 안 받아짐
+		
 		// dto가 null인지 확인
 	    if (dto == null) {
 	        return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
@@ -86,11 +98,12 @@ public class OrderController {
 		String user_id = dto.getUser_id();
 		//System.out.println("user_id: "+ user_id);
 		
-		List<OrderVo> orderList = orderService.getOrderList(user_id);
+		List<OrderDto> orderList = orderService.getOrderList(user_id, ono);
 		model.addAttribute("orderList", orderList);
 		return "/gr/order/order_list";
 	}
 	
+	//주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
 	@GetMapping("/detail/{ono}")
 	public String getDetailList(@PathVariable("ono") int ono,
 			Model model, HttpSession session ){
@@ -108,10 +121,8 @@ public class OrderController {
 		return "/gr/order/detail";
 	}
 	
-	@PostMapping("/pre_order")
-	public String preOrder(@RequestParam("bdnos") int[] bdnos, HttpSession session) {
-		session.setAttribute("bdnos", bdnos);
-		return "redirect:/gr/order/order_form";
-	}
-	
+	//결제하기: tbl_user에서 포인트를 조회해서 결제금액보다 적으면 alert, 
+	//        포인트-결제금액(pay_amount)해서 tbl_user 포인트 수정, tbl_order에 결제완료1 상태로 바꾸기 
+	//배송관리: 결제전 0 이면 주문상세 목록에, 결제완료 1이면 배송관리 목록에 넣음.
+	//배송관리 목록 배송리스트에 배송 준비중, 배송중, 배송완료 선택할 수 있게 하고 tbl_order DELIVERY_STATUS에 정보 넘겨주기
 }

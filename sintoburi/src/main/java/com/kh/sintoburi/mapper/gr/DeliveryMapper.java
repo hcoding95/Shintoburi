@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.kh.sintoburi.domain.gr.OrderDetailDto;
 
-public interface ShippingMapper {
+public interface DeliveryMapper {
 
 	
 	public List<OrderDetailDto> shippingManageList();

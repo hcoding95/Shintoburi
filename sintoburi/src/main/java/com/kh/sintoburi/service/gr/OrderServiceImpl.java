@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.sintoburi.domain.gr.BasketDetailDto;
 import com.kh.sintoburi.domain.gr.DeliveryDto;
 import com.kh.sintoburi.domain.gr.OrderDetailDto;
+import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.domain.gr.OrderVo;
 import com.kh.sintoburi.mapper.gr.BasketMapper;
 import com.kh.sintoburi.mapper.gr.OrderMapper;
@@ -48,23 +49,27 @@ public class OrderServiceImpl implements OrderService{
 				int subCount = basketMapper.delete(bdno);
 				count += subCount;
 			}
+			//배송비 계산
 			count += orderMapper.updateDeliveryCharge(ono);
 		}
 		return (count == (bdnos.length * 2) + 2) ?  true : false;
 	}
 	
+	//배송정보 입력
 	@Override
 	public DeliveryDto getDeliveryInfo(String user_id) {
 		DeliveryDto dto = orderMapper.getDeliveryInfo(user_id);
 		return dto;
 	}
 	
+	//주문정보 목록
 	@Override
-	public List<OrderVo> getOrderList(String user_id) {
-		List<OrderVo> list = orderMapper.getOrderList(user_id);
+	public List<OrderDto> getOrderList(String user_id, int ono) {
+		List<OrderDto> list = orderMapper.getOrderList(user_id, ono);
 		return list;
 	}
 
+	//주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
 	@Override
 	public List<OrderDetailDto> getDetailList(String user_id, int ono) {
 		List<OrderDetailDto> detailList = orderMapper.getDetailList(user_id, ono);

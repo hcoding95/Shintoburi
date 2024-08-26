@@ -26,11 +26,11 @@ import com.kh.sintoburi.service.gr.BasketService;
 @Controller
 @RequestMapping("/gr/basket/*")
 public class BasketController {
+	
 	@Autowired
 	private BasketService basketService;
 	
-		
-	// 장바구니 담기
+	//장바구니 담기(더 해야 함:구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기, 상품 이미지 넣기)
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
 		//장바구니 번호 가져오기
@@ -55,8 +55,7 @@ public class BasketController {
 		return "redirect:/gr/basket/list";
 	}
 	
-	
-	// 장바구니 목록 보기
+	// 장바구니 목록 보기(페이징)
 	@GetMapping("/list")
 	public String list(Model model, HttpSession session, BasketCriteria criteria) {
 		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
@@ -66,12 +65,8 @@ public class BasketController {
 		}
 		String user_id = dto.getUser_id();
 		criteria.setUser_id(user_id);
-//		List<BasketDetailDto> list = basketService.getList(user_id);
-//		model.addAttribute("list", list);
-		
 //		System.out.println("Page Number: " + criteria.getPageNum());
 //		System.out.println("Amount per Page: " + criteria.getAmount());
-//		
 		List<BasketDetailDto> list = basketService.getListWithPaging(criteria);
 		int sumPrice = basketService.getSumPrice(user_id);
 		int total = basketService.getTotalCount(criteria);
@@ -83,7 +78,7 @@ public class BasketController {
 		return "/gr/basket/list";
 	}
 		
-	// 개수 수정
+	// 장바구니 상품 개수 수정
 	@PostMapping("/modCount")
 	@ResponseBody
 	public boolean modCount(@RequestBody Map<String, Integer> map) {
@@ -101,7 +96,7 @@ public class BasketController {
 		return result;
 	}
 	
-	//장바구니 삭제
+	//장바구니 상세에서 상품 제거 - 1개씩 제거
 	@PostMapping("/removeOne")
 	@ResponseBody
 	public boolean removeOne(@RequestBody Map<String, List<Integer>> bdnos) {
@@ -113,7 +108,7 @@ public class BasketController {
 		return true;
 	}
 	
-	
+	//장바구니 비우기 - 장바구니 상세에 있는 상품들 모두 제거 -> 장바구니 제거
 	@PostMapping("/removeAll")
 	@ResponseBody
 	public String removeAll(/* @RequestBody Map<String, Integer> map, */HttpSession session) {
@@ -130,12 +125,6 @@ public class BasketController {
 //		System.out.println("removeAll...bno:" + bno);
 		boolean result = basketService.removeAll(bno);
 		return String.valueOf(result);
-//		return false;
 	}
-	
-	
-	
-	
-	
 
 }

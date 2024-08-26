@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.domain.gr.OrderVo;
 import com.kh.sintoburi.mapper.gr.OrderMapper;
 
@@ -16,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class OrderTests {
+public class OrderMapperTests {
 	@Autowired
 	public OrderMapper orderMapper;
 	
@@ -42,7 +43,8 @@ public class OrderTests {
 	@Test
 	public void testGetOrderList() {
 		String user_id= "user01";
-		List<OrderVo> list = orderMapper.getOrderList(user_id);
+		int ono = 22;
+		List<OrderDto> list = orderMapper.getOrderList(user_id, ono);
 		log.info(list);
 	}
 

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.sintoburi.service.gr.OrderService;
 
 @Controller
-@RequestMapping("/gr/shipping/*")
-public class ShippingController {
+@RequestMapping("/gr/delivery/*")
+public class DeliveryController {
 
 	@Autowired
 	public OrderService orderService;

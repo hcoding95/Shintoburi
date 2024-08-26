@@ -6,6 +6,7 @@
 
 <script>
 $(function(){
+	//주문자와 수취인이 같을 때
 	$("#chkSame").change(function(){
 		let checked = $(this).prop("checked");
 		console.log("checked:", checked);
@@ -38,7 +39,7 @@ $(function(){
 	</div>
 	
 		<div class="col-md-8">
-		   <form action="/gr/order/runOrder" method="post">
+		   <form action="/gr/order/run_order" method="post">
 			 <div>
 				${login.user_id}님의 주문 정보를 입력해주세요. 
 			 </div>
@@ -56,15 +57,14 @@ $(function(){
 						<tr>
 							<th>배송지</th>
 							<td><input type="text" id="address" name="address"></td>
+							<hr>
 							<td colspan="2"><input type="checkbox" id="chkSame">주문자 정보와 동일</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div>
-<!-- 		        <a href="http://localhost/gr/order/order_list"> -->
 		            <button type="submit" id="btnDetail" name="btnDetail" class="btn btn-warning">주문 계속하기</button>
-<!-- 		        </a> -->
 		    </div>
 			</form>
 		</div>

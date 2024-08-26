@@ -5,6 +5,7 @@
   
   <mapper namespace="com.kh.sintoburi.mapper.gr.OrderMapper">
   
+<!--   주문하기 생성 -->
   <insert id="insert">
   	<selectKey keyProperty="ono" order="BEFORE"
 			resultType="int">
@@ -16,38 +17,14 @@
   		(#{ono}, #{user_phone}, #{user_name}, #{address}, #{user_id})
   </insert>
   
-   
-  <select id="getOrderList" resultType="OrderVo">
-  	select * from tbl_order
-	where user_id = #{user_id}
-	order by ono desc
-  </select>
-  
-  <select id="getDetailList" resultType="OrderDetailDto">
-  	select o.user_id, o.ono, p.pno, p.name, i.img_path, d.p_count, p.price, o.delivery_status, o.order_date
-	from tbl_product p, tbl_img i, tbl_order_detail d , tbl_order o
-		where o.ono =  #{ono}
-	    and o.user_id = #{user_id}
-	    and o.ono= d.ono
-	    and d.pno = p.pno
-	    and p.pno = i.pno
-	order by o.order_date desc
-  </select>
-  
-  
+<!--   배송정보 입력하기 -->
   <select id="getDeliveryInfo" resultType="DeliveryDto">
   	select user_name, user_phone, address
 	from tbl_users
 	where user_id = #{user_id}
   </select>
   
-  <insert id="insertDetail">
-  	insert into tbl_order_detail
-  		(odno, ono, pno, p_count)
-  	values
-  		(seq_order_detail.nextval, #{ono}, #{pno}, #{p_count})
-  </insert>
-  
+<!--   배송료 계산(30000원 미만 3000원) -->
   <update id="updateDeliveryCharge">
   	update tbl_order set
 	   delivery_charge = (
@@ -62,21 +39,60 @@
 	where ono = #{ono}
   </update>
   
-  <update id="updateSumTotal">
-  update tbl_order set
-	sum_total = (
-	select sum(total) 
- 	from (select (p.price * d.p_count) total
-         from tbl_product p, tbl_order_detail d
-         where p.pno = d.pno
-         and d.ono = #{ono}))
-  where ono = #{ono}
-  </update>
+  <!--   <update id="updateSumTotal"> -->
+<!--   update tbl_order set -->
+<!-- 	sum_total = ( -->
+<!-- 	select sum(total)  -->
+<!--  	from (select (p.price * d.p_count) total -->
+<!--          from tbl_product p, tbl_order_detail d -->
+<!--          where p.pno = d.pno -->
+<!--          and d.ono = #{ono})) -->
+<!--   where ono = #{ono} -->
+<!--   </update> -->
   
-  <update id="updateTotalOrder">
-  UPDATE tbl_order
-	SET PAY_AMOUNT = sum_total + delivery_charge
-	WHERE ono =  #{ono}
-  </update>
+<!--   <update id="updateTotalOrder"> -->
+<!--   UPDATE tbl_order -->
+<!-- 	SET PAY_AMOUNT = sum_total + delivery_charge -->
+<!-- 	WHERE ono =  #{ono} -->
+<!--   </update> -->
+  
+<!--   주문정보 -->
+  <select id="getOrderList" resultType="OrderDto">
+  	select a.ono, a.user_phone, a.user_name, a.address, a.total_price, a.delivery_charge, 
+        (a.total_price + a.delivery_charge) pay_amount, 
+        CASE WHEN a.payment_state = '0' THEN '결제전' 
+		    ELSE '결제완료' 
+        end as p_state
+		from(select o.*, (select sum(total) sum_total
+	        from (select (p.price * d.p_count) total
+	                from tbl_product p, tbl_order_detail d
+	                where p.pno = d.pno
+	                and d.ono = #{ono})) total_price 
+	from tbl_order o
+	where user_id = #{user_id}
+	and ono = #{ono}
+	order by ono desc) a
+  </select>
+ 
+<!--  주문상세 생성  -->
+ <insert id="insertDetail">
+  	insert into tbl_order_detail
+  		(odno, ono, pno, p_count)
+  	values
+  		(seq_order_detail.nextval, #{ono}, #{pno}, #{p_count})
+  </insert> 
+  
+<!-- 주문상세 정보(주문번호 누르면 주문상세로 이동)   -->
+  <select id="getDetailList" resultType="OrderDetailDto">
+  	select o.user_id, o.ono, p.pno, p.name, i.img_path, d.p_count, p.price, o.delivery_status, o.order_date
+	from tbl_product p, tbl_img i, tbl_order_detail d, tbl_order o
+		where o.ono =  #{ono}
+	    and o.user_id = #{user_id}
+	    and o.ono= d.ono
+	    and d.pno = p.pno
+	    and p.pno = i.pno
+	order by o.order_date desc
+  </select>
+  
   
  </mapper>

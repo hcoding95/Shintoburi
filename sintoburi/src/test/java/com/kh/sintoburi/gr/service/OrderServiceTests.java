@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.domain.gr.OrderVo;
 import com.kh.sintoburi.service.gr.OrderService;
 
@@ -25,7 +26,8 @@ public class OrderServiceTests {
 	@Test
 	public void testGetOrderList() {
 		String user_id= "user01";
-		List<OrderVo> list = orderService.getOrderList(user_id);
+		int ono = 28;
+		List<OrderDto> list = orderService.getOrderList(user_id, ono);
 		log.info(list);
 	}
 	
