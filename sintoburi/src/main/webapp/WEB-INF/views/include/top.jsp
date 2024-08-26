@@ -5,6 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -174,8 +175,15 @@ main {
                     <a href="#" class="btn ">공지사항[24/07/22] 당첨자발표 | 7월 고기데이 기획전 경품 당첨자</a>
                 </div>
                 <div class="user-menu">
-                    <a href="/hc/main/login" class="btn ">로그인</a>
-                    <a href="#" class="btn">회원가입</a>
+                	<c:choose>
+                		<c:when test="${empty login}">
+		                    <a href="/hc/main/login" class="btn ">로그인</a>
+		                    <a href="#" class="btn">회원가입</a>
+                		</c:when>
+                		<c:otherwise>
+		                    <a href="/hc/main/login" class="btn ">로그아웃</a>
+                		</c:otherwise>
+                	</c:choose>
                     <a href="#" class="btn">마이페이지</a>
                     <a href="#" class="btn">주문조회</a>
                     <a href="#" class="btn">고객센터</a>
@@ -192,15 +200,10 @@ main {
         <nav class="main-nav">
             <div class="main-container">
                 <ul>
-                    <li><a href="#" class="btn btn-success">카테고리</a></li>
-                    <li><a href="#" class="btn btn-success">정기배송</a></li>
-                    <li><a href="#" class="btn btn-success">베스트</a></li>
-                    <li><a href="#" class="btn btn-success">신상품</a></li>
-                    <li><a href="#" class="btn btn-success">지역특산물</a></li>
-                    <li><a href="#" class="btn btn-success">기획전</a></li>
-                    <li><a href="#" class="btn btn-success">푸드체험단</a></li>
-                    <li><a href="#" class="btn btn-success">상품후기</a></li>
-                    <li><a href="#" class="btn btn-success">장바구니</a></li>
+                    <li><a href="#" class="btn btn-success">홈</a></li>
+                    <li><a href="#" class="btn btn-success">상품몰</a></li>
+                    <li><a href="#" class="btn btn-success">커뮤니티</a></li>
+                    <li><a href="#" class="btn btn-success">이벤트</a></li>
                 </ul>
             </div>
         </nav>
