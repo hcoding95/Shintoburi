@@ -103,6 +103,21 @@
 
 
 </style>
+<%
+    // 현재 요청의 URL을 가져와서 세션에 저장
+    String prefixToRemove = "/WEB-INF/views";
+    String uri = request.getRequestURI().substring(prefixToRemove.length()); // ? 앞에 문자열
+    uri = uri.substring(0, uri.length() - 4);
+	String query = request.getQueryString(); // ? 뒤에 문자열
+	if(query != null && !query.equals("")) {
+		query = "?" + query;
+		System.out.println("합쳐진 쿼리는" + query);
+	} else {
+		query = "";
+	}
+    session.setAttribute("targetLocation", uri + query);
+%>
+
 <script>
 $(function () {
 	$(".likeBtn").click(function () {
@@ -130,7 +145,18 @@ $(function () {
 					countLike.text(count - 1);
 					that.attr("data-liked", "false"); // data-liked 값을 "false"로 변경
 					that.html('<i class="fa-regular fa-thumbs-up">좋아요</i>');
-				} 
+				}  ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		} else {
 			$.ajax({
@@ -146,7 +172,18 @@ $(function () {
 					countLike.text(count + 1);
 					that.attr("data-liked", "true"); // data-liked 값을 "true"로 변경
 					that.html('<i class="fa-solid fa-thumbs-up">좋아요</i>');
-				} 
+				}  ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		}
 	});

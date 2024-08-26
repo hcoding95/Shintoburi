@@ -10,6 +10,24 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <!-- 스윗 얼럿  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
+<%
+	//세션에서 기존의 targetLocation 속성을 먼저 제거
+	session.removeAttribute("targetLocation");
+
+    // 현재 요청의 URL을 가져와서 세션에 저장
+    String prefixToRemove = "/WEB-INF/views";
+    String uri = request.getRequestURI().substring(prefixToRemove.length()); // ? 앞에 문자열
+    uri = uri.substring(0, uri.length() - 4);
+	String query = request.getQueryString(); // ? 뒤에 문자열
+	if(query != null && !query.equals("")) {
+		query = "?" + query;
+		System.out.println("합쳐진 쿼리 블로그는?" + query);
+	} else {
+		query = "";
+	}
+    session.setAttribute("targetLocation", uri + query);
+%>
 <script>
 $(function () {
 	$(".likeBtn").click(function () {
@@ -37,7 +55,16 @@ $(function () {
 					countLike.text(count - 1);
 					that.attr("data-liked", "false"); // data-liked 값을 "false"로 변경
 					that.html('<i class="fa-regular fa-thumbs-up">좋아요</i>');
-				} 
+				} ,
+				error: function(xhr, status, error) {
+				       if (xhr.status === 401) {
+				           // 로그인 페이지로 리디렉션
+				           window.location.href = "/hc/main/login";
+				       } else {
+				           // 다른 오류 처리
+				           console.error("Error occurred: " + error);
+				       }
+				}
 			});
 		} else {
 			$.ajax({
@@ -53,7 +80,18 @@ $(function () {
 					countLike.text(count + 1);
 					that.attr("data-liked", "true"); // data-liked 값을 "true"로 변경
 					that.html('<i class="fa-solid fa-thumbs-up">좋아요</i>');
-				} 
+				} ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		}
 	});
@@ -296,14 +334,6 @@ $(function () {
 		$("#myModal").modal("show");
 	});
 	
-	/* // 모달이 열릴 때마다 실행 
-    $('#myModal').on('show.bs.modal', function () {
-        let iframe = $(this).find('iframe');
-        let src = iframe.attr('src'); // 현재 src를 가져와서
-        iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
-        iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
-    }); */
-	
     $('.post-content').each(function() {
         let contentText = $(this).find('.content-text');
         let moreLink = $(this).find('.more-link');
@@ -350,10 +380,8 @@ $(function () {
 	
 });
 </script>
-<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
 <style>
 .header-top {
-    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -682,6 +710,7 @@ $(function () {
                 <p>팔로워 수 <span>${blog_userVo.sumFollow}</span></p>
             </div>
         </div>
+        
         <div class="profile-actions ">
              <!-- <button>쪽지 보내기</button> -->
              <c:if test="${blog_userVo.user_id ne login.user_id }">
@@ -836,27 +865,13 @@ $(function () {
 							        	</c:otherwise>
 							        	</c:choose></button>
 							        <button><a class="open-modal" data-blog_no="${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
-							        <button class="report-btn"><i class="fa fa-exclamation-triangle">신고하기</i></button>
+							        <button class="report-btn" data-reg_id="${vo.user_id}" data-blog_no="${vo.blog_no}"><i class="fa fa-exclamation-triangle">신고하기</i></button>
 							        <button><c:choose>
 							        	<c:when test="${vo.user_id eq login.user_id }"><a href="/hc/blog/modify_form?blog_no=${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a></c:when>
 							        	<c:otherwise><a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a></c:otherwise>
 							        </c:choose></button>
 							    </div>
 							</div>
-							<c:set var="detailVo" value="${vo}"></c:set>
-							<%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
-							<script type="text/javascript">
-							// 모달창이 실행될때마다 초기화 해줌 좋아요반응
-							$(function() {
-							    // 모달이 열릴 때마다 실행
-							    $('#myModal${detailVo.blog_no}').on('show.bs.modal', function () {
-							        let iframe = $(this).find('iframe');
-							        let src = iframe.attr('src'); // 현재 src를 가져와서
-							        iframe.attr('src', ''); // 잠시 빈 값으로 변경한 후
-							        iframe.attr('src', src); // 다시 원래 src로 복원하여 새로고침 효과
-							    });
-							});
-							</script>
 							</c:forEach> 
 							<!-- 메인 내용 끝 -->
 				            </div>

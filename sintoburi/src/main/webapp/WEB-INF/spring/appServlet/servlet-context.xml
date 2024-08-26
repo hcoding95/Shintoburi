@@ -28,6 +28,36 @@
 	
 	<context:component-scan base-package="com.kh.sintoburi.controller" />
 	
+	<beans:bean 
+		id="loginInterceptor"
+		class="com.kh.sintoburi.interceptor.LoginInterceptor">
+	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<!-- 효철  -->
+			<mapping path="/hc/blog/**/*"/>
+			<mapping path="/hc/follow/**/*"/>
+			<mapping path="/hc/like/**/*"/>
+			<mapping path="/hc/reply/**/*"/>
+			<exclude-mapping path="/hc/blog/blog"/>
+			<exclude-mapping path="/hc/blog/detail"/>
+			<exclude-mapping path="/hc/reply/getReply"/>
+			<!-- 한나 -->
+			<!-- <mapping path="/hn/manager/**/*"/>
+			<mapping path="/hn/mypage/**/*"/>
+			<exclude-mapping path="/hn/mypage/noticeList"/>
+			<exclude-mapping path="/hn/mypage/faqList"/> -->
+			<!-- 동석 -->
+			<!-- <mapping path=" /ds/board/**/*"/>
+			<exclude-mapping path="/ds/board/index"/> -->
+			
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	
+	
+	</interceptors>
+	
 	
 	
 </beans:beans>

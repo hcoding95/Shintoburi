@@ -49,6 +49,8 @@ public class BlogController {
 	
 	@GetMapping("/blog")
 	public void blog(String user_id, HttpSession session,Model model) {
+		String url = (String) session.getAttribute("targetLocation");
+		System.out.println("지금 위치?" + url);
 		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
 		System.out.println("로그인한 user정보는?" + loginUser);
@@ -72,6 +74,7 @@ public class BlogController {
 	@Transactional
 	@GetMapping("/detail")
 	public void detail(int blog_no, HttpSession session, Model model) {
+		System.out.println("디테일뷰 실행");
 		BlogVo blogVo = blogService.readByBlogNo(blog_no);
 		List<HcReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
 		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
