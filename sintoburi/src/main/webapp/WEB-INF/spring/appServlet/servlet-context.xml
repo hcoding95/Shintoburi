@@ -31,7 +31,6 @@
 		<beans:property name="uploadTempDir" value="file:/D:/upload/tmp"/>
 		<beans:property name="maxInMemorySize" value="10000000"/> <!-- 10M -->
 	</beans:bean>
-	
 
 	<context:component-scan base-package="com.kh.sintoburi.controller" />
 
@@ -68,6 +67,8 @@
 	
 	
 	</mvc:interceptors>
+
+	
 	
 	
 	
