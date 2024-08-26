@@ -390,14 +390,14 @@ $(function () {
 
 <!-- 검색 -->
 <div class="search-container">
-    <form action="/board/list" method="get">
+    <form action="/hc/main/home" method="get">
         <div>
             <select name="type">
-                <option value="T" ${creteria.type == 'T'? 'selected' : '' }>내용</option>
-                <option value="C" ${creteria.type == 'C'? 'selected' : '' }>상품이름</option>
-                <option value="W" ${creteria.type == 'W'? 'selected' : '' }>작성자</option>
+                <option value="T" ${BlogPageDto.type == 'T'? 'selected' : '' }>내용</option>
+                <option value="P" ${BlogPageDto.type == 'P'? 'selected' : '' }>상품이름</option>
+                <option value="W" ${BlogPageDto.type == 'W'? 'selected' : '' }>작성자</option>
             </select>
-            <input type="text" name="keyword" value="${creteria.keyword}">
+            <input type="text" name="keyword" value="${BlogPageDto.keyword}">
             <button>검색</button>
         </div>
     </form>

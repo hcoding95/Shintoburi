@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.sintoburi.domain.hc.BlogPageDto;
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.HcLoginDto;
 import com.kh.sintoburi.domain.hc.HcUserVo;
@@ -30,8 +31,8 @@ public class MainController {
 	private HcInjectionService injectionService;
 	
 	@GetMapping("/home")
-	public void home(Model model, HttpSession session) {
-		List<BlogVo> list = blogService.getList();
+	public void home(Model model, HttpSession session, BlogPageDto blogPageDto) {
+		List<BlogVo> list = blogService.getList(blogPageDto);
 		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
 		String login_id = "";
 		if(loginUser != null) {
