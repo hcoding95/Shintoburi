@@ -18,6 +18,7 @@ public class HcLikeController {
 	
 	@PostMapping("/addLike")
 	public boolean addLike(@RequestBody HcLikeDto likeDto) {
+		System.out.println("좋아요 클릭");
 		return likeService.addLike(likeDto);
 	}
 	

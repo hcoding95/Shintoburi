@@ -57,7 +57,7 @@
         
 </style>
 <!-- 모달창 jsp 뛰우기 -->
-<div class="modal fade" id="myModal${detailVo.blog_no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%-- <div class="modal fade" id="myModal${detailVo.blog_no }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -72,6 +72,20 @@
 	            		</div>
             		</c:forEach>
 	            	</c:if>
+            	</div>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div> --%>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe id="myIframe" src="" frameborder="0" style="width: 100%; height: 100%; overflow: hidden;" scrolling="no"></iframe>
+            </div>
+            <div class="modal-footer">
+            	<div class="modal-left">
             	</div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
             </div>

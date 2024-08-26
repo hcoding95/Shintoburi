@@ -52,7 +52,9 @@ public class MainController {
 		String path = "";
 		if(loginVo != null) {
 			session.setAttribute("login", loginVo);
-			path = "redirect:/hc/main/home";
+			String realPath = (String)session.getAttribute("targetLocation");
+			System.out.println("내가보낼 타겟은?" + realPath);
+			path = "redirect:" + realPath;
 		} else {
 			path = "redirect:/hc/main/login";
 		}

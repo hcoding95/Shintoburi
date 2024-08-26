@@ -21,4 +21,14 @@ public class HcProductServiceImpl implements HcProductService {
 		return list;
 	}
 
+	@Override
+	public List<HcProductTagDto> getProductListByBlogNo(int blog_no) {
+		List<HcProductTagDto> list = productMapper.getTagList(blog_no);
+		
+		return list;
+	}
+	
+	
+	
+
 }

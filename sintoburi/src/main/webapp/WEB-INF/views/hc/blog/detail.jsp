@@ -14,6 +14,20 @@
 <head>
     <meta charset="UTF-8">
     <title>디테일 뷰</title>
+<%
+    // 현재 요청의 URL을 가져와서 세션에 저장
+    String prefixToRemove = "/WEB-INF/views";
+    String uri = request.getRequestURI().substring(prefixToRemove.length()); // ? 앞에 문자열
+    uri = uri.substring(0, uri.length() - 4);
+	String query = request.getQueryString(); // ? 뒤에 문자열
+	if(query != null && !query.equals("")) {
+		query = "?" + query;
+		System.out.println("합쳐진 쿼리는" + query);
+	} else {
+		query = "";
+	}
+    session.setAttribute("targetLocation", uri + query);
+%>
     
 <script type="text/javascript">
 
@@ -50,6 +64,17 @@ $(function () {
 				if(rData) {
 					location.reload();
 				}
+			} ,
+			error: function(xhr, status, error) {
+				console.log("에러발생");
+		        if (xhr.status === 401) {
+		    	   console.log("401에러 발견 작동");
+		           // 로그인 페이지로 리디렉션
+		           window.location.href = "/hc/main/login";
+		        } else {
+		           // 다른 오류 처리
+		           console.error("Error occurred: " + error);
+		        }
 			}
 		});
 	});
@@ -124,11 +149,25 @@ $(function () {
 						data : { 'blog_no' : blog_no},
 						success : function (rData) {
 							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+							$(window.parent.document).find("#likeBtn" + blog_no).attr("data-liked", false);
+							$(window.parent.document).find("#likeBtn" + blog_no).html('<i class="fa-regular fa-thumbs-up">좋아요</i>');
+							
 						}
 					})
 					location.reload();
 					
-				} 
+				}  ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		} else {
 			$.ajax({
@@ -144,10 +183,23 @@ $(function () {
 						data : { 'blog_no' : blog_no},
 						success : function (rData) {
 							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
+							$(window.parent.document).find("#likeBtn" + blog_no).attr("data-liked", true);
+							$(window.parent.document).find("#likeBtn" + blog_no).html('<i class="fa-solid fa-thumbs-up">좋아요</i>');
 						}
 					})
 					location.reload();
-				} 
+				}  ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		}
 	});
@@ -181,7 +233,18 @@ $(function () {
 					})
 					location.reload();
 					
-				} 
+				}  ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		} else {
 			$.ajax({
@@ -200,7 +263,18 @@ $(function () {
 						}
 					})
 					location.reload();
-				} 
+				}  ,
+				error: function(xhr, status, error) {
+					console.log("에러발생");
+			        if (xhr.status === 401) {
+			    	   console.log("401에러 발견 작동");
+			           // 로그인 페이지로 리디렉션
+			           window.location.href = "/hc/main/login";
+			        } else {
+			           // 다른 오류 처리
+			           console.error("Error occurred: " + error);
+			        }
+				}
 			});
 		}
 	});
@@ -364,6 +438,10 @@ body {
     font-weight: bold;
 }
 
+.content-text{
+	white-space: pre-line;
+}
+
 .text-end {
 	border-bottom: 2px solid #ddd; /* 테두리 추가 */
 	display: flex;
@@ -500,7 +578,7 @@ body {
 				          </c:otherwise>
 				      </c:choose></h3>
 			      	</div>
-			        <div>${blogVo.blog_content }</div>
+			        <div class="content-text">${blogVo.blog_content }</div>
 			      </div>
 			      <!-- 본문 내용끝  -->
 			        <div class="profile-section reply">

@@ -22,7 +22,7 @@ $(function () {
 	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|pdf|txt)$");
 	// run.exe , smile.zip...
 	let maxSize = 5242880; // 5MB 업로드 최대 크기 확인
-	let imageNum = ${blogVo.fileList.size()};
+	let imageNum = ${blogVo.fileList.size() != null ? blogVo.fileList.size() : 0};
 	function checkExtension (file_name, fileSize) {
 		if (fileSize > maxSize) {
 			alert("파일 사이즈 초과");
