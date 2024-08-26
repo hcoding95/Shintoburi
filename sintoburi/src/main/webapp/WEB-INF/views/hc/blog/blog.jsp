@@ -12,8 +12,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
 <%
-	//세션에서 기존의 targetLocation 속성을 먼저 제거
-	session.removeAttribute("targetLocation");
 
     // 현재 요청의 URL을 가져와서 세션에 저장
     String prefixToRemove = "/WEB-INF/views";
@@ -781,7 +779,7 @@ $(function () {
 					            	<c:forEach items="${list}" var="pictureVo" begin="0" end="5" step="1">
 					             		<c:if test="${not empty pictureVo.fileList }">
 							             <c:forEach items="${pictureVo.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
-							                <div class="photo"><a data-toggle="modal" data-target="#myModal${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
+							                <div class="photo"><a class="open-modal" data-blog_no="${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
 							             </c:forEach>
 						             	</c:if>
 					            	</c:forEach>
@@ -1002,9 +1000,9 @@ $(function () {
 							            	<c:forEach items="${list}" var="pictureVo2">
 							             		<c:if test="${not empty pictureVo2.fileList }">
 									             <c:forEach items="${pictureVo2.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
-									                <div class="photo"><a data-toggle="modal" data-target="#pictureModal${pictureVo2.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
-									                <c:set var="detailVo" value="${pictureVo2}"></c:set>
-													<%@ include file="/WEB-INF/views/hc/include/picture_modal.jsp" %>
+									                <div class="photo">
+									                	<a class="open-modal" data-blog_no="${pictureVo2.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a>
+									                </div>
 									             </c:forEach>
 								             	</c:if>
 							            	</c:forEach>
