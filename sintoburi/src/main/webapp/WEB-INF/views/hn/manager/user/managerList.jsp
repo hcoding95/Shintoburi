@@ -76,7 +76,7 @@ $(function() {
 				<tr class="col-md-8 text-center">
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>
-					<td>${vo.email}</td>
+					<td>${vo.user_email}</td>
 					 <td class="current-grade"> ${vo.grade} </td>
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>

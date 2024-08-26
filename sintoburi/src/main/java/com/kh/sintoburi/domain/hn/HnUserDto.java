@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HnUserDto {
 	private String user_id;
+	private String user_pw;
 	private String user_name;
 	private String grade;
-	private String email;
+	private String user_email;
 	private Date  last_login;
 	private int business;
 

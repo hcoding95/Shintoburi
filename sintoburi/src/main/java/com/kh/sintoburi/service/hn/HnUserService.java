@@ -32,6 +32,9 @@ public interface HnUserService {
 	// 로그인
 	public HnUserDto login(HnLoginDto dto);
 
+	// 비밀번호체크
+	public HnUserDto checkPw(@Param("user_id") String user_id);
+
 	// 사업자번호 업데이트
 	public boolean modifyBusinessNum(String user_id, String business_num);
 
@@ -40,5 +43,11 @@ public interface HnUserService {
 
 	// 등급 변경 해야하는 회원 리스트
 	public List<HnUserDto> gradeChangeList();
+
+	// 회원정보
+	public HnUserVo userInfo(String user_id);
+
+	// 회원 정보 수정
+	public boolean userInfoMod(HnUserVo userVo);
 
 }

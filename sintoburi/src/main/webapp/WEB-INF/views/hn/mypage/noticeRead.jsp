@@ -4,7 +4,8 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ include file="/WEB-INF/views/include/top.jsp" %>
   <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
-	    <hr style="border: 0; height: 1px; background: #000; margin: 20px 0;">
+  
+<hr style="border: 0; height: 1px; background: #000; margin: 20px 0;">
 <style>
    .section-divider-top {
         border: 0;
@@ -93,7 +94,7 @@
     <c:if test="${previousNotice != null}">
         <div class="navigation-item">
             <label > 이전글 </label>
-            <a  style="text-align: center; href="/hn/mypage/noticeRead?n_no=${previousNotice.n_no}" class="navigation-link">${previousNotice.title}</a>
+            <a href="/hn/mypage/noticeRead?n_no=${previousNotice.n_no}" class="navigation-link">${previousNotice.title}</a>
         </div>
     </c:if>
 </div>

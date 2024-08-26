@@ -114,13 +114,15 @@
                     </div>
                     <ul class="sub-menu">
                         <li><a href="/hn/mypage/enqList">1:1문의내역</a></li>
+                        <li><a href="/hn/mypage/noticeList">공지사항</a></li>
+                        <li><a href="/hn/mypage/faqList">자주하는 질문</a></li>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
                         마이정보
                     </div>
                     <ul class="sub-menu">
-                        <li><a href="#!">회원정보 수정</a></li>
-                        <li><a href="#!">회원탈퇴</a></li>
+                        <li><a href="/hn/mypage/checkPw">회원정보 수정</a></li>
+                        <li><a href="/hn/mypage/loginConfirm">회원탈퇴</a></li>
                     </ul>
                 </div>
             </div>

@@ -86,5 +86,25 @@ public class HnUserServiceImpl implements HnUserService {
 		List<HnUserDto> list = userMapper.gradeUpdateShow();
 		return list;
 	}
+	
+	// 비밀번호 체크
+	@Override
+	public HnUserDto checkPw(String user_id) {
+		HnUserDto dto =  userMapper.checkPw(user_id);
+		return dto;
+	}
+
+	// 회원 정보 조회
+	@Override
+	public HnUserVo userInfo(String user_id) {
+		HnUserVo userVo = userMapper.selectUserInfo(user_id);
+		return userVo;
+	}
+
+	@Override
+	public boolean userInfoMod(HnUserVo userVo) {
+		int count = userMapper.updateUserInfo(userVo);
+		return (count == 1)? true: false;
+	}
 
 }

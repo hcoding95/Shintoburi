@@ -41,15 +41,21 @@ public interface HnUserMapper {
 
 	// 회원가입
 	public int join(HnUserVo vo);
+	
+	// 회원정보
+	public HnUserVo selectUserInfo(@Param("user_id") String user_id);
+	
+	// 회원 정보 수정
+	public int updateUserInfo(HnUserVo userVo);
 
 	// 아이디저장
 	public int checkDupId(@Param("user_id") String user_id);
 
 	// 이메일조회
 	public String getEmailById(@Param("user_id") String user_id);
-
-	// 비밀번호변경
-	public int updatePw(Map<String, String> map);
+	
+	// 비밀번호체크
+	public HnUserDto checkPw(@Param("user_id") String user_id);
 	
 	// 사업자번호 업데이트
 	public int updateBusinessNum(@Param("user_id") String user_id, @Param("business_num") String business_num);
@@ -59,4 +65,6 @@ public interface HnUserMapper {
 	
 	// 등급 변경 해야하는 회원 리스트
 	public List<HnUserDto> gradeUpdateShow();
+	
+
 }

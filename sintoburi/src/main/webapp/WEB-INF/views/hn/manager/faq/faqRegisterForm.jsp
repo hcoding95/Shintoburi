@@ -57,7 +57,7 @@ $(function() {
                             </div>
                             
                             <div class="col-md-12 text-right">
-                                <button class="btnMod btn btn-outline-dark btn-sm" type="submit">작성하기</button>
+                                <button class="btnMod btn btn-primary btn-sm" type="submit">등록하기</button>
                             </div>
                         </form>
                     </div>

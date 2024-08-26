@@ -16,12 +16,13 @@ public class HnUserVo {
 	private String user_id;
 	private String user_name;
 	private String user_pw;
-	private String email;
+	private String user_email;
 	private String address;
 	private String grade;
 	private int point;
 	private int  business;
 	private String  business_num;
 	private Date  last_login;
+	private String user_phone;
 
 }

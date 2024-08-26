@@ -56,7 +56,7 @@ $(function() {
 				 success: function(rData) {
 					  $("#modalUserId").val(rData.user_id || ''); 
 		                $("#modalUserName").val(rData.user_name || '');
-		                $("#modalEmail").val(rData.email || '');
+		                $("#modalEmail").val(rData.user_email || '');
 		                $("#modalAddress").val(rData.address || '');
 		                $("#modalGrade").val(rData.grade || '');
 		                $("#modalPoints").val(rData.point || '');
@@ -139,7 +139,7 @@ $(function() {
 						</div>
 						<div class="my-3">
 						이메일	<input type="text" class="form-control"
-								id="modalEmail" name ="email" readonly>
+								id="modalEmail" name ="user_email" readonly>
 						</div>
 						<div class="my-3">
 						주소	<input type="text" class="form-control"
@@ -227,7 +227,7 @@ $(function() {
 				<tr class="col-md-8 text-center">
 					<td class="user-id" style="font-weight: bold; cursor: pointer;" data-id ="${vo.user_id}">${vo.user_id}</td>
 					<td>${vo.user_name}</td>
-					<td>${vo.email}</td>
+					<td>${vo.user_email}</td>
 					 <td class="current-grade">
                   	  ${vo.grade} <c:if test="${vo.business == 1 && vo.grade != '판매자'}">
 			  			<span style="color: green;">[승인요청]</span>

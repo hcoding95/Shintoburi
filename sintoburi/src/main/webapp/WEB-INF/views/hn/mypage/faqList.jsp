@@ -117,7 +117,7 @@ $(function(){
 					        	<select style="display: none;" name="type">
 					        		  <option value="T" ${criteria.type == 'T' ? 'selected' : ''}>제목</option>
 					        	</select>
-					            <input type="text" id="searchInput" name="keyword" class="form-control" placeholder="질문 키워드를 입력해주세요." aria-label="Search">
+					            <input type="text" id="searchInput" name="keyword" class="form-control" placeholder="질문 키워드를 입력해주세요." aria-label="Search" value="${param.keyword}">
 					            <div class="input-group-append">
 					                <button id ="btnSearch" class="btn btn-success" type="submit">검색</button>
 					            </div>

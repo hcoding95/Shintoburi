@@ -200,4 +200,12 @@ public class mapperTest {
 		log.info(list);
 	}
 
+	@Test
+	public void selectUserInfo() {
+		String user_id = "user01";
+		HnUserVo vo = userMapper.selectUserInfo(user_id);
+		log.info(vo);
+	}
+	
+
 }
