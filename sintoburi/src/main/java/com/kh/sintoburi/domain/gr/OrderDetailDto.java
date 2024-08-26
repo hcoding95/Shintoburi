@@ -15,17 +15,17 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class BasketDetailDto {
-	private int bdno; //장바구니 상세번호
-	private int pno;//상품번호
-	private String name;//상품이름
-	private String img_path;//상품 이미지
-	private int price;//상품 가격
+public class OrderDetailDto {
+    private String user_id;
+	private int ono;
+	private int pno;
+	private String name;
+	private String img_path;
 	private int p_count;//상품 개수
+	private int price;
 	private int total_price;
-	private int bno; // 장바구니 번호
-	private String user_id;//로그인한 구매자
-	private Date put_date;
 	private int delivery_charge;
-	
+	private int pay_amount;
+	private String delivery_status;
+	private Date order_date;
 }

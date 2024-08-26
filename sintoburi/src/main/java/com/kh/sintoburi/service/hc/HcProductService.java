@@ -8,4 +8,6 @@ public interface HcProductService {
 	
 	public List<HcProductTagDto> getProductList(HcProductTagDto dto);
 
+	public List<HcProductTagDto> getProductListByBlogNo(int blog_no);
+
 }

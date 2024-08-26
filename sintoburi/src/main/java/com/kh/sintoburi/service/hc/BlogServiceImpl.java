@@ -31,6 +31,9 @@ public class BlogServiceImpl implements BlogService {
 	@Transactional
 	@Override
 	public boolean insert(BlogVo blogVo) {
+		String content = blogVo.getBlog_content();
+		content.replace("\n", "<br>");
+		blogVo.setBlog_content(content);
 		int result = blogMapper.insertSelectKey(blogVo);
 		int blog_no = blogVo.getBlog_no();
 		List<HcAttachFileDto> fileList = blogVo.getFileList();

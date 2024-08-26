@@ -20,8 +20,8 @@ public class BasketPageDto {
 		
 		//1~10, 11~20
 		//현재 페이지에 따라서 페이지 블럭 정하기
-		this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0)) * 10; // 51페이지라면 60
-		this.startPage = endPage - 9;
+		this.endPage = (int)(Math.ceil(cri.getPageNum() / 5.0)) * 5; // 51페이지라면 60
+		this.startPage = endPage - 4;
 		
 		//페이지 블럭을 얻었는데 실제 끝페이지가 endPage가 아닐 수 있다. 
 		//데이터 개수가 501개라면 - endPage: 60, 실제 끝페이지는 51

@@ -13,7 +13,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class BasketVo {
-	private int bno; //장바구니 번호
-	private String user_id; // 구매자 = 로그인
+public class OrderDetailVo {
+	private int odno;
+	private int ono;
+	private int pno;
+	
+	private int p_count;
 }
