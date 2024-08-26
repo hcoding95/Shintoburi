@@ -15,38 +15,64 @@
 
 $(function(){
 	
+	
+	
 $("#chatInput").focus();
+	let nickname;
 
+	// 닉네임을 입력하지 않거나 조건에 맞지 않으면 재귀호출
+	function inputNick(){
+		 nickname = prompt('닉네임을 입력해주세요');
+
+		if(nickname==null){
 	
+			inputNick();
+		} else if(nickname.length<2){
+			alert("두글자 이상 입력해주세요");
+			inputNick();
+		} else if(nickname.length>8){
+			alert("최대 8글자까지 입력가능합니다");
+			inputNick();
+		}
+	}
 	
+		
+// 	setInterval(function(){
+// 		$("#enterUser").html(`<p>\${}님이 접속하였습니다</p>`);
+// 	}, 100)	
+		
+	inputNick();
+
 
 	$(document).keyup(function(e){
+		
+		
 			
 			if(e.keyCode==13&&$("#chatInput").val()!=""){	// 엔터
 				console.log("엔터");
-				$("#chatContext").append($("#chatInput").val()+"<br>");
+				//$("#chatContext").append($("#chatInput").val()+"<br>");
 				
 				let data ={
-						"bno":${detail.bno},
-						"reply":$("#commentContext").val(),
-						"replyer":'유저1'
+						"user_id":'user01',
+						"user_name":nickname,
+						"chat_log":$("#chatInput").val()
 					
 					};
 				
 				$.ajax({
 					type:"POST",
-					url:"/ds/reply/commitComment",
+					url:"/ds/chat/sendChat",
 					data:JSON.stringify(data), 
 					contentType: "application/json; charset=UTF-8",
 					async: false,
 					success: function(result){
-							
-						$("#commentContext").val("");
+							console.log("채팅보냄")
+					//getChatLog();
 
 
 					}
 					,error: function(){
-						alert("댓글 등록 실패");
+						console.log("채팅안보내짐");
 					
 					}	
 			
@@ -57,18 +83,61 @@ $("#chatInput").focus();
 				$("#chatInput").val("");
 			}
 			
-			
-			
-			
+
 		});
+	
+	
+	setInterval(function(){
+		getChatLog();	
+	}, 100);
+	
+	
+	function getChatLog(){
+		$.ajax({
+			type:"POST",
+			url:"/ds/chat/chatLog",
+			contentType: "application/json; charset=UTF-8",
+			async: false,
+			success: function(result){
+				
+					
+// 					console.log("채팅 읽어옴")
+// 					console.log(result)
+					
+						
+					let chat=''; 
+					for(let i=0; i<result.length; i++){
+// 						console.log(i)
+					
+						
+						chat += `
+							<p>\${result[i].user_name} :\${result[i].chat_log}</p>
+						
+					  `;
+						
+						}
+						
+					$("#chatContext").html(chat);
+					$("#chatContext").scrollTop(1000000);	// 임시로 스크롤을 내림
+					
+					
+			}
+			,error: function(){
+				console.log("채팅 못읽옴")
+			
+			}	
+	
+		});
+		
+	}
+	
+	
+
 
 });
 
 
-
-
 </script>
-
 
 
 <title>채팅</title>
@@ -76,38 +145,25 @@ $("#chatInput").focus();
 </head>
 <body>
 
-<h2>실시간 채팅</h2>
+
+<h2>환영합니다<img src=""></h2>
 <hr>
 
-<div id="chatContext">
-
-
+<!-- 채팅내용 -->
+<div>
+<div id="chatContext" style="height:500px;overflow-y:scroll;">	
 
 </div>
 
-  
-<!-- <ul>  -->
-
-<!-- <li class="d-flex flex-row-reverse align-items-end my-3"> -->
-<!--   <span class="chat-box mine ms-1">내용</span> -->
-<!--   <span class="tx-small text-end"> -->
-<!--     날짜  -->
-<!--   </span> -->
-<!-- </li> -->
-
-<!-- <li class="d-flex flex-row align-items-end my-3"> -->
-<!--   <span class="chat-box me-1">내용</span> -->
-<!--   <span class="tx-small"> -->
-<!--     날짜 -->
-<!--   </span> -->
-<!-- </li> -->
-
-<!-- </ul>  -->
-
-<div style="">
+<!-- 채팅창 -->
+<div id="divChat" style="position:absolute;bottom:0;width:100%">
           <input type="text" class="form-control" id="chatInput">
 </div>
+</div>
+<!-- 들어온 유저 --> 
+<!-- <div id="enterUser"> -->
 
+<!-- </div> -->
 
 </body>
 </html>

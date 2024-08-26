@@ -40,19 +40,23 @@ $(function() {
 	
 	function judgeStageLevel(){
 		
-		
-		if(correctNum==3){
+		// 게임레벨 판단 부분 확인 편의상 빠르게 레벨 증가 시켜놓음
+		if(correctNum==2){
 			bonusScore++;
 			stageLevel++;
 			limitTime=8000;
-		} else if(correctNum==5){
+		} else if(correctNum==3){
 			bonusScore++;
 			stageLevel++;
 			limitTime=6000;
-		}  else if(correctNum==10){
+		}  else if(correctNum==5){
 			bonusScore++;
 			stageLevel++;
 			limitTime=4000;
+		} else if(correctNum==7){
+			bonusScore++;
+			stageLevel++;
+			limitTime=2500;
 		}
 		$("#stage").text(`레벨 : \${stageLevel}`);
 	}
@@ -187,11 +191,11 @@ $(function() {
 	function judgeLose(playerLife){
 		if(playerLife==0){
 			$("#timeBar").stop();
-			alert("기회를 모두 소진하였습니다");
+			//alert("기회를 모두 소진하였습니다");
 			
 			let data ={
-					"user_id":'user01',
-					"user_name":'유저1',
+					"user_id":"${login.user_id}",
+					"user_name":"${login.user_name}",
 					"score":playerScore
 				
 				};
@@ -203,7 +207,7 @@ $(function() {
 				contentType: "application/json; charset=UTF-8",
 				success: function(result){
 					if(result){
-						//alert("스코어 등록");
+						alert(`\${playerScore}포인트 획득!`);
 						$(location).attr("href","/ds/board/event");
 					}
 				}
@@ -213,8 +217,7 @@ $(function() {
 				}	
 		
 			});
-			
-			
+
 		}
 	}
 	// 랭킹 불러오는 부분	
@@ -240,9 +243,35 @@ $(function() {
 		}	
 
 	});
+	getUserPoint();
+	
+	function getUserPoint(){
+		let data ={
+				"user_id":"${login.user_id}"	
+				};
+		
+		$.ajax({
+			type:"POST",
+			url:"/ds/user/getPoint",
+			data:JSON.stringify(data),
+			contentType: "application/json; charset=UTF-8",
+			success: function(result){
+				userPoint=result;
+				
+				$(".point").eq(0).text(`소지포인트 \${userPoint}P`);
+					
+			}
+			,error: function(){
+				console.log("포인트 불러오기 실패");
+			
+			}	
+	
+		});
+	}
+	
 
 
-	});
+});
 </script>
 <title>이벤트</title>
 </head>
@@ -262,6 +291,7 @@ $(function() {
 
 
 	<div id="record">
+	<h1 class="point"></h1>
 	<h2>현재 랭킹</h2>
 	</div>
 	

@@ -7,7 +7,18 @@
 <script>
 
 $(function() {
+	let category = $(".btnCate:first").text();
 	let thumb=null;
+	$("#category").val(category);
+	$(".btnCate").click(function(){
+		category = $(this).text();
+		$("#category").val(category);
+		console.log(category);
+   });
+	
+	console.log(category);
+	
+	
 	$('.summernote').summernote({
 	      
 		
@@ -86,9 +97,9 @@ $(function() {
 		
 		let data ={
 			"title":$("#title").val(),
-			"writer":'user01',
+			"writer":"${login.user_id}",
 			"content":$("#content").val(),
-			"category":'자유게시판',
+			"category":category,
 			"thumbnail":img
 		
 		};
@@ -129,14 +140,20 @@ $(function() {
 				<div>
                  <a class="nav-link dropdown-toggle" id="navbarDropdown"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">카테고리</a>
                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
-                         <li><a class="dropdown-item" href="#!" >자유게시판</a></li>
-                             <li ><hr class="dropdown-divider" /></li>
-                             <li><a class="dropdown-item" href="#!">레시피 이야기</a></li>
+                         <li><a type="button" class="dropdown-item btnCate">자유게시판</a></li>
+                             <li ><hr class="dropdown-divider"/></li>
+                             <li><a class="dropdown-item btnCate" >농산물 이야기</a></li>
                              <li><hr class="dropdown-divider" /></li>
-                              <li><a class="dropdown-item" href="#!">농작물 이야기</a></li>
+                              <li><a class="dropdown-item btnCate" >레시피 이야기</a></li>
                             
                       </ul>
                    </div>
+               
+                   <input type="text" class="form-control" id="category" name="category" readonly />
+                   
+                   
+             
+                   
 				</div>
 				<!-- 글내용 입력 -->
 				<textarea class="summernote" name="content" id="content" required></textarea>

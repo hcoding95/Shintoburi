@@ -14,30 +14,35 @@
 <script>
 
 $(function(){
-	
-	$.ajax({
-		type:"POST",
-		url:"/ds/game/quizScore",
-		contentType: "application/json; charset=UTF-8",
-		success: function(result){
-			if(result){
-				//alert("스코어 불러와짐");
-				
-				for(let i=0; i<10; i++){
-					console.log(result[i].user_name);
-					// 등수 표시
-					$("#record").append(`<h3>\${i+1}등 :\${result[i].user_name}님 \${result[i].score}점</h3>`);
-				}
-				
-			}
-		}
-		,error: function(){
-			//alert("스코어 불러오기 실패");
+	function getUserPoint(){
+		let data ={
+				"user_id":"${login.user_id}"
+				};
 		
-		}	
+		$.ajax({
+			type:"POST",
+			url:"/ds/user/getPoint",
+			data:JSON.stringify(data),
+			contentType: "application/json; charset=UTF-8",
+			success: function(result){
+				let userPoint=result;
+				//$(".user").eq(0).text(`님 환영합니다!`);
+				$(".point").eq(0).text(`소지포인트 \${userPoint}P`);
+					
+			}
+			,error: function(){
+				console.log("포인트 불러오기 실패");
+			
+			}	
 
-	});
-})
+		});
+	}
+	
+	getUserPoint();
+});
+
+
+
 
 
 
@@ -49,14 +54,17 @@ $(function(){
 
 <h2>이벤트 게임에 도전해 포인트를 얻으세요!</h2>
 
+<img src="/resources/images/quiz.png" style="width:50px;height:50px;">
 <a href="/ds/board/quizGame">퀴즈게임</a>
-
-
+<br>
+<img src="/resources/images/run.jpg" style="width:50px;height:50px;">
+<a href="/ds/board/runGame">야채달리기</a>
 <hr>
-<h2>랭킹</h2>
-<div id="record">
+<!-- <h2 class="user"></h2> -->
+<h3 class="point"></h3>
 
-</div>
+
+
 
 
 </body>

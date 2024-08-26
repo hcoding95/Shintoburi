@@ -29,6 +29,11 @@
 
  <!-- /서머노트 -->
  
+<script>
+              
+                      
+</script>
+ 
    </head>
     
         <!-- Navigation-->
@@ -56,9 +61,14 @@
                         </li>
                     </ul>
                     
+                  
+						<a href="/ds/board/register">회원가입</a>
+					
+                    
                     	<nav class="navbar navbar-light bg-">
 						<div class="container-fluid">
 							<form class="d-flex">
+							
 								<input class="form-control me-2" type="search" placeholder="검색"
 									aria-label="Search">
 								<button class="btn btn-outline-success" type="submit">
@@ -76,11 +86,30 @@
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                         
-                      <button class="btn btn-outline-danger" type="submit">
+                    <div>
+               
+                    <c:choose>
+                      <c:when test="${not empty login.user_id}">
+                        <a class="btn btn-outline-danger" href="/ds/user/logout"  id="logout">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            로그아웃
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </a>
+                      </c:when>
+                      <c:otherwise>
+                       
+                        
+                         <a class="btn btn-outline-primary" href="/ds/board/login"  id="login">
                             <i class="bi bi-box-arrow-in-left"></i>
                             로그인
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
+                        </a>
+                        </c:otherwise>
+                      </c:choose>
+                         
+                      </div> 
+                      
+                
                       
                     </form>
                 </div>
@@ -95,20 +124,24 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						<a href="#" style="color:white;">인기글</a>
+						<a href="/ds/board/index" style="color:white;">홈화면</a>
 					</li>
-					<li class="breadcrumb-item">
-						<a href="#" style="color:white;">자유게시판</a>
-					</li>
-					<li class="breadcrumb-item">
-						<a href="#" style="color:white;">갤러리</a>
-					</li>
+<!-- 					<li class="breadcrumb-item"> -->
+<!-- 						<a href="#" style="color:white;">자유게시판</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="breadcrumb-item"> -->
+<!-- 						<a href="#" style="color:white;">갤러리</a> -->
+<!-- 					</li> -->
 					<li class="breadcrumb-item">
 						<a href="javascript:void(0);" onclick="openChatPopup();" target="_blank" style="color:white;">채팅</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="javascript:void(0);" onclick="openEventPopup();"  target="_blank" style="color:white;">이벤트</a>
 					</li>
+					
+<!-- 					<li class="breadcrumb-item"> -->
+<!-- 					<a href="/ds/board/test" style="color:white;">테스트</a> -->
+<!-- 					</li> -->
 				</ol>
 			</nav>
 		</div>
@@ -127,13 +160,19 @@ function openEventPopup(){
 
 
 function openChatPopup(){
+
+	
     let url = "/ds/board/chat";
     let name = "채팅";
-    let option = "width=600,height=700,top=100,left=200"
+    let option = "width=600,height=610,top=100,left=200"
     window.open(url, name, option);
     console.log("채팅실행");
     
 }
+
+
+
+
 </script>
 
   </div>
