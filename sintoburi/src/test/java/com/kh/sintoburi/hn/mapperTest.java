@@ -14,10 +14,10 @@ import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.HnPageDto;
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
 import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.NoticeMapper;
@@ -154,7 +154,7 @@ public class mapperTest {
 	@Test
 	public void selectById() {
 		String user_id = "user00";
-		HnUserVo vo = userMapper.selectById(user_id);
+		UserVo vo = userMapper.selectById(user_id);
 		log.info(vo);
 	}
 	
@@ -203,7 +203,7 @@ public class mapperTest {
 	@Test
 	public void selectUserInfo() {
 		String user_id = "user01";
-		HnUserVo vo = userMapper.selectUserInfo(user_id);
+		UserVo vo = userMapper.selectUserInfo(user_id);
 		log.info(vo);
 	}
 	
