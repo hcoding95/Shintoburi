@@ -55,8 +55,6 @@
   		order by 
   			followers_count DESC,
   			likes_count DESC
-        	
-        
   	</select>
   	
   	
