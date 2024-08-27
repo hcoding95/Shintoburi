@@ -6,14 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-<<<<<<< HEAD
-import com.kh.sintoburi.domain.hn.HnUserDto;
-=======
 import com.kh.sintoburi.domain.common.UserVo;
 
-
-
->>>>>>> refs/heads/master
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	

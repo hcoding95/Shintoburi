@@ -59,16 +59,16 @@ public class HnUserController {
 	@PostMapping("/userDetail/{user_id}")
 	@ResponseBody
 	public UserVo userDetail(@PathVariable("user_id") String user_id , Model model) {
-		UserVo hnUserVo = userService.selectById(user_id);
-		return hnUserVo;
+		UserVo userVo = userService.selectById(user_id);
+		return userVo;
 	}
 	
 	// 사업자번호업데이트
 	@PostMapping("/modBusinessNum")
 	@ResponseBody
-	public boolean modBusinessNum(@RequestBody UserVo hnUserVo) {
-		String user_id = hnUserVo.getUser_id();
-		String business_num = hnUserVo.getBusiness_num();
+	public boolean modBusinessNum(@RequestBody UserVo userVo) {
+		String user_id = userVo.getUser_id();
+		String business_num = userVo.getBusiness_num();
 		boolean result = userService.modifyBusinessNum(user_id, business_num);
 		return result;
 	}

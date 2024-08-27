@@ -8,19 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-<<<<<<< HEAD
-=======
 import com.kh.sintoburi.domain.common.UserVo;
->>>>>>> refs/heads/master
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-<<<<<<< HEAD
-import com.kh.sintoburi.domain.hn.HnUserVo;
-=======
->>>>>>> refs/heads/master
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;

@@ -61,7 +61,7 @@ $(function() {
 	    url: "/hn/manager/notice/managerNoticeShow",
 	    success: function(rData) {
 	        console.log(rData);
-	        $('#noticeShow').html('<strong>관리자 중요 공지사항:</strong> <a href="/hn/manager/notice/noticeDetail/2">' + rData.title + '</a>');
+	        $('#noticeShow').html('<strong>관리자 중요 공지사항:</strong> <a href="/hn/manager/notice/noticeDetail/' + rData.n_no + '">' + rData.title + '</a>');
 	    }
 	});
 	

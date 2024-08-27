@@ -33,17 +33,17 @@ public class HnMainController {
 	@PostMapping("/loginPost")
 	public String loginPost(HnLoginDto dto, HttpServletRequest request, Model model) throws Exception {
 		System.out.println("dto: " + dto);
-		UserVo userDto = userService.login(dto);
-		System.out.println("userDto: " + userDto);
+		UserVo userVo = userService.login(dto);
+		System.out.println("userDto: " + userVo);
 
-		if (userDto != null) {
+		if (userVo != null) {
 			// 로그인 성공
 			HttpSession session = request.getSession();
-			session.setAttribute("login", userDto);
+			session.setAttribute("login", userVo);
 
 			String location = null;
-			System.out.println(userDto.getGrade());
-			switch (userDto.getGrade()) {
+			System.out.println(userVo.getGrade());
+			switch (userVo.getGrade()) {
 			case "판매자":
 				location = "/hn/mypage/myPageMain";
 				break;
