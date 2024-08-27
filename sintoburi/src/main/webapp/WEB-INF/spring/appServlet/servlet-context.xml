@@ -49,6 +49,7 @@
 			<mvc:mapping path="/hc/reply/**/*"/>
 			<!-- 한나 -->
 			<mvc:mapping path="/hn/manager/**/*"/>
+			<mvc:mapping path=" /ds/board/**/*"/>
 			<mvc:mapping path="/hn/mypage/**/*"/>
 			<!-- 효철 제외 -->
 			<mvc:exclude-mapping path="/hc/blog/blog"/>
@@ -58,8 +59,7 @@
 			<mvc:exclude-mapping path="/hn/mypage/noticeList"/>
 			<mvc:exclude-mapping path="/hn/mypage/faqList"/>
 			<!-- 동석 -->
-			<!-- <mvc:mapping path=" /ds/board/**/*"/>
-			<mvc:exclude-mapping path="/ds/board/index"/> -->
+			<mvc:exclude-mapping path="/ds/board/index"/> 
 			
 			
 			<beans:ref bean="loginInterceptor"/>
@@ -69,6 +69,7 @@
 	</mvc:interceptors>
 
 	
+
 	
 	
 	

@@ -47,7 +47,9 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 
+
 		<property name="typeAliasesPackage" value="com.kh.sintoburi.domain"/>	
+
 
 
 	</bean>
@@ -60,10 +62,12 @@
 	
 
 
+
 	<mybatis-spring:scan base-package="com.kh.sintoburi.mapper"/>
 	<context:component-scan base-package="com.kh.sintoburi.service"></context:component-scan>
 
 	
+
 	<context:component-scan base-package="com.kh.sintoburi.task"></context:component-scan>
 
 	

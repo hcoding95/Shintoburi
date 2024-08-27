@@ -8,6 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        
+        
 
 <!--         <title>Shop Homepage - Start Bootstrap Template</title> -->
         <!-- Favicon-->
@@ -16,8 +18,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/resources/css/styles.css" rel="stylesheet" />
-        
+        <link href="/resources/css/ds/styles.css" rel="stylesheet" />
 
   <!-- 서머노트(게시판 에디터CDN) -->
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +29,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
 
  <!-- /서머노트 -->
+
  
 <script>
               
@@ -42,27 +44,22 @@
             <div class="container px-4 px-lg-5">   
         
         <div>
-		<img src="/resources/images/logo.png" alt="농사랑 로고" style="width:56px;height:44px;">
+        <a href="/hc/main/home"><img src="/resources/images/logo.png" alt="농사랑 로고" style="width:56px;height:44px;"></a>
+		
   		<span style="margin-top:20px;font-size:22px;" >신토불이 - 커뮤니티</span>
 		</div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">홈</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">도움말</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">모든상품</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">인기상품</a></li>
-                                <li><a class="dropdown-item" href="#!">신상품</a></li>
-                            </ul>
-                        </li>
+<!--                         <li class="nav-item"><a class="nav-link" href="#!">도움말</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="#!">상품몰</a></li>
                     </ul>
-                    
+                      <c:if test="${empty login}">
+		                   	<a href="/ds/board/register">회원가입</a>
+		                    </c:if>
                   
-						<a href="/ds/board/register">회원가입</a>
+					
 					
                     
                     	<nav class="navbar navbar-light bg-">
@@ -133,10 +130,10 @@
 <!-- 						<a href="#" style="color:white;">갤러리</a> -->
 <!-- 					</li> -->
 					<li class="breadcrumb-item">
-						<a href="javascript:void(0);" onclick="openChatPopup();" target="_blank" style="color:white;">채팅</a>
+						<a href="javascript:void(0);" onclick="openChatPopup();"  style="color:white;">채팅</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="javascript:void(0);" onclick="openEventPopup();"  target="_blank" style="color:white;">이벤트</a>
+						<a href="javascript:void(0);" onclick="openEventPopup();"   style="color:white;">이벤트</a>
 					</li>
 					
 <!-- 					<li class="breadcrumb-item"> -->
@@ -150,6 +147,12 @@
 
 <script>
 function openEventPopup(){
+	
+	if(${login.user_id==null}){
+		alert("로그인을 해주세요");
+		return;
+	}
+	
     let url = "/ds/board/event";
     let name = "이벤트";
     let option = "width=600,height=700,top=100,left=200"
@@ -160,7 +163,10 @@ function openEventPopup(){
 
 
 function openChatPopup(){
-
+	if(${login.user_id==null}){
+		alert("로그인을 해주세요");
+		return;
+	}
 	
     let url = "/ds/board/chat";
     let name = "채팅";

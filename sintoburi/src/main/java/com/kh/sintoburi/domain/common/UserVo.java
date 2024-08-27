@@ -1,11 +1,11 @@
-package com.kh.sintoburi.domain.ds;
+package com.kh.sintoburi.domain.common;
 
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class DsUserVo {
+public class UserVo {
 	private String user_id;
 	private String user_pw;
 	private String user_name;

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.sintoburi.domain.ds.DsLoginDto;
-import com.kh.sintoburi.domain.ds.DsUserVo;
+import com.kh.sintoburi.domain.common.LoginDto;
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.service.ds.DsUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class DsUserController {
 	// 유저 회원가입
 	@PostMapping("/register")
 	@ResponseBody
-	public boolean register(@RequestBody DsUserVo vo) {
+	public boolean register(@RequestBody UserVo vo) {
 		
 		
 		//System.out.println(vo.toString());
@@ -67,18 +67,17 @@ public class DsUserController {
 	@GetMapping("/logout")
 	public void logout(HttpSession session,HttpServletResponse response) throws IOException {
 		session.invalidate();
-		response.sendRedirect("/ds/board/index");
-		
+		response.sendRedirect("/hc/main/home");
+
 	}
 	
 	
-	// 로그인
+	 //로그인
 	@PostMapping("/login")
 	@ResponseBody
-	public String login(@RequestBody DsLoginDto dto, HttpSession session) {
+	public String login(@RequestBody LoginDto dto, HttpSession session) {
 			
-		
-		DsUserVo vo = userService.login(dto);
+		UserVo vo = userService.login(dto);
 		
 		if(vo!=null) {
 			System.out.println("세션저장");
@@ -88,9 +87,27 @@ public class DsUserController {
 			return "fail";
 		}
 		
-			
 	}
 		
+//	@PostMapping("/login")	
+//	@ResponseBody
+//	public String loginAction(@RequestBody LoginDto dto, HttpSession session) {			
+//				
+//		UserVo vo = userService.login(dto);
+//		
+//		String path = "";		
+//		if(vo != null) {		
+//			session.setAttribute("login", vo);	
+////			String realPath = (String)session.getAttribute("targetLocation");	
+////
+////			System.out.println("내가보낼 타겟은?" + realPath);	
+////			path = "redirect:" + realPath;	
+//		} else {		
+//			path = "redirect:/ds/board/login";	
+//		}		
+//		return path;		
+//	}			
+
 		
 		
 		
