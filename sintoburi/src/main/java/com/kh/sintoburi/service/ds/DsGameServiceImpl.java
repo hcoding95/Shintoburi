@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.ds.DsBoardVo;
 import com.kh.sintoburi.domain.ds.DsPointDto;
 import com.kh.sintoburi.domain.ds.DsQuizVo;
-import com.kh.sintoburi.mapper.ds.DsBoardMapper;
 import com.kh.sintoburi.mapper.ds.DsQuizGameMapper;
 import com.kh.sintoburi.mapper.ds.DsRunGameMapper;
 

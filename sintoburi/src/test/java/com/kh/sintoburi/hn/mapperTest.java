@@ -8,23 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.kh.sintoburi.domain.hn.HnCriteria;
+import com.kh.sintoburi.domain.common.UserVo;
+import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
-import com.kh.sintoburi.domain.hn.NoticeVo;
-import com.kh.sintoburi.domain.hn.HnPageDto;
-import com.kh.sintoburi.domain.common.UserVo;
-import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
-import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.domain.hn.HnUserDto;
+import com.kh.sintoburi.domain.hn.NoticeVo;
+import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
-import com.kh.sintoburi.mapper.hn.FaqMapper;
-import com.kh.sintoburi.mapper.hn.NoticeMapper;
 import com.kh.sintoburi.mapper.hn.EnquiryReplyMapper;
-import com.kh.sintoburi.mapper.hn.ReportPostMapper;
+import com.kh.sintoburi.mapper.hn.FaqMapper;
 import com.kh.sintoburi.mapper.hn.HnUserMapper;
-import com.kh.sintoburi.service.hn.HnUserService;
+import com.kh.sintoburi.mapper.hn.NoticeMapper;
+import com.kh.sintoburi.mapper.hn.ReportPostMapper;
 
 import lombok.extern.log4j.Log4j;
 
