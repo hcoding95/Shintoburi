@@ -25,8 +25,36 @@
   	</delete>
   	
   	<select id="getListWithPage" resultType="BlogVo">
-  		select * from tbl_blog
-  		order by blog_no desc
+  		select * 
+  		from (
+  		select b.blog_no, b.user_id, b.blog_content, b.regdate, b.updatedate, b.user_name,
+  			(SELECT COUNT(*) FROM tbl_blog_like l WHERE l.blog_no = b.blog_no) AS likes_count,
+  			(SELECT COUNT(*) FROM tbl_user_follow uf WHERE uf.user_following = b.user_id) AS followers_count,
+  			rownum as rn
+  		from tbl_blog b
+  		<if test="type == 'P'.toString()">
+  			LEFT JOIN tbl_product p ON b.product_id = p.product_id
+  		</if>
+ 		<where>
+  			<if test="type != null">
+				<choose>
+					<when test="type == 'T'.toString()">
+						 b.blog_content like '%' || #{keyword} || '%'
+					</when>
+					<when test="type == 'P'.toString()">
+						 p.product_name like '%' || #{keyword} || '%'
+					</when>
+					<when test="type == 'W'.toString()">
+						 b.user_name like '%' || #{keyword} || '%'
+					</when>
+				</choose>
+			</if>
+			and rownum &lt;= #{pageNum} * #{limit})
+		</where>
+		where rn &gt; (#{pageNum} - 1 ) * #{limit} 
+  		order by 
+  			followers_count DESC,
+  			likes_count DESC
   	</select>
   	
   	
