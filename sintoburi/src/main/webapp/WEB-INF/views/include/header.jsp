@@ -133,10 +133,10 @@
 <!-- 						<a href="#" style="color:white;">갤러리</a> -->
 <!-- 					</li> -->
 					<li class="breadcrumb-item">
-						<a href="javascript:void(0);" onclick="openChatPopup();" target="_blank" style="color:white;">채팅</a>
+						<a href="javascript:void(0);" onclick="openChatPopup();"  style="color:white;">채팅</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="javascript:void(0);" onclick="openEventPopup();"  target="_blank" style="color:white;">이벤트</a>
+						<a href="javascript:void(0);" onclick="openEventPopup();"   style="color:white;">이벤트</a>
 					</li>
 					
 <!-- 					<li class="breadcrumb-item"> -->
@@ -150,6 +150,12 @@
 
 <script>
 function openEventPopup(){
+	
+	if(${login.user_id==null}){
+		alert("로그인을 해주세요");
+		return;
+	}
+	
     let url = "/ds/board/event";
     let name = "이벤트";
     let option = "width=600,height=700,top=100,left=200"
@@ -160,7 +166,10 @@ function openEventPopup(){
 
 
 function openChatPopup(){
-
+	if(${login.user_id==null}){
+		alert("로그인을 해주세요");
+		return;
+	}
 	
     let url = "/ds/board/chat";
     let name = "채팅";

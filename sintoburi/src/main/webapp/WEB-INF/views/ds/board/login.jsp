@@ -40,12 +40,13 @@ $(function() {
 			data:JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8",
 			success: function(result){
-				if(result=="success"){
-					//alert("로그인 성공");
-					$(location).attr("href","/ds/board/index");
-				} else{
-					alert("아이디 또는 비밀번호를 확인해주세요");
-				}					
+				$(location).attr("href","/ds/board/index");
+// 				if(result=="success"){
+// 					//alert("로그인 성공");
+// 					//$(location).attr("href","/ds/board/index");
+// 				} else{
+// 					alert("아이디 또는 비밀번호를 확인해주세요");
+// 				}					
 			}
 			,error: function(){
 				

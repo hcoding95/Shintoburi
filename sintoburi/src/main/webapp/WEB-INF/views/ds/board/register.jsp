@@ -44,7 +44,7 @@ $(function() {
 		if($("#checkId").val()=="yes"){
 			registerUser(data);
 		}else{
-			alert("아이디 중복확인을 해주세요");
+			alert("아이디를 확인해주세요");
 		}
 		
 		
@@ -57,10 +57,19 @@ $(function() {
 	});
 	
 	function checkUserId(){
+		
+		
 		let user_id= $("#user_id").val();
 		let data ={
 				"user_id":user_id
 				};
+		
+		if(user_id.length<8){
+			console.log(user_id.length);
+			$("#checkId").text("최소8글자를 입력해주세요");
+			$("#checkId").val("no");
+			return;
+		}
 		
 		$.ajax({
 			type:"POST",
@@ -87,12 +96,18 @@ $(function() {
 		});
 	}
 	
+
+		
+		
 	
 	
 	
 	function registerUser(data){
+		
+		
 		if($("#user_pw").val()==$("#user_pw_check").val()){
 			
+		
 		
 		$.ajax({
 			type:"POST",
@@ -103,6 +118,12 @@ $(function() {
 			console.log(result);
 			
 			if(result==true){
+				if($("#user_id").val().length<8){
+					console.log(user_id.length);
+					$("#checkId").text("최소8글자를 입력해주세요");
+					$("#checkId").val("no");
+					return;
+				}
 				setTimeout(() => {
 					alert("가입이 완료되었습니다.");
 					$(location).attr("href","/ds/board/login");
@@ -113,7 +134,7 @@ $(function() {
 				}
 			,error: function(){
 			
-				alert("아이디를 다시확인해주세요");
+				alert("입력정보를 다시 확인해주세요");
 			}	
 	});
 		

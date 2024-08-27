@@ -46,7 +46,7 @@
 	<bean id="sqlSessionFactory11"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="typeAliasesPackage" value="org.zerock.ex06.domainDs"/>	
+		<property name="typeAliasesPackage" value="org.zerock.ex06.domain.ds"/>	
 	</bean>
 	
 	<!-- 트랜잭션 aop 설정 ( 오토 커밋 dml 같은 설정을 위한 )   -->
@@ -55,8 +55,8 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<mybatis-spring:scan base-package="com.kh.sintoburi.mapperDs"/>
-	<context:component-scan base-package="com.kh.sintoburi.serviceDs"></context:component-scan>
+	<mybatis-spring:scan base-package="com.kh.sintoburi.mapper.ds"/>
+	<context:component-scan base-package="com.kh.sintoburi.service.ds"></context:component-scan>
 	<context:component-scan base-package="com.kh.sintoburi.task"></context:component-scan>
 	
 	<!-- @Transactional을 실행하는것  -->

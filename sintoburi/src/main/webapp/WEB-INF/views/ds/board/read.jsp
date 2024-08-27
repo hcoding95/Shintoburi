@@ -27,6 +27,11 @@ $(function(){
 	
 	// 댓글작성 보이기
 	$("#viewCommentEdit").click(function(){
+		if(${login.user_id==null}){
+			alert("로그인을 해주세요");
+			return;
+		}
+		
 		$("#commentEdit").css("display","block");
 		$("#commentModifyEdit").css("display","none");
 	});
@@ -149,11 +154,12 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 						<td>\${result[i].reply}</td>
 						<td>\${result[i].replyer}</td>
 						<td>\${date}</td>
+						//<c:if test="\${login.user_name == result[i].replyer}">
 						<td><button type="button" class="btn btn-danger btnReplyDel"
 						value=\${result[i].rno}>삭제</button></td>
 						<td><button type="button" class="btn btn-warning btnReplyMod"
-							value=\${result[i].rno}>수정</button></td>
-						
+						value=\${result[i].rno}>수정</button></td>
+						//</c:if>
 					</tr>
 				  `;
 			
@@ -172,6 +178,10 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 	
 
 	$("#btnShowComplain").click(function(){
+		if(${login.user_id==null}){
+			alert("로그인을 해주세요")
+			return;
+		}
 		console.log("모달");
 		$("#modal-complain").modal("show");
 		//$('.modal-title').text("팔로우");
@@ -179,12 +189,14 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 	
 
 	$("#btnComplainOk").click(function(){	// 신고하기 버튼을 눌렀을때
+	
+		
 		let data={
 				
 				"post_url":$(location).attr('href'),
-				"post_id":"user01",
+				"post_id":"${detail.writer}",
 				"re_reason":$(".complain:checked").val(),
-				"re_id":"user02",
+				"re_id":"${login.user_id}",
 				"delete_url":"/ds/board/delete",
 				"category":"bno",
 				"write_num":${detail.bno}
@@ -221,18 +233,16 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 	});
 	
 	
-	// 좋아요가 된유저인지 안된 유저인지 판단하는 부분 됬으면 하트색상을 red로 바꿈 
-	// 로그인부분 구현되야 기능할듯
 	
-	if("${result}" ==true){
+	if("${result}"=="true"){
+		console.log("하트체크")
 		$("#heart").css("color","red");
-
-		//$("#likeCount").html("${likeCount}");
+		$("#likeCount").html("${likeCount}");
 	} else{
 		$("#heart").css("color","white");
-		//$("#likeCount").html("${likeCount}");
+		$("#likeCount").html("${likeCount}");
 	}
-	
+	console.log("${result}");
 	// 하트수
 	let count = parseInt(${likeCount});
 	
@@ -268,6 +278,8 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 					console.log("좋아요 실패");
 				}
 				
+			}, error : function(){
+				alert("로그인이 해주세요");
 			}
 		});
 		
@@ -293,7 +305,10 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 					console.log("좋아요 해제 실패");
 				}
 				
+			} , error : function(){
+				alert("로그인이 필요합니다");
 			}
+			
 		});
 	}
 	
@@ -375,7 +390,7 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 			<form role="form">
 			<br>
 				<div class="form-group" style="margin-left:px;font-weight:bold;font-size:25px;">
-			제목 <input type="text" value="${detail.title}" class="form-control" readonly >		
+			 제목<input type="text" value="${detail.title}" class="form-control" readonly >		
 				</div>
 				<div class="form-group">
 			 카테고리<input type="text" value="${detail.category}" class="form-control" readonly >		
@@ -411,7 +426,7 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 				<button type="button" class="btn btn-success" id="likeButton">
 					<span id="heart" style="color: white; font-size: 30px;"><i
 						class="fas fa-solid fa-heart"></i></span> <span
-						style="margin-left: 10px; font-size: 30px; display:none;" id="likeCount"></span>
+						style="margin-left: 10px; font-size: 30px; display:;" id="likeCount"></span>
 				</button>
 			</div>
 <!-- //좋아요 -->	
