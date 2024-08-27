@@ -1,64 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
- <%@ include file="/WEB-INF/views/include/top.jsp" %>
- <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ include file="/WEB-INF/views/include/top.jsp" %>
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
 <style>
-.card {
-    border: none; /* 카드의 테두리 제거 */
-    background-color: #ffffff; /* 전체 배경색을 하얀색으로 설정 */
-    margin-bottom: 10px; /* 카드 사이 간격 설정 */
-}
-
-/* 카드 헤더의 가로 옆 테두리 제거 */
-.card-header {
-    border-left: none; /* 왼쪽 테두리 제거 */
-    border-right: none; /* 오른쪽 테두리 제거 */
-    border-top: none; /* 위쪽 테두리 제거 (선택적) */
-    border-bottom: 1px solid #ddd; /* 아래쪽 테두리만 유지 (선택적) */
-    padding: 0.75rem 1.25rem; /* 카드 헤더 패딩 조정 */
-}
-
-/* 아코디언 토글 스타일 조정 */
-.accordion-toggle {
-    cursor: pointer;
-    padding: 8px; /* 세로 길이 조정 */
-    background-color: #ffffff; /* 하얀색 배경 */
-    color: black;
-    text-decoration: none;
-    border: none; /* 테두리 제거 */
-    box-shadow: none; /* 그림자 제거 (선택적) */
-    font-size: 14px; /* 글씨 크기 조정 */
-    display: block; /* 블록 레벨 요소로 설정 */
-    width: 100%; /* 너비를 100%로 설정 */
-}
-
-/* 아코디언 바디의 여백과 패딩 조정 */
-.card-body {
-    padding: 1rem; /* 카드 바디 패딩 조정 */
-    background-color: #ffffff; /* 카드 바디 배경색 하얀색 */
-}
-.accordion-toggle {
-    display: flex; /* Flexbox를 사용하여 내부 요소 정렬 */
-    justify-content: space-between; /* 아이콘과 텍스트 사이의 공간 분배 */
-    align-items: center; /* 수직 정렬을 중앙으로 설정 */
-    padding: 8px; /* 적절한 패딩 추가 */
-    background-color: #ffffff; /* 배경색 설정 */
-    color: black; /* 텍스트 색상 설정 */
-    text-decoration: none; /* 텍스트 장식 제거 */
-    border: none; /* 테두리 제거 */
-    box-shadow: none; /* 그림자 제거 */
-    font-size: 14px; /* 글씨 크기 조정 */
-    width: 100%; /* 너비를 100%로 설정 */
-}
-
-.toggle-icon {
-    font-size: 18px; /* 아이콘 크기 조정 */
-    margin-left: 8px; /* 아이콘과 텍스트 사이의 여백 추가 */
-}
+	.card {
+	    border: none; /* 카드의 테두리 제거 */
+	    background-color: #ffffff; /* 전체 배경색을 하얀색으로 설정 */
+	    margin-bottom: 10px; /* 카드 사이 간격 설정 */
+	}
+	
+	/* 카드 헤더의 가로 옆 테두리 제거 */
+	.card-header {
+	    border-left: none; /* 왼쪽 테두리 제거 */
+	    border-right: none; /* 오른쪽 테두리 제거 */
+	    border-top: none; /* 위쪽 테두리 제거 (선택적) */
+	    border-bottom: 1px solid #ddd; /* 아래쪽 테두리만 유지 (선택적) */
+	    padding: 0.75rem 1.25rem; /* 카드 헤더 패딩 조정 */
+	}
+	
+	/* 아코디언 토글 스타일 조정 */
+	.accordion-toggle {
+	    cursor: pointer;
+	    padding: 8px; /* 세로 길이 조정 */
+	    background-color: #ffffff; /* 하얀색 배경 */
+	    color: black;
+	    text-decoration: none;
+	    border: none; /* 테두리 제거 */
+	    box-shadow: none; /* 그림자 제거 (선택적) */
+	    font-size: 14px; /* 글씨 크기 조정 */
+	    display: block; /* 블록 레벨 요소로 설정 */
+	    width: 100%; /* 너비를 100%로 설정 */
+	}
+	
+	/* 아코디언 바디의 여백과 패딩 조정 */
+	.card-body {
+	    padding: 1rem; /* 카드 바디 패딩 조정 */
+	    background-color: #ffffff; /* 카드 바디 배경색 하얀색 */
+	}
+	.accordion-toggle {
+	    display: flex; /* Flexbox를 사용하여 내부 요소 정렬 */
+	    justify-content: space-between; /* 아이콘과 텍스트 사이의 공간 분배 */
+	    align-items: center; /* 수직 정렬을 중앙으로 설정 */
+	    padding: 8px; /* 적절한 패딩 추가 */
+	    background-color: #ffffff; /* 배경색 설정 */
+	    color: black; /* 텍스트 색상 설정 */
+	    text-decoration: none; /* 텍스트 장식 제거 */
+	    border: none; /* 테두리 제거 */
+	    box-shadow: none; /* 그림자 제거 */
+	    font-size: 14px; /* 글씨 크기 조정 */
+	    width: 100%; /* 너비를 100%로 설정 */
+	}
+	
+	.toggle-icon {
+	    font-size: 18px; /* 아이콘 크기 조정 */
+	    margin-left: 8px; /* 아이콘과 텍스트 사이의 여백 추가 */
+	}
 
 </style>
 <script>

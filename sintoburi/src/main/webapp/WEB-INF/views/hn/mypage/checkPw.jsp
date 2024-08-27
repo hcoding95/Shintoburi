@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
 
 <head>
@@ -128,16 +129,15 @@
                    		 </c:if>
                    		   </div>
                    		   <div class="text-center">
+                   		    <button style="display: inline-block;"  type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/hn/mypage/myPageMain'">
+                       		취소
+                  		 </button>
                         <button style="display: inline-block;"  type="submit" class="btn btn-primary btn-block">
                             확인
                         </button>
-                         <button style="display: inline-block;"  type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/hn/mypage/myPageMain'">
-                       		취소
-                  		 </button>
+                        
                   		 </div>
                     </form>
-                    
-                   
                 </div>
             </div>
         </div>

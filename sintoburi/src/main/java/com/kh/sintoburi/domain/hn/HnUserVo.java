@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class HnUserVo {
-	
 	private String user_id;
 	private String user_name;
 	private String user_pw;

@@ -47,6 +47,9 @@ public interface HnUserMapper {
 	
 	// 회원 정보 수정
 	public int updateUserInfo(HnUserVo userVo);
+	
+	// 회원 탈퇴
+	public int unRegister(@Param("user_id") String user_id);
 
 	// 아이디저장
 	public int checkDupId(@Param("user_id") String user_id);

@@ -213,6 +213,11 @@
 		where user_id = #{user_id}
 	</update>
 	
+	<!-- 회원탈퇴 -->
+	<delete id="unRegister">
+		delete from tbl_users
+		where user_id = #{user_id}
+	</delete>
 	
 	<!-- 아이디저장 -->
 	<select id="checkDupId" resultType="int">

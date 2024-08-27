@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
 
 <head>
@@ -116,7 +117,7 @@
                     <h2>회원탈퇴</h2>
                     <form method="post" action="/hn/mypage/loginConfirm">
                         <div class="form-group">
-                            <p>회원탈퇴를 위해 재인증을 진행합니다.</p>
+                            <p>회원탈퇴를 위해 재인증을 해주세요.</p>
                         </div>
                         <div class="form-group" style="margin-bottom: 0px;">
                             <input type="password" class="form-control form-control-user" id="user_pw" name="user_pw" placeholder="비밀번호를 입력해주세요." required>
@@ -127,12 +128,13 @@
                    		 </c:if>
                    		   </div>
                    		   <div class="text-center">
-                        <button style="display: inline-block;"  type="submit" class="btn btn-primary btn-block">
-                            확인
-                        </button>
-                         <button style="display: inline-block;"  type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/hn/mypage/myPageMain'">
-                       		취소
-                  		 </button>
+                   		    <button style="display: inline-block;"  type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/hn/mypage/myPageMain'">
+                       			취소
+                  		 	</button>
+	                        <button style="display: inline-block;"  type="submit" class="btn btn-primary btn-block">
+	                            확인
+	                        </button>
+	                        
                   		 </div>
                     </form>
                     
@@ -143,4 +145,4 @@
     </div>
 </body>
 
- <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>

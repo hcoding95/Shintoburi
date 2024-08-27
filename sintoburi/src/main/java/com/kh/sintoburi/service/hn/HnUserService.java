@@ -50,4 +50,7 @@ public interface HnUserService {
 	// 회원 정보 수정
 	public boolean userInfoMod(HnUserVo userVo);
 
+	// 회원 탈퇴
+	public boolean unRegister(String user_id);
+
 }

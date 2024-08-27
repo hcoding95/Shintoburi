@@ -251,12 +251,13 @@ public class MypageController {
 		model.addAttribute("criteria", criteria);
 	}
 
-	// 회원정보 수정 전 비밀번호 체크
+	// 회원정보 수정 전 비밀번호 체크 폼
 	@GetMapping("/checkPw")
 	public void checkPwForm() {
 
 	}
 
+	// 비밀번호 체크처리
 	@PostMapping("/checkPw")
 	public String checkPw(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
 		HnUserDto login = (HnUserDto) session.getAttribute("login");
@@ -274,6 +275,7 @@ public class MypageController {
 
 	}
 
+	// 회원정보수정폼
 	@GetMapping("/updateInfo")
 	public void updateInfo(Model model, HttpSession session) {
 		HnUserDto login = (HnUserDto) session.getAttribute("login");
@@ -283,6 +285,7 @@ public class MypageController {
 		model.addAttribute("userInfo", userVo);
 	}
 
+	// 회원정보수정
 	@PostMapping("/userInfoMod")
 	public String userInfoMod(HnUserVo userVo, RedirectAttributes rttr) {
 		boolean result = userService.userInfoMod(userVo);
@@ -296,6 +299,7 @@ public class MypageController {
 
 	}
 
+	// 회원탈퇴 전 로그인 인증
 	@PostMapping("/loginConfirm")
 	public String loginConfirm(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
 		HnUserDto login = (HnUserDto) session.getAttribute("login");
@@ -313,9 +317,21 @@ public class MypageController {
 
 	}
 	
+	// 회원탈퇴폼
 	@GetMapping("/unRegister")
-	public void unRegister() {
-		
+	public void unRegisterForm() {
+	
+	}
+	
+	// 회원탈퇴
+	@PostMapping("unRegister")
+	public String unRegister(HttpSession session, RedirectAttributes rttr ) {
+		HnUserDto login = (HnUserDto)session.getAttribute("login");
+		String user_id = login.getUser_id();
+		boolean result = userService.unRegister(user_id);
+		session.invalidate();
+		rttr.addFlashAttribute("unRegister",result);
+		return "redirect:/hn/main/login";
 	}
 
 }

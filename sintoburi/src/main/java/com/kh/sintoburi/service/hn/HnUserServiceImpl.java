@@ -107,4 +107,10 @@ public class HnUserServiceImpl implements HnUserService {
 		return (count == 1)? true: false;
 	}
 
+	@Override
+	public boolean unRegister(String user_id) {
+		int count = userMapper.unRegister(user_id);
+		return (count == 1)? true: false;
+	}
+
 }
