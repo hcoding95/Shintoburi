@@ -4,10 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.kh.sintoburi.domain.hc.HcUserVo;
+import com.kh.sintoburi.domain.common.UserVo;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
@@ -15,7 +14,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		HcUserVo login_user = (HcUserVo)session.getAttribute("login");
+		UserVo login_user = (UserVo)session.getAttribute("login");
 		System.out.println("동기컷팅작용");
 		if(login_user == null) {
 			System.out.println("로그인 감지");
