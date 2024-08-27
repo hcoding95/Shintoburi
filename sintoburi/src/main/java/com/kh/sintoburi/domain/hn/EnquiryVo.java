@@ -1,6 +1,7 @@
 package com.kh.sintoburi.domain.hn;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +18,10 @@ public class EnquiryVo {
 	private String user_id;
 	private String enquiry_type;
 	private String content;
-	private String image;
 	private String status;
 	private Date write_date;
+	
+	private List<EnquiryImageVo> imageList;
+	private List<String> imageDel;
 
 }

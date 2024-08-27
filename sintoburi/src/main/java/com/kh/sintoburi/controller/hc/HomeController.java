@@ -1,7 +1,5 @@
 package com.kh.sintoburi.controller.hc;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -26,7 +24,7 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		return "/hc/main/main";
+		return "/hc/main/home";
 	}
 	
 }

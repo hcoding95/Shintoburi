@@ -29,10 +29,12 @@
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
 		<property name="username"
-			value="SPRING_PROJECT"></property>
+			value="spring"></property>
 		<property name="password"
 			value="1234"></property>
 	</bean>
+	
+	
 	
 	<!-- 커넥션 풀  -->
 	<bean id="dataSource"
@@ -44,7 +46,10 @@
 	<bean id="sqlSessionFactory11"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="typeAliasesPackage" value="com.kh.sintoburi.domain.ji"/>	
+
+		<property name="typeAliasesPackage" value="com.kh.sintoburi.domain"/>	
+
+
 	</bean>
 	
 	<!-- 트랜잭션 aop 설정 ( 오토 커밋 dml 같은 설정을 위한 )   -->
@@ -53,10 +58,15 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<mybatis-spring:scan base-package="com.kh.sintoburi.mapper.ji"/>
-	<context:component-scan base-package="com.kh.sintoburi.service.ji"></context:component-scan>
+
+
+	<mybatis-spring:scan base-package="com.kh.sintoburi.mapper"/>
+	<context:component-scan base-package="com.kh.sintoburi.service"></context:component-scan>
+
+	
 	<context:component-scan base-package="com.kh.sintoburi.task"></context:component-scan>
-	<context:component-scan base-package="com.kh.sintoburi.util.ji" />
+
+	
 	<!-- @Transactional을 실행하는것  -->
 	<tx:annotation-driven/>
 	
@@ -70,8 +80,8 @@
 	>
 		<property name="host" value="smtp.gmail.com"></property>
 		<property name="port" value="587"></property>
-		<property name="username" value=""></property>
-		<property name="password" value=""></property>
+		<property name="username" value="spring"></property>
+		<property name="password" value="1234"></property>
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
