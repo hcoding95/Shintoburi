@@ -5,88 +5,87 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-        }
-
-        #wrapper {
-            display: flex;
-            min-height: 100vh;
-            justify-content: center; /* 수평 중앙 정렬 */
-            align-items: flex-start; /* 상단 정렬 */
-        }
-
-        #content-wrapper {
-            display: flex;
-            width: 100%;
-            max-width: 1200px; /* 최대 너비 설정 */
-        }
-
-        #sidebar-wrapper {
-            width: 200px; /* 사이드바 너비 */
-            background-color: #fff;
-            border-right: 1px solid #ddd; /* 사이드바의 오른쪽 경계선 */
-            flex-shrink: 0; /* 사이드바가 줄어들지 않도록 설정 */
-        }
-
-        #page-content-wrapper {
-            flex: 1; /* 나머지 공간 차지 */
-            padding: 20px; /* 콘텐츠 여백 추가 */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* 수평 중앙 정렬 */
-        }
-
-        .center-text span {
-            font-size: 30px;
-            font-weight: bold;
-            padding-left: 16px;
-        }
-
-        .sidebar-heading {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: black;
-            margin-bottom: 20px;
-        }
-
-        .list-group-item {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: black;
-            margin-bottom: 15px;
-        }
-
-        .sub-menu {
-            list-style: none;
-            padding-left: 20px;
-        }
-
-        .sub-menu li {
-            margin-bottom: 8px;
-        }
-
-        .sub-menu a {
-            font-size: 1rem;
-            color: black;
-            text-decoration: none;
-        }
-
-        .sub-menu a:hover {
-            color: #333;
-        }
-
-        .table-container {
-            width: 100%;
-            max-width: 1000px; /* 테이블 최대 너비 설정 */
-        }
-
-        .table {
-            width: 100%; /* 테이블 폭을 부모 컨테이너에 맞춤 */
-        }
-    </style>
+<style>
+	body, html {
+	    height: 100%;
+	    margin: 0;
+	}
+	
+	#wrapper {
+	    display: flex;
+	    min-height: 100vh;
+	    justify-content: center; /* 수평 중앙 정렬 */
+	    align-items: flex-start; /* 상단 정렬 */
+	}
+	
+	#content-wrapper {
+	    display: flex;
+	    width: 100%;
+	    max-width: 1200px; /* 최대 너비 설정 */
+	}
+	
+	#sidebar-wrapper {
+	    width: 200px; /* 사이드바 너비 */
+	    background-color: #fff;
+	    border-right: 1px solid #ddd; /* 사이드바의 오른쪽 경계선 */
+	    flex-shrink: 0; /* 사이드바가 줄어들지 않도록 설정 */
+	}
+	
+	#page-content-wrapper {
+	    flex: 1; /* 나머지 공간 차지 */
+	    padding: 20px; /* 콘텐츠 여백 추가 */
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center; /* 수평 중앙 정렬 */
+	}
+	
+	.center-text span {
+	    font-size: 30px;
+	    font-weight: bold;
+	    padding-left: 16px;
+	}
+	
+	.sidebar-heading {
+	    font-size: 1.25rem;
+	    font-weight: bold;
+	    color: black;
+	    margin-bottom: 20px;
+	}
+	
+	.list-group-item {
+	    font-size: 1.25rem;
+	    font-weight: bold;
+	    color: black;
+	    margin-bottom: 15px;
+	}
+	
+	.sub-menu {
+	    list-style: none;
+	    padding-left: 20px;
+	}
+	
+	.sub-menu li {
+	    margin-bottom: 8px;
+	}
+	
+	.sub-menu a {
+	    font-size: 1rem;
+	    color: black;
+	    text-decoration: none;
+	}
+	
+	.sub-menu a:hover {
+	    color: #333;
+	}
+	
+	.table-container {
+	    width: 100%;
+	    max-width: 1000px; /* 테이블 최대 너비 설정 */
+	}
+	
+	.table {
+	    width: 100%; /* 테이블 폭을 부모 컨테이너에 맞춤 */
+</style>
 </head>
 <body>
     <div id="wrapper">
@@ -121,17 +120,11 @@
                         마이정보
                     </div>
                     <ul class="sub-menu">
-                        <li><a href="/hn/mypage/checkPw">회원정보 수정</a></li>
+                        <li><a href="/hn/mypage/checkPw">회원 정보 수정</a></li>
                         <li><a href="/hn/mypage/loginConfirm">회원탈퇴</a></li>
                     </ul>
                 </div>
             </div>
-<!-- main -->            
-       
-      
-       
-       
-<!-- main -->
 
 
    

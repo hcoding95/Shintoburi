@@ -20,5 +20,7 @@ public class ReportPostVo {
 	private Date re_date;
 	private String status;
 	private String delete_url;
+	private String category;
+	private int write_num;
 
 }

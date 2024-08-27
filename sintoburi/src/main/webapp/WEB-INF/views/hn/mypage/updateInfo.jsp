@@ -36,6 +36,7 @@ $(function() {
 			$("#pwMessage").css("color", "green");
 		}else{
 			$("#pwMessage").text("비밀번호가 일치하지 않습니다.");
+			$("#pwMessage").css("color", "red");
 			
 		}
 		
@@ -48,7 +49,9 @@ $(function() {
         if (user_pw !== checkPw) {
             e.preventDefault(); 
             alert("비밀번호가 일치하지 않아 수정이 불가능합니다.");
-        } 
+        } else{
+        	alert("회원 정보가 수정되었습니다.");
+        }
     });
 	
 	
@@ -90,7 +93,7 @@ $(function() {
                                     <div style="display: inline-block; vertical-align: middle;">
 						            <input id="inputPwCheck" class="form-control" type="password" style="display: inline-block; width: auto; margin-right: 5px;" />
 						            <button id="btnPwCheck" type="button" class="btn btn-outline-dark" style="display: inline-block;">확인</button>
-						       		<p id="pwMessage" style="display: inline-block; margin: 10; color: red;"></p>
+						       		<p id="pwMessage" style="display: inline-block; margin: 10;"></p>
 						        </div>
 		                </td>
                             </tr>
@@ -116,8 +119,8 @@ $(function() {
                     </table>
                     <div class="row">
                         <div class="col-md-12 text-center" style="margin-bottom: 40px;">
-                            <button id="btnMod" type="submit" class="btn btn-success">수정</button>
                             <a href="/hn/mypage/myPageMain" class="btn btn-secondary">취소</a>
+                            <button id="btnMod" type="submit" class="btn btn-success">수정</button>
                         </div>
                     </div>
                 </form>
@@ -127,5 +130,4 @@ $(function() {
 </body>
     
     
-    
-     <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>

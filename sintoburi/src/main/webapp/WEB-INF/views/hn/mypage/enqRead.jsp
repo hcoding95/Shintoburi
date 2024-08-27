@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <%@ include file="/WEB-INF/views/include/top.jsp" %>
-  <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/WEB-INF/views/include/top.jsp" %>
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 <script>
 $(function() {
 	// 수정버튼
@@ -134,4 +134,4 @@ $(function() {
 	          </div>
 		</div>
 	</div>
- <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>

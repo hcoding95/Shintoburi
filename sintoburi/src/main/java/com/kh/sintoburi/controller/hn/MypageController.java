@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
@@ -28,7 +29,6 @@ import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.EnquiryService;
@@ -67,7 +67,7 @@ public class MypageController {
 	@GetMapping("/enqList")
 	public String getEnquiryList(HttpSession session, Model model, HnCriteria criteria) {
 		// 세션에서 로그인한 사용자 정보 가져오기
-		HnUserDto login = (HnUserDto) session.getAttribute("login");
+		UserVo login = (UserVo) session.getAttribute("login");
 
 		// 로그인 상태 확인
 		if (login == null) {
@@ -251,15 +251,16 @@ public class MypageController {
 		model.addAttribute("criteria", criteria);
 	}
 
-	// 회원정보 수정 전 비밀번호 체크
+	// 회원정보 수정 전 비밀번호 체크 폼
 	@GetMapping("/checkPw")
 	public void checkPwForm() {
 
 	}
 
+	// 비밀번호 체크처리
 	@PostMapping("/checkPw")
 	public String checkPw(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
-		HnUserDto login = (HnUserDto) session.getAttribute("login");
+		UserVo login = (UserVo) session.getAttribute("login");
 		String user_id = login.getUser_id();
 
 		HnUserDto dto = userService.checkPw(user_id);
@@ -274,17 +275,19 @@ public class MypageController {
 
 	}
 
+	// 회원정보수정폼
 	@GetMapping("/updateInfo")
 	public void updateInfo(Model model, HttpSession session) {
-		HnUserDto login = (HnUserDto) session.getAttribute("login");
+		UserVo login = (UserVo) session.getAttribute("login");
 		String user_id = login.getUser_id();
 
-		HnUserVo userVo = userService.userInfo(user_id);
+		UserVo userVo = userService.userInfo(user_id);
 		model.addAttribute("userInfo", userVo);
 	}
 
+	// 회원정보수정
 	@PostMapping("/userInfoMod")
-	public String userInfoMod(HnUserVo userVo, RedirectAttributes rttr) {
+	public String userInfoMod(UserVo userVo, RedirectAttributes rttr) {
 		boolean result = userService.userInfoMod(userVo);
 		rttr.addFlashAttribute("infoMod", result);
 		return "redirect:/hn/mypage/myPageMain";
@@ -296,6 +299,7 @@ public class MypageController {
 
 	}
 
+	// 회원탈퇴 전 로그인 인증
 	@PostMapping("/loginConfirm")
 	public String loginConfirm(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
 		HnUserDto login = (HnUserDto) session.getAttribute("login");
@@ -313,9 +317,21 @@ public class MypageController {
 
 	}
 	
+	// 회원탈퇴폼
 	@GetMapping("/unRegister")
-	public void unRegister() {
-		
+	public void unRegisterForm() {
+	
+	}
+	
+	// 회원탈퇴
+	@PostMapping("unRegister")
+	public String unRegister(HttpSession session, RedirectAttributes rttr ) {
+		HnUserDto login = (HnUserDto)session.getAttribute("login");
+		String user_id = login.getUser_id();
+		boolean result = userService.unRegister(user_id);
+		session.invalidate();
+		rttr.addFlashAttribute("unRegister",result);
+		return "redirect:/hn/main/login";
 	}
 
 }

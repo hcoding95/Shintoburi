@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
@@ -58,15 +58,15 @@ public class HnUserController {
 	// 회원 상세보기
 	@PostMapping("/userDetail/{user_id}")
 	@ResponseBody
-	public HnUserVo userDetail(@PathVariable("user_id") String user_id , Model model) {
-		HnUserVo hnUserVo = userService.selectById(user_id);
+	public UserVo userDetail(@PathVariable("user_id") String user_id , Model model) {
+		UserVo hnUserVo = userService.selectById(user_id);
 		return hnUserVo;
 	}
 	
 	// 사업자번호업데이트
 	@PostMapping("/modBusinessNum")
 	@ResponseBody
-	public boolean modBusinessNum(@RequestBody HnUserVo hnUserVo) {
+	public boolean modBusinessNum(@RequestBody UserVo hnUserVo) {
 		String user_id = hnUserVo.getUser_id();
 		String business_num = hnUserVo.getBusiness_num();
 		boolean result = userService.modifyBusinessNum(user_id, business_num);

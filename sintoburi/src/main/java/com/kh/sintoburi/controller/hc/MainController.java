@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.HcLoginDto;
 import com.kh.sintoburi.domain.hc.HcUserVo;
@@ -32,7 +33,7 @@ public class MainController {
 	@GetMapping("/home")
 	public void home(Model model, HttpSession session) {
 		List<BlogVo> list = blogService.getList();
-		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
+		UserVo loginUser = (UserVo)session.getAttribute("login");
 		String login_id = "";
 		if(loginUser != null) {
 			login_id = loginUser.getUser_id();
