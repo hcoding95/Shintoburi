@@ -6,7 +6,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+<<<<<<< HEAD
 import com.kh.sintoburi.domain.hn.HnUserDto;
+=======
+import com.kh.sintoburi.domain.common.UserVo;
+
+
+
+>>>>>>> refs/heads/master
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
@@ -14,7 +21,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		HnUserDto login_user = (HnUserDto)session.getAttribute("login");
+
+		UserVo login_user = (UserVo)session.getAttribute("login");
+
 		System.out.println("동기컷팅작용");
 		if(login_user == null) {
 			System.out.println("로그인 감지");

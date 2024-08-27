@@ -8,12 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+<<<<<<< HEAD
+=======
+import com.kh.sintoburi.domain.common.UserVo;
+>>>>>>> refs/heads/master
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
+<<<<<<< HEAD
 import com.kh.sintoburi.domain.hn.HnUserVo;
+=======
+>>>>>>> refs/heads/master
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
 import com.kh.sintoburi.mapper.hn.EnquiryMapper;
@@ -151,7 +158,7 @@ public class mapperTest {
 	@Test
 	public void selectById() {
 		String user_id = "user00";
-		HnUserVo vo = userMapper.selectById(user_id);
+		UserVo vo = userMapper.selectById(user_id);
 		log.info(vo);
 	}
 	
@@ -200,7 +207,7 @@ public class mapperTest {
 	@Test
 	public void selectUserInfo() {
 		String user_id = "user01";
-		HnUserVo vo = userMapper.selectUserInfo(user_id);
+		UserVo vo = userMapper.selectUserInfo(user_id);
 		log.info(vo);
 	}
 	

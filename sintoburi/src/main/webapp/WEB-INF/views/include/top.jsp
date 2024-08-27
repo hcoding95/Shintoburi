@@ -177,16 +177,16 @@ main {
                 <div class="user-menu">
                 	<c:choose>
                 		<c:when test="${empty login}">
-		                    <a href="/hc/main/login" class="btn ">로그인</a>
-		                    <a href="#" class="btn">회원가입</a>
+		                    <a href="/ds/board/login" class="btn ">로그인</a>
+		                   <a href="/ds/board/register" class="btn">회원가입</a>
                 		</c:when>
                 		<c:otherwise>
-		                    <a href="/hc/main/login" class="btn ">로그아웃</a>
+		                    <a href="/ds/user/logout" class="btn ">로그아웃</a>
                 		</c:otherwise>
                 	</c:choose>
-                    <a href="#" class="btn">마이페이지</a>
+                    <a href="/hn/mypage/enqList" class="btn">마이페이지</a>
                     <a href="#" class="btn">주문조회</a>
-                    <a href="#" class="btn">고객센터</a>
+                    <a href="/hn/mypage/noticeList" class="btn">고객센터</a>
                 </div>
             </div>
         </div>
@@ -200,16 +200,51 @@ main {
         <nav class="main-nav">
             <div class="main-container">
                 <ul>
-                    <li><a href="#" class="btn btn-success">홈</a></li>
+                    <li><a href="/hc/main/home" class="btn btn-success">홈</a></li>
                     <li><a href="#" class="btn btn-success">상품몰</a></li>
-                    <li><a href="#" class="btn btn-success">커뮤니티</a></li>
-                    <li><a href="#" class="btn btn-success">이벤트</a></li>
+                    <li><a href="/ds/board/index" class="btn btn-success">커뮤니티</a></li>
+                    <li><a href="javascript:void(0);" onclick="openEventPopup();" class="btn btn-success" id="event">이벤트</a></li>
+               		<li><a href="javascript:void(0);" onclick="openChatPopup();" class="btn btn-success" id="chat">채팅</a></li>
+                    <li><a href="#" class="btn btn-success">장바구니</a></li>
                 </ul>
             </div>
         </nav>
     </header>
     <main>
+    
+    
     <script>
+    
+    
+    function openChatPopup(){
+    	if(${login.user_id==null}){
+    		alert("로그인을 해주세요");
+    		return;
+    	}
+    	
+        let url = "/ds/board/chat";
+        let name = "채팅";
+        let option = "width=600,height=610,top=100,left=200"
+        window.open(url, name, option);
+        console.log("채팅실행");
+        
+    }
+    
+    function openEventPopup(){
+    	
+    	if(${login.user_id==null}){
+    		alert("로그인을 해주세요");
+    		return;
+    	}
+    	
+        let url = "/ds/board/event";
+        let name = "이벤트";
+        let option = "width=600,height=700,top=100,left=200"
+        window.open(url, name, option);
+        console.log("이벤트실행");
+        
+    }
+    
 	    // 특정 글자 수로 텍스트 자르기
 	    function truncateText(selector, maxLength) {
 	        const element = document.querySelector(selector);

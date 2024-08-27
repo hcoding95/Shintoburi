@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 import com.kh.sintoburi.mapper.hn.HnUserMapper;
 
 @Service
@@ -55,14 +55,14 @@ public class HnUserServiceImpl implements HnUserService {
 
 	// 회원 전체 데이터 1개
 	@Override
-	public HnUserVo selectById(String user_id) {
-		HnUserVo vo = userMapper.selectById(user_id);
+	public UserVo selectById(String user_id) {
+		UserVo vo = userMapper.selectById(user_id);
 		return vo;
 	}
 
 	@Override
-	public HnUserDto login(HnLoginDto dto) {
-		HnUserDto userDto = userMapper.login(dto);
+	public UserVo login(HnLoginDto dto) {
+		UserVo userDto = userMapper.login(dto);
 		return userDto;
 	}
 
@@ -96,13 +96,13 @@ public class HnUserServiceImpl implements HnUserService {
 
 	// 회원 정보 조회
 	@Override
-	public HnUserVo userInfo(String user_id) {
-		HnUserVo userVo = userMapper.selectUserInfo(user_id);
+	public UserVo userInfo(String user_id) {
+		UserVo userVo = userMapper.selectUserInfo(user_id);
 		return userVo;
 	}
 
 	@Override
-	public boolean userInfoMod(HnUserVo userVo) {
+	public boolean userInfoMod(UserVo userVo) {
 		int count = userMapper.updateUserInfo(userVo);
 		return (count == 1)? true: false;
 	}

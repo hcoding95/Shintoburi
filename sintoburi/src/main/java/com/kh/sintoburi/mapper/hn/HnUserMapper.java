@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 
 public interface HnUserMapper {
 
@@ -33,19 +33,16 @@ public interface HnUserMapper {
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public HnUserVo selectById(@Param("user_id") String user_id);
+	public UserVo selectById(@Param("user_id") String user_id);
 
 	// 로그인
-	public HnUserDto login(HnLoginDto dto);
-
-	// 회원가입
-	public int join(HnUserVo vo);
+	public UserVo login(HnLoginDto dto);
 	
 	// 회원정보
-	public HnUserVo selectUserInfo(@Param("user_id") String user_id);
+	public UserVo selectUserInfo(@Param("user_id") String user_id);
 	
 	// 회원 정보 수정
-	public int updateUserInfo(HnUserVo userVo);
+	public int updateUserInfo(UserVo userVo);
 	
 	// 회원 탈퇴
 	public int unRegister(@Param("user_id") String user_id);

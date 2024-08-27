@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 
 public interface HnUserService {
 
@@ -27,10 +27,10 @@ public interface HnUserService {
 	public boolean modifyGrade(String user_id, String grade);
 
 	// 데이터 1개
-	public HnUserVo selectById(String user_id);
+	public UserVo selectById(String user_id);
 
 	// 로그인
-	public HnUserDto login(HnLoginDto dto);
+	public UserVo login(HnLoginDto dto);
 
 	// 비밀번호체크
 	public HnUserDto checkPw(@Param("user_id") String user_id);
@@ -45,10 +45,10 @@ public interface HnUserService {
 	public List<HnUserDto> gradeChangeList();
 
 	// 회원정보
-	public HnUserVo userInfo(String user_id);
+	public UserVo userInfo(String user_id);
 
 	// 회원 정보 수정
-	public boolean userInfoMod(HnUserVo userVo);
+	public boolean userInfoMod(UserVo userVo);
 
 	// 회원 탈퇴
 	public boolean unRegister(String user_id);

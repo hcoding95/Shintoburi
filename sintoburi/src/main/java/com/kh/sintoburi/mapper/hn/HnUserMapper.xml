@@ -6,12 +6,12 @@
   
   <!-- 회원목록 -->
 	  <select id="getList" resultType="HnUserDto">
-	  	select * from tbl_users
+	  	select * from tbl_user
 	  </select>
 
 	<!-- 매니저목록 -->
 	  <select id="managerList" resultType="HnUserDto">
-	  	select * from tbl_users
+	  	select * from tbl_user
 	  	where grade = '관리자'
 	  </select>
   
@@ -30,7 +30,7 @@
                     case when business = '1' then 0 else 1 end,
                     case when grade != '판매자' then 0 else 1 end,
                     last_login desc) as rn
-        from tbl_users
+        from tbl_user
         <where>
            grade not in('관리자', '마스터') 
            <if test="type != null">
@@ -65,7 +65,7 @@
 
 <!-- 게시글 갯수 -->
 	<select id="getTotalCount" resultType="int">
-		select count(*) from tbl_users
+		select count(*) from tbl_user
 		<where>
 			<if test="type != null">
 				<trim prefix="(" suffix=")" prefixOverrides="or">
@@ -107,7 +107,7 @@
             last_login,
             business,
             row_number() over (order by last_login desc) as rn
-        from tbl_users
+        from tbl_user
         <where>
           grade ='관리자'
             <if test="typeArr != null and typeArr.length > 0">
@@ -136,7 +136,7 @@
 
 <!-- 매니저게시글 갯수 -->
 	<select id="managerTotalCount" resultType="int">
-		select count(*) from tbl_users
+		select count(*) from tbl_user
 		where grade= '관리자'
 		<where>
 			<if test="type != null">
@@ -164,47 +164,47 @@
 
 <!-- 회원 등급 수정 --> 
     <update id="updateGrade">
-        update tbl_users
+        update tbl_user
         set grade = #{grade}
         where user_id = #{user_id}
     </update>
     
     <!-- 등급 처리 완료시 business 1로 업데이트 -->
     <update id="updateBusiness">
-    	update tbl_users
+    	update tbl_user
     	set business = 1
     	where user_id = #{user_id}
     </update>
   
   <!--  회원 데이터 1개 -->
-   <select id="selectById" resultType="HnUserVo">
-  	select * from tbl_users
+   <select id="selectById" resultType="UserVo">
+  	select * from tbl_user
   	where user_id = #{user_id}
   </select>
   
   <!-- 로그인 -->
-  <select id="login" resultType="HnUserDto">
+  <select id="login" resultType="UserVo">
 		select *
-		from tbl_users
+		from tbl_user
 		where user_id = #{user_id}
 		and user_pw = #{user_pw}
 	</select>
 
 	<!-- 회원가입 -->
 	<insert id="join">
-		insert into tbl_users (user_id, user_pw, user_name,user_email,address ,user_phone)
+		insert into tbl_user (user_id, user_pw, user_name,user_email,address ,user_phone)
 		values(#{user_id},#{user_pw}, #{user_name} , #{user_email},#{address},#{user_phone})
 	</insert>
 	
 	<!-- 회원정보 -->
-	<select id="selectUserInfo" resultType="HnUserVo">
-		select * from tbl_users
+	<select id="selectUserInfo" resultType="UserVo">
+		select * from tbl_user
 		where user_id = #{user_id}
 	</select>
 	
 	<!-- 회원정보수정 -->
 	<update id="updateUserInfo">
-		update tbl_users set
+		update tbl_user set
 			user_name = #{user_name},
 			user_pw = #{user_pw},
 			user_email = #{user_email},
@@ -215,31 +215,31 @@
 	
 	<!-- 회원탈퇴 -->
 	<delete id="unRegister">
-		delete from tbl_users
+		delete from tbl_user
 		where user_id = #{user_id}
 	</delete>
 	
 	<!-- 아이디저장 -->
 	<select id="checkDupId" resultType="int">
-		select count(*) from tbl_users
+		select count(*) from tbl_user
 		where user_id = #{user_id}
 	</select>
 	
 	<!-- 이메일조회 -->
 	<select id="getEmailById" resultType="string">
-		select user_email from tbl_users
+		select user_email from tbl_user
 		where user_id = #{user_id}
 	</select>
 
 	 <!-- 회원정보 수정 시 비밀번호 체크 -->
 	<select id="checkPw" resultType="HnUserDto">
-		select user_pw from tbl_users 
+		select user_pw from tbl_user 
 		where user_id = #{user_id}
 	</select>
 	
 	<!-- 사업자번호 업데이트 -->
 	 <update id="updateBusinessNum">
-	  	update tbl_users set
+	  	update tbl_user set
 			business_num = #{business_num}
 		where user_id = #{user_id}
 	 </update>
@@ -249,7 +249,7 @@
 	  select * 
 	from (
 	    select * 
-	    from tbl_users
+	    from tbl_user
 	    where business = 1
 	      and grade = '구매자'
 	    order by last_login desc
