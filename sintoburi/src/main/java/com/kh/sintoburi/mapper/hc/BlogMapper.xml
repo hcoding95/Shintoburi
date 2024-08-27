@@ -25,15 +25,18 @@
   	</delete>
   	
   	<select id="getListWithPage" resultType="BlogVo">
-  		select b.blog_no, b.user_id, b.blog_content, b.redgdate, b.updatedate, b.user_name,
+  		select * 
+  		from (
+  		select b.blog_no, b.user_id, b.blog_content, b.regdate, b.updatedate, b.user_name,
   			(SELECT COUNT(*) FROM tbl_blog_like l WHERE l.blog_no = b.blog_no) AS likes_count,
-  			(SELECT COUNT(*) FROM tbl_user_follow uf WHERE uf.user_following = b.user_id) AS followers_count
+  			(SELECT COUNT(*) FROM tbl_user_follow uf WHERE uf.user_following = b.user_id) AS followers_count,
+  			rownum as rn
   		from tbl_blog b
   		<if test="type == 'P'.toString()">
   			LEFT JOIN tbl_product p ON b.product_id = p.product_id
   		</if>
-  		<if test="type != null">
-  			<where>
+ 		<where>
+  			<if test="type != null">
 				<choose>
 					<when test="type == 'T'.toString()">
 						 b.blog_content like '%' || #{keyword} || '%'
@@ -45,13 +48,15 @@
 						 b.user_name like '%' || #{keyword} || '%'
 					</when>
 				</choose>
-			</where>
-		</if>
+			</if>
+			and rownum &lt;= #{pageNum} * #{limit})
+		</where>
+		where rn &gt; (#{pageNum} - 1 ) * #{limit} 
   		order by 
-  			likes_count DESC, 
-        	followers_count DESC
-        offset #{pageNum} * 10 rows 
-        fetch next #{limit} rows only
+  			followers_count DESC,
+  			likes_count DESC
+        	
+        
   	</select>
   	
   	

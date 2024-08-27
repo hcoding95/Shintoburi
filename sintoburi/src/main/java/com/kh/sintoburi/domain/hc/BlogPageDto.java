@@ -11,7 +11,7 @@ public class BlogPageDto {
 	private String keyword;
 	
 	public BlogPageDto() {
-		this(0, 10);
+		this(1, 10);
 	};
 	
 	public BlogPageDto(int pageNum, int limit) {

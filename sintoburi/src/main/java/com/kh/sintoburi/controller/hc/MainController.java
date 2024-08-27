@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.sintoburi.domain.hc.BlogPageDto;
 import com.kh.sintoburi.domain.hc.BlogVo;
@@ -32,6 +33,7 @@ public class MainController {
 	
 	@GetMapping("/home")
 	public void home(Model model, HttpSession session, BlogPageDto blogPageDto) {
+		System.out.println("내가받은 페이지는?:" + blogPageDto);
 		List<BlogVo> list = blogService.getList(blogPageDto);
 		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
 		String login_id = "";
@@ -41,6 +43,23 @@ public class MainController {
 		list = injectionService.checkListFollowAndLike(list, login_id);
 		model.addAttribute("list", list);
 	}
+	
+	@GetMapping("/data")
+	@ResponseBody
+	public List<BlogVo> data(HttpSession session, BlogPageDto blogPageDto) {
+		System.out.println("내가받은 페이지는?:" + blogPageDto);
+		List<BlogVo> list = blogService.getList(blogPageDto);
+		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
+		String login_id = "";
+		if(loginUser != null) {
+			login_id = loginUser.getUser_id();
+		}
+		list = injectionService.checkListFollowAndLike(list, login_id);
+		System.out.println("내가 만든 리스트는?" + list);
+		return list;
+	} 
+	
+	
 	
 	@GetMapping("/login")
 	public void login() {
