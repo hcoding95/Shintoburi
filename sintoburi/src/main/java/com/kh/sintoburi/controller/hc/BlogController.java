@@ -18,7 +18,6 @@ import com.kh.sintoburi.domain.hc.HcFollowDto;
 import com.kh.sintoburi.domain.hc.HcReplyDto;
 import com.kh.sintoburi.domain.hc.HcUserVo;
 import com.kh.sintoburi.service.hc.BlogService;
-import com.kh.sintoburi.service.hc.BlogServiceImpl;
 import com.kh.sintoburi.service.hc.BlogSettingService;
 import com.kh.sintoburi.service.hc.HcFollowService;
 import com.kh.sintoburi.service.hc.HcInjectionService;

@@ -4,10 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.kh.sintoburi.domain.hc.HcUserVo;
 import com.kh.sintoburi.domain.hn.HnUserDto;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
