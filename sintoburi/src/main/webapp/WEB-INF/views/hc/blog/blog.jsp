@@ -1084,7 +1084,7 @@ $(function () {
             // AJAX 요청으로 서버로 데이터 전송 (예시)
             $.ajax({
                 type: "POST",
-                url: "/hc/report/submit", // 서버에서 처리할 URL
+                url: "/ds/report/addReport", // 서버에서 처리할 URL
                 data: JSON.stringify(reportData), // JSON 형식으로 전송
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
