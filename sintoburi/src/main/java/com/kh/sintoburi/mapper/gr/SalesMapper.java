@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.kh.sintoburi.domain.gr.OrderDto;
 
-public interface DeliveryMapper {
-	public List<OrderDto> getDeliveryManageList();
+public interface SalesMapper {
+	public List<OrderDto> getSalesManageList();
 }
