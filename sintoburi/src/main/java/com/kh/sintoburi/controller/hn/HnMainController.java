@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
-import com.kh.sintoburi.domain.hn.HnUserDto;
 import com.kh.sintoburi.service.hn.HnUserService;
 
 import lombok.extern.log4j.Log4j;
@@ -33,16 +33,17 @@ public class HnMainController {
 	@PostMapping("/loginPost")
 	public String loginPost(HnLoginDto dto, HttpServletRequest request, Model model) throws Exception {
 		System.out.println("dto: " + dto);
-		HnUserDto userDto = userService.login(dto);
-		System.out.println("userDto: " + userDto);
+		UserVo userVo = userService.login(dto);
+		System.out.println("userDto: " + userVo);
 
-		if (userDto != null) {
+		if (userVo != null) {
 			// 로그인 성공
 			HttpSession session = request.getSession();
-			session.setAttribute("login", userDto);
+			session.setAttribute("login", userVo);
 
 			String location = null;
-			switch (userDto.getGrade()) {
+			System.out.println(userVo.getGrade());
+			switch (userVo.getGrade()) {
 			case "판매자":
 				location = "/hn/mypage/myPageMain";
 				break;

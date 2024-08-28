@@ -1,16 +1,10 @@
 package com.kh.sintoburi.service.ds;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.ds.DsLoginDto;
-import com.kh.sintoburi.domain.ds.DsReplyVo;
-import com.kh.sintoburi.domain.ds.DsReportVo;
-import com.kh.sintoburi.domain.ds.DsUserVo;
-import com.kh.sintoburi.mapper.ds.DsReplyMapper;
-import com.kh.sintoburi.mapper.ds.DsReportMapper;
+import com.kh.sintoburi.domain.common.LoginDto;
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.mapper.ds.DsUserMapper;
 
 @Service
@@ -26,7 +20,7 @@ public class DsUserServiceImpl implements DsUserService {
 	}
 
 	@Override
-	public boolean registerUser(DsUserVo vo) {
+	public boolean registerUser(UserVo vo) {
 		
 		return userMapper.insert(vo)>0?true:false;
 	}
@@ -38,7 +32,8 @@ public class DsUserServiceImpl implements DsUserService {
 	}
 
 	@Override
-	public DsUserVo login(DsLoginDto dto) {
+	public UserVo login(LoginDto dto) {
+
 		
 		return userMapper.selectLoginUser(dto);
 	}

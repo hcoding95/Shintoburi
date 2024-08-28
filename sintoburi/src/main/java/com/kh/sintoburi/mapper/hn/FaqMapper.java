@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
-import com.kh.sintoburi.domain.hn.NoticeVo;
 
 public interface FaqMapper {
 	// 자주하는 질문 목록

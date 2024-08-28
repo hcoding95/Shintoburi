@@ -1,14 +1,13 @@
 package com.kh.sintoburi.mapper.hn;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnLoginDto;
 import com.kh.sintoburi.domain.hn.HnUserDto;
-import com.kh.sintoburi.domain.hn.HnUserVo;
 
 public interface HnUserMapper {
 
@@ -34,22 +33,28 @@ public interface HnUserMapper {
 	public int updateGrade(@Param("user_id") String user_id, @Param("grade") String grade);
 
 	// 데이터 1개
-	public HnUserVo selectById(@Param("user_id") String user_id);
+	public UserVo selectById(@Param("user_id") String user_id);
 
 	// 로그인
-	public HnUserDto login(HnLoginDto dto);
-
-	// 회원가입
-	public int join(HnUserVo vo);
+	public UserVo login(HnLoginDto dto);
+	
+	// 회원정보
+	public UserVo selectUserInfo(@Param("user_id") String user_id);
+	
+	// 회원 정보 수정
+	public int updateUserInfo(UserVo userVo);
+	
+	// 회원 탈퇴
+	public int unRegister(@Param("user_id") String user_id);
 
 	// 아이디저장
 	public int checkDupId(@Param("user_id") String user_id);
 
 	// 이메일조회
 	public String getEmailById(@Param("user_id") String user_id);
-
-	// 비밀번호변경
-	public int updatePw(Map<String, String> map);
+	
+	// 비밀번호체크
+	public HnUserDto checkPw(@Param("user_id") String user_id);
 	
 	// 사업자번호 업데이트
 	public int updateBusinessNum(@Param("user_id") String user_id, @Param("business_num") String business_num);
@@ -59,4 +64,6 @@ public interface HnUserMapper {
 	
 	// 등급 변경 해야하는 회원 리스트
 	public List<HnUserDto> gradeUpdateShow();
+	
+
 }

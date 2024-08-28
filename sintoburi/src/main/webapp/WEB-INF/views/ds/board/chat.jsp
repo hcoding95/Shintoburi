@@ -53,7 +53,7 @@ $("#chatInput").focus();
 				//$("#chatContext").append($("#chatInput").val()+"<br>");
 				
 				let data ={
-						"user_id":'user01',
+						"user_id":"${login.user_id}",
 						"user_name":nickname,
 						"chat_log":$("#chatInput").val()
 					

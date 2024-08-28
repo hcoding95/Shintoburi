@@ -1,7 +1,6 @@
 package com.kh.sintoburi.controller.hn;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
-import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.service.hn.NoticeService;
 
 import lombok.extern.log4j.Log4j;
-import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequestMapping("/hn/manager/notice")

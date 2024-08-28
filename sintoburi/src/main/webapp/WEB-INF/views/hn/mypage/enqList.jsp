@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
- <%@ include file="/WEB-INF/views/include/top.jsp" %>
- <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
+<%@ include file="/WEB-INF/views/include/top.jsp" %>
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 <script>
 $(function() {
 		
@@ -19,12 +19,8 @@ $(function() {
 	        $("#actionForm").submit();
 	    });
 	
-	
-	
 });
 </script>
-
-
            <!-- Main Content -->
            <div id="page-content-wrapper">
                <div class="container-fluid">
@@ -171,4 +167,4 @@ $(function() {
 
 
 
- <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>

@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;

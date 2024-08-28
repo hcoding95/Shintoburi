@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.EnquiryFormDto;
 import com.kh.sintoburi.domain.hn.EnquiryImageVo;
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
@@ -32,8 +33,8 @@ import com.kh.sintoburi.domain.hn.NoticeVo;
 import com.kh.sintoburi.service.hn.EnquiryReplyService;
 import com.kh.sintoburi.service.hn.EnquiryService;
 import com.kh.sintoburi.service.hn.FaqService;
+import com.kh.sintoburi.service.hn.HnUserService;
 import com.kh.sintoburi.service.hn.NoticeService;
-import com.kh.sintoburi.util.hn.HnFileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -54,6 +55,9 @@ public class MypageController {
 	@Autowired
 	private FaqService faqService;
 
+	@Autowired
+	private HnUserService userService;
+
 	@GetMapping("/myPageMain")
 	public void myPageMain() {
 
@@ -63,7 +67,7 @@ public class MypageController {
 	@GetMapping("/enqList")
 	public String getEnquiryList(HttpSession session, Model model, HnCriteria criteria) {
 		// 세션에서 로그인한 사용자 정보 가져오기
-		HnUserDto login = (HnUserDto) session.getAttribute("login");
+		UserVo login = (UserVo) session.getAttribute("login");
 
 		// 로그인 상태 확인
 		if (login == null) {
@@ -160,8 +164,8 @@ public class MypageController {
 		if (imageFiles != null && !imageFiles.isEmpty()) {
 			for (MultipartFile multi : imageFiles) {
 				if (multi.isEmpty()) {
-	                continue; // 빈 파일은 무시
-	            }
+					continue; // 빈 파일은 무시
+				}
 				// UUID를 이용해 고유한 파일 이름 생성
 				String uuid = UUID.randomUUID().toString();
 				String originalFileName = multi.getOriginalFilename(); // 이미지이름
@@ -176,17 +180,10 @@ public class MypageController {
 				System.out.println("imageVo: " + imageVo);
 			}
 		}
-		EnquiryVo enquiryVo = EnquiryVo.builder()
-				.content(dto.getContent())
-				.enquiry_type(dto.getEnquiry_type())
-				.user_id(dto.getUser_id())
-				.imageDel(imageDel)
-				.imageList(imageList)
-				.eno(dto.getEno())
-				.build();
+		EnquiryVo enquiryVo = EnquiryVo.builder().content(dto.getContent()).enquiry_type(dto.getEnquiry_type())
+				.user_id(dto.getUser_id()).imageDel(imageDel).imageList(imageList).eno(dto.getEno()).build();
 		System.out.println("after imageList, enquiryVo...:" + enquiryVo);
-		
-		
+
 		int eno = enquiryService.modify(enquiryVo);
 		rttr.addFlashAttribute("resultMod", eno);
 		return "redirect:/hn/mypage/enqList";
@@ -253,4 +250,88 @@ public class MypageController {
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("criteria", criteria);
 	}
+
+	// 회원정보 수정 전 비밀번호 체크 폼
+	@GetMapping("/checkPw")
+	public void checkPwForm() {
+
+	}
+
+	// 비밀번호 체크처리
+	@PostMapping("/checkPw")
+	public String checkPw(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
+		UserVo login = (UserVo) session.getAttribute("login");
+		String user_id = login.getUser_id();
+
+		HnUserDto dto = userService.checkPw(user_id);
+
+		String sessionPw = dto != null ? dto.getUser_pw() : null;
+		if (sessionPw != null && sessionPw.equals(user_pw)) {
+			return "redirect:/hn/mypage/updateInfo";
+		} else {
+			rttr.addFlashAttribute("pwMessage", "비밀번호가 일치하지 않습니다.");
+			return "redirect:/hn/mypage/checkPw";
+		}
+
+	}
+
+	// 회원정보수정폼
+	@GetMapping("/updateInfo")
+	public void updateInfo(Model model, HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+		String user_id = login.getUser_id();
+
+		UserVo userVo = userService.userInfo(user_id);
+		model.addAttribute("userInfo", userVo);
+	}
+
+	// 회원정보수정
+	@PostMapping("/userInfoMod")
+	public String userInfoMod(UserVo userVo, RedirectAttributes rttr) {
+		boolean result = userService.userInfoMod(userVo);
+		rttr.addFlashAttribute("infoMod", result);
+		return "redirect:/hn/mypage/myPageMain";
+	}
+
+	// 회원정보 수정 전 비밀번호 체크
+	@GetMapping("/loginConfirm")
+	public void loginConfirm() {
+
+	}
+
+	// 회원탈퇴 전 로그인 인증
+	@PostMapping("/loginConfirm")
+	public String loginConfirm(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
+		HnUserDto login = (HnUserDto) session.getAttribute("login");
+		String user_id = login.getUser_id();
+
+		HnUserDto dto = userService.checkPw(user_id);
+
+		String sessionPw = dto != null ? dto.getUser_pw() : null;
+		if (sessionPw != null && sessionPw.equals(user_pw)) {
+			return "redirect:/hn/mypage/unRegister";
+		} else {
+			rttr.addFlashAttribute("pwMessage", "비밀번호가 일치하지 않습니다.");
+			return "redirect:/hn/mypage/loginConfirm";
+		}
+
+	}
+	
+	// 회원탈퇴폼
+	@GetMapping("/unRegister")
+	public void unRegisterForm() {
+	
+	}
+	
+	// 회원탈퇴
+	@PostMapping("unRegister")
+	public String unRegister(HttpSession session, RedirectAttributes rttr ) {
+		HnUserDto login = (HnUserDto)session.getAttribute("login");
+		String user_id = login.getUser_id();
+		boolean result = userService.unRegister(user_id);
+		session.invalidate();
+		rttr.addFlashAttribute("unRegister",result);
+		return "redirect:/hn/main/login";
+	}
+
 }

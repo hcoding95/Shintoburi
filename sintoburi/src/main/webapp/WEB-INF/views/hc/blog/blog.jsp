@@ -57,7 +57,7 @@ $(function () {
 				error: function(xhr, status, error) {
 				       if (xhr.status === 401) {
 				           // 로그인 페이지로 리디렉션
-				           window.location.href = "/hc/main/login";
+				           window.location.href = "/ds/board/login";
 				       } else {
 				           // 다른 오류 처리
 				           console.error("Error occurred: " + error);
@@ -84,7 +84,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
@@ -1045,7 +1045,7 @@ $(function () {
     let reportData = {
         category : "blog_no",
         delete_url : "/hc/blog/delete",
-        post_url : "/hc/blog/detil?blog_no=",
+        post_url : "/hc/blog/detail?blog_no=",
         post_id : '',
         re_id: '',
         write_num: '',
@@ -1084,7 +1084,7 @@ $(function () {
             // AJAX 요청으로 서버로 데이터 전송 (예시)
             $.ajax({
                 type: "POST",
-                url: "/hc/report/submit", // 서버에서 처리할 URL
+                url: "/ds/report/addReport", // 서버에서 처리할 URL
                 data: JSON.stringify(reportData), // JSON 형식으로 전송
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {

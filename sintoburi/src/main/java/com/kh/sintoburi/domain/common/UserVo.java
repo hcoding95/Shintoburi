@@ -1,11 +1,11 @@
-package com.kh.sintoburi.domain.ds;
+package com.kh.sintoburi.domain.common;
 
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class DsUserVo {
+public class UserVo {
 	private String user_id;
 	private String user_pw;
 	private String user_name;
@@ -17,4 +17,6 @@ public class DsUserVo {
 	private String business_num;
 	private Date last_login;
 	private String user_email;
+	private int sumFollow;
+	private boolean checkFollow;
 }

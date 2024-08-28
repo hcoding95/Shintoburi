@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hc.BlogSettingVo;
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.HcFollowDto;
 import com.kh.sintoburi.domain.hc.HcReplyDto;
-import com.kh.sintoburi.domain.hc.HcUserVo;
 import com.kh.sintoburi.service.hc.BlogService;
-import com.kh.sintoburi.service.hc.BlogServiceImpl;
 import com.kh.sintoburi.service.hc.BlogSettingService;
 import com.kh.sintoburi.service.hc.HcFollowService;
 import com.kh.sintoburi.service.hc.HcInjectionService;
@@ -51,10 +50,10 @@ public class BlogController {
 	public void blog(String user_id, HttpSession session,Model model) {
 		String url = (String) session.getAttribute("targetLocation");
 		System.out.println("지금 위치?" + url);
-		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
+		UserVo loginUser = (UserVo)session.getAttribute("login");
 		List<BlogVo> list = blogService.getListByUser_id(user_id);
 		System.out.println("로그인한 user정보는?" + loginUser);
-		HcUserVo blog_userVo = userService.searchByUserId(user_id);
+		UserVo blog_userVo = userService.searchByUserId(user_id);
 		blog_userVo.setSumFollow(followService.getCountFollower(user_id));
 		String login_id = "";
 		if(loginUser != null) {
@@ -77,7 +76,7 @@ public class BlogController {
 		System.out.println("디테일뷰 실행");
 		BlogVo blogVo = blogService.readByBlogNo(blog_no);
 		List<HcReplyDto> replyList = replyService.getReplyListByBlog_no(blog_no);
-		HcUserVo loginUser = (HcUserVo)session.getAttribute("login");
+		UserVo loginUser = (UserVo)session.getAttribute("login");
 		String login_id = "";
 		if(loginUser != null) {
 			login_id = loginUser.getUser_id();

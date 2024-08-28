@@ -4,10 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.kh.sintoburi.domain.hc.HcUserVo;
+import com.kh.sintoburi.domain.common.UserVo;
+
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
@@ -15,7 +15,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		HcUserVo login_user = (HcUserVo)session.getAttribute("login");
+
+		UserVo login_user = (UserVo)session.getAttribute("login");
+
 		System.out.println("동기컷팅작용");
 		if(login_user == null) {
 			System.out.println("로그인 감지");
@@ -27,6 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			} else {
 				query = "";
 			}
+			String realPath = uri + query;
 			// AJAX 요청인지 확인
 	        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 	        	System.out.println("비동기 확인 401헤드 삽입");
@@ -34,8 +37,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	            response.getWriter().write("Login required");
 	            return false; // 요청을 더 이상 처리하지 않음
 	        } else {
-	        	session.setAttribute("targetLocation", uri + query); 
-	            response.sendRedirect("/hc/main/login");
+	        	session.setAttribute("targetLocation", realPath);
+	        	System.out.println("지금 바라보고있는 패스는?" + realPath);
+	        	if(realPath.startsWith("/hn/manager") || realPath.startsWith("/hn/mypage")) {
+	        		response.sendRedirect("/hn/main/login");
+	        	}else {
+	        		response.sendRedirect("/ds/board/login");
+	        	}
 	            return false; // 요청을 더 이상 처리하지 않음
 	        }
 		} 

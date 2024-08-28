@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <%@ include file="/WEB-INF/views/include/top.jsp" %>
-  <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/WEB-INF/views/include/top.jsp" %>
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 <script>
 $(function() {
 	// 수정버튼
@@ -81,7 +81,7 @@ $(function() {
 						    </div>
 						    <div class="form-group">
 						        <label for="enquiry_type">문의 유형</label>
-						        <select class="form-select sEditable" aria-label="Default select example" id="enquiry_type" name="enquiry_type" disabled>
+						        <select class="form-control sEditable" aria-label="Default select example" id="enquiry_type" name="enquiry_type" disabled>
 						            <option value="상품문의" <c:if test="${enquiryVo.enquiry_type =='상품문의'}">selected</c:if>>상품문의</option>
 						            <option value="배송문의" <c:if test="${enquiryVo.enquiry_type =='배송문의'}">selected</c:if>>배송문의</option>
 						            <option value="결제문의" <c:if test="${enquiryVo.enquiry_type =='결제문의'}">selected</c:if>>결제문의</option>
@@ -134,4 +134,4 @@ $(function() {
 	          </div>
 		</div>
 	</div>
- <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>

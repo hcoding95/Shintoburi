@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.ds.DsBoardVo;
 import com.kh.sintoburi.domain.ds.DsLikeDto;
-import com.kh.sintoburi.domain.ds.DsUserVo;
 import com.kh.sintoburi.service.ds.DsBoardService;
 import com.kh.sintoburi.service.ds.DsLikeService;
 
@@ -44,7 +44,7 @@ public class DsBoardController {
 		DsBoardVo boardVo = boardService.getDetail(bno);
 		Integer likeCount = likeService.getLikeCount(boardVo.getBno());
 		System.out.println("likeCount:" + likeCount);
-		DsUserVo user = (DsUserVo) session.getAttribute("login");
+		UserVo user = (UserVo) session.getAttribute("login");
 
 		
 		if (user != null) {
@@ -53,6 +53,9 @@ public class DsBoardController {
 
 			boolean result = likeService.checkLike(user.getUser_id(), bno);
 			model.addAttribute("result", result);
+
+			System.out.println("체크"+result);
+
 
 			System.out.println("result: " + boardVo.getWriter() + " " + user.getUser_id());
 
