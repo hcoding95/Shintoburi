@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
-<link rel="stylesheet" href="/resources/css/hc/complaint.css">
+<!-- <link rel="stylesheet" href="/resources/css/hc/complaint.css"> -->
 <!-- 글리피콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
@@ -151,7 +151,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
@@ -178,7 +178,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
@@ -265,7 +265,7 @@ $(function () {
     let reportData = {
         category : "blog_no",
         delete_url : "/hc/blog/delete",
-        post_url : "/hc/blog/detil?blog_no=",
+        post_url : "/hc/blog/detail?blog_no=",
         post_id : '',
         re_id: '',
         write_num: '',
@@ -304,7 +304,7 @@ $(function () {
             // AJAX 요청으로 서버로 데이터 전송 (예시)
             $.ajax({
                 type: "POST",
-                url: "/hc/report/submit", // 서버에서 처리할 URL
+                url: "/ds/report/addReport", // 서버에서 처리할 URL
                 data: JSON.stringify(reportData), // JSON 형식으로 전송
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
@@ -318,6 +318,108 @@ $(function () {
 
         } else {
             alert('신고할 이유를 선택해주세요.');
+        }
+    });
+    // 페이징 처리
+    let page = 1;
+    let isFetching = false;
+    let loginUserId = "\${loginUser != null ? loginUser.user_id : ''}";
+    $(window).on('scroll', function() {
+    	console.log($(window).scrollTop());
+    	console.log($(window).height());
+    	console.log($(document).height() - 10);
+        if (!isFetching 
+        		&& $(window).scrollTop() >= $(document).height() - 2000) {
+        	$(window).scrollTop();
+            console.log("맨밑 감지");
+
+            // 페이징 처리가 필요하다면, AJAX로 콘텐츠를 로드하고 isFetching을 사용하여 중복 실행 방지
+            isFetching = true;
+            page += 1;
+            limit = 10;
+            let type = $("#searchType").val();
+            let keyword = $("#searchValue").val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/hc/main/data?pageNum=' + page + "&limit=" + limit 
+                		+ "&type=" + type + "&keyword=" + keyword, 
+                success: function(data) {
+                	console.log(data);
+                	$.each(data, function (index, vo) {
+	                    // 새로운 콘텐츠를 추가
+	                    let uniqueIndex = index + page * 10;
+	                    let tag = `
+	                    	<div class="post-container">
+	                    	\${vo.fileList.length > 0 ? `
+	                    			 <div id="imageCarousel2\${uniqueIndex}"  class="carousel slide" data-ride="carousel" data-interval="false">
+		                             <div class="carousel-inner">
+		                                 \${vo.fileList.map((file, innerIndex) => `
+		                                 <div class="carousel-item \${innerIndex == 0 ? 'active' : ''}">
+		                                     <a class="open-modal" data-blog_no="\${vo.blog_no}"><img src="/display?file_name=\${file.file_path}/\${file.uuid}_\${file.file_name}" class="d-block w-100" alt="Image"></a>
+		                                 </div>
+		                            	 `).join('')}
+		                             </div>
+		                             <a class="carousel-control-prev" href="#imageCarousel2\${uniqueIndex}" role="button" data-slide="prev">
+		                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		                                 <span class="sr-only">Previous</span>
+		                             </a>
+		                             <a class="carousel-control-next" href="#imageCarousel2\${uniqueIndex}" role="button" data-slide="next">
+		                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		                                 <span class="sr-only">Next</span>
+		                             </a>
+		                         </div>`:''}
+	                    			
+	                    	
+	                    	\${vo.productTagList.length > 0 ? `
+	                    		 <div class="post-icons">
+	                    			\${vo.productTagList.map((tag, inIndex) => `
+			                             <a href="#"><img src="/resources/images/logo.png" alt="Icon 1">\${tag.product_id}</a>
+	                    			`).join('')}
+		                         </div>
+	                    			`: ''}
+	                    	
+	                         <div class="post-user-info">
+	                      	  <div class="user-details">
+	                           <img src="/resources/images/logo.png" alt="User Image">
+	                           <div class="user-info-text">
+	                               <div><a href="/hc/blog/blog?user_id=\${vo.user_id}">\${vo.user_name}</a></div>
+	                               <div>
+	                               \${vo.updatedate ? 
+	                            		   new Date(vo.updatedate).toLocaleDateString('ko-KR', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}) + ' 수정' 
+	                            		   : new Date(vo.regdate).toLocaleDateString('ko-KR', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'})}
+	                               </div>
+	                           </div>
+	                         </div>
+	                         <div class="user-stats">
+	                           <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike" id="sumLike\${vo.blog_no }">${vo.sumLike }</span></i></div>
+	                           <div><i class="fa fa-handshake">팔로워<span class="sumFollow" id="sumFollow\${vo.blog_no }">${vo.sumFollower }</span></i></div>
+	                         </div>
+	                    </div>
+	                        <div class="post-content">
+	                             <span class="content-text">\${vo.blog_content}</span> 
+	                        	 <a href="#" class="more-link" style="display: none;">더보기</a>
+	                        </div>
+	                        <div class="post-actions">
+	                            <button id="likeBtn\${vo.blog_no}" class="likeBtn" data-blog_no="\${vo.blog_no}" data-liked="\${vo.checkLike}">
+	                            <i class="\${vo.checkLike ? 'fa-solid' : 'fa-regular'} fa-thumbs-up">좋아요</i>
+	                        	</button>
+	                            <button><a class="open-modal" data-blog_no="\${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
+	                            <button class="report-btn" data-reg_id="\${vo.user_id}" data-blog_no="\${vo.blog_no}"><i class="fa fa-exclamation-triangle">신고하기</i></button>
+	                            <button>\${vo.user_id === loginUserId ? `<a href="/hc/blog/modify_form?blog_no=\${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a>` : `<a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a>`}</button>
+	                        </div>
+	                    </div>
+	                    `;
+	                    $('#main-content-box').append(tag);
+						
+					})
+                    isFetching = false; // 페이징 완료 후 다시 false로 설정
+                },
+                error: function() {
+                    console.log("에러 발생");
+                    isFetching = false;
+                }
+            });
         }
     });
 	
@@ -390,14 +492,14 @@ $(function () {
 
 <!-- 검색 -->
 <div class="search-container">
-    <form action="/board/list" method="get">
+    <form action="/hc/main/home" method="get">
         <div>
-            <select name="type">
-                <option value="T" ${creteria.type == 'T'? 'selected' : '' }>내용</option>
-                <option value="C" ${creteria.type == 'C'? 'selected' : '' }>상품이름</option>
-                <option value="W" ${creteria.type == 'W'? 'selected' : '' }>작성자</option>
+            <select id="searchType" name="type">
+                <option value="T" ${BlogPageDto.type == 'T'? 'selected' : '' }>내용</option>
+                <option value="P" ${BlogPageDto.type == 'P'? 'selected' : '' }>상품이름</option>
+                <option value="W" ${BlogPageDto.type == 'W'? 'selected' : '' }>작성자</option>
             </select>
-            <input type="text" name="keyword" value="${creteria.keyword}">
+            <input id="searchValue" type="text" name="keyword" value="${BlogPageDto.keyword}">
             <button>검색</button>
         </div>
     </form>
@@ -421,7 +523,7 @@ $(function () {
 <!-- 글쓰기 탭 끝 -->
 
 
-
+<div id="main-content-box">
 <!-- 메인의 내용 시작 -->
 <c:forEach items="${list}" var="vo" varStatus="status">
 <div class="post-container">
@@ -499,7 +601,7 @@ $(function () {
 
 </c:forEach>    
 <!-- 메인 내용 끝 -->
-
+</div>
 <!-- 신고하기 모달 창 -->
 <div id="reportModal" class="modal">
     <div class="modal-content">
@@ -519,11 +621,6 @@ $(function () {
 </div>
 
 <script>
-    let page = 1;
-    $(window).scroll(function() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-            console.log("맨밑 감지");
-        }
-    });
+    
 </script>
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>

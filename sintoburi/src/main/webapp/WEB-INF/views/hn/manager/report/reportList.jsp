@@ -44,8 +44,9 @@ $(function() {
 		 let delete_url = $(this).data("delete-url");
 		 let num = $(this).data("num");
 		 let cate = $(this).data("cate");
-		 let sData = {cate : num};
-		 
+		 let sData = {};
+		 sData[cate] = num;
+		 console.log(sData);
 		 $.ajax({
 		  	 type: "post",
 		  	url: delete_url,
@@ -122,14 +123,14 @@ $(function() {
         <c:forEach items="${reportList}" var="vo">
             <tr class="text-center">
                 <td>${vo.re_no}</td>
-                <td><a href="">${vo.post_url}</a></td>
+                <td><a href="${vo.post_url}${vo.write_num}">${vo.post_url}${vo.write_num}</a></td>
                 <td>${vo.post_id}</td>
                 <td>${vo.re_reason}</td>
                 <td><fmt:formatDate value="${vo.re_date}" pattern="yyyy-MM-dd"/></td>
                 <td>${vo.status}</td>
                <td>
 				<button class="btn-sm btn-danger btnDelete" data-delete-url="${vo.delete_url}" 
-					data-num="1" data-cate="test" data-re-no="${vo.re_no}"	type="button">삭제</button>
+					data-num="${vo.write_num}" data-cate="${vo.category }" data-re-no="${vo.re_no}"	type="button">삭제</button>
 				</td>
             </tr>
         </c:forEach>

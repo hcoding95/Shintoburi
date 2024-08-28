@@ -18,9 +18,12 @@
             post_url,
             post_id,
             re_reason,
+            re_id,
             re_date,
             status,
             delete_url,
+            category,
+            write_num,
             row_number() over (order by re_no desc) as rn
         from tbl_reportPost
         <where>

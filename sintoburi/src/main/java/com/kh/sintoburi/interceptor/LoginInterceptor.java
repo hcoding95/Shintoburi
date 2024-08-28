@@ -44,7 +44,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	        	if(realPath.startsWith("/hn/manager") || realPath.startsWith("/hn/mypage")) {
 	        		response.sendRedirect("/hn/main/login");
 	        	}else {
-	        		response.sendRedirect("/hc/main/login");
+	        		response.sendRedirect("/ds/board/login");
 	        	}
 	            return false; // 요청을 더 이상 처리하지 않음
 	        }

@@ -70,7 +70,7 @@ $(function () {
 		        if (xhr.status === 401) {
 		    	   console.log("401에러 발견 작동");
 		           // 로그인 페이지로 리디렉션
-		           window.location.href = "/hc/main/login";
+		           window.location.href = "/ds/board/login";
 		        } else {
 		           // 다른 오류 처리
 		           console.error("Error occurred: " + error);
@@ -162,7 +162,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
@@ -194,7 +194,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
@@ -239,7 +239,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
@@ -269,7 +269,7 @@ $(function () {
 			        if (xhr.status === 401) {
 			    	   console.log("401에러 발견 작동");
 			           // 로그인 페이지로 리디렉션
-			           window.location.href = "/hc/main/login";
+			           window.location.href = "/ds/board/login";
 			        } else {
 			           // 다른 오류 처리
 			           console.error("Error occurred: " + error);
