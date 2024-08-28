@@ -541,7 +541,7 @@ $(function () {
      <c:if test="${not empty vo.productTagList }">
      <div class="post-icons">
      	<c:forEach items="${vo.productTagList }" var="tag" >
-         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+         <a href="/product/productDetail?pno=${tag.product_id}"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_name}</a>
      	</c:forEach>
      </div>
      </c:if>

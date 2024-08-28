@@ -775,28 +775,34 @@ $(function () {
 				        	<div class="blog-control">
 					            <h3 class="text-end">사진<div class="filters"><a id="filterBtn" href="#tab3" data-toggle="tab" data-tab="#main-tab3" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <div class="photo-grid">
+					            	<c:set var="displayCount" value="0" />
 					            	<!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
-					            	<c:forEach items="${list}" var="pictureVo" begin="0" end="5" step="1">
-					             		<c:if test="${not empty pictureVo.fileList }">
+					            	<c:forEach items="${list}" var="pictureVo" begin="0" step="1">
+					             		<c:if test="${not empty pictureVo.fileList && displayCount < 6 }">
 							             <c:forEach items="${pictureVo.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
 							                <div class="photo"><a class="open-modal" data-blog_no="${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
 							             </c:forEach>
+						            	<c:set var="displayCount" value="${displayCount + 1}" />
 						             	</c:if>
 					            	</c:forEach>
 					            </div>
 				        	</div>
+				        	<c:if test="${login.grade eq '판매자'}">
+				        	</c:if>
 				        	<div class="blog-control">
-					            <h3 class="text-end">브랜드몰<div class="filters"><a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a></div></h3>
+					            <h3 class="text-end">브랜드몰<div class="filters">
+					            <!-- <a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a> -->
+					            </div></h3>
 					            <div class="product-photo-grid">
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
 					            </div>
 				        	</div>
 				        </div>
 				        <div class="blog-main-content">
 				        	<div class="blog-control">
-					            <h3 class="text-end">게시물 <div class="filters "><button id="filterBtn" class="btn btn-primary btn-standard">필터</button></div></h3>
+					            <h3 class="text-end">게시물 <div class="filters "></div></h3>
 				        	</div>
 				            <div class="posts">
 				            <!-- 메인의 내용 시작 -->
@@ -829,7 +835,7 @@ $(function () {
 							     <c:if test="${not empty vo.productTagList }">
 							     <div class="post-icons">
 							     	<c:forEach items="${vo.productTagList }" var="tag" >
-							         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+							         <a href="/product/productDetail?pno=${tag.product_id}"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_name}</a>
 							     	</c:forEach>
 							     </div>
 							     </c:if>
