@@ -29,7 +29,4 @@ public class ProductVo {
 	private String summary;
 	
 	
-	private List<ProductImageVo> imgList ;
-	
-	private List<ProductImageVo> delList;
 }
