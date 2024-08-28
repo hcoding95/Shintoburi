@@ -7,30 +7,30 @@
 $(function() {
 $(".btnMod").click(function() {
        let ono = $(this).attr("data-ono");
-       let status = $(this).closest('tr').find('select').val();
+       let delivery_status = $(this).closest('tr').find('select').val();
        console.log(ono);
        console.log(status);
        
        let sData = {
            "ono": ono,
-           "status": status
+           "delivery_status": delivery_status
        };
 
-//        $.ajax({
-//            type: "post",
-//            url: "/gr/sales_manage/updateDeliveryStatus"
-//            data: JSON.stringify(sData),
-//            contentType: "application/json; charset=utf-8",
-//            success: function(result) {
-//                if (result) {
-//                    let updatedStatus = status; // 업데이트된 등급
-//                    $(this).closest('tr').find('.current-grade').text(updatedStatus);
-//                    alert(status + "로 변경 되었습니다.");
-//                } else {
-//                    alert("변경 실패 , 다시 시도해 주세요.");
-//                }
-//            }
-//        });
+       $.ajax({
+           type: "post",
+           url: "/gr/sales_manage/updateDeliveryStatus"
+           data: JSON.stringify(sData),
+           contentType: "application/json; charset=utf-8",
+           success: function(result) {
+               if (result) {
+                   let updatedStatus = status; // 업데이트된 등급
+                   $(this).closest('tr').find('.current-grade').text(updatedStatus);
+                   alert(status + "로 변경 되었습니다.");
+               } else {
+                   alert("변경 실패 , 다시 시도해 주세요.");
+               }
+           }
+       });
    });
 });
 

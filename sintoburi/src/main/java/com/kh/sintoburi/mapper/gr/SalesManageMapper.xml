@@ -16,9 +16,8 @@
 	  
 	  <update id="updateDeliveryStatus">
 	  update tbl_order set
-		delivery_status = ${delivery_status}
-	 where ono = ${ono};
-	  
+		delivery_status = #{delivery_status}
+	 where ono = #{ono};
 	  </update>
   </mapper>
   
