@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="/WEB-INF/views/gr/include/top.jsp"%>   
 
+
 <script>
 $(function() {
 	
@@ -221,4 +222,4 @@ $(function() {
 
 </html>
 <%@ include file="/WEB-INF/views/gr/include/action_form.jsp" %>
-<%@ include file="/WEB-INF/views/gr/include/bottom.jsp"%>
+<%@ include file="/WEB-INF/views/include/bottom.jsp"%>

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.gr.DeliveryDto;
-import com.kh.sintoburi.domain.gr.LoginUser;
 import com.kh.sintoburi.domain.gr.OrderDetailDto;
 import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.domain.gr.OrderVo;
@@ -38,7 +38,7 @@ public class OrderController {
 	//체크한 것 주문하기로 넘겨주기, 장바구니에서 삭제
 	@PostMapping("/run_order")
 	public String runOrder(HttpSession session, OrderVo orderVo, RedirectAttributes rttr) {
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
 		log.info("orderVo:" + orderVo);
 		// bdno값 받기
 		int[] bdnos = (int[])session.getAttribute("bdnos");
@@ -91,7 +91,7 @@ public class OrderController {
 	//주문정보 목록
 	@GetMapping("/order_list")
 	public String orderList(Model model, HttpSession session, Integer ono){
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
 		//System.out.println("ono:" + ono);
 	    if (dto == null) {
 	        return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
@@ -117,7 +117,7 @@ public class OrderController {
 	@GetMapping("/detail/{ono}")
 	public String getDetailList(@PathVariable("ono") int ono,
 			Model model, HttpSession session ){
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
 		// dto가 null인지 확인
 	    if (dto == null) {
 	        return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
@@ -141,7 +141,7 @@ public class OrderController {
 			Model model, HttpSession session) {
 		//ystem.out.println(paymentDto.toString());
 		
-		//LoginUser dto = (LoginUser)session.getAttribute("login");
+		//UserVo dto = (UserVo)session.getAttribute("login");
 //		 if (dto == null) {
 //		        return "redirect:/gr";
 //		    }
@@ -165,7 +165,7 @@ public class OrderController {
 	public String paymentList(Model model, HttpSession session,  
 			Integer ono, PaymentDto paymentDto) {
 		 System.out.println("Received ono: " + ono);
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
 	    if (dto == null) {
 	        return "redirect:/gr"; 
 	    }

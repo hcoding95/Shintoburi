@@ -5,7 +5,7 @@
   
   <mapper namespace="com.kh.sintoburi.mapper.gr.DeliveryMapper">
 	  <select id="getDeliveryManageList" resultType="OrderDto">
-		select ono, user_phone, user_name, address, 
+		select ono, user_phone, user_name, address, user_id,
   				delivery_charge, delivery_status, 
   				pay_amount, sum_total, order_date
         from tbl_order
@@ -13,3 +13,5 @@
 		order by order_date, ono
 	  </select>
   </mapper>
+  
+ 
