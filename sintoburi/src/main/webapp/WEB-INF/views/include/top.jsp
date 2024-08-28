@@ -175,7 +175,7 @@ console.log()
         <div class="top-bar">
             <div class="main-container">
                 <div class="announcement">
-                    <a href="${noti.url }" class="btn ">${noti.title }</a>
+                  <a href="${noti.url}" class="btn ">${noti.title}</a>
                 </div>
                 <div class="user-menu">
                 	<c:choose>
