@@ -168,11 +168,14 @@ main {
 
 </style>
 <body>
+<script>
+console.log()
+</script>
     <header class="main-header">
         <div class="top-bar">
             <div class="main-container">
                 <div class="announcement">
-                    <a href="/hn/mypage/noticeList" class="btn ">공지사항[24/07/22] 당첨자발표 | 7월 고기데이 기획전 경품 당첨자</a>
+                    <a href="${noti.url }" class="btn ">${noti.title }</a>
                 </div>
                 <div class="user-menu">
                 	<c:choose>
@@ -197,6 +200,7 @@ main {
                 </div>
             </div>
         </div>
+        
         <nav class="main-nav">
             <div class="main-container">
                 <ul>

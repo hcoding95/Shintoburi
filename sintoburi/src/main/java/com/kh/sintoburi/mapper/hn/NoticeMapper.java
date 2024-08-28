@@ -18,7 +18,16 @@ public interface NoticeMapper {
 
 	// 관리자 공지사항 보여주기
 	public NoticeVo managerNoticeShow();
+	
+	// 중요 공지사항 보여주기
+	public NoticeVo importantNoticeShow();
 
+	// 중요 공지사항 일반 공지사항으로 바꾸기
+	public int changeN();
+	
+	// 관리자 공지사항 일반 공지사항으로 바꾸기
+	public int changeManagerN();
+	
 	// 공지사항 페이징
 	public List<NoticeVo> getNoticePaging(HnCriteria criteria);
 

@@ -27,7 +27,7 @@ public class NoticeServiceImpl implements NoticeService {
 		List<NoticeVo> list = noticeMapper.getNoticePaging(criteria);
 		return list;
 	}
-	
+
 	@Override
 	public List<NoticeVo> managerNoticeList() {
 		List<NoticeVo> list = noticeMapper.selectManagerNotice();
@@ -44,8 +44,17 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int registerNotice(NoticeVo vo) {
-		int count = noticeMapper.insertNotice(vo);
+		if ("Y".equals(vo.getImportant())) {
+			noticeMapper.changeN();
+		}
+		if ("M".equals(vo.getImportant())) {
+			noticeMapper.changeManagerN();
+		}
+		
+		
 
+		int count = noticeMapper.insertNotice(vo);
+		
 		List<NoticeImageVo> list = vo.getImageList();
 		if (list != null && list.size() > 0) {
 			list.forEach(imageVo -> {
@@ -63,12 +72,19 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int modifyNotice(NoticeVo vo) {
+		if ("Y".equals(vo.getImportant())) {
+			noticeMapper.changeN();
+		}
+		if ("M".equals(vo.getImportant())) {
+			noticeMapper.changeManagerN();
+		}
 		
+
 		log.info("modify, before vo:" + vo);
 		List<String> imageDel = vo.getImageDel();
-		
+
 		log.info("after vo:" + vo);
-		// 선택한 이미지 삭제 
+		// 선택한 이미지 삭제
 		if (imageDel != null && !imageDel.isEmpty()) {
 			for (String image : imageDel) {
 				int slashIndex = image.lastIndexOf("/");
@@ -79,7 +95,7 @@ public class NoticeServiceImpl implements NoticeService {
 				log.info("uuid:" + uuid);
 				if (deleteCount == 1) {
 					File imageDelete = new File(image);
-					
+
 					if (imageDelete.exists()) {
 						imageDelete.delete();
 					}
@@ -87,22 +103,22 @@ public class NoticeServiceImpl implements NoticeService {
 
 			}
 		}
-		
+
 		List<NoticeImageVo> list = vo.getImageList();
-		
+
 		if (list != null && !list.isEmpty()) {
 			for (NoticeImageVo imageVo : list) {
 				imageVo.setN_no(vo.getN_no());
-				
+
 				int insertCount = noticeMapper.imageInsert(imageVo);
 				if (insertCount != 1) {
-					
+
 					return 0;
 				}
 			}
 		}
-		log.info("list.." + list); 
-		
+		log.info("list.." + list);
+
 		int count = noticeMapper.updateNotice(vo);
 		if (count > 0) {
 			return vo.getN_no();
@@ -118,7 +134,7 @@ public class NoticeServiceImpl implements NoticeService {
 			HnFileUtil.delete(fileName);
 		});
 		noticeMapper.imageDelete(n_no);
-		
+
 		int count = noticeMapper.deleteNotice(n_no);
 		return (count == 1) ? true : false;
 	}
@@ -156,9 +172,13 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public boolean choiceImageDelete(String uuid) {
 		int count = noticeMapper.choiceImageDelete(uuid);
-		return (count == 1)? true : false;
+		return (count == 1) ? true : false;
 	}
 
-
+	@Override
+	public NoticeVo importantNoticeShow() {
+		NoticeVo noticeVo = noticeMapper.importantNoticeShow();
+		return noticeVo;
+	}
 
 }
