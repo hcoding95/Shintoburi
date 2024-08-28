@@ -65,7 +65,7 @@ $(function() {
 	function imageUploader(file, el) {
 		var formData = new FormData();
 		formData.append('file', file);
-	  	console.log(formData);
+	  	//console.log(formData);
 		$.ajax({                                                              
 			data : formData,
 			type : "POST",
