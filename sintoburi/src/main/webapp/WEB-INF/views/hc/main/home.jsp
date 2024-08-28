@@ -104,7 +104,7 @@
 
 </style>
 <%
-    // 현재 요청의 URL을 가져와서 세션에 저장
+    /* // 현재 요청의 URL을 가져와서 세션에 저장
     String prefixToRemove = "/WEB-INF/views";
     String uri = request.getRequestURI().substring(prefixToRemove.length()); // ? 앞에 문자열
     uri = uri.substring(0, uri.length() - 4);
@@ -115,7 +115,7 @@
 	} else {
 		query = "";
 	}
-    session.setAttribute("targetLocation", uri + query);
+    session.setAttribute("targetLocation", uri + query); */
 %>
 
 <script>
@@ -138,7 +138,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("좋아요 취소");
+					//alert("좋아요 취소");
 					let container = that.closest(".post-container");
 					let countLike = container.find(".sumLike");
 					let count = parseInt(countLike.text(), 10);
@@ -165,7 +165,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("좋아요 클릭");
+					//alert("좋아요 클릭");
 					let container = that.closest(".post-container");
 					let countLike = container.find(".sumLike");
 					let count = parseInt(countLike.text(), 10);
