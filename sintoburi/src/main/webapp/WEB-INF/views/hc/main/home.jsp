@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/hc/main.css">
-<!-- <link rel="stylesheet" href="/resources/css/hc/complaint.css"> -->
+<link rel="stylesheet" href="/resources/css/hc/complaint.css">
 <!-- 글리피콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
@@ -441,38 +441,25 @@ $(function () {
 				<li data-slide-to="0" data-target="#carousel-514190" class="active">
 				</li>
 				<li data-slide-to="1" data-target="#carousel-514190"></li>
-				<li data-slide-to="2" data-target="#carousel-514190"></li>
 			</ol>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="d-block w-100" alt="Carousel Bootstrap First"
-						src="https://www.layoutit.com/img/sports-q-c-1600-500-1.jpg" />
+					<img class="d-block w-100" alt="Carousel Bootstrap First"src="/resources/images/quiz.webp" />
+					<a href="javascript:void(0);" onclick="openEventQuizPopup();" class="btn btn-success" id="event">
 					<div class="carousel-caption">
-						<h4>First Thumbnail label</h4>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
-							dolor id nibh ultricies vehicula ut id elit.</p>
+						<h4>퀴즈 게임</h4>
+						<p>이벤트를 통해 포인트를 획득하세요!!.</p>
 					</div>
+					</a>
 				</div>
 				<div class="carousel-item">
-					<img class="d-block w-100" alt="Carousel Bootstrap Second"
-						src="https://www.layoutit.com/img/sports-q-c-1600-500-2.jpg" />
+					<img class="d-block w-100" alt="Carousel Bootstrap Second" src="/resources/images/run.webp" />
+					<a href="javascript:void(0);" onclick="openEventRunPopup();" class="btn btn-success" id="event">
 					<div class="carousel-caption">
-						<h4>Second Thumbnail label</h4>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
-							dolor id nibh ultricies vehicula ut id elit.</p>
+						<h4>경마 게임</h4>
+						<p>이벤트를 통해 포인트를 획득하세요!!.</p>
 					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100" alt="Carousel Bootstrap Third"
-						src="https://www.layoutit.com/img/sports-q-c-1600-500-3.jpg" />
-					<div class="carousel-caption">
-						<h4>Third Thumbnail label</h4>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-							quam. Donec id elit non mi porta gravida at eget metus. Nullam id
-							dolor id nibh ultricies vehicula ut id elit.</p>
-					</div>
+					</a>
 				</div>
 			</div>
 			<a class="carousel-control-prev" href="#carousel-514190"

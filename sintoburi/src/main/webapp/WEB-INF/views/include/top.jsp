@@ -245,6 +245,39 @@ main {
         
     }
     
+    function openEventQuizPopup(){
+    	
+    	if(${login.user_id==null}){
+    		alert("로그인을 해주세요");
+    		return;
+    	}
+    	
+        let url = "/ds/board/quizGame";
+        let name = "이벤트";
+        let option = "width=600,height=700,top=100,left=200"
+        window.open(url, name, option);
+        console.log("이벤트실행");
+        
+    }
+    
+    function openEventRunPopup(){
+    	
+    	if(${login.user_id==null}){
+    		alert("로그인을 해주세요");
+    		return;
+    	}
+    	
+        let url = "/ds/board/runGame";
+        let name = "이벤트";
+        let option = "width=600,height=700,top=100,left=200"
+        window.open(url, name, option);
+        console.log("이벤트실행");
+        
+    }
+    
+    
+    
+    
 	    // 특정 글자 수로 텍스트 자르기
 	    function truncateText(selector, maxLength) {
 	        const element = document.querySelector(selector);
