@@ -17,7 +17,7 @@ public class BasketServiceImpl implements BasketService{
 	@Autowired
 	private BasketMapper basketMapper;
 	
-//	장바구니 키 얻기
+//장바구니 키 얻기
 	@Override
 	public boolean getBasketKey(BasketVo basketVo) {
 		int count = basketMapper.insertSelectKey(basketVo);
@@ -67,7 +67,7 @@ public class BasketServiceImpl implements BasketService{
 		return count;
 	}
 	
-	// 글 목록(페이징)
+	//글 목록(페이징)
 	@Override
 	public List<BasketDetailDto> getListWithPaging(BasketCriteria criteria) {
 		List<BasketDetailDto> listPage = basketMapper.getListWithPaging(criteria);

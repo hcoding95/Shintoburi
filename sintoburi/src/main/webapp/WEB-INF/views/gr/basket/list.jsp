@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="/WEB-INF/views/gr/include/top.jsp"%>   
+<%@ include file="/WEB-INF/views/include/top.jsp"%>   
+
 
 <script>
 $(function() {
@@ -152,7 +153,7 @@ $(function() {
 					    			value="${detailDto.bdno}"></td>
 						<td>${detailDto.pno}</td>
 						<td>${detailDto.name}</td>
-						<td>${detailDto.img_path}</td>
+						<td><img src="/">${detailDto.img_path}</td>
 						<td>
 							<input type="text" class="p_count" value="${detailDto.p_count}">
 							<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}" data-pcount="${detailDto.p_count}">수정</button>
@@ -221,4 +222,4 @@ $(function() {
 
 </html>
 <%@ include file="/WEB-INF/views/gr/include/action_form.jsp" %>
-<%@ include file="/WEB-INF/views/gr/include/bottom.jsp"%>
+<%@ include file="/WEB-INF/views/include/bottom.jsp"%>
