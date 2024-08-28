@@ -165,8 +165,28 @@
 		where important = 'M'
 	</select>
 	
+		<!--  중요 공지사항 보여주기 -->
+	<select id="importantNoticeShow" resultType="NoticeVo">
+		select * from tbl_notice
+		where important = 'Y'
+	</select>
+	
+	<!-- 중요공지사항등록시 일반 공지사항으로 변경 -->
+	<update id="changeN">
+		update tbl_notice set
+   			 important = 'N'
+		where important = 'Y'
+	</update>
+	
+	<!-- 관리자 공지사항 등록시 일반 공지사항으로 변경 -->
+	<update id="changeManagerN">
+		update tbl_notice set
+   			 important = 'N'
+		where important = 'M'
+	</update>
+	
 	   <!--  첨부파일등록 -->
-      <insert id="imageInsert">
+    <insert id="imageInsert">
 		insert into tbl_notice_image
 			(uuid, n_no, upload_path, image_name)
 		values
