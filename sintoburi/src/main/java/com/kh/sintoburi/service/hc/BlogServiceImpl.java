@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.sintoburi.domain.hc.HcAttachFileDto;
+import com.kh.sintoburi.domain.hc.BlogPageDto;
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.HcAttachFileDto;
 import com.kh.sintoburi.domain.hc.HcProductTagDto;
@@ -149,8 +151,8 @@ public class BlogServiceImpl implements BlogService {
 	
 	@Transactional
 	@Override
-	public List<BlogVo> getList() {
-		List<BlogVo> list = blogMapper.getListWithPage();
+	public List<BlogVo> getList(BlogPageDto blogPageDto) {
+		List<BlogVo> list = blogMapper.getListWithPage(blogPageDto);
 		list.forEach(vo -> {
 			int blog_no = vo.getBlog_no();
 			List<HcAttachFileDto> attachList = attachMapper.getAttachList(blog_no);

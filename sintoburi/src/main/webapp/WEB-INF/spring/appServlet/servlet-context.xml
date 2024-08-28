@@ -49,16 +49,18 @@
 			<mvc:mapping path="/hc/reply/**/*"/>
 			<!-- 한나 -->
 			<mvc:mapping path="/hn/manager/**/*"/>
-			<mvc:mapping path=" /ds/board/**/*"/>
 			<mvc:mapping path="/hn/mypage/**/*"/>
+			<!-- 동석 -->
+			<mvc:mapping path=" /ds/board/**/*"/>
 			<!-- 효철 제외 -->
 			<mvc:exclude-mapping path="/hc/blog/blog"/>
 			<mvc:exclude-mapping path="/hc/blog/detail"/>
 			<mvc:exclude-mapping path="/hc/reply/getReply"/>
 			<!-- 한나 제외 -->
 			<mvc:exclude-mapping path="/hn/mypage/noticeList"/>
+			<mvc:exclude-mapping path="/hn/mypage/noticeRead"/>
 			<mvc:exclude-mapping path="/hn/mypage/faqList"/>
-			<!-- 동석 -->
+			<!-- 동석 제외 -->
 			<mvc:exclude-mapping path="/ds/board/index"/> 
 			
 			

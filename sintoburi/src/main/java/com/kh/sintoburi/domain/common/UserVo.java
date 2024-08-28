@@ -17,4 +17,6 @@ public class UserVo {
 	private String business_num;
 	private Date last_login;
 	private String user_email;
+	private int sumFollow;
+	private boolean checkFollow;
 }
