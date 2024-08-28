@@ -27,7 +27,6 @@ public class ProductVo {
 	private int cate_no;
 	private String user_id;
 	private String summary;
-	
 	private List<ProductImageVo> imgList;
 	
 	private List<ProductImageVo> delList;
