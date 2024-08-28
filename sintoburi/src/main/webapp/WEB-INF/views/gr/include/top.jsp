@@ -177,7 +177,7 @@ main {
                     <a href="#" class="btn ">로그인</a>
                     <a href="#" class="btn">회원가입</a>
                     <a href="#" class="btn">마이페이지</a>
-                    <a href="#" class="btn">주문조회</a>
+                    <a href="http://localhost/gr/order/payment_list" class="btn">주문조회</a>
                     <a href="#" class="btn">고객센터</a>
                 </div>
             </div>
@@ -200,7 +200,7 @@ main {
                     <li><a href="#" class="btn btn-success">기획전</a></li>
                     <li><a href="#" class="btn btn-success">푸드체험단</a></li>
                     <li><a href="#" class="btn btn-success">상품후기</a></li>
-                    <li><a href="http://localhost/gr/basket/list"" class="btn btn-success">장바구니</a></li>
+                    <li><a href="http://localhost/gr/basket/list" class="btn btn-success">장바구니</a></li>
                 </ul>
             </div>
         </nav>

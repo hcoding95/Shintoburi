@@ -39,39 +39,53 @@
 	where ono = #{ono}
   </update>
   
-  <!--   <update id="updateSumTotal"> -->
-<!--   update tbl_order set -->
-<!-- 	sum_total = ( -->
-<!-- 	select sum(total)  -->
-<!--  	from (select (p.price * d.p_count) total -->
-<!--          from tbl_product p, tbl_order_detail d -->
-<!--          where p.pno = d.pno -->
-<!--          and d.ono = #{ono})) -->
-<!--   where ono = #{ono} -->
-<!--   </update> -->
+<!--   물건 가격 합계 -->
+  <update id="updateSumTotal">
+	  update tbl_order set
+		sum_total = (
+		select sum(total) 
+	 	from (select (p.price * d.p_count) total
+	         from tbl_product p, tbl_order_detail d
+	         where p.pno = d.pno
+	         and d.ono = #{ono}))
+	  where ono = #{ono}
+  </update>
   
-<!--   <update id="updateTotalOrder"> -->
-<!--   UPDATE tbl_order -->
-<!-- 	SET PAY_AMOUNT = sum_total + delivery_charge -->
-<!-- 	WHERE ono =  #{ono} -->
-<!--   </update> -->
+<!--   결제 금액 -->
+  <update id="updatePayAmount">
+  	UPDATE tbl_order 
+	SET PAY_AMOUNT = (select sum_total 
+                      from tbl_order
+                      where ono = #{ono}) + delivery_charge
+	WHERE ono = #{ono}
+  </update>
   
-<!--   주문정보 -->
+<!--   주문정보 목록 -->
   <select id="getOrderList" resultType="OrderDto">
-  	select a.ono, a.user_phone, a.user_name, a.address, a.total_price, a.delivery_charge, 
-        (a.total_price + a.delivery_charge) pay_amount, 
-        CASE WHEN a.payment_state = '0' THEN '결제전' 
+<!--   	select a.ono, a.user_phone, a.user_name, a.address, a.total_price,  -->
+<!--   			a.delivery_charge, a.delivery_status, a.payment_type, -->
+<!--         (a.total_price + a.delivery_charge) pay_amount,  -->
+<!--         CASE WHEN a.payment_state = '0' THEN '결제전'  -->
+<!-- 		    ELSE '결제완료'  -->
+<!--         end as p_state -->
+<!-- 		from(select o.*, (select sum(total) sum_total -->
+<!-- 	        from (select (p.price * d.p_count) total -->
+<!-- 	                from tbl_product p, tbl_order_detail d -->
+<!-- 	                where p.pno = d.pno -->
+<!-- 	                and d.ono = #{ono})) total_price  -->
+<!-- 	from tbl_order o -->
+<!-- 	where user_id = #{user_id} -->
+<!-- 	order by ono desc) a -->
+		
+		select ono, user_phone, user_name, address, 
+  			delivery_charge, delivery_status, payment_type, 
+  			pay_amount, sum_total,
+        	CASE WHEN payment_state = '0' THEN '결제전' 
 		    ELSE '결제완료' 
-        end as p_state
-		from(select o.*, (select sum(total) sum_total
-	        from (select (p.price * d.p_count) total
-	                from tbl_product p, tbl_order_detail d
-	                where p.pno = d.pno
-	                and d.ono = #{ono})) total_price 
-	from tbl_order o
-	where user_id = #{user_id}
-	and ono = #{ono}
-	order by ono desc) a
+        	end as p_state
+        from tbl_order
+		where user_id = #{user_id}
+		order by ono desc
   </select>
  
 <!--  주문상세 생성  -->
@@ -94,5 +108,40 @@
 	order by o.order_date desc
   </select>
   
+<!--   결제하기(가격빼기) -->
+  <select id="payment" resultType ="PaymentDto">
+  select ono, u.point current_point, pay_amount,(u.point - pay_amount) remain_point, payment_state
+        from (select a.ono, a.pay_amount, a.payment_state
+              from(select *
+                  from tbl_order o
+                  order by ono desc) a), tbl_users u
+   where user_id = #{user_id}
+   and ono = #{ono}
+  </select>
+  
+<!--   결제 후 포인트 갱신 -->
+  <update id="updatePoint">
+  	update tbl_users 
+  	set point = #{remain_point} 
+  	where user_id = #{user_id}
+  </update>
+  
+<!--   결제 후 결제완료 상태 갱신 -->
+  <update id="updatePaymentState">
+	  update tbl_order
+	  set payment_state = '1'
+	  where ono = #{ono}
+  </update>
+  
+<!--   결제 후 결제완료 목록 -->
+	<select id="getPaymentList" resultType="OrderDto">
+		select ono, user_phone, user_name, address, 
+  			delivery_charge, delivery_status, 
+  			pay_amount, sum_total, order_date
+        from tbl_order
+		where user_id = #{user_id}
+        and payment_state = '1'
+		order by ono desc
+  </select>
   
  </mapper>
