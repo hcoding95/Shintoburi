@@ -1,7 +1,5 @@
 package com.kh.sintoburi.domain.gr;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,14 +13,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class ProductVo {
+public class ProductImageDto {
+	private int ino;
 	private int pno;
-	private String name;
-	private String content;
-	private int price;
-	private int stock;
-	private String status;
-	private Date reg_date;
-	private Date upd_date;
+	private String img_path;
 	private int cate_no;
 }
