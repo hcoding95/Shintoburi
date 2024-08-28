@@ -152,7 +152,7 @@ $(function() {
 					    			value="${detailDto.bdno}"></td>
 						<td>${detailDto.pno}</td>
 						<td>${detailDto.name}</td>
-						<td>${detailDto.img_path}</td>
+						<td><img src="/">${detailDto.img_path}</td>
 						<td>
 							<input type="text" class="p_count" value="${detailDto.p_count}">
 							<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}" data-pcount="${detailDto.p_count}">수정</button>

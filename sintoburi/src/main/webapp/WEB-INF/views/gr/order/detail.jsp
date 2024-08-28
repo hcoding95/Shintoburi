@@ -39,7 +39,6 @@
 						<td>${orderDetailDto.img_path}</td>
 						<td>${orderDetailDto.p_count}</td>
 						<td>${orderDetailDto.price}</td>
-						
 						<td>${orderDetailDto.delivery_status}</td>
 						<td><fmt:formatDate value="${orderDetailDto.order_date}" pattern="yyyy-MM-dd"/></td>
 					</tr>
@@ -52,8 +51,9 @@
 		<div class="container-fluid">
 			<div class="row justify-content-end">
 			    <div class="col-auto">
-			        <a href="http://localhost/gr/order/order_list">
-			            <button type="button" id="btnDetail" name="btnDetail" class="btn btn-warning">주문하기</button>
+			        <a href="http://localhost/gr/order/order_list?ono=${detailList[0].ono}">
+			            <button type="button" id="btnDetail" name="btnDetail" 
+			            	class="btn btn-warning">주문목록</button>
 			        </a>
 			    </div>
 			    
