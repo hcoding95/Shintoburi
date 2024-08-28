@@ -9,21 +9,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sintoburi.domain.gr.OrderDto;
-import com.kh.sintoburi.service.gr.DeliveryService;
+import com.kh.sintoburi.service.gr.SalesManageService;
 
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class DeliveryServiceTests {
+public class SalesManageServiceTests {
 	
 	@Autowired
-	public DeliveryService deliveryService;
+	public SalesManageService deliveryService;
 	
 	@Test
-	public void testGetDeliveryManageList() {
-		List<OrderDto> list = deliveryService.getDeliveryManageList();
+	public void testGetSalesManageList() {
+		List<OrderDto> list = deliveryService.getSalesManageList();
 		log.info(list);
 	}
 	

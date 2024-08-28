@@ -2,35 +2,35 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="/WEB-INF/views/gr/delivery/include/header.jsp"%>     
+<%@ include file="/WEB-INF/views/gr/sales_manage/include/header.jsp"%>     
 <script>
 $(function() {
 $(".btnMod").click(function() {
        let ono = $(this).attr("data-ono");
-//        let grade = $(this).closest('tr').find('select').val();
+       let delivery_status = $(this).closest('tr').find('select').val();
        console.log(ono);
-//        console.log(grade);
+       console.log(status);
        
-//        let sData = {
-//            "ono": ono,
-//            "grade": grade
-//        };
+       let sData = {
+           "ono": ono,
+           "delivery_status": delivery_status
+       };
 
-//        $.ajax({
-//            type: "post",
-//            url: 
-//            data: JSON.stringify(sData),
-//            contentType: "application/json; charset=utf-8",
-//            success: function(result) {
-//                if (result) {
-//                    let updatedGrade = grade; // 업데이트된 등급
-//                    $(this).closest('tr').find('.current-grade').text(updatedGrade);
-//                    alert(grade + "로 변경 되었습니다.");
-//                } else {
-//                    alert("변경 실패 , 다시 시도해 주세요.");
-//                }
-//            }
-//        });
+       $.ajax({
+           type: "post",
+           url: "/gr/sales_manage/updateDeliveryStatus"
+           data: JSON.stringify(sData),
+           contentType: "application/json; charset=utf-8",
+           success: function(result) {
+               if (result) {
+                   let updatedStatus = status; // 업데이트된 등급
+                   $(this).closest('tr').find('.current-grade').text(updatedStatus);
+                   alert(status + "로 변경 되었습니다.");
+               } else {
+                   alert("변경 실패 , 다시 시도해 주세요.");
+               }
+           }
+       });
    });
 });
 
@@ -111,4 +111,4 @@ $(".btnMod").click(function() {
             </div> <!-- card-body -->
     
 
-<%@ include file="/WEB-INF/views/gr/delivery/include/footer.jsp"%> 
+<%@ include file="/WEB-INF/views/gr/sales_manage/include/footer.jsp"%> 
