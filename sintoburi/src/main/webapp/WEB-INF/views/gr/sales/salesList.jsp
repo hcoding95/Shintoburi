@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="/WEB-INF/views/gr/delivery/include/header.jsp"%>     
+<%@ include file="/WEB-INF/views/gr/sales_manage/include/header.jsp"%>     
 <script>
 $(function() {
 $(".btnMod").click(function() {
@@ -110,4 +110,4 @@ $(".btnMod").click(function() {
             </div> <!-- card-body -->
     
 
-<%@ include file="/WEB-INF/views/gr/delivery/include/footer.jsp"%> 
+<%@ include file="/WEB-INF/views/gr/sales_manage/include/footer.jsp"%> 
