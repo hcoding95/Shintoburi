@@ -60,6 +60,7 @@ public class BasketController {
 	public String list(Model model, HttpSession session, BasketCriteria criteria) {
 		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
 		UserVo dto = (UserVo)session.getAttribute("login");
+		System.out.println("로그인한 유저는?" + dto);
 		if (dto == null) {
 			return "redirect:/gr";
 		}

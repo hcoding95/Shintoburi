@@ -185,7 +185,7 @@ main {
                 		</c:otherwise>
                 	</c:choose>
                     <a href="/hn/mypage/enqList" class="btn">마이페이지</a>
-                    <a href="#" class="btn">주문조회</a>
+                    <a href="/gr/order/payment_list" class="btn">주문조회</a>
                     <a href="/hn/mypage/noticeList" class="btn">고객센터</a>
                 </div>
             </div>
@@ -205,7 +205,7 @@ main {
                     <li><a href="/ds/board/index" class="btn btn-success">커뮤니티</a></li>
                     <li><a href="javascript:void(0);" onclick="openEventPopup();" class="btn btn-success" id="event">이벤트</a></li>
                		<li><a href="javascript:void(0);" onclick="openChatPopup();" class="btn btn-success" id="chat">채팅</a></li>
-                    <li><a href="#" class="btn btn-success">장바구니</a></li>
+                    <li><a href="/gr/basket/list" class="btn btn-success">장바구니</a></li>
                 </ul>
             </div>
         </nav>

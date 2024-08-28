@@ -20,7 +20,7 @@
 <!--   배송정보 입력하기 -->
   <select id="getDeliveryInfo" resultType="DeliveryDto">
   	select user_name, user_phone, address
-	from tbl_users
+	from tbl_user
 	where user_id = #{user_id}
   </select>
   
@@ -114,14 +114,14 @@
         from (select a.ono, a.pay_amount, a.payment_state
               from(select *
                   from tbl_order o
-                  order by ono desc) a), tbl_users u
+                  order by ono desc) a), tbl_user u
    where user_id = #{user_id}
    and ono = #{ono}
   </select>
   
 <!--   결제 후 포인트 갱신 -->
   <update id="updatePoint">
-  	update tbl_users 
+  	update tbl_user 
   	set point = #{remain_point} 
   	where user_id = #{user_id}
   </update>
