@@ -105,8 +105,8 @@
                         마이쇼핑
                     </div>
                     <ul class="sub-menu">
-                        <li><a href="#!">장바구니</a></li>
-                        <li><a href="#!">주문/배송 조회</a></li>
+                        <li><a href="gr/basket/list">장바구니</a></li>
+                        <li><a href="gr/order/payment_list">주문/배송 조회</a></li>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
                         마이활동

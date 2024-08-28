@@ -45,13 +45,13 @@ $(".btnMod").click(function() {
 			<thead>
 				<tr class="col-md-8 text-center">
 					<th>주문번호</th>
-					<th>주문아이디</th>
-					<th>수취인이름</th>
+					<th>수취인 이름</th>
 					<th>수취인 전화번호</th>
+					<th>배송지</th>
+					<th>송장번호</th>
 					<th>총상품금액</th>
 					<th>결제금액</th>
 					<th>배송상태</th>
-					<th>배송수정</th>
 					<th>결제일</th>
 					<th>수정</th>
 				</tr>
@@ -60,12 +60,11 @@ $(".btnMod").click(function() {
 			<c:forEach items="${deliveryList}" var="orderDto">
 				    <tr class="col-md-8 text-center">
 				        <td><a href="http://localhost/gr/order/detail/${orderDto.ono}">${orderDto.ono}</a></td>
-				        <td>${orderDto.user_id}</td>
 				        <td>${orderDto.user_name}</td>
 				        <td>${orderDto.user_phone}</td>
+				        <td>${orderDto.address}</td>
 				        <td>${orderDto.sum_total}</td>
 				        <td>${orderDto.pay_amount}</td>
-				        <td>${orderDto.delivery_status}</td>
 				        <td>
 				            <select name="delivery_status_${orderDto.ono}">
 				                <option value="배송전" ${orderDto.delivery_status == '배송전' ? 'selected' : ''}>배송전</option>

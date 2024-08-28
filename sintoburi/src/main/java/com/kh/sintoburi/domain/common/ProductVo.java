@@ -1,4 +1,4 @@
-package com.kh.sintoburi.domain.gr;
+package com.kh.sintoburi.domain.common;
 
 import java.util.Date;
 
