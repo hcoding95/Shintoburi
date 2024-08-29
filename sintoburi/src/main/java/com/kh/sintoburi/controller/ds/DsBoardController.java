@@ -8,15 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.ds.DsBoardVo;
+import com.kh.sintoburi.domain.ds.DsCriteria;
 import com.kh.sintoburi.domain.ds.DsLikeDto;
-import com.kh.sintoburi.domain.ds.DsUserVo;
+import com.kh.sintoburi.domain.ds.DsPageDto;
 import com.kh.sintoburi.service.ds.DsBoardService;
 import com.kh.sintoburi.service.ds.DsLikeService;
 
@@ -44,7 +47,7 @@ public class DsBoardController {
 		DsBoardVo boardVo = boardService.getDetail(bno);
 		Integer likeCount = likeService.getLikeCount(boardVo.getBno());
 		System.out.println("likeCount:" + likeCount);
-		DsUserVo user = (DsUserVo) session.getAttribute("login");
+		UserVo user = (UserVo) session.getAttribute("login");
 
 		
 		if (user != null) {
@@ -171,11 +174,16 @@ public class DsBoardController {
 	
 	// 커뮤니티-홈화면
 	@GetMapping("/index")
-	public void index(Model model) {
-		List<DsBoardVo> list = boardService.getList();
+	public void index(Model model, DsCriteria criteria) {
+		System.out.println("criteria:"+criteria);
+		List<DsBoardVo> list = boardService.getList(criteria);
+		Integer total = boardService.getTotal(criteria);
+		DsPageDto pageMaker = new DsPageDto(criteria, total);
 		
+		System.out.println("total:"+total);
 		System.out.println("list:"+list.toString());
 		model.addAttribute("list", list);
+		model.addAttribute("pageMaker",pageMaker);
 	}
 	
 	// 이벤트 페이지

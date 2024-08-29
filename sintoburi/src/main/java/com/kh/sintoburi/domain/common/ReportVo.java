@@ -1,11 +1,11 @@
-package com.kh.sintoburi.domain.ds;
+package com.kh.sintoburi.domain.common;
 
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class DsReportVo {
+public class ReportVo {
 	private Long re_no;
 	private String post_url;
 	private String post_id;

@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Select;
 
 import com.kh.sintoburi.domain.common.LoginDto;
 import com.kh.sintoburi.domain.common.UserVo;
-import com.kh.sintoburi.domain.ds.DsUserVo;
 
 public interface DsUserMapper {
 	
@@ -15,7 +14,7 @@ public interface DsUserMapper {
 	@Insert("insert into tbl_user(user_id,user_pw,user_name,address,user_phone,user_email)"
 			+ " values(#{user_id},#{user_pw},#{user_name},"
 			+ " #{address},#{user_phone},#{user_email})")
-	public Integer insert(DsUserVo vo);
+	public Integer insert(UserVo vo);
 	
 	@Select("select count(*) from tbl_user where user_id=#{user_id}")
 	public Integer selectByUserId(String user_id);

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.common.LoginDto;
 import com.kh.sintoburi.domain.common.UserVo;
-import com.kh.sintoburi.domain.ds.DsUserVo;
 import com.kh.sintoburi.mapper.ds.DsUserMapper;
 
 @Service
@@ -21,7 +20,7 @@ public class DsUserServiceImpl implements DsUserService {
 	}
 
 	@Override
-	public boolean registerUser(DsUserVo vo) {
+	public boolean registerUser(UserVo vo) {
 		
 		return userMapper.insert(vo)>0?true:false;
 	}

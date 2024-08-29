@@ -28,7 +28,7 @@ $(function(){
 	// 댓글작성 보이기
 	$("#viewCommentEdit").click(function(){
 		if(${login.user_id==null}){
-			alert("로그인을 해주세요");
+			$(location).attr("href","/ds/board/login");
 			return;
 		}
 		
@@ -43,7 +43,7 @@ $(function(){
 		let data ={
 				"bno":${detail.bno},
 				"reply":$("#commentContext").val(),
-				"replyer":'유저1'
+				"replyer":"${login.user_id}"
 			
 			};
 		
@@ -145,23 +145,34 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 			success: function(result){
 				//alert("댓글 불러오기 성공");
 				let tr=null;	// 댓글 보기
-				
+				let loginUser='${login.user_id}';
 				for(let i=result.length-1; i>=0; i--){
-					let date = new Date(${result[i].replyDate})
+					let date = new Date(${result[i].replyDate});
 					
+					if(loginUser==`\${result[i].replyer}`){
 					 tr += `
 					<tr>
 						<td>\${result[i].reply}</td>
 						<td>\${result[i].replyer}</td>
 						<td>\${date}</td>
-						//<c:if test="\${login.user_name == result[i].replyer}">
 						<td><button type="button" class="btn btn-danger btnReplyDel"
 						value=\${result[i].rno}>삭제</button></td>
 						<td><button type="button" class="btn btn-warning btnReplyMod"
 						value=\${result[i].rno}>수정</button></td>
-						//</c:if>
-					</tr>
-				  `;
+						
+						
+					</tr>`;
+				} else{
+					 tr += `
+							<tr>
+								<td>\${result[i].reply}</td>
+								<td>\${result[i].replyer}</td>
+								<td>\${date}</td>
+						
+								
+							</tr>`;
+					
+				}
 			
 					$("#replyView").html(tr);
 					
@@ -193,7 +204,7 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 		
 		let data={
 				
-				"post_url":$(location).attr('href'),
+				"post_url":"/ds/board/read?bno=",
 				"post_id":"${detail.writer}",
 				"re_reason":$(".complain:checked").val(),
 				"re_id":"${login.user_id}",
@@ -279,7 +290,7 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 				}
 				
 			}, error : function(){
-				alert("로그인이 해주세요");
+				$(location).attr("href","/ds/board/login");
 			}
 		});
 		
@@ -302,7 +313,7 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 					return;
 
 				} else{
-					console.log("좋아요 해제 실패");
+					$(location).attr("href","/ds/board/login");
 				}
 				
 			} , error : function(){

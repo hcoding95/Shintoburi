@@ -9,7 +9,6 @@
 <insert id="insert">
 insert into tbl_quiz(bno,user_id,user_name,score)
 values(seq_quiz.nextval,#{user_id},#{user_name},#{score})
-
 </insert>
 
 <update id="update">

@@ -30,7 +30,15 @@
  <!-- /서머노트 -->
  
 <script>
-              
+
+$(function(){
+	
+
+	
+
+});
+
+
                       
 </script>
  
@@ -49,9 +57,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">홈</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">도움말</a></li>
+<!--                         <li class="nav-item"><a class="nav-link" href="#!">도움말</a></li> -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">쇼핑몰</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#!">모든상품</a></li>
                                 <li><hr class="dropdown-divider" /></li>
@@ -62,19 +70,33 @@
                     </ul>
                     
                   
-						<a href="/ds/board/register">회원가입</a>
+<!-- 						<a href="/ds/board/register">회원가입</a> -->
 					
                     
                     	<nav class="navbar navbar-light bg-">
 						<div class="container-fluid">
-							<form class="d-flex">
 							
-								<input class="form-control me-2" type="search" placeholder="검색"
-									aria-label="Search">
-								<button class="btn btn-outline-success" type="submit">
-									<i class="bi bi-search"></i>
-								</button>
-							</form>
+<!-- 			검색				 -->
+						
+			<form class="d-flex" action="/ds/board/index" method="get" id="searchForm">
+				<select name="type" class="form-select form-select">
+					<option value="T" ${criteria.type=='T'? 'selected' : '' }>제목</option>
+					<option value="C" ${criteria.type=='C'? 'selected' : '' }>내용</option>
+					<option value="W" ${criteria.type=='W'? 'selected' : '' }>작성자</option>
+					<option value="TC" ${criteria.type=='TC'? 'selected' : '' }>제목+내용</option>
+					<option value="TW" ${criteria.type=='TW'? 'selected' : '' }>제목+작성자</option>
+					<option value="CW" ${criteria.type=='CW'? 'selected' : '' }>내용+작성자</option>
+					<option value="TCW" ${criteria.type=='TCW'? 'selected' : ''}>제목+내용+작성자</option>
+				</select> <input type="text" name="keyword" class="form-control me-2" placeholder="검색" aria-label="Search"
+				
+				value="${criteria.keyword}">
+				<button id="btnSearch" class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+			
+			</form>
+		
+							
+						
+						
 						</div>
 					</nav>
                     <form class="d-flex">
@@ -152,7 +174,7 @@
 function openEventPopup(){
 	
 	if(${login.user_id==null}){
-		alert("로그인을 해주세요");
+		$(location).attr("href","/ds/board/login");
 		return;
 	}
 	
@@ -167,7 +189,7 @@ function openEventPopup(){
 
 function openChatPopup(){
 	if(${login.user_id==null}){
-		alert("로그인을 해주세요");
+		$(location).attr("href","/ds/board/login");
 		return;
 	}
 	

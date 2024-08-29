@@ -5,10 +5,89 @@
 
 <mapper namespace="com.kh.sintoburi.mapper.ds.DsBoardMapper">
 
+<select id="selectList" resultType="DsBoardVo">
+	<![CDATA[select *from tbl_board where bno>0]]>
+</select>
+
+<select id="selectListWithPaging" resultType="DsBoardVo">
+
+ 	select* from(select /*+ INDEX_DESC (TBL_BOARD PK_BOARD) */ 
+    				ROWNUM AS RN, 
+    				BNO, 
+    				TITLE, 
+    				WRITER, 
+    				REGDATE, 
+    				UPDATEDATE,
+    				VIEW_COUNT,
+    				THUMBNAIL,
+    				CATEGORY
+					from TBL_BOARD
+<where> 
+	<if test="type!=null">
+		<trim prefix="(" suffix=")" prefixOverrides="or">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString">
+						 title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString">
+						 content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString">
+						 writer like '%' || #{keyword} || '%'
+						</when>	
+					</choose>
+				</trim>
+			
+			</foreach>
+			</trim>
+				</if>
+				and ROWNUM &lt;=#{pageNum}*#{amount}) 
+				
+			</where>
+					where RN &gt;(#{pageNum}-1)*#{amount}
+					
+
+</select>
+
+<select id="getTotalCount" resultType="int">
+
+
+	select count(*) from tbl_board
+  	
+  	<where> 
+	<if test="type!=null">
+		<trim prefix="(" suffix=")" prefixOverrides="or">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString">
+						 title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString">
+						 content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString">
+						 writer like '%' || #{keyword} || '%'
+						</when>	
+					</choose>
+				</trim>
+			
+			</foreach>
+			</trim>
+		</if>
+				
+	</where>
+  
+
+</select>
+
+
 
 <insert id="insert">
-insert into tbl_board(bno,title,content,writer,category,thumbnail)
-values(seq_board.nextval, #{title}, #{content}, #{writer},#{category},#{thumbnail})
+	insert into tbl_board(bno,title,content,writer,category,thumbnail)
+	values(seq_board.nextval, #{title}, #{content}, #{writer},#{category},#{thumbnail})
 </insert>
 
 <delete id="delete">
