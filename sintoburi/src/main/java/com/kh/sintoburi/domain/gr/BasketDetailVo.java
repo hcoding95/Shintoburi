@@ -17,7 +17,7 @@ import lombok.ToString;
 @Builder
 public class BasketDetailVo {
 	private int bdno;
-	private int pno;
+	private int product_no;
 	private int bno;
 	private int p_count;
 	private Date put_date;

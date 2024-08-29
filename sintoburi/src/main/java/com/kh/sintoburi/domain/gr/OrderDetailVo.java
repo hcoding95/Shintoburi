@@ -16,7 +16,7 @@ import lombok.ToString;
 public class OrderDetailVo {
 	private int odno;
 	private int ono;
-	private int pno;
+	private int product_no;
 	
 	private int p_count;
 }

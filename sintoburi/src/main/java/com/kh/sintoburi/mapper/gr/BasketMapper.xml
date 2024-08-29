@@ -19,9 +19,9 @@
 <!-- 	  장바구니에 넣기 -->
 	  <insert id="insertDetail">
 		insert into tbl_basket_detail
-			(bdno, pno, bno, p_count)
+			(bdno, product_no, bno, p_count)
 		values
-			(seq_basket_detail.nextval, #{pno}, #{bno}, #{p_count})
+			(seq_basket_detail.nextval, #{product_no}, #{bno}, #{p_count})
 	  </insert>
 	  
 <!-- 	  장바구니 번호 확인(0이면 장바구니 없는 것) -->
@@ -68,20 +68,22 @@
 	   <!-- 게시글 개수 -->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from tbl_basket_detail
+		where bno = (select bno from tbl_basket
+					 where user_id = #{user_id})
 	</select> 
 	  
 	  <!-- 글목록 (페이징) --> 
 	<select id="getListWithPaging" resultType="BasketDetailDto">
 		select * from (
-			select k.user_id, p.name, p.price, 
+			select k.user_id, p.product_name, p.price, 
 					(i.img_path || i.uuid || '_' || i.img_name) img_path,
-					b.pno, b.p_count, b.bdno, b.put_date, (b.p_count*p.price) total_price,
+					b.product_no, b.p_count, b.bdno, b.put_date, (b.p_count*p.price) total_price,
                 row_number() over (order by put_date desc) as rn 
 	        from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k
 	        where b.bno = k.bno
 	        and k.user_id = #{user_id}
-	        and b.pno = p.pno
-	        and p.pno = i.product_no
+	        and b.product_no = p.product_no
+	        and p.product_no = i.product_no
 	        order by B.PUT_DATE desc
 	        ) 
 		where rn &gt; (#{pageNum} - 1) * #{amount}
@@ -104,7 +106,7 @@
 	                   ELSE 3000 
 	               END) as total_price
 	        from tbl_basket_detail d
-	        join tbl_product p on d.pno = p.pno
+	        join tbl_product p on d.product_no = p.product_no
 	        where d.bno = (
 	            select bno 
 	            from tbl_basket
@@ -115,7 +117,7 @@
 	
 <!-- 	bdno 삭제해도 bdno에서 얻을 수 있는 정보를 주문상세에 넘겨주기   -->
 	<select id="selectByBdno" resultType="BasketDetailDto">
-		select bdno, pno, p_count from tbl_basket_detail
+		select bdno, product_no, p_count from tbl_basket_detail
  		where bdno = #{bdno}
 	</select>
  

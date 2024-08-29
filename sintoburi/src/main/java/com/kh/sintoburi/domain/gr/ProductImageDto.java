@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 public class ProductImageDto {
 	private int ino;
-	private int pno;
+	private int product_no;
 	private String img_path;
 	private int cate_no;
 }

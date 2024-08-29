@@ -62,8 +62,8 @@ public class BasketServiceImpl implements BasketService{
 
 	//게시글 개수
 	@Override
-	public int getTotalCount(BasketCriteria criteria) {
-		int count = basketMapper.getTotalCount(criteria);
+	public int getTotalCount(BasketCriteria criteria, String user_id) {
+		int count = basketMapper.getTotalCount(criteria, user_id);
 		return count;
 	}
 	

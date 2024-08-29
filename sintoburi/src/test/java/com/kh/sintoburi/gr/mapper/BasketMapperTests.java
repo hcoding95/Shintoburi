@@ -52,7 +52,7 @@ public class BasketMapperTests {
 		}
 		
 		BasketDetailVo detailVo = new BasketDetailVo();
-		detailVo.setPno(2);
+		detailVo.setProduct_no(2);
 		detailVo.setBno(bno);
 		detailVo.setP_count(5);
 		int count = basketMapper.insertDetail(detailVo);

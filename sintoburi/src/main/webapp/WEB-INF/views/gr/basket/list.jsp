@@ -153,8 +153,8 @@ $(function() {
 					    	<input type="checkbox" name="selectedItems" 
 					    			value="${detailDto.bdno}"
 					    			style="height:50px; line-height:50px;vertical-align:middle"></td>
-						<td>${detailDto.pno}</td>
-						<td>${detailDto.name}</td>
+						<td>${detailDto.product_no}</td>
+						<td>${detailDto.product_name}</td>
 						<td><img style="height:50px" src="/gr/upload/display?fileName=${detailDto.img_path}"></td>
 						<td>
 							<input type="text" class="p_count" value="${detailDto.p_count}"
@@ -202,19 +202,18 @@ $(function() {
 	<div class="col-md-12 mt-4" >
 		<nav>
 			<ul class="pagination justify-content-center">
-				이전
 				<c:if test="${pageMaker.prev == true}">
 					<li class="page-item"><a class="page-link"
 						href="${pageMaker.startPage - 1}">&laquo;</a></li>
 				</c:if>
-				페이지
+				
 				<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
 					var="v">
 					<li class="page-item ${v == pageMaker.cri.pageNum?'active' : ''}">
 						<a class="page-link" href="${v}">${v}</a>
 					</li>
 				</c:forEach>
-				다음
+				
 				<c:if test="${pageMaker.next == true}">
 					<li class="page-item"><a class="page-link"
 						href="${pageMaker.endPage + 1}">&raquo;</a></li>

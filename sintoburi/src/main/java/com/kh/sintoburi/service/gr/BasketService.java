@@ -2,6 +2,8 @@ package com.kh.sintoburi.service.gr;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.kh.sintoburi.domain.gr.BasketCriteria;
 import com.kh.sintoburi.domain.gr.BasketDetailDto;
 import com.kh.sintoburi.domain.gr.BasketDetailVo;
@@ -28,7 +30,7 @@ public interface BasketService {
 	public boolean removeAll(int bno);
 	
 	//게시글 개수
-	public int getTotalCount(BasketCriteria criteria);
+	public int getTotalCount(BasketCriteria criteria, String user_id);
 	
 	// 글 목록(페이징)
 	public List<BasketDetailDto> getListWithPaging(BasketCriteria criteria);

@@ -23,8 +23,11 @@ import com.kh.sintoburi.domain.gr.BasketPageDto;
 import com.kh.sintoburi.domain.gr.BasketVo;
 import com.kh.sintoburi.service.gr.BasketService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
 @RequestMapping("/gr/basket/*")
+@Log4j
 public class BasketController {
 	
 	@Autowired
@@ -70,7 +73,8 @@ public class BasketController {
 //		System.out.println("Amount per Page: " + criteria.getAmount());
 		List<BasketDetailDto> list = basketService.getListWithPaging(criteria);
 		int sumPrice = basketService.getSumPrice(user_id);
-		int total = basketService.getTotalCount(criteria);
+		int total = basketService.getTotalCount(criteria, user_id);
+		log.info("total:" + total);
 		
 		BasketPageDto pageMaker = new BasketPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);

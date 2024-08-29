@@ -6,6 +6,12 @@
 
 <script>
 $(function(){
+	let ordernow = '${ordernow}';
+	
+	if (ordernow == "Y") {
+		$("#frmOrder").attr("action", "/gr/order/ordernow");
+	}
+	
 	//주문자와 수취인이 같을 때
 	$("#chkSame").change(function(){
 		let checked = $(this).prop("checked");
@@ -39,7 +45,9 @@ $(function(){
 	</div>
 	
 		<div class="col-md-8">
-		   <form action="/gr/order/run_order" method="post">
+		   <form id="frmOrder" action="/gr/order/run_order" method="post">
+		   		<input type="hidden" name="product_no" value="${product_no}">
+		   		<input type="hidden" name="p_count" value="${p_count}">
 			 <div>
 				${login.user_id}님, 수취인의 주문정보를 입력해주세요. 
 			 </div>

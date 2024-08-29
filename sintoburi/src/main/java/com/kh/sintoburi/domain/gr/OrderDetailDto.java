@@ -18,8 +18,8 @@ import lombok.ToString;
 public class OrderDetailDto {
     private String user_id;
 	private int ono;
-	private int pno;
-	private String name;
+	private int product_no;
+	private String product_name;
 	private String img_path;
 	private int p_count;//상품 개수
 	private int price;

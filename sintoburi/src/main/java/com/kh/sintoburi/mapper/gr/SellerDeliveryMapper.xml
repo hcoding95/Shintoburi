@@ -8,10 +8,10 @@
 		select o.ono, o.user_phone, o.user_name, 
     		   o.address, o.user_id, o.delivery_charge, o.delivery_status, 
     		   o.pay_amount, o.sum_total, o.order_date, o.delivery_number, 
-    		   d.pno
+    		   d.product_no
 		from tbl_order o, tbl_product p, tbl_order_detail d
 		where o.ono = d.ono  
-		and  d.pno = p.pno 
+		and  d.product_no = p.product_no 
 		and p.user_id = #{user_id}   
 		and o.payment_state = '1' 
 		order by o.order_date

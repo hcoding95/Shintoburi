@@ -17,8 +17,8 @@ import lombok.ToString;
 @Builder
 public class BasketDetailDto {
 	private int bdno; //장바구니 상세번호
-	private int pno;//상품번호
-	private String name;//상품이름
+	private int product_no;//상품번호
+	private String product_name;//상품이름
 	private String img_path;//상품 이미지
 	private int price;//상품 가격
 	private int p_count;//상품 개수

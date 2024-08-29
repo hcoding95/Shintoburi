@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,10 +63,15 @@ public class OrderController {
 			
 	//배송정보 입력 폼(더 해야 함: 주문자와 수취인이 다를 경우 입력한 정보 저장하기)
 	@GetMapping("/order_form")
-	public void orderForm(HttpSession session) {
+	public void orderForm(HttpSession session,
+			@ModelAttribute("product_no") int product_no,
+			@ModelAttribute("p_count") int p_count,
+			@ModelAttribute("ordernow") String ordernow) {
 		 int[] bdnos =(int[])session.getAttribute("bdnos");
-		 for (int bdno : bdnos) {
-			// log.info(bdno);
+		 if (bdnos != null && bdnos.length > 0) {
+			 for (int bdno : bdnos) {
+				// log.info(bdno);
+			 }
 		 }
 	}
 	
@@ -173,4 +179,11 @@ public class OrderController {
 		return "/gr/order/payment_list";
 	}
 	
+	// 지환씨 상품 보기 -> 바로 주문(/gr/order/order_form?product_no=1&count=2&ordernow=Y)
+	// 바로주문: 상품번호(product_no), 개수(count), 바로주문옵션(ordernow=Y)
+	@PostMapping("/ordernow")
+	public void ordernow(
+			int product_no, int p_count) {
+		
+	}
 }

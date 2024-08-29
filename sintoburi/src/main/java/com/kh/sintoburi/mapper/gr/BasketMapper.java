@@ -32,7 +32,7 @@ public interface BasketMapper {
 	public int deleteBasket(@Param("bno") int bno);
 	
 	//게시글 개수
-	public int getTotalCount(BasketCriteria criteria);
+	public int getTotalCount(BasketCriteria criteria, @Param("user_id") String user_id);
 	
 	// 글목록 -  페이징 적용 
 	public List<BasketDetailDto> getListWithPaging(BasketCriteria ci);

@@ -47,7 +47,7 @@ public class BasketServiceTests {
 		}
 		
 		BasketDetailVo detailVo = new BasketDetailVo();
-		detailVo.setPno(1);
+		detailVo.setProduct_no(1);
 		detailVo.setBno(bno);
 		detailVo.setP_count(3);
 		boolean result = basketService.putBasket(detailVo);

@@ -32,11 +32,12 @@
 
 				<tbody>
 				<c:forEach items="${detailList}" var="orderDetailDto">
-					<tr class="col-md-8 text-center">
+					<tr class="col-md-8 text-center"
+						style="height:50px; line-height:50px;vertical-align:middle">
 <%-- 					    <td><a href="http://localhost/gr/order/form">${orderDetailDto.odno} </a></td> --%>
-						<td>${orderDetailDto.pno}</td>
-						<td>${orderDetailDto.name}</td>
-						<td>${orderDetailDto.img_path}</td>
+						<td>${orderDetailDto.product_no}</td>
+						<td>${orderDetailDto.product_name}</td>
+						<td><img style="height:50px" src="/gr/upload/display?fileName=${orderDetailDto.img_path}"></td>
 						<td>${orderDetailDto.p_count}</td>
 						<td>${orderDetailDto.price}</td>
 						<td>${orderDetailDto.delivery_status}</td>

@@ -39,11 +39,11 @@ public class OrderServiceImpl implements OrderService{
 		// 주문 상세에 추가
 		for(int bdno : bdnos) {
 			BasketDetailDto dto = basketMapper.selectByBdno(bdno);
-			int pno = dto.getPno();
+			int product_no = dto.getProduct_no();
 			int p_count = dto.getP_count();
 			OrderDetailDto orderDetailDto = new OrderDetailDto();
 			orderDetailDto.setOno(ono);
-			orderDetailDto.setPno(pno);
+			orderDetailDto.setProduct_no(product_no);
 			orderDetailDto.setP_count(p_count);
 			orderMapper.insertDetail(orderDetailDto);
 			log.info(bdno + "주문 상세에 추가됨.");

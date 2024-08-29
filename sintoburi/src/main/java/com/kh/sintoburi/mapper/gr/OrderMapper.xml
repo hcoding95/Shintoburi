@@ -34,7 +34,7 @@
 	 (select  sum(total) sum_total
 	 from (select (p.price * d.p_count) total
 	         from tbl_product p, tbl_order_detail d
-	         where p.pno = d.pno
+	         where p.product_no = d.product_no
 	         and d.ono = #{ono})))
 	where ono = #{ono}
   </update>
@@ -46,7 +46,7 @@
 		select sum(total) 
 	 	from (select (p.price * d.p_count) total
 	         from tbl_product p, tbl_order_detail d
-	         where p.pno = d.pno
+	         where p.product_no = d.product_no
 	         and d.ono = #{ono}))
 	  where ono = #{ono}
   </update>
@@ -77,20 +77,20 @@
 <!--  주문상세 생성  -->
  <insert id="insertDetail">
   	insert into tbl_order_detail
-  		(odno, ono, pno, p_count)
+  		(odno, ono, product_no, p_count)
   	values
-  		(seq_order_detail.nextval, #{ono}, #{pno}, #{p_count})
+  		(seq_order_detail.nextval, #{ono}, #{product_no}, #{p_count})
   </insert> 
   
 <!-- 주문상세 정보(주문번호 누르면 주문상세로 이동)   -->
   <select id="getDetailList" resultType="OrderDetailDto">
-  	select o.user_id, o.ono, p.pno, p.name, i.img_path, d.p_count, p.price, o.delivery_status, o.order_date
+  	select o.user_id, o.ono, p.product_no, p.product_name, (i.img_path || i.uuid || '_' || i.img_name) img_path, d.p_count, p.price, o.delivery_status, o.order_date
 	from tbl_product p, tbl_img i, tbl_order_detail d, tbl_order o
 		where o.ono =  #{ono}
 	    and o.user_id = #{user_id}
 	    and o.ono= d.ono
-	    and d.pno = p.pno
-	    and p.pno = i.pno
+	    and d.product_no = p.product_no
+	    and p.product_no = i.product_no
 	order by o.order_date desc
   </select>
   
