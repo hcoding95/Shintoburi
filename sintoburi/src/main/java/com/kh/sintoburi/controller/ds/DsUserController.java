@@ -76,11 +76,15 @@ public class DsUserController {
 	@PostMapping("/login")
 	@ResponseBody
 	public String login(@RequestBody LoginDto dto, HttpSession session) {
-			
+			System.out.println("LoginDto:" + dto);
 		UserVo vo = userService.login(dto);
 		session.setAttribute("login", vo);
-		String grade=vo.getGrade();
-		if(vo.getGrade().equals("관리자")) {
+//		String grade = vo.getGrade();
+			
+		System.out.println("vo:" + vo);
+
+		if (vo.getGrade() != null && vo.getGrade().equals("관리자") ) {
+			
 			return "manager";
 		}
 		
