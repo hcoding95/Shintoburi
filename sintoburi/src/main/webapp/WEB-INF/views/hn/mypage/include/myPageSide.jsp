@@ -115,7 +115,7 @@
                         <li><a href="gr/basket/list">장바구니</a></li>
                         <li><a href="gr/order/payment_list">주문/배송 조회</a></li>
                         <c:if test="${login.grade == '판매자'}">
-                        <li><a href="">판매 상품 조회</a></li>
+                        <li><a href="/ji/manager/productList">판매 상품 조회</a></li>
                         <li><a href="">판매 내역 조회</a></li>
                         </c:if>
                     </ul>
