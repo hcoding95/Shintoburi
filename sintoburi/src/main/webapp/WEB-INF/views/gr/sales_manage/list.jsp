@@ -9,28 +9,29 @@ $(".btnMod").click(function() {
        let ono = $(this).attr("data-ono");
        let delivery_status = $(this).closest('tr').find('select').val();
        console.log(ono);
-       console.log(status);
+       console.log(delivery_status);
        
        let sData = {
            "ono": ono,
            "delivery_status": delivery_status
        };
-
+       console.log("sData:", sData);
        $.ajax({
-           type: "post",
-           url: "/gr/sales_manage/updateDeliveryStatus"
-           data: JSON.stringify(sData),
-           contentType: "application/json; charset=utf-8",
-           success: function(result) {
-               if (result) {
-                   let updatedStatus = status; // 업데이트된 등급
-                   $(this).closest('tr').find('.current-grade').text(updatedStatus);
-                   alert(status + "로 변경 되었습니다.");
-               } else {
-                   alert("변경 실패 , 다시 시도해 주세요.");
-               }
-           }
-       });
+			type: "post",
+			url : "/gr/sales_manage/updateDeliveryStatus",
+			data : JSON.stringify(sData),
+			contentType: "application/json; charset=utf-8",
+			 success: function(rData) {
+				 	console.log("rData:", rData);
+	                if (rData) {
+	                    alert(delivery_status + "로 변경 되었습니다.");
+	                    window.location.reload();
+	                } else {
+	                    alert("변경 실패 , 다시 시도해 주세요.");
+	                }
+	            }
+		});
+       
    });
 });
 

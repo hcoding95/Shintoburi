@@ -9,6 +9,6 @@ import com.kh.sintoburi.domain.gr.OrderDto;
 public interface SalesManageMapper {
 	public List<OrderDto> getSalesManageList();
 
-	public int updateDeliveryStatus(@Param("ono") int ono, @Param("delivery_status") String delivery_status);
+	//public int updateDeliveryStatus(@Param("ono") int ono, @Param("delivery_status") String delivery_status);
 
 }

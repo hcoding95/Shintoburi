@@ -20,10 +20,10 @@ public class SalesManageServiceImpl implements SalesManageService{
 		return list;
 	}
 
-	@Override
-	public boolean updateDeliveryStatus(int ono, String delivery_status) {
-		int count = salesManageMapper.updateDeliveryStatus(ono, delivery_status);
-		return (count == 1)? true: false;
-	}
+//	@Override
+//	public boolean updateDeliveryStatus(int ono, String delivery_status) {
+//		int count = salesManageMapper.updateDeliveryStatus(ono, delivery_status);
+//		return (count == 1)? true: false;
+//	}
 
 }

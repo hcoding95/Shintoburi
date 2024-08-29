@@ -55,7 +55,7 @@
 		<div class="container-fluid">
 			<div class="row justify-content-end">
 			    <div class="col-auto">
-			        <a href="#"  id="btnMain" class="btn btn-warning">쇼핑몰 메인</a>
+			        <a href="/hc/main/home"  id="btnMain" class="btn btn-warning">쇼핑몰 홈</a>
 			    </div>
 			</div>
 		</div>	

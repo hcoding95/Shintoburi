@@ -7,5 +7,5 @@ import com.kh.sintoburi.domain.gr.OrderDto;
 public interface SalesManageService {
 	public List<OrderDto> getSalesManageList();
 	
-	public boolean updateDeliveryStatus(int ono, String delivery_status);
+	//public boolean updateDeliveryStatus(int ono, String delivery_status);
 }
