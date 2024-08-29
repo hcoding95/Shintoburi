@@ -37,14 +37,11 @@ public class ProductController {
 	@Autowired
 	private ReviewService reviewService;
 	
-	@Autowired
-	private JiuserService userService;
 	
 	// 쇼핑몰 메인
 	@GetMapping("/productMain")
 	public String list(Model model, HttpSession session) {
 	    List<DefaultProductListDto> productList = productService.getProducts();
-//	    log.info("productList:" + productList);
 	    
 	    UserVo userVo = (UserVo) session.getAttribute("login");
 	    
@@ -99,7 +96,7 @@ public class ProductController {
 		
 		UserVo userVo = (UserVo) session.getAttribute("login");
 		if (userVo != null) {
-			
+			model.addAttribute("login", userVo);
 		}
 		
 	    model.addAttribute("relatedProducts", relatedProducts);

@@ -12,7 +12,7 @@ public interface SuggestionMapper {
 	
 	public int delete(int suggestion_no);
 	
-	public int update(SuggestionVo vo);
+	public int update(SuggestionVo suggestionVo);
 	
 	public List<SuggestionVo> getList(int product_no);
 }

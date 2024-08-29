@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
 
-<!-- 별점 관련 아이콘css -->
+<!-- 별점 관련 아이콘 CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
@@ -17,207 +16,207 @@
 .star-rating-container {
     margin-top: 10px; /* 별점 위 여백 */
 }
-
-
 </style>
 
-
 <script>
-// 별점 함수
+//별점 생성 함수
 function generateStars(rating) {
-    let fullStars = Math.floor(rating);
-    let halfStars = rating % 1 !== 0 ? 1 : 0;
-    let emptyStars = 5 - fullStars - halfStars;
-    
-    let starHtml = '';
-    
-    for (let i = 0; i < fullStars; i++) {
-        starHtml += '<i class="fas fa-star gold-star"></i>'; // 풀 별
-    }
-    
-    if (halfStars) {
-        starHtml += '<i class="fas fa-star-half-alt gold-star"></i>'; // 반 별
-    }
-    
-    for (let i = 0; i < emptyStars; i++) {
-        starHtml += '<i class="far fa-star gold-star"></i>'; // 빈 별
-    }
-    
-    return starHtml;
+ let fullStars = Math.floor(rating);
+ let halfStars = rating % 1 !== 0 ? 1 : 0;
+ let emptyStars = 5 - fullStars - halfStars;
+ 
+ let starHtml = '';
+ 
+ for (let i = 0; i < fullStars; i++) {
+     starHtml += '<i class="fas fa-star gold-star"></i>'; // 풀 별
+ }
+ 
+ if (halfStars) {
+     starHtml += '<i class="fas fa-star-half-alt gold-star"></i>'; // 반 별
+ }
+ 
+ for (let i = 0; i < emptyStars; i++) {
+     starHtml += '<i class="far fa-star gold-star"></i>'; // 빈 별
+ }
+ 
+ return starHtml;
 }
 
 $(function() {
-    let pno = '${product.product_no}';
+ let pno = '${product.product_no}';
 
-    $.ajax({
-        type: 'get',
-        url: '/ji/review/averageRating/' + pno,
-        success: function(averageRating) {
-            let starHtml = generateStars(averageRating);
-            $('#averageRating').html(starHtml); 
-            $('#averageRatingTop').html(starHtml);
-        },
-        error: function() {
-            alert('평균 평점을 불러오는데 실패했습니다.');
-        }
-    });
+ // 평균 평점 불러오기
+ $.ajax({
+     type: 'get',
+     url: '/ji/review/averageRating/' + pno,
+     success: function(averageRating) {
+         let starHtml = generateStars(averageRating);
+         $('#averageRating').html(starHtml); 
+         $('#averageRatingTop').html(starHtml);
+     },
+     error: function() {
+         alert('평균 평점을 불러오는데 실패했습니다.');
+     }
+ });
 
-    $("#reviewTab").on("click", function() {
-        sortReviews(); // 리뷰 목록 가져오기
-    });
+ // 리뷰 탭 클릭 시 리뷰 목록 가져오기
+ $("#reviewTab").on("click", function() {
+     sortReviews(); // 리뷰 목록 가져오기
+ });
 });
 
+//리뷰 목록 정렬 함수
 function sortReviews() {
-    let sortOrder = document.getElementById('sortOrder').value;
-    let pno = '${product.product_no}';
+ let sortOrder = document.getElementById('sortOrder').value;
+ let pno = '${product.product_no}';
 
-    $.ajax({
-        type: 'get',
-        url: '/ji/review/list/' + pno + '/' + sortOrder,
-        success: function(data) {
-        	console.log(data);
-            $('#reviewList').html('');
-            if (data.length > 0) {
-                $.each(data, function(index, review) {
-                	
-//                 	console.log("리뷰의 사용자 ID:", review.user_id);
-//                 	console.log("로그인된 사용자 ID:", "${sessionScope.loggedInUser.user_id}");
-                	
-                    let reviewDate = new Date(review.review_reg_date).toLocaleDateString();
-                	let starHtml = generateStars(review.review_rating);
-                	
-                    var reviewHtml = `
-                        <div class="card mt-3">
-                            <div class="card-body">
-                                <h5 class="card-title">\${review.user_id}님의 리뷰</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">평점: \${starHtml}</h6>
-                                <p class="card-text">\${review.review_content}</p>
-                                <small class="text-muted">작성일: \${reviewDate}</small>`;
-                                
-                    if (review.user_id == "${sessionScope.login.user_id}") {
-                        reviewHtml += `
-                                <button onclick="deleteReview(\${review.review_no}, \${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
-                                
-                    }
+ $.ajax({
+     type: 'get',
+     url: '/ji/review/list/' + pno + '/' + sortOrder,
+     success: function(data) {
+    	 console.log("data", data);
+         $('#reviewList').html('');
+         if (data.length > 0) {
+             $.each(data, function(index, review) {
+                 let reviewDate = new Date(review.review_reg_date).toLocaleDateString();
+                 let starHtml = generateStars(review.review_rating);
+                 
+                 var reviewHtml = `
+                     <div class="card mt-3">
+                         <div class="card-body">
+                             <h5 class="card-title">\${review.user_id}님의 리뷰</h5>
+                             <h6 class="card-subtitle mb-2 text-muted">평점: \${starHtml}</h6>
+                             <p class="card-text">\${review.review_content}</p>
+                             <small class="text-muted">작성일: \${reviewDate}</small>`;
+                             
+                 if (review.user_id == "\${login.user_id}") {
+                     reviewHtml += `
+                             <button onclick="deleteReview(\${review.review_no}, \${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
+                 }
 
-                    reviewHtml += `</div></div>`;
-                    $('#reviewList').append(reviewHtml);
-                });
-            } else {
-                $('#reviewList').html('<div class="alert alert-info" role="alert">이 상품에 대한 리뷰가 아직 없습니다.</div>');
-            }
-        },
-        error: function() {
-            alert('리뷰를 불러오는데 실패했습니다.');
-        }
-    });
-    
+                 reviewHtml += `</div></div>`;
+                 $('#reviewList').append(reviewHtml);
+             });
+         } else {
+             $('#reviewList').html('<div class="alert alert-info" role="alert">이 상품에 대한 리뷰가 아직 없습니다.</div>');
+         }
+     },
+     error: function() {
+         alert('리뷰를 불러오는데 실패했습니다.');
+     }
+ });
 }
 
-$(function() {
-    let pno = '${product.product_no}';
-    $.ajax({
-        type: 'get',
-        url: '/ji/review/averageRating/' + pno,
-        success: function(averageRating) {
-            let starHtml = generateStars(averageRating);
-            $('#averageRating').html(starHtml);
-            $('#averageRatingTop').html(starHtml);
-        },
-        error: function() {
-            alert('평균 평점을 불러오는데 실패했습니다.');
-        }
-    });
-
-    $('.card.h-100').each(function() {
-        let pno = $(this).data('pno');
-        let starContainer = $(this).find('.star-rating-container');
-
-        $.ajax({
-            type: 'get',
-            url: '/ji/review/averageRating/' + pno,
-            success: function(averageRating) {
-                let starHtml = generateStars(averageRating);
-                starContainer.html(starHtml);
-            },
-            error: function() {
-                console.log('평균 평점을 불러오는데 실패했습니다.');
-            }
-        });
-    });
-});
-
-
-
-// 리뷰 삭제 함수
+//리뷰 삭제 함수
 function deleteReview(review_no, pno) {
-    if(confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
-        $.ajax({
-            type: 'delete',
-            url: '/ji/review/remove/' + review_no + '/' + pno,
-            success: function(response) {
-                if(response) {
-                    alert('리뷰가 삭제되었습니다.');
-                    sortReviews();
-                } else {
-                    alert('리뷰 삭제에 실패했습니다.');
-                }
-            },
-            error: function() {
-                alert('리뷰 삭제 중 오류가 발생했습니다.');
-            }
-        });
-    }
+ if(confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
+     $.ajax({
+         type: 'delete',
+         url: '/ji/review/remove/' + review_no + '/' + pno,
+         success: function(response) {
+             if(response) {
+                 alert('리뷰가 삭제되었습니다.');
+                 sortReviews();
+             } else {
+                 alert('리뷰 삭제에 실패했습니다.');
+             }
+         },
+         error: function() {
+             alert('리뷰 삭제 중 오류가 발생했습니다.');
+         }
+     });
+ }
 }
 
-// 리뷰 작성 폼 제출
+//리뷰 작성 폼 제출 (주석 처리된 코드)
 $(function() {
-    $('#reviewForm').submit(function(event) {
-        event.preventDefault();
+ $('#reviewForm').submit(function(event) {
+     event.preventDefault();
 
-        let review = {
-            product_no: '${product.product_no}',
+     let review = {
+         product_no: '${product.product_no}',
+         user_id: '${login.user_id}',
+         review_content: $('#reviewContent').val(),
+         review_rating: $('#reviewRating').val()
+     };
+
+     $.ajax({
+         type: 'post',
+         url: '/ji/review/register',
+         contentType: 'application/json',
+         data: JSON.stringify(review),
+         success: function(response) {
+             if(response) {
+                 alert('리뷰가 등록되었습니다.');
+                 $('#reviewModal').modal('hide');
+                 $('#suggestionTab').tab('show');
+                 sortReviews(); 
+             } else {
+                 alert('리뷰 등록에 실패했습니다.');
+             }
+         },
+         error: function() {
+             alert('리뷰 등록 중 오류가 발생했습니다.');
+         }
+     });
+ });
+});
+
+//문의사항 작성 및 등록
+$(function() {
+    // 질문 등록 버튼 클릭 시
+    $('#submitQuestion').on('click', function() {
+        let formData = {
+            product_no: $('input[name="product_no"]').val(),
             user_id: '${login.user_id}',
-            review_content: $('#reviewContent').val(),
-            review_rating: $('#reviewRating').val()
+            suggestion_content: $('#suggestionContent').val(),
+            role_type: 'QUESTION'
         };
-        console.log(review);
 
         $.ajax({
-            type: 'post',
-            url: '/ji/review/register',
-            contentType: 'application/json',
-            data: JSON.stringify(review),
+            type: 'POST',
+            url: '/ji/suggestion/register',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(formData),
             success: function(response) {
-                if(response) {
-                    alert('리뷰가 등록되었습니다.');
-                    $('#reviewModal').modal('hide');
-                    sortReviews(); 
-                } else {
-                    alert('리뷰 등록에 실패했습니다.');
-                }
+                alert('문의사항이 등록되었습니다.');
+                $('#questionModal').modal('hide');
+                loadSuggestions();
             },
-            error: function() {
-                alert('리뷰 등록 중 오류가 발생했습니다.');
+            error: function(xhr, status, error) {
+                alert('문의사항 등록 중 오류가 발생했습니다.');
             }
         });
     });
-});
-	
-$(function() {
-    $('.card-img-top').each(function() {
-        let img = $(this);
-        img.on('load', function() {
-//             console.log('Width: ' + img.width());
-//             console.log('Height: ' + img.height());
+
+    // 답변 등록 버튼 클릭 시 (상품 등록자 전용)
+    $('#submitAnswer').on('click', function() {
+        let formData = {
+            product_no: $('input[name="product_no"]').val(),
+            user_id: '${login.user_id}',
+            suggestion_content: $('#answerContent').val(),
+            role_type: 'ANSWER'
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/ji/suggestion/register',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                alert('답변이 등록되었습니다.');
+                $('#answerModal').modal('hide');
+                $('#suggestionTab').tab('show');
+                loadSuggestions();
+            },
+            error: function(xhr, status, error) {
+                alert('답변 등록 중 오류가 발생했습니다.');
+            }
         });
     });
-});
 
-// 문의사항 보기
-$(function() {
-    
-    $("#suggestionTab").on("click", function() {
+    // 문의사항 목록 로드
+    function loadSuggestions() {
         let pno = '${product.product_no}';
 
         $.ajax({
@@ -225,46 +224,145 @@ $(function() {
             url: "/ji/suggestion/list/" + pno,
             contentType: "application/json; charset=utf-8",
             success: function(rData) {
-                console.log(rData);
-                
+            	console.log("rData:" , rData);
                 $("#suggestion_table tbody").empty();
-                
-                
+
                 if (rData.length > 0) {
                     $.each(rData, function(index, suggestion) {
                         let tr = `<tr>
                             <td>\${suggestion.suggestion_content}</td>
                             <td>\${suggestion.user_id}</td>
                             <td>\${toDateString(suggestion.suggestion_reg_date)}</td>
-                            <td>\${toDateString(suggestion.suggestion_upd_date)}</td>
-                        `;
-                        
-                        if (suggestion.user_id == "\${sessionScope.login.user_id}") {
+                            <td>\${toDateString(suggestion.suggestion_upd_date)}</td>`;
+
+                        // 현재 유저가 문의 작성자일 경우 수정/삭제 버튼 표시
+                        if (suggestion.user_id === $('input[name="user_id"]').val()) {
                             tr += `<td><button class="btn btn-sm btn-warning btnSuggestionModify" data-rno="\${suggestion.suggestion_no}">수정</button></td>
                                    <td><button class="btn btn-sm btn-danger btnSuggestionRemove" data-rno="\${suggestion.suggestion_no}">삭제</button></td>`;
+                        } else {
+                            tr += `<td></td><td></td>`;
                         }
+
+                        // 현재 유저가 상품 등록자일 경우 답변하기 버튼 표시
+                        if ('\${login.user_id}' === '\${product.user_id}' && suggestion.role_type === 'QUESTION') {
+	                        tr += `<td><button class="btn btn-sm btn-primary btnSuggestionAnswer" data-rno="\${suggestion.suggestion_no}" data-toggle="modal" data-target="#answerModal">답변하기</button></td>`;
+	                    } else {
+	                        tr += `<td></td>`;
+	                    }
 
                         tr += `</tr>`;
                         $("#suggestion_table tbody").append(tr);
                     });
-                } else {    
-                    $("#suggestion_table tbody").append('<tr><td colspan="5" class="text-center">아직 등록된 문의사항이 없습니다.</td></tr>');
+                } else {
+                    $("#suggestion_table tbody").append('<tr><td colspan="6" class="text-center">아직 등록된 문의사항이 없습니다.</td></tr>');
                 }
             },
             error: function() {
                 alert("문의사항을 불러오는 데 실패했습니다.");
             }
-	    });
-	});
+        });
+    }
+    
+    $('#suggestion_table').on('click', '.btnSuggestionAnswer', function() {
+        let suggestionNo = $(this).data('rno');
+        $('#answerContent').data('rno', suggestionNo); // 답변할 문의사항 번호 저장
+    });
 
+ 	// 수정 버튼 클릭 시 모달에 기존 내용을 로드
+    $('#suggestion_table').on('click', '.btnSuggestionModify', function() {
+        console.log('#btnSuggestionModify');
+    	let suggestionNo = $(this).data('rno');
+        
+        // 서버로부터 해당 문의 내용을 가져와서 모달에 채움
+        $.ajax({
+            type: 'get',
+            url: '/ji/suggestion/get/' + suggestionNo, // 해당 경로에서 suggestion 데이터를 가져온다고 가정
+            success: function(suggestion) {
+                $('#editSuggestionNo').val(suggestion.suggestion_no);
+                $('#editSuggestionContent').val(suggestion.suggestion_content);
+                
+                // 모달을 띄움
+                $('#editQuestionModal').modal('show');
+            },
+            error: function() {
+                alert('문의사항을 불러오는데 실패했습니다.');
+            }
+        });
+    });
+
+    // 수정된 문의사항 저장
+    $('#submitEditQuestion').on('click', function() {
+        let formData = {
+            suggestion_no: $('input[name="suggestion_no"]').val(),
+            product_no: $('input[name="product_no"]').val(),
+            suggestion_content: $('#editSuggestionContent').val(),
+            user_id: $('input[name="user_id"]').val(), 
+        };
+        
+        console.log("FormData:", formData);
+        
+        if (!formData.user_id) {
+            console.log('유효한 사용자 ID가 필요합니다.');
+            return;
+        }
+        if (!formData.product_no) {
+        	console.log('유효한 상품 ID가 필요합니다.');
+            return;
+        }
+
+        $.ajax({
+            type: 'put',
+            url: '/ji/suggestion/modify', // 수정 요청을 처리하는 경로
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                if(response) {
+                    alert('문의사항이 수정되었습니다.');
+                    $('#editQuestionModal').modal('hide');
+                    loadSuggestions();
+                } else {
+                    alert('문의사항 수정에 실패했습니다.');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('문의사항 수정 중 오류가 발생했습니다.');
+            }
+        });
+    });
+    
+    
+    // 문의사항 삭제
+    $('#suggestion_table').on('click', '.btnSuggestionRemove', function() {
+    	console.log('#btnSuggestionRemove');
+        if(confirm('정말로 이 문의사항을 삭제하시겠습니까?')) {
+            let suggestionNo = $(this).data('rno');
+
+            $.ajax({
+                type: 'delete',
+                url: '/ji/suggestion/remove/' + suggestionNo + '/' + $('input[name="product_no"]').val(),
+                success: function(response) {
+                    if(response) {
+                        alert('문의사항이 삭제되었습니다.');
+                        loadSuggestions();
+                    } else {
+                        alert('문의사항 삭제에 실패했습니다.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('문의사항 삭제 중 오류가 발생했습니다.');
+                }
+            });
+        }
+    });
+    
     // 날짜 형식 변환 함수
     function toDateString(dateString) {
         const date = new Date(dateString);
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
+    
+    loadSuggestions();
 });
-	
-
 
 </script>
 
@@ -405,15 +503,13 @@ $(function() {
                     <div class="col-md-12">
                         <div class="jumbotron card card-block"  style="background-color: white">
                             <h2>상품평</h2>
-
+                            
                             <!-- 별점 -->
 							<div class="average-rating">
 							    <h3><span id="averageRating"></span></h3>
 							</div>								
                             <!-- 별점 -->
-
-			                
-
+                            
                             <div style="display: flex; justify-content: space-between; align-items: center;">
 							    <!-- 리뷰 정렬 드롭다운 -->
 							    <div class="form-group" style="margin: 0;">
@@ -436,8 +532,6 @@ $(function() {
 							
                             <!-- 작성된 리뷰 리스트 -->
                             <div id="reviewList">
-                                
-
                                 <!-- 리뷰가 없을 경우 -->
                                 <c:if test="${empty reviews}">
                                     <div class="alert alert-info" role="alert">
@@ -463,7 +557,7 @@ $(function() {
                             <div class="modal-body">
                                 <form id="reviewForm" action="/ji/product/addReview" method="post">
                                     <input type="hidden" name="product_no" value="${product.product_no}">
-                                    <input type="hidden" name="user_id" value="${sessionScope.loggedInUser.user_id}"> <!-- 로그인된 유저 ID -->
+                                    <input type="hidden" name="user_id" value="${login.user_id}"> <!-- 로그인된 유저 ID -->
                                     
                                     <div class="form-group">
                                         <label for="reviewContent">리뷰 내용</label>
@@ -523,35 +617,136 @@ $(function() {
                 
                 	<!-- 문의사항 탭 -->
 					<div class="tab-pane" id="tab4">
-						<div class="col-md-12">
-						<div class="jumbotron card card-block"  style="background-color: white">
-							<div class="clearFix" style="display: flex;">
-							    <h4 class="prod-suggestion-list-title">상품문의</h4>
-							    <a class="prod-suggestion-list-write-btn btn btn-outline-primary" 
-							       style="width: 90px; height: 35px; display: flex;">
-							       문의하기
-							    </a>
-							</div>
-						
-							<div class="prod-suggestion-list">
-								<ul>
-									<li>구매한 상품의 취소/반품은 마이페이지에서 신청 가능합니다.</li>
-									<li>상품문의 및 후기게시판을 통해 취소나 환불, 반품 등은 처리되지 않습니다.</li>
-									<li>가격, 판매자, 교환/환불 및 배송 등 해당 상품 자체와 관련 없는 문의는 고객센터 내 1:1 문의하기를 이용해주세요.</li>
-									<li>"해당 상품 자체"와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 이동, 노출제한, 삭제 등의 조치가 취해질 수 있습니다.</li>
-									<li>공개 게시판이므로 전화번호, 메일 주소 등 고객님의 소중한 개인정보는 절대 남기지 말아주세요.</li>
-								</ul>
-							</div>
-												
-							
-							<table class="table" id="suggestion_table">
-								<tbody>
-								</tbody>
-							</table>
-							
-						</div>
+					    <div class="col-md-12">
+					        <div class="jumbotron card card-block" style="background-color: white;">
+					        
+					            <div class="clearFix" style="display: flex; align-items: center;">
+					                <h4 class="prod-suggestion-list-title">상품문의</h4>
+					                
+					                <!-- 상품 등록자와 로그인한 유저가 다를 경우에만 문의하기 버튼을 표시 -->
+					                <c:if test="${login.user_id != product.user_id}">
+					                    <button type="button" class="btn prod-suggestion-list-write-btn btn-outline-primary" data-toggle="modal" 
+					                        data-target="#questionModal" style="margin-left: auto;">
+					                        문의하기
+					                    </button>
+					                </c:if>
+					            </div>
+					        
+					            <div class="prod-suggestion-list">
+					                <ul>
+					                    <li>구매한 상품의 취소/반품은 마이페이지에서 신청 가능합니다.</li>
+					                    <li>상품문의 및 후기게시판을 통해 취소나 환불, 반품 등은 처리되지 않습니다.</li>
+					                    <li>가격, 판매자, 교환/환불 및 배송 등 해당 상품 자체와 관련 없는 문의는 고객센터 내 1:1 문의하기를 이용해주세요.</li>
+					                    <li>"해당 상품 자체"와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 이동, 노출제한, 삭제 등의 조치가 취해질 수 있습니다.</li>
+					                    <li>공개 게시판이므로 전화번호, 메일 주소 등 고객님의 소중한 개인정보는 절대 남기지 말아주세요.</li>
+					                </ul>
+					            </div>
+					            
+					            <table class="table" id="suggestion_table">
+					                <thead>
+					                    <tr>
+					                        <th>문의 내용</th>
+					                        <th>작성자</th>
+					                        <th>작성일</th>
+					                        <th>수정일</th>
+					                        <th>수정</th>
+					                        <th>삭제</th>
+					                    </tr>
+					                </thead>
+					                <tbody>
+					                </tbody>
+					            </table>
+					            
+					        </div>
+					    </div>
 					</div>
-                </div>
+					
+					<!-- 질문 작성 모달 -->
+					<div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+					    <div class="modal-dialog" role="document">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="questionModalLabel">상품 문의</h5>
+					                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					                    <span aria-hidden="true">&times;</span>
+					                </button>
+					            </div>
+					            <div class="modal-body">
+					                <form id="questionForm">
+					                    <input type="hidden" name="product_no" value="${product.product_no}">
+					                    <input type="hidden" name="user_id" value="${login.user_id}">
+					                    <input type="hidden" name="role_type" value="QUESTION"> <!-- 질문임을 표시 -->
+					                    <div class="form-group">
+					                        <label for="suggestionContent">문의 내용</label>
+					                        <textarea class="form-control" id="suggestionContent" name="suggestion_content" rows="4" required></textarea>
+					                    </div>
+					                    <p class="text-muted">
+					                        * 개인정보(주민번호, 연락처, 주소, 계좌번호, 카드번호 등)가 포함되지 않도록 유의해주세요.
+					                    </p>
+					                </form>
+					            </div>
+					            <div class="modal-footer">
+					                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					                <button type="button" class="btn btn-primary" id="submitQuestion">확인</button>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					<!-- 질문 작성 모달 -->
+					
+					<!-- 답변 작성 모달 -->
+					<div id="answerModal" class="modal fade" tabindex="-1" role="dialog">
+					    <div class="modal-dialog" role="document">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title">답변 등록</h5>
+					                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					                    <span aria-hidden="true">&times;</span>
+					                </button>
+					            </div>
+					            <div class="modal-body">
+					                <textarea id="answerContent" class="form-control" rows="4" placeholder="답변을 입력하세요..."></textarea>
+					            </div>
+					            <div class="modal-footer">
+					                <button type="button" class="btn btn-primary" id="submitAnswer">답변 등록</button>
+					                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					<!-- 답변 작성 모달 -->
+					
+					<!-- 수정 모달 -->
+					<div class="modal fade" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
+					    <div class="modal-dialog" role="document">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="editQuestionModalLabel">문의사항 수정</h5>
+					                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					                    <span aria-hidden="true">&times;</span>
+					                </button>
+					            </div>
+					            <div class="modal-body">
+					                <form id="editQuestionForm">
+					                    <input type="hidden" name="suggestion_no" id="suggestion_no" value="${suggestion.suggestion_no}">
+					                    <input type="hidden" name="product_no" id="product_no" value="${product.product_no}">
+					                    <input type="hidden" name="user_id" id="user_id" value="${login.user_id}">
+					                    <div class="form-group">
+					                        <label for="editSuggestionContent">문의 내용</label>
+					                        <textarea class="form-control" id="editSuggestionContent" name="suggestion_content" rows="4" required></textarea>
+					                    </div>
+					                    <p class="text-muted">
+					                        * 개인정보(주민번호, 연락처, 주소, 계좌번호, 카드번호 등)가 포함되지 않도록 유의해주세요.
+					                    </p>
+					                </form>
+					            </div>
+					            <div class="modal-footer">
+					                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					                <button type=d"button" class="btn btn-primary" id="submitEditQuestion">수정</button>
+					            </div>
+					        </div>
+					    </div>
+					</div>
             </div>
         </div>
     </div>

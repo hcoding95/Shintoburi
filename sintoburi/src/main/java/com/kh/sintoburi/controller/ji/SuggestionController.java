@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.sintoburi.domain.ji.SuggestionVo;
@@ -26,16 +27,18 @@ public class SuggestionController {
 	private SuggestionService suggService;
 	
 	// 문의사항 등록
-	@PostMapping("/register")
-	public boolean register(@RequestBody SuggestionVo vo) {
-		boolean result = suggService.register(vo);
-		return result;
-	}
+    @PostMapping("/register")
+    public boolean register(@RequestBody SuggestionVo suggestionVo) {
+    	boolean result = suggService.register(suggestionVo);
+        return result;
+    }
 	
 	// 문의사항 수정
 	@PutMapping("/modify")
-	public boolean modify(@RequestBody SuggestionVo vo) {
-		boolean result = suggService.modify(vo);
+	public boolean modify(@RequestBody SuggestionVo suggestionVo) {
+		System.out.println("suggestionVo:" + suggestionVo);
+		boolean result = suggService.modify(suggestionVo);
+		System.out.println("result:" + result);
 		return result;
 	}
 	
@@ -50,9 +53,13 @@ public class SuggestionController {
 	// 문의사항 목록 가져오기 
 	@GetMapping("/list/{product_no}")
 	public List<SuggestionVo> list(@PathVariable("product_no") int product_no) {
-	    log.info("product_no: " + product_no);
 	    List<SuggestionVo> list = suggService.getList(product_no);
-	    log.info("list: " + list);
 	    return list;
+	}
+	
+	// 문의사항 상세보기
+	@GetMapping("/get/{suggestion_no}")
+	public SuggestionVo getSuggestion(@PathVariable("suggestion_no") int suggestion_no) {
+	    return suggService.get(suggestion_no);
 	}
 }

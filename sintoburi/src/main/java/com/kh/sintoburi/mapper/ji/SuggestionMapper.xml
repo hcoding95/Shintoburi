@@ -5,7 +5,7 @@
   
 <mapper namespace="com.kh.sintoburi.mapper.ji.SuggestionMapper">
 	
-	<select id="read">
+	<select id="read" resultType="SuggestionVo">
 		select * from tbl_suggestion
 		where suggestion_no = #{suggestion_no}
 	</select>
@@ -16,17 +16,17 @@
 	</select>
 	
 	<insert id="insert">
-		insert into tbl_suggestion
-			(suggestion_no, suggestion_content ,product_no ,user_id)
-		values
-			(seq_suggestion_nextval, #{suggestion_content}, #{product_no}, #{user_id})
+	    insert into tbl_suggestion
+	        (suggestion_no, suggestion_content, product_no, user_id, role_type)
+	    values
+	        (seq_suggestion.NEXTVAL, #{suggestion_content}, #{product_no}, #{user_id}, #{role_type})
 	</insert>
 	
 	<update id="update">
 		update tbl_suggestion set
 			suggestion_content = #{suggestion_content},
 			user_id = #{user_id},
-			suggestion_upd_date = #{suggestion_upd_date}
+			suggestion_upd_date = sysdate
 		where suggestion_no = #{suggestion_no}
 	</update>
 	

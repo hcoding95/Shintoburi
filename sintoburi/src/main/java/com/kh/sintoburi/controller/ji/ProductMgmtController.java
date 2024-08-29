@@ -42,7 +42,6 @@ public class ProductMgmtController {
 		
 		
 		List<ProductListDto> list = productService.selectProductsByUser(uservo.getUser_id());
-		log.info("list:" + list);
 		
 		model.addAttribute("list", list);
 		return "/ji/manager/productList";
@@ -65,9 +64,7 @@ public class ProductMgmtController {
 	// 상품 등록 처리
 	@PostMapping("/register")
 	public String register(ProductVo testVo, RedirectAttributes rttr) {
-		log.info("prodMgmtCon/testVo:" + testVo);
 		int pno = productService.productRegister(testVo);
-		log.info("prodMgmtCon/pno:" + pno);
 		rttr.addFlashAttribute("resultRegister", pno);
 		return "redirect:/ji/product/productMain";
 	}
@@ -80,7 +77,6 @@ public class ProductMgmtController {
 		
 		ProductVo productVo = productService.getProductByNo(pno);
 		model.addAttribute("productVo", productVo);
-		log.info("productVo:" + productVo);
 		
 		
 		return "/ji/manager/modifyProduct";
@@ -89,7 +85,6 @@ public class ProductMgmtController {
 	// 수정 처리
 	@PostMapping("/modifyProduct")
 	public String modifyProduct(ProductVo productVo, RedirectAttributes rttr) {
-		log.info("productVo:" + productVo);
 		
 	    List<ProductImageVo> delList = productVo.getDelList();
 	    if (delList != null && !delList.isEmpty()) {

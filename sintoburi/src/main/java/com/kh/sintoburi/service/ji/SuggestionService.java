@@ -12,7 +12,7 @@ public interface SuggestionService {
 	
 	public boolean remove(int suggestion_no, int product_no);
 	
-	public boolean modify(SuggestionVo vo);
+	public boolean modify(SuggestionVo suggestionVo);
 	
 	public List<SuggestionVo> getList(int product_no);
 }
