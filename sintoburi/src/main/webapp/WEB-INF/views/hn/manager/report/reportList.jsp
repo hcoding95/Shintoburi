@@ -58,7 +58,7 @@ $(function() {
                      url: "/hn/manager/report/updateStatus",
                      data: { "re_no" : re_no },
                      success: function() {
-                         alert("문의사항 상태가 '처리완료'로 업데이트되었습니다.");
+                         alert("신고게시글의 상태가 '처리완료'로 업데이트되었습니다.");
                         
                          location.href = "/hn/manager/report/reportList";
                      }
