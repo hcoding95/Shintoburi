@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,18 +32,27 @@ public class HnUserController {
 
 	// 회원목록
 	@GetMapping("/userList")
-	public void userList(Model model, HnCriteria criteria) {
+	public String userList(Model model, HnCriteria criteria, HttpSession session) {
+	    UserVo login = (UserVo) session.getAttribute("login");
 
-		List<HnUserDto> list = userService.getList(criteria);
-		model.addAttribute("userList", list);
-		int total = userService.getTotal(criteria);
-		HnPageDto pageMaker = new HnPageDto(criteria, total);
-		
-		System.out.println("Criteria: " + criteria);
-		
-		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("criteria", criteria);
-		
+	    // 로그인하지 않았거나, 사용자가 관리자일 경우 로그인 페이지로 리다이렉트
+	    if (login == null || !"관리자".equals(login.getGrade())) {
+	    	session.invalidate();
+	        return "redirect:/ds/board/login"; 
+	    }
+
+	    
+	    List<HnUserDto> list = userService.getList(criteria);
+	    model.addAttribute("userList", list);
+
+	   
+	    int total = userService.getTotal(criteria);
+	    HnPageDto pageMaker = new HnPageDto(criteria, total);
+	    model.addAttribute("pageMaker", pageMaker);
+	    model.addAttribute("criteria", criteria);
+
+	 
+	    return "/hn/manager/user/userList";
 	}
 
 	// 매니저목록

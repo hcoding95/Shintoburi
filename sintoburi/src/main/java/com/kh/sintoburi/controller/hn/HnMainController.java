@@ -45,10 +45,10 @@ public class HnMainController {
 			System.out.println(userVo.getGrade());
 			switch (userVo.getGrade()) {
 			case "판매자":
-				location = "/hn/mypage/myPageMain";
+				location = "/hn/mypage/enqList";
 				break;
 			case "구매자":
-				location = "/hn/mypage/myPageMain";
+				location = "/hn/mypage/enqList";
 				break;
 			case "관리자":
 				location = "/hn/manager/user/userList";
