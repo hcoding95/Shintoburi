@@ -62,14 +62,14 @@ public class HnMainController {
 		} else {
 			// 로그인실패
 			model.addAttribute("loginError", "아이디 또는 비밀번호가 잘못되었습니다.");
-			return "/hn/main/login";
+			return "/ds/board/login";
 		}
 	}
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/hn/main/login";
+		return "redirect:/ds/board/login";
 
 	}
 

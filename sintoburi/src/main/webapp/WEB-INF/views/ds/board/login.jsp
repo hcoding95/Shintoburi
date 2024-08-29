@@ -45,28 +45,27 @@ $(function() {
 				
 				//history.back();
 				
-				//$(location).attr("href","/ds/board/index");
-				if(result=="success"){
-					//alert("로그인 성공");
-					//$(location).attr("href","/ds/board/index");
-					location.href = document.referrer;
+		
+				if (result == "manager") {
+	
+						$(location).attr("href", "/hn/manager/user/userList");
+
+					} else {
+
+						location.href = document.referrer;
+					}
+
 					console.log(result);
-				} else{
-					alert("아이디 또는 비밀번호를 확인해주세요");
-				}					
-			}
-			,error: function(){
-				
-				alert("에러");
-			}	
+
+				},
+				error : function() {
+
+					alert("아이디또는 비밀번호를 확인해주세요");
+				}
+
+			});
 
 		});
-		
-	});
-	
-
-	
-	
 
 	});
 </script>
