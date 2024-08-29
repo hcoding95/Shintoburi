@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -40,6 +41,7 @@ $(function() {
 			data:JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8",
 			success: function(result){
+
 				
 				// 전 페이지로 이동
 				
@@ -65,6 +67,7 @@ $(function() {
 
 			});
 
+
 		});
 
 	});
@@ -74,8 +77,7 @@ $(function() {
 <body class="bg-gradient-primary">
 
     <div class="container">
-    <a href="/hc/main/home"><img src="/resources/images/logo.png" alt="농사랑 로고" style="width:112px;height:88px;">
-    </a>
+<img src="/resources/images/logo.png" alt="농사랑 로고" style="width:112px;height:88px;">
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->

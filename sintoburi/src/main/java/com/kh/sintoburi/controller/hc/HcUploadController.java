@@ -1,6 +1,7 @@
 package com.kh.sintoburi.controller.hc;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,9 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.sintoburi.domain.hc.HcAttachFileDto;
+import com.kh.sintoburi.domain.ji.ImageFileDto;
 import com.kh.sintoburi.util.hc.MyfileUtil;
+import com.kh.sintoburi.util.ji.JiMyFileUtil;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @Log4j
@@ -112,7 +116,69 @@ public class HcUploadController {
 		return result;
 	}
 	
+	// 지환 method
+	@ResponseBody
+	@PostMapping("/ji/uploadFormAction")
+	public List<ImageFileDto> JiUploadFormAction(MultipartFile[] uploadFile) throws Exception {
+		log.info("uploadFormAction...");
+		String uploadPath = "D:/upload/" + getFolder();
+		File folder = new File(uploadPath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
 		
+		List<ImageFileDto> list = new ArrayList<>();
+		
+		for (MultipartFile multi : uploadFile) {
+			log.info("-------------------------");
+			log.info("uploadCon/getOriginalFilename:" + multi.getOriginalFilename());
+			log.info("uploadCon/getSize:" + multi.getSize());
+			
+			String uuid = UUID.randomUUID().toString();
+			String savedFileName = uuid + "_" + multi.getOriginalFilename();
+			File f = new File(uploadPath, savedFileName);
+			// 업로드된 파일이 이미지라면 썸네일 이미지 생성
+			// 썸네일 파일명: s_원본이미지명
+			boolean isImage = JiMyFileUtil.checkImageType(f);
+			
+			
+			ImageFileDto imageDto = ImageFileDto.builder()
+					.img_name(multi.getOriginalFilename())
+					.uuid(uuid)
+					.img_path(uploadPath)
+					.build();
+			list.add(imageDto);
+			
+			if (isImage) {
+				// 원본 파일을 읽어서 -> 썸네일 파일로 출력
+				FileOutputStream thumbnail = new FileOutputStream(
+						new File(uploadPath, "s_" + savedFileName));
+				
+				Thumbnailator.createThumbnail(
+						multi.getInputStream(), thumbnail, 100, 100);
+				thumbnail.close();
+			}
+			multi.transferTo(f);
+		}
+		return list;
+	}
+	
+	// <img src="/display?fileName="/>
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/ji/display") public ResponseEntity<byte[]> getFile(String
+	 * fileName) throws Exception { File f = new File(fileName); // binary data
+	 * byte[] data = FileCopyUtils.copyToByteArray(f); HttpHeaders headers = new
+	 * HttpHeaders(); headers.add("Content-Type",
+	 * Files.probeContentType(f.toPath())); // image/png ResponseEntity<byte[]>
+	 * entity = new ResponseEntity<byte[]>(data, headers, HttpStatus.OK); return
+	 * entity; }
+	 */
+	
+	
+	
+	
 	
 	
 	

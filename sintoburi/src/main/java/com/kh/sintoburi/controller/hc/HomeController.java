@@ -37,6 +37,7 @@ public class HomeController {
 			request.getServletContext().setAttribute("noti", dto);
 		}
 		
+
 //		context.setAttribute("noti", "테스트공지");
 		return "redirect:/hc/main/home";
 	}

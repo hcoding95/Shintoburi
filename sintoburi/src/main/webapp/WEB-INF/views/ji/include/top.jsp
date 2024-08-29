@@ -5,7 +5,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -162,9 +161,8 @@ body, html {
 }
 
 main {
-    padding-top: 170px; /* 헤더 높이만큼 여백 추가 */
+    padding-top: 200px; /* 헤더 높이만큼 여백 추가 */
 }
-
 
 /* 지환 스타일 추가  */
 
@@ -217,123 +215,54 @@ main {
 }
 
 /*// 지환 스타일 추가 */
-
 </style>
 <body>
-<script>
-console.log()
-</script>
     <header class="main-header">
         <div class="top-bar">
             <div class="main-container">
                 <div class="announcement">
-                  <a href="${noti.url}" class="btn ">${noti.title}</a>
+                    <a href="#" class="btn ">공지사항[24/07/22] 당첨자발표 | 7월 고기데이 기획전 경품 당첨자</a>
                 </div>
                 <div class="user-menu">
-                	<c:choose>
-                		<c:when test="${empty login}">
-		                    <a href="/ds/board/login" class="btn ">로그인</a>
-		                   <a href="/ds/board/register" class="btn">회원가입</a>
-                		</c:when>
-                		<c:otherwise>
-		                    <a href="/ds/user/logout" class="btn ">로그아웃</a>
-                		</c:otherwise>
-                	</c:choose>
-                    <a href="/hn/mypage/enqList" class="btn">마이페이지</a>
-                    <a href="/gr/order/payment_list" class="btn">주문조회</a>
-                    <a href="/hn/mypage/noticeList" class="btn">고객센터</a>
-                </div>
+				    <!-- 로그인 상태 O -->
+				    <c:if test="${isLoggedIn}">
+				        <a href="/ds/user/logout" class="btn">로그아웃</a>
+				        <a href="/user/myPage" class="btn">마이페이지</a>
+				    </c:if>
+				    
+				    <!-- 로그인 상태 X -->
+				    <c:if test="${not isLoggedIn}">
+				        <a href="/ds/board/login" class="btn">로그인</a>
+				        <a href="/user/register" class="btn">회원가입</a>
+				    </c:if>
+				
+				    <a href="#" class="btn">주문조회</a>
+				    <a href="#" class="btn">고객센터</a>
+				</div>
             </div>
         </div>
         <div class="middle-bar">
             <div class="main-container">
                 <div class="logo">
-                    <a href="/hc/main/home"><img src="/resources/images/logo.png" alt="신토불이 로고"></a>
+                    <a href="/"><img src="/resources/images/logo.png" alt="농사랑 로고"></a>
                 </div>
             </div>
         </div>
-        
         <nav class="main-nav">
             <div class="main-container">
                 <ul>
-                    <li><a href="/hc/main/home" class="btn btn-success">홈</a></li>
-                    <li><a href="/ji/product/productMain" class="btn btn-success">상품몰</a></li>
-                    <li><a href="/ds/board/index" class="btn btn-success">커뮤니티</a></li>
-                    <li><a href="javascript:void(0);" onclick="openEventPopup();" class="btn btn-success" id="event">이벤트</a></li>
-               		<li><a href="javascript:void(0);" onclick="openChatPopup();" class="btn btn-success" id="chat">채팅</a></li>
-                    <li><a href="/gr/basket/list" class="btn btn-success">장바구니</a></li>
+                    <li><a href="/ji/product/productMain" class="btn btn-success">메인화면</a></li>
+                    <li><a href="#" class="btn btn-success">정기배송</a></li>
+                    <li><a href="#" class="btn btn-success">베스트</a></li>
+                    <li><a href="#" class="btn btn-success">신상품</a></li>
+                    <li><a href="#" class="btn btn-success">상품후기</a></li>
+                    <li><a href="#" class="btn btn-success">장바구니</a></li>
                 </ul>
             </div>
         </nav>
     </header>
     <main>
-    
-    
     <script>
-    
-    
-    function openChatPopup(){
-    	if(${login.user_id==null}){
-    		alert("로그인을 해주세요");
-    		return;
-    	}
-    	
-        let url = "/ds/board/chat";
-        let name = "채팅";
-        let option = "width=600,height=610,top=100,left=200"
-        window.open(url, name, option);
-        console.log("채팅실행");
-        
-    }
-    
-    function openEventPopup(){
-    	
-    	if(${login.user_id==null}){
-    		alert("로그인을 해주세요");
-    		return;
-    	}
-    	
-        let url = "/ds/board/event";
-        let name = "이벤트";
-        let option = "width=600,height=700,top=100,left=200"
-        window.open(url, name, option);
-        console.log("이벤트실행");
-        
-    }
-    
-    function openEventQuizPopup(){
-    	
-    	if(${login.user_id==null}){
-    		alert("로그인을 해주세요");
-    		return;
-    	}
-    	
-        let url = "/ds/board/quizGame";
-        let name = "이벤트";
-        let option = "width=600,height=700,top=100,left=200"
-        window.open(url, name, option);
-        console.log("이벤트실행");
-        
-    }
-    
-    function openEventRunPopup(){
-    	
-    	if(${login.user_id==null}){
-    		alert("로그인을 해주세요");
-    		return;
-    	}
-    	
-        let url = "/ds/board/runGame";
-        let name = "이벤트";
-        let option = "width=600,height=700,top=100,left=200"
-        window.open(url, name, option);
-        console.log("이벤트실행");
-        
-    }
-    
-    
-    
-    
 	    // 특정 글자 수로 텍스트 자르기
 	    function truncateText(selector, maxLength) {
 	        const element = document.querySelector(selector);

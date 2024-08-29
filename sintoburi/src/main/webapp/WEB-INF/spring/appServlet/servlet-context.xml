@@ -58,6 +58,10 @@
 			<mvc:mapping path=" /gr/payment/**/*"/>
 			<mvc:mapping path=" /gr/delivery/**/*"/>
 			<!-- 지환  -->
+			<mvc:mapping path=" /ji/product/**/*"/>
+			<mvc:mapping path=" /ji/manager/**/*"/>
+			<mvc:mapping path=" /ji/review/**/*"/>
+			<mvc:mapping path=" /ji/suggestion/**/*"/>
 			
 			<!-- 효철 제외 -->
 			<mvc:exclude-mapping path="/hc/blog/blog"/>
