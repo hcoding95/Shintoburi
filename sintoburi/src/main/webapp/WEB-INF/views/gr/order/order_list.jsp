@@ -33,13 +33,13 @@ $(function(){
 	        //console.log(data.ono);
 	        
 	        $.ajax({
-	            url: '/gr/order/do_pay',  // 결제 처리 요청을 보낼 URL
+	            url: '/gr/order/do_pay', //결제 처리 요청을 보낼 URL
 	            type: 'POST',
-	            contentType: 'application/json',  // JSON 형식으로 전송
+	            contentType: 'application/json',  //JSON 형식으로 전송
 	            data: JSON.stringify(data),
 	            success: function(response) {
 	             alert("결제완료 되었습니다.");
-	               $(location).attr("href","/gr/order/payment_list"); // 서버에서 리다이렉트 URL을 받아서 이동
+	               $(location).attr("href","/gr/order/payment_list"); //서버에서 리다이렉트 URL을 받아서 이동
 	            },
 	            error: function() {
 	                alert("결제 처리 중 오류가 발생했습니다.");
@@ -67,11 +67,14 @@ $(function(){
 						<th>수취인 이름</th>
 						<th>수취인 전화번호</th>
 						<th>배송지</th>
-						<th>결제방법</th>
+<!-- 						<th>결제방법</th> -->
+						<th>남은포인트</th>
 						<th>총상품금액</th>
 						<th>배송비</th>
 						<th>결제금액</th>
 						<th>결제상태</th>
+						<th>배송상태</th>
+						<th>송장번호</th>
 					</tr>
 				</thead>
 
@@ -86,13 +89,14 @@ $(function(){
 						<td>${orderDto.user_name}</td>
 						<td>${orderDto.user_phone}</td>
 						<td>${orderDto.address}</td>
-						<td>${orderDto.payment_type}</td>
+<%-- 						<td>${orderDto.payment_type}</td> --%>
+						<td>${orderDto.point}</td>
 						<td>${orderDto.sum_total}</td>
 						<td>${orderDto.delivery_charge}</td>
 						<td>${orderDto.pay_amount}</td>
 						<td>${orderDto.p_state}</td>
-						
-						
+						<td>${orderDto.delivery_status}</td>
+						<td>${orderDto.delivery_number}</td>
 						
 <%-- 						<c:choose> --%>
 <%-- 						<c:when test="${orderDto.p_state=='결제완료'}"> --%>

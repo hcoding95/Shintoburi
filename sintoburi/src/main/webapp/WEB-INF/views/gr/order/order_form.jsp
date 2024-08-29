@@ -30,20 +30,6 @@ $(function(){
 			$("#address").val("");
 		}
 	});
-	
-	
-	 // 입력 필드에 값이 변경되었을 때 값을 가져오는 이벤트 리스너
-//     $("#user_name, #user_phone, #address").change(function(){
-//         let userName = $("#user_name").val().trim();
-//         let userPhone = $("#user_phone").val().trim();
-//         let address = $("#address").val().trim();
-
-//         console.log("현재 입력된 값:", {
-//             userName: userName,
-//             userPhone: userPhone,
-//             address: address
-//         });
-//     });
 });
 </script>
 
@@ -55,7 +41,7 @@ $(function(){
 		<div class="col-md-8">
 		   <form action="/gr/order/run_order" method="post">
 			 <div>
-				${login.user_id}님의 주문 정보를 입력해주세요. 
+				${login.user_id}님, 수취인의 주문정보를 입력해주세요. 
 			 </div>
 			 <div>
 				<table class="table">

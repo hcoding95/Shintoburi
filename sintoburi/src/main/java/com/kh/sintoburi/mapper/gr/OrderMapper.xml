@@ -62,29 +62,15 @@
   
 <!--   주문정보 목록 -->
   <select id="getOrderList" resultType="OrderDto">
-<!--   	select a.ono, a.user_phone, a.user_name, a.address, a.total_price,  -->
-<!--   			a.delivery_charge, a.delivery_status, a.payment_type, -->
-<!--         (a.total_price + a.delivery_charge) pay_amount,  -->
-<!--         CASE WHEN a.payment_state = '0' THEN '결제전'  -->
-<!-- 		    ELSE '결제완료'  -->
-<!--         end as p_state -->
-<!-- 		from(select o.*, (select sum(total) sum_total -->
-<!-- 	        from (select (p.price * d.p_count) total -->
-<!-- 	                from tbl_product p, tbl_order_detail d -->
-<!-- 	                where p.pno = d.pno -->
-<!-- 	                and d.ono = #{ono})) total_price  -->
-<!-- 	from tbl_order o -->
-<!-- 	where user_id = #{user_id} -->
-<!-- 	order by ono desc) a -->
-		
-		select ono, user_phone, user_name, address, 
-  			delivery_charge, delivery_status, payment_type, 
-  			pay_amount, sum_total,
+		select o.ono, o.user_phone, o.user_name, o.address, 
+  			o.delivery_charge, o.delivery_status, o.payment_type, 
+  			o.pay_amount, o.sum_total, o.delivery_status, o.delivery_number, u.point,
         	CASE WHEN payment_state = '0' THEN '결제전' 
 		    ELSE '결제완료' 
         	end as p_state
-        from tbl_order
-		where user_id = #{user_id}
+        from tbl_order o, tbl_user u
+		where o.user_id = #{user_id}
+        and o.user_id = u.user_id
 		order by ono desc
   </select>
  

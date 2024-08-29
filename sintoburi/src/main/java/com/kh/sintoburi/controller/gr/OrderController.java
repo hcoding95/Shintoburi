@@ -88,7 +88,7 @@ public class OrderController {
 		return dto;
 	}
 	
-	//주문정보 목록
+	//주문정보 목록 //TODO 결제방법 뒤에 남은포인트 기록, 배송상태 기록
 	@GetMapping("/order_list")
 	public String orderList(Model model, HttpSession session, Integer ono){
 		UserVo dto = (UserVo)session.getAttribute("login");
