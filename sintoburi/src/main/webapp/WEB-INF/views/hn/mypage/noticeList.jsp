@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
 
+
 <script>
 $(function() {
 	// 페이지 블럭

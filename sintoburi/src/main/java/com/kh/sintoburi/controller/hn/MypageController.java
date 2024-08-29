@@ -68,13 +68,6 @@ public class MypageController {
 	public String getEnquiryList(HttpSession session, Model model, HnCriteria criteria) {
 		// 세션에서 로그인한 사용자 정보 가져오기
 		UserVo login = (UserVo) session.getAttribute("login");
-
-		// 로그인 상태 확인
-		if (login == null) {
-			// 로그인되지 않은 경우 로그인 페이지로 리다이렉트
-			return "redirect:/hn/main/login";
-		}
-
 		String user_id = login.getUser_id();
 		criteria.setUser_id(user_id);
 
@@ -302,7 +295,7 @@ public class MypageController {
 	// 회원탈퇴 전 로그인 인증
 	@PostMapping("/loginConfirm")
 	public String loginConfirm(@RequestParam("user_pw") String user_pw, HttpSession session, RedirectAttributes rttr) {
-		HnUserDto login = (HnUserDto) session.getAttribute("login");
+		UserVo login = (UserVo) session.getAttribute("login");
 		String user_id = login.getUser_id();
 
 		HnUserDto dto = userService.checkPw(user_id);
@@ -331,7 +324,7 @@ public class MypageController {
 		boolean result = userService.unRegister(user_id);
 		session.invalidate();
 		rttr.addFlashAttribute("unRegister",result);
-		return "redirect:/hn/main/login";
+		return "redirect:/ds/board/login";
 	}
 
 }

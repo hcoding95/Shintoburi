@@ -85,12 +85,19 @@
 	
 	.table {
 	    width: 100%; /* 테이블 폭을 부모 컨테이너에 맞춤 */
+	    }
+	    
+    .hidden {
+      display: none;
+  }
 </style>
 </head>
 <body>
     <div id="wrapper">
         <div id="content-wrapper" style="margin-top: 20px;">
-            <div id="sidebar-wrapper" >
+            <div id="sidebar-wrapper"  class="${login == null ? 'hidden' : ''}" >
+            <c:if test="${login != null}">
+
                 <div class="center-text" style="margin-top: 25px;">
                     <span>마이페이지</span>
                 </div>
@@ -107,6 +114,9 @@
                     <ul class="sub-menu">
                         <li><a href="gr/basket/list">장바구니</a></li>
                         <li><a href="gr/order/payment_list">주문/배송 조회</a></li>
+                        <c:if test="${login.grade == '판매자'}">
+                        <li><a href="">판매 상품 조회</a></li>
+                        </c:if>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
                         마이활동
@@ -124,7 +134,8 @@
                         <li><a href="/hn/mypage/loginConfirm">회원탈퇴</a></li>
                     </ul>
                 </div>
+                </c:if>
             </div>
-
+		
 
    
