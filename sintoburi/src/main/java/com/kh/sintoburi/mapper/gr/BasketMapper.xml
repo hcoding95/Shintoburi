@@ -73,13 +73,15 @@
 	  <!-- 글목록 (페이징) --> 
 	<select id="getListWithPaging" resultType="BasketDetailDto">
 		select * from (
-			select k.user_id, p.name, p.price, i.img_path, b.pno, b.p_count, b.bdno, b.put_date, (b.p_count*p.price) total_price,
+			select k.user_id, p.name, p.price, 
+					(i.img_path || i.uuid || '_' || i.img_name) img_path,
+					b.pno, b.p_count, b.bdno, b.put_date, (b.p_count*p.price) total_price,
                 row_number() over (order by put_date desc) as rn 
 	        from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k
 	        where b.bno = k.bno
 	        and k.user_id = #{user_id}
 	        and b.pno = p.pno
-	        and p.pno = i.pno
+	        and p.pno = i.product_no
 	        order by B.PUT_DATE desc
 	        ) 
 		where rn &gt; (#{pageNum} - 1) * #{amount}

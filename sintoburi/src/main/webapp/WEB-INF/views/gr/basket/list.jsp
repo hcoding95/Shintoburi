@@ -147,16 +147,21 @@ $(function() {
 
 				<tbody>
 				<c:forEach items="${list}" var="detailDto">
-					<tr class="col-md-8 text-center">
+					<tr class="col-md-8 text-center" 
+						style="height:50px; line-height:50px;vertical-align:middle">
 					    <td>
 					    	<input type="checkbox" name="selectedItems" 
-					    			value="${detailDto.bdno}"></td>
+					    			value="${detailDto.bdno}"
+					    			style="height:50px; line-height:50px;vertical-align:middle"></td>
 						<td>${detailDto.pno}</td>
 						<td>${detailDto.name}</td>
-						<td><img src="/">${detailDto.img_path}</td>
+						<td><img style="height:50px" src="/gr/upload/display?fileName=${detailDto.img_path}"></td>
 						<td>
-							<input type="text" class="p_count" value="${detailDto.p_count}">
-							<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}" data-pcount="${detailDto.p_count}">수정</button>
+							<input type="text" class="p_count" value="${detailDto.p_count}"
+								style="height:30px">
+							<button type="button" class="btnp_count" data-bdno="${detailDto.bdno}" 
+								data-pcount="${detailDto.p_count}"
+								style="height:30px;line-height:30px;vertical-align:middle">수정</button>
 						</td>	
 						<td>${detailDto.price}</td>
 						<td>${detailDto.total_price}</td>
