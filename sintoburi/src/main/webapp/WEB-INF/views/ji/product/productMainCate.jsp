@@ -3,135 +3,105 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%-- <%@ include file="../include/top.jsp"%> --%>
-<%@ include file="../test/top2.jsp"%>
+<%@ include file="/WEB-INF/views/include/top.jsp"%>
+<!-- 별점 관련 아이콘css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<style>
+.card-img-top {
+    width: 236.5px;
+    height: 193.578px;
+    object-fit: cover; /* 이미지가 컨테이너에 맞게 조정되도록 설정 */
+}
+</style>
 
+<script>
+$(function() {
+    $('.product-item').each(function() {
+        let pno = $(this).data('pno');
+        
+        let starContainer = $(this).find('.star-rating-container');
+        
+        $.ajax({
+            type: 'get',
+            url: '/review/averageRating/' + pno,
+            success: function(averageRating) {
+                let starHtml = generateStars(averageRating);
+                starContainer.html(starHtml);
+            },
+            error: function() {
+                console.log('평균 평점을 불러오는데 실패했습니다.');
+            }
+        });
+    });
+});
 
-		<section class="py-5 product-list">
-<!--             	<div class="btn test"> -->
-<!--             		<button class="btn btn-outline"> 테스트 버튼</button> -->
-<!--             	</div> -->
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <c:forEach items="${cate1List}" var="productVo" varStatus="status" begin="0" end="3">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-							<a href="/product/productDetail?pno=${productVo.pno}">
-                            <!-- Product image-->
-                            <img class="card-img-top" 
-                    		src="${pageContext.request.contextPath}/display?fileName=/upload/${imageList1[status.index].uuid}_${imageList1[status.index].img_name}"
-                    		alt="${productVo.name}"/> 
-                            </a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">${productVo.name}</h5>
-                                    <!-- Product price-->
-                                    ${productVo.price} 원
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">사용자 아이디(추가예정)</a></div>
-                            </div>
-                        </div>
-                    </div>
-                 </c:forEach>
-			     </div>
-		     </div>
-			     
-			     <!-- testSection -->
-			     <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <c:forEach items="${cate2List}" var="productVo" varStatus="status" begin="0" end="3">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-							<a href="/product/productDetail?pno=${productVo.pno}">
-                            <!-- Product image-->
-                            <img class="card-img-top" 
-                    		src="${pageContext.request.contextPath}/display?fileName=/upload/${imageList2[status.index].uuid}_${imageList2[status.index].img_name}"
-                    		alt="${productVo.name}"/> 
-                            </a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">${productVo.name}</h5>
-                                    <!-- Product price-->
-                                    ${productVo.price} 원
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">사용자 아이디(추가예정)</a></div>
-                            </div>
-                        </div>
-                    </div>
-                 </c:forEach>
-			     </div>
-		     </div>
-			     <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <c:forEach items="${cate3List}" var="productVo" varStatus="status" begin="0" end="3">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-							<a href="/product/productDetail?pno=${productVo.pno}">
-                            <!-- Product image-->
-                            <img class="card-img-top" 
-                    		src="${pageContext.request.contextPath}/display?fileName=/upload/${imageList3[status.index].uuid}_${imageList3[status.index].img_name}"
-                    		alt="${productVo.name}"/> 
-                            </a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">${productVo.name}</h5>
-                                    <!-- Product price-->
-                                    ${productVo.price} 원
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">사용자 아이디(추가예정)</a></div>
-                            </div>
-                        </div>
-                    </div>
-                 </c:forEach>
-			     </div>
-		     	 </div>
-			     <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <c:forEach items="${cate4List}" var="productVo" varStatus="status" begin="0" end="3">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-							<a href="/product/productDetail?pno=${productVo.pno}">
-                            <!-- Product image-->
-                            <img class="card-img-top" 
-                    		src="${pageContext.request.contextPath}/display?fileName=/upload/${imageList4[status.index].uuid}_${imageList4[status.index].img_name}"
-                    		alt="${productVo.name}"/> 
-                            </a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">${productVo.name}</h5>
-                                    <!-- Product price-->
-                                    ${productVo.price} 원
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">사용자 아이디(추가예정)</a></div>
-                            </div>
-                        </div>
-                    </div>
-                 </c:forEach>
-			     </div>
-			     <!-- // testSection -->
-				</div>
+function generateStars(rating) {
+    let fullStars = Math.floor(rating);
+    let halfStars = rating % 1 !== 0 ? 1 : 0;
+    let emptyStars = 5 - fullStars - halfStars;
+    
+    let starHtml = '';
+    
+    for (let i = 0; i < fullStars; i++) {
+        starHtml += '<i class="fas fa-star gold-star"></i>'; // 가득 찬 별
+    }
+    
+    if (halfStars) {
+        starHtml += '<i class="fas fa-star-half-alt gold-star"></i>'; // 반 별
+    }
+    
+    for (let i = 0; i < emptyStars; i++) {
+        starHtml += '<i class="far fa-star gold-star"></i>'; // 빈 별
+    }
+    
+    return starHtml;
+}
+</script>
+
+		<section class="py-1">
+			<div class="container" ">
+				<a class="btn btn-outline-success" href="/manager/register" style="margin-left: 985px;">상품등록</a>
+			</div>
+		</section>
+		
+		<%@include file="/WEB-INF/views/ji/include/cateMenu.jsp" %>
+		
+		<hr>
+		<section class="py-1 product-list">
+					<div class="container px-4 px-lg-5 mt-3">
+						
+		                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+		                <c:forEach items="${list}" var="dto" varStatus="status">
+		                
+		                    <div class="col mb-5 float-left product-item" data-pno="${dto.product_no}">
+		                        <div class="card h-100">
+									<a href="/product/productDetail?pno=${dto.product_no}">
+					                    <img class="card-img-top" 
+					                         src="/display?fileName=/upload/${dto.uuid}_${dto.img_name}"
+					                         alt="${dto.product_name}"/>
+		                            </a>
+		                            <div class="card-body p-4">
+		                                <div class="text-center">
+		                                    <h5 class="fw-bolder">${dto.product_name}</h5>
+		                                    ${dto.price}원
+		                                    <div class="star-rating-container"></div>
+		                                </div>
+		                                
+		                            </div>
+		                            <!-- Product actions-->
+		                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+		                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${dto.user_id}</a></div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                 </c:forEach>
+					     </div>
+				     </div>
+			
+            
         </section>
         
 <%-- <%@ include file="../include/bottom.jsp"%> --%>
-<%@ include file="../test/bottom2.jsp"%>
+<%@ include file="/WEB-INF/views/include/bottom.jsp"%>
 

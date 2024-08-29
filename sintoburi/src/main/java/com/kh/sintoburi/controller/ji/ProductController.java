@@ -1,29 +1,30 @@
 package com.kh.sintoburi.controller.ji;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.sintoburi.domain.ji.ImageVo;
-import com.kh.sintoburi.domain.ji.ProductRegisterDto;
-import com.kh.sintoburi.domain.ji.ProductVo;
+import com.kh.sintoburi.domain.common.ProductImageVo;
+import com.kh.sintoburi.domain.common.ProductVo;
+import com.kh.sintoburi.domain.common.UserVo;
+import com.kh.sintoburi.domain.ji.DefaultProductListDto;
+import com.kh.sintoburi.domain.ji.RelatedProdDto;
 import com.kh.sintoburi.service.ji.ImageService;
+import com.kh.sintoburi.service.ji.JiuserService;
 import com.kh.sintoburi.service.ji.ProductService;
+import com.kh.sintoburi.service.ji.ReviewService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/ji/product/*")
+@RequestMapping("/product/*")
 @Log4j
 public class ProductController {
 
@@ -33,209 +34,72 @@ public class ProductController {
 	@Autowired
 	private ImageService imageService;
 	
-	// 쇼핑몰 메인 (원본)
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private JiuserService userService;
+	
+	// 쇼핑몰 메인
 	@GetMapping("/productMain")
-	public String list(Model model) {
-	    List<ProductVo> productList = productService.getProducts();
-	    List<ImageVo> imageList = new ArrayList<>();
-	    log.info("productList:" + productList);
+	public String list(Model model, HttpSession session) {
+	    List<DefaultProductListDto> productList = productService.getProducts();
+//	    log.info("productList:" + productList);
 	    
-	    for (ProductVo product : productList) {
-	        ImageVo imageVo = imageService.getImageByProductNo(product.getPno());
-	        log.info("imageVo:" + imageVo);
-	        if (imageVo != null) {
-	            imageList.add(imageVo);
-	        } else {
-	            log.info("이미지 찾기 실패: " + product.getPno());
-	        }
-	    }
+	    UserVo userVo = (UserVo) session.getAttribute("login");
+	    
+	    if (userVo != null) {
+            model.addAttribute("isLoggedIn", true);
+            model.addAttribute("loginUser", userVo);
+        } else {
+            model.addAttribute("isLoggedIn", false);
+        }
+	    
 	    model.addAttribute("list", productList); 
-	    model.addAttribute("imageList", imageList); 
-	    log.info("imageList: " + imageList);
 	    
 	    return "product/productMain";
 	}
 	
-	@GetMapping("/productMainCate")
-	public String productMainCate(Model model) {
-		List<ProductVo> cate1List = productService.selectProductsByCate(1);
-		List<ProductVo> cate2List = productService.selectProductsByCate(2);
-		List<ProductVo> cate3List = productService.selectProductsByCate(3);
-		List<ProductVo> cate4List = productService.selectProductsByCate(4);
+	
+	
+	// Main화면에서 해당 카테고리만 나오는 productMainCate
+	@GetMapping("/productMainCate") 
+	public String productMainCate(@RequestParam(required = true, name = "cate_no") int cate_no, Model model) {
+//		log.info("cate_no:" + cate_no);
+		List<DefaultProductListDto> list = productService.selectProductsByCate(cate_no);
 		
-		List<ImageVo> imageList1 = new ArrayList<>();
-		List<ImageVo> imageList2 = new ArrayList<>();
-		List<ImageVo> imageList3 = new ArrayList<>();
-		List<ImageVo> imageList4 = new ArrayList<>();
-		
-		for (ProductVo vo : cate1List) {
-			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
-			log.info("imageVo:" + imageVo);
-			if (imageVo != null) {
-				imageList1.add(imageVo);
-			} else {
-				log.info("이미지 불러오기 실패:" + vo.getPno());
-			}
-		}
-		
-		for (ProductVo vo : cate2List) {
-			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
-			log.info("imageVo:" + imageVo);
-			if (imageVo != null) {
-				imageList2.add(imageVo);
-			} else {
-				log.info("이미지 불러오기 실패:" + vo.getPno());
-			}
-		}
-		
-		for (ProductVo vo : cate3List) {
-			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
-			log.info("imageVo:" + imageVo);
-			if (imageVo != null) {
-				imageList3.add(imageVo);
-			} else {
-				log.info("이미지 불러오기 실패:" + vo.getPno());
-			}
-		}
-		
-		for (ProductVo vo : cate4List) {
-			ImageVo imageVo = imageService.getImageByProductNo(vo.getPno());
-			log.info("imageVo:" + imageVo);
-			if (imageVo != null) {
-				imageList4.add(imageVo);
-			} else {
-				log.info("이미지 불러오기 실패:" + vo.getPno());
-			}
-		}
-		model.addAttribute("cate1List", cate1List);
-		model.addAttribute("imageList1", imageList1);
-		
-		model.addAttribute("cate2List", cate2List);
-		model.addAttribute("imageList2", imageList2);
-		
-		model.addAttribute("cate3List", cate3List);
-		model.addAttribute("imageList3", imageList3);
-		
-		model.addAttribute("cate4List", cate4List);
-		model.addAttribute("imageList4", imageList4);
+		model.addAttribute("list", list);
 		
 		return "product/productMainCate";
 	}
 	
 	
-	
-	
-	// 상품 상세보기 
-//	@GetMapping("/productDetail")
-//	public void productDetail() {
-//		log.info("productDetail...");
-//	}
-	
-	// 상품 상세보기
+	/**
+	 * 상품번호를 전달 받아서 상품 상세보기 페이지로 전달
+	 * 
+	 * @param pno 상품번호: from 클라이언트
+	 * @param model 뷰 전달용
+	 * @return "product/productDetail" 로 포워드
+	 */
 	@GetMapping("/productDetail")
 	public String productDetail(@RequestParam("pno") int pno, Model model) {
+//		log.info("pno:" + pno);
 		ProductVo product = productService.getProductByNo(pno);
-		List<ImageVo> images = imageService.getImgList(pno);
-
-		System.out.println("product:" + product);
-	    System.out.println("Images: " + images);
+		List<ProductImageVo> images = imageService.getImgList(pno);
+		List<RelatedProdDto> relatedProducts = productService.selectRelatedProdByUser(product.getUser_id(), pno);
+		
 	    
+	    model.addAttribute("relatedProducts", relatedProducts);
 		model.addAttribute("product", product);
 		model.addAttribute("images", images);
-		
-		
-		
+        
 		return "product/productDetail";
 	}
 	
-	// 상품 추가 폼
-	@GetMapping("/addProduct")
-	public void addProduct() {
-		log.info("addProduct...");
-	}
+	
+
 	
 	
-	// 상품 추가 페이지
-	@PostMapping("/addProduct")
-	public String showAddForm(ProductRegisterDto registerDto, Model model) {
-	    log.info("registerdto: " + registerDto);
-
-		String uploadPath = "G:/upload/"/* + getFolder() */;
-
-	    File uploadDir = new File(uploadPath);
-	    if (!uploadDir.exists()) {
-	        uploadDir.mkdirs();
-	    }
-
-	    MultipartFile multi = registerDto.getProductImg();
-	    String orgName = multi.getOriginalFilename();
-	    String uuid = UUID.randomUUID().toString();
-
-	    String fileName = uuid + "_" + orgName;
-	    File saveFile = new File(uploadPath, fileName);
-
-	    try {
-	        multi.transferTo(saveFile);
-	        log.info("파일 저장 성공: " + saveFile.getAbsolutePath());
-	    } catch (Exception e) {
-	        log.info("파일 저장 실패", e);
-	    }
-
-	    ImageVo imageVo = new ImageVo();
-	    imageVo.setUuid(uuid);
-	    imageVo.setImg_name(orgName);
-	    
-	    imageVo.setImg_path(uploadPath);
-	    
-	    ProductVo productVo = new ProductVo();
-	    productVo.setName(registerDto.getName());
-	    productVo.setContent(registerDto.getContent());
-	    productVo.setPrice(registerDto.getPrice());
-	    productVo.setStock(registerDto.getStock());
-	    productVo.setStatus(registerDto.getStatus());
-	    productVo.setCate_no(registerDto.getCate_no());
-
-	    Integer pno = productService.register(productVo);
-	    if (pno != null) {
-	        log.info("상품 등록 성공: " + pno);
-	        imageVo.setPno(pno);
-	        imageService.saveImage(imageVo); 
-	        log.info("이미지 : " + imageVo);
-	    } else {
-	        log.info("상품 저장 실패");
-	    }
-
-	    model.addAttribute("product", productVo);
-	    return "redirect:/product/productMain"; 
-	}
-	
-	
-//	private String getFolder() {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//		Date today = new Date();
-//		String folders = sdf.format(today);
-//		return folders;
-//	}
-    
-	// 상품 추가 페이지 (원본)
-//		@PostMapping("/addProduct")
-//	    public String showAddForm(ProductRegisterDto registerDto, Model model) {
-//			log.info("registerdto:" + registerDto);
-//			
-//			String uploadPath = "G:/upload/" + getFolder();
-//			
-//			MultipartFile multi = registerDto.getProductImg();
-//			String orgName = multi.getOriginalFilename();
-//			String uuid = UUID.randomUUID().toString();
-//			
-//			ImageVo imageVo = new ImageVo();
-//			imageVo.setUuid(uuid);
-//			imageVo.setImg_name(orgName);
-//			imageVo.setImg_path(uploadPath);
-//			
-//	        model.addAttribute("product", new ProductVo());
-//	        return "product/addProduct"; 
-//	    }
 
 		
 }

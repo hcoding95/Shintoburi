@@ -13,14 +13,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductRegisterDto {
-	private	String product_name;
-	private String details;
-	private String summary;
-	private Integer price;
-	private Integer stock;
-	private String status;
-	private Integer cate_no;
-	private MultipartFile productImg; 
+public class ProductMultipartDto {
 	
+	private int product_no;
+	private String product_name;
+    private String details;
+    private int price;
+    private int stock;
+    private String status;
+    private int cate_no;
+    private String summary;
+    private MultipartFile[] productImg; 
+
 }

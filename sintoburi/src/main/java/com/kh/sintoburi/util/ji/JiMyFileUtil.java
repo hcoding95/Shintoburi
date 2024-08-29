@@ -9,17 +9,17 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.sintoburi.domain.ji.ImageVo;
+import com.kh.sintoburi.domain.common.ProductImageVo;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Component
-public class MyFileUtil {
+public class JiMyFileUtil {
 	
 	private static final String UPLOAD_DIR = "/path/to/upload";
 
-    public ImageVo uploadFile(MultipartFile file, Integer pno) throws IOException {
+    public ProductImageVo uploadFile(MultipartFile file, Integer pno) throws IOException {
         if (file.isEmpty()) return null;
 
         String uuid = UUID.randomUUID().toString();
@@ -29,8 +29,8 @@ public class MyFileUtil {
         File saveFile = new File(uploadPath);
         file.transferTo(saveFile);
 
-        ImageVo image = new ImageVo();
-        image.setPno(pno);
+        ProductImageVo image = new ProductImageVo();
+        image.setProduct_no(pno);
         image.setImg_path(uploadPath);
         image.setImg_name(fileName);
 
@@ -59,13 +59,14 @@ public class MyFileUtil {
 		boolean isImage = checkImageType(f);
 		if (isImage) {
 			// 썸네일 이미지 삭제
-			// D:/upload/2024/07/25/07701548-2425-4d0c-a8a8-4d89a03ceaf7_1.png
+			// G:/upload/2024/07/25/07701548-2425-4d0c-a8a8-4d89a03ceaf7_1.png
 			int slashIndex = fileName.lastIndexOf("/");
-			String front = fileName.substring(0, slashIndex + 1);
+			String front = fileName.substring(0, slashIndex + 3);
 			// -> D:/upload/2024/07/25/
 			String rear = fileName.substring(slashIndex + 1);
 			// -> 07701548-2425-4d0c-a8a8-4d89a03ceaf7_1.png
 			String thumbnail = front + "s_" + rear;
+			
 			File fThumbnail = new File(thumbnail);
 			if (fThumbnail.exists()) {
 				fThumbnail.delete();

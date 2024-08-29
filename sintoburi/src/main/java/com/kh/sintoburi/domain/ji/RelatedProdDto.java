@@ -13,10 +13,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-public class ImageVo {
+public class RelatedProdDto {
+	
+	private int product_no;
+	private String product_name;
+	private int price;
+	private String uuid;
+	private String user_id;
+	private String img_name;
+	private String img_path;
 
-	private String uuid;	 // random string
-	private String img_name; // 상품 이름
-	private String img_path; // 상품 경로
-	private Integer pno; 		 // 어느 상품의 첨부파일인지
+
 }

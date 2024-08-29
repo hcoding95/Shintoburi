@@ -36,7 +36,7 @@ $(function() {
 		
 		$.ajax({
 			type:"POST",
-			url:"/ds/user/login",
+			url:"/user/loginPost",
 			data:JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8",
 			success: function(result){
@@ -116,7 +116,7 @@ $(function() {
 <!--                                 <a class="small" href="forgot-password.html">비밀번호 찾기</a> -->
 <!--                             </div> -->
                             <div class="text-center">
-                                <a class="small" href="/ds/board/register">회원가입</a>
+                                <a class="small" href="/product/productMain">회원가입</a>
                             </div>
                         </div>
                     </div>

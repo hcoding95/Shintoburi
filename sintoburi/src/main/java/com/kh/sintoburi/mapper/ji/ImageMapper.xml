@@ -2,43 +2,53 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.sintoburi.mapper.ji.ImageMapper">
-
-	<!-- 이미지 등록 -->
-	<insert id="insertImg">
-		insert into tbl_img
-			(uuid, img_name, img_path, pno)
-		values
-			(#{uuid}, #{img_name}, #{img_path}, #{pno})
-	</insert>
+<mapper namespace="com.kh.project01.mapper.ImageMapper">
 
 	<!-- 상품 리스트 -->
-	<select id="getImgList" resultType="ImageVo">
-		select uuid, img_name, img_path, pno
+	<select id="getImgList" resultType="ProductImageVo">
+		select uuid, img_name, img_path, product_no
 		from tbl_img
-		where pno = #{pno}
+		where product_no = #{product_no}
 	</select>
 	
+	<!-- 상품 이미지 등록  -->
+	<!-- productRegister -->
+	<insert id="Insert">
+		insert into tbl_img
+			(uuid, img_name, img_path, represent, product_no)
+		values
+			(#{uuid}, #{img_name}, #{img_path}, #{represent}, #{product_no})
+	</insert>
+
+	<!-- 이미지 등록 -->
+	<!-- imgService -->
+	<insert id="insertImg">
+		insert into tbl_img
+			(uuid, img_name, img_path, product_no)
+		values
+			(#{uuid}, #{img_name}, #{img_path}, #{product_no})
+	</insert>
+
 	<!-- 상품 상세보기 -->
-	<select id="getImageByProductNo" parameterType="int" resultType="ImageVo">
-        SELECT uuid, img_name, img_path, pno
+	<select id="getImageByProductNo" parameterType="int" resultType="ProductImageVo">
+        SELECT uuid, img_name, img_path, product_no
         FROM tbl_img
-        WHERE pno = #{pno}
+        WHERE product_no = #{product_no}
     </select>
+    
+    <!-- 이미지 리스트로 가져오기 (상품 리스트랑 중복 나중에 하나 삭제)-->
+    <select id="getImageListByPno" parameterType="int" resultType="ProductImageVo">
+	    SELECT uuid, img_name, img_path, product_no
+	    FROM tbl_img
+	    WHERE product_no = #{product_no}
+	</select>
+    
 	
-	<!-- <delete id="delete">
-		delete from tbl_img
-		where rno = #{rno}	
-	</delete>
-	
-	<select id="getOldImgList" resultType="ImageVo">
-		select * from tbl_img
-		where img_path = 'G:/upload/' ||
-							(select to_char(sysdate -1, 'yyyy/MM/dd') from dual)
-	</select> -->
-	
-	
+    <delete id="deleteImageByUuidAndName">
+        delete from tbl_img 
+        where uuid = #{uuid} and img_name = #{img_name}
+    </delete>
+    
 
 	
-
 </mapper>

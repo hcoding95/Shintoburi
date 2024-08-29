@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.sintoburi.domain.ji.ImageVo;
-import com.kh.sintoburi.util.ji.MyFileUtil;
+import com.kh.sintoburi.domain.ji.ImageFileDto;
+import com.kh.sintoburi.util.ji.JiMyFileUtil;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -49,32 +49,35 @@ public class UploadController {
 	
 	@ResponseBody
 	@PostMapping("/uploadFormAction")
-	public List<ImageVo> uploadFormAction(MultipartFile[] uploadFile) throws Exception {
+	public List<ImageFileDto> uploadFormAction(MultipartFile[] uploadFile) throws Exception {
 		log.info("uploadFormAction...");
-		String uploadPath = "G:/upload/" + getFolder();
+		String uploadPath = "D:/upload"; /*+ getFolder();*/
 		File folder = new File(uploadPath);
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
 		
-		List<ImageVo> list = new ArrayList<>();
+		List<ImageFileDto> list = new ArrayList<>();
 		
 		for (MultipartFile multi : uploadFile) {
+			log.info("-------------------------");
+			log.info("uploadCon/getOriginalFilename:" + multi.getOriginalFilename());
+			log.info("uploadCon/getSize:" + multi.getSize());
 			
 			String uuid = UUID.randomUUID().toString();
 			String savedFileName = uuid + "_" + multi.getOriginalFilename();
 			File f = new File(uploadPath, savedFileName);
 			// 업로드된 파일이 이미지라면 썸네일 이미지 생성
 			// 썸네일 파일명: s_원본이미지명
-			boolean isImage = MyFileUtil.checkImageType(f);
+			boolean isImage = JiMyFileUtil.checkImageType(f);
 			
 			
-			ImageVo attachDto = ImageVo.builder()
+			ImageFileDto imageDto = ImageFileDto.builder()
 					.img_name(multi.getOriginalFilename())
 					.uuid(uuid)
 					.img_path(uploadPath)
 					.build();
-			list.add(attachDto);
+			list.add(imageDto);
 			
 			if (isImage) {
 				// 원본 파일을 읽어서 -> 썸네일 파일로 출력
@@ -90,16 +93,16 @@ public class UploadController {
 		return list;
 	}
 	
-//	@GetMapping("/uploadAjax")
-//	public void uploadAjax() {
-//		
-//	}
+	@GetMapping("/uploadAjax")
+	public void uploadAjax() {
+		
+	}
 	
 	// <img src="/display?fileName="/>
 	@ResponseBody
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getFile(String fileName) throws Exception {
-		File f = new File("G:/" + fileName);
+		File f = new File(fileName);
 		// binary data
 		byte[] data = FileCopyUtils.copyToByteArray(f);
 		HttpHeaders headers = new HttpHeaders();
@@ -133,7 +136,7 @@ public class UploadController {
 	@DeleteMapping("/delete")
 	@ResponseBody
 	public String delete(String fileName) {
-		String result = MyFileUtil.delete(fileName);
+		String result = JiMyFileUtil.delete(fileName);
 		// 삭제 처리
 		return result;
 	}
