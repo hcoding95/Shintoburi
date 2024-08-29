@@ -13,7 +13,7 @@
 <%@ include file="/WEB-INF/views/hc/include/modal.jsp" %>
 <%
 
-    // 현재 요청의 URL을 가져와서 세션에 저장
+  /*   // 현재 요청의 URL을 가져와서 세션에 저장
     String prefixToRemove = "/WEB-INF/views";
     String uri = request.getRequestURI().substring(prefixToRemove.length()); // ? 앞에 문자열
     uri = uri.substring(0, uri.length() - 4);
@@ -24,7 +24,7 @@
 	} else {
 		query = "";
 	}
-    session.setAttribute("targetLocation", uri + query);
+    session.setAttribute("targetLocation", uri + query); */
 %>
 <script>
 $(function () {
@@ -46,7 +46,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("좋아요 취소");
+					//alert("좋아요 취소");
 					let container = that.closest(".post-container");
 					let countLike = container.find(".sumLike");
 					let count = parseInt(countLike.text(), 10);
@@ -71,7 +71,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("좋아요 클릭");
+					//alert("좋아요 클릭");
 					let container = that.closest(".post-container");
 					let countLike = container.find(".sumLike");
 					let count = parseInt(countLike.text(), 10);
@@ -112,7 +112,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("팔로우 취소");
+					//alert("팔로우 취소");
 					location.reload();
 				} 
 			});
@@ -123,7 +123,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("팔로우 클릭");
+					//alert("팔로우 클릭");
 					location.reload();
 				} 
 			});
@@ -291,7 +291,7 @@ $(function () {
             data: JSON.stringify(contents),
             contentType: "application/json; charset=utf-8",
             success: function (response) {
-                alert("수정 완료");
+                //alert("수정 완료");
                 // 성공 시 추가 작업 수행 가능
                 location.reload();
             },
@@ -775,28 +775,34 @@ $(function () {
 				        	<div class="blog-control">
 					            <h3 class="text-end">사진<div class="filters"><a id="filterBtn" href="#tab3" data-toggle="tab" data-tab="#main-tab3" class="btn btn-primary btn-standard">더보기</a></div></h3>
 					            <div class="photo-grid">
+					            	<c:set var="displayCount" value="0" />
 					            	<!-- 더 많은 이미지가 필요하면 이곳에 추가 -->
-					            	<c:forEach items="${list}" var="pictureVo" begin="0" end="5" step="1">
-					             		<c:if test="${not empty pictureVo.fileList }">
+					            	<c:forEach items="${list}" var="pictureVo" begin="0" step="1">
+					             		<c:if test="${not empty pictureVo.fileList && displayCount < 6 }">
 							             <c:forEach items="${pictureVo.fileList}" var="file" varStatus="innerstatus" begin="0" end="0">
 							                <div class="photo"><a class="open-modal" data-blog_no="${pictureVo.blog_no}" ><img src="/display?file_name=${file.file_path }/${file.uuid}_${file.file_name}" class="d-block w-100" alt="First Image"></a></div>
 							             </c:forEach>
+						            	<c:set var="displayCount" value="${displayCount + 1}" />
 						             	</c:if>
 					            	</c:forEach>
 					            </div>
 				        	</div>
+				        	<c:if test="${login.grade eq '판매자'}">
+				        	</c:if>
 				        	<div class="blog-control">
-					            <h3 class="text-end">브랜드몰<div class="filters"><a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a></div></h3>
+					            <h3 class="text-end">브랜드몰<div class="filters">
+					            <!-- <a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a> -->
+					            </div></h3>
 					            <div class="product-photo-grid">
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="#"><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
+					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
 					            </div>
 				        	</div>
 				        </div>
 				        <div class="blog-main-content">
 				        	<div class="blog-control">
-					            <h3 class="text-end">게시물 <div class="filters "><button id="filterBtn" class="btn btn-primary btn-standard">필터</button></div></h3>
+					            <h3 class="text-end">게시물 <div class="filters "></div></h3>
 				        	</div>
 				            <div class="posts">
 				            <!-- 메인의 내용 시작 -->
@@ -829,7 +835,7 @@ $(function () {
 							     <c:if test="${not empty vo.productTagList }">
 							     <div class="post-icons">
 							     	<c:forEach items="${vo.productTagList }" var="tag" >
-							         <a href="#"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_id}</a>
+							         <a href="/product/productDetail?pno=${tag.product_id}"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_name}</a>
 							     	</c:forEach>
 							     </div>
 							     </c:if>

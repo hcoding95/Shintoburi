@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.gr.BasketCriteria;
 import com.kh.sintoburi.domain.gr.BasketDetailDto;
 import com.kh.sintoburi.domain.gr.BasketDetailVo;
 import com.kh.sintoburi.domain.gr.BasketPageDto;
 import com.kh.sintoburi.domain.gr.BasketVo;
-import com.kh.sintoburi.domain.gr.LoginUser;
 import com.kh.sintoburi.service.gr.BasketService;
 
 @Controller
@@ -34,9 +34,9 @@ public class BasketController {
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
 		//장바구니 번호 가져오기
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 		int bno =basketService.getBnoByUserId(user_id);
@@ -59,9 +59,10 @@ public class BasketController {
 	@GetMapping("/list")
 	public String list(Model model, HttpSession session, BasketCriteria criteria) {
 		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
+		System.out.println("로그인한 유저는?" + dto);
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 		criteria.setUser_id(user_id);
@@ -113,9 +114,9 @@ public class BasketController {
 	@ResponseBody
 	public String removeAll(/* @RequestBody Map<String, Integer> map, */HttpSession session) {
 		
-		LoginUser dto = (LoginUser)session.getAttribute("login");
+		UserVo dto = (UserVo)session.getAttribute("login");
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 	

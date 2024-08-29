@@ -27,7 +27,7 @@ public class OrderServiceTests {
 	public void testGetOrderList() {
 		String user_id= "user01";
 		int ono = 28;
-		List<OrderDto> list = orderService.getOrderList(user_id, ono);
+		List<OrderDto> list = orderService.getOrderList(user_id);
 		log.info(list);
 	}
 	
@@ -44,6 +44,13 @@ public class OrderServiceTests {
 		vo.setUser_id("user01");
 		//boolean result	= orderService.runOrder(vo, bdnos);
 		//log.info(result);
+	}
+	
+	@Test
+	public void testGetPaymentList() {
+		String user_id = "user01";
+		List<OrderDto> list = orderService.getPaymentList(user_id);
+		log.info(list);
 	}
 
 }

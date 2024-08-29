@@ -52,6 +52,13 @@
 			<mvc:mapping path="/hn/mypage/**/*"/>
 			<!-- 동석 -->
 			<mvc:mapping path=" /ds/board/**/*"/>
+			<!-- 규림-->
+			<mvc:mapping path=" /gr/basket/**/*"/>
+			<mvc:mapping path=" /gr/order/**/*"/>
+			<mvc:mapping path=" /gr/payment/**/*"/>
+			<mvc:mapping path=" /gr/delivery/**/*"/>
+			<!-- 지환  -->
+			
 			<!-- 효철 제외 -->
 			<mvc:exclude-mapping path="/hc/blog/blog"/>
 			<mvc:exclude-mapping path="/hc/blog/detail"/>

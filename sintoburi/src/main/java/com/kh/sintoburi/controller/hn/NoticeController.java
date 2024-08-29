@@ -3,8 +3,12 @@ package com.kh.sintoburi.controller.hn;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
+import com.kh.sintoburi.domain.hn.MainNoticeDto;
 import com.kh.sintoburi.domain.hn.NoticeFormDto;
 import com.kh.sintoburi.domain.hn.NoticeImageVo;
 import com.kh.sintoburi.domain.hn.NoticeVo;
@@ -62,7 +67,7 @@ public class NoticeController {
 
 	// 공지사항등록
 	@PostMapping("/noticeRegister")
-	public String noticeRegister(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
+	public String noticeRegister(NoticeFormDto dto, RedirectAttributes rttr, HttpServletRequest request) throws IOException {
 
 		log.info("dto:" + dto);
 		List<MultipartFile> imageFiles = dto.getImage();
@@ -100,6 +105,14 @@ public class NoticeController {
 				.important(dto.getImportant()).build();
 
 		int n_no = noticeService.registerNotice(noticeVo);
+		
+		if (dto.getImportant() != null && dto.getImportant().equals("Y")) {
+			MainNoticeDto mainNoticeDto = new MainNoticeDto();
+			mainNoticeDto.setTitle(noticeVo.getTitle());
+			mainNoticeDto.setUrl("/hn/manager/notice/noticeDetail/" + n_no);
+			request.getServletContext().setAttribute("noti", mainNoticeDto);
+		}
+		
 		rttr.addFlashAttribute("registerNotice", n_no);
 		return "redirect:/hn/manager/notice/noticeList";
 
@@ -116,7 +129,7 @@ public class NoticeController {
 
 	// 공지사항 수정
 	@PostMapping("/noticeMod")
-	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr) throws IOException {
+	public String noticeMod(NoticeFormDto dto, RedirectAttributes rttr , HttpServletRequest request) throws IOException {
 		log.info("dto:" + dto);
 		List<MultipartFile> imageFiles = dto.getImage();
 		String uploadPath = "D:/upload/sintoburi/notice";
@@ -150,6 +163,13 @@ public class NoticeController {
 				.imageList(imageList).n_no(dto.getN_no()).important(dto.getImportant()).build();
 
 		int n_no = noticeService.modifyNotice(noticeVo);
+		
+		if (dto.getImportant() != null && dto.getImportant().equals("Y")) {
+			MainNoticeDto mainNoticeDto = new MainNoticeDto();
+			mainNoticeDto.setTitle(noticeVo.getTitle());
+			mainNoticeDto.setUrl("/hn/manager/notice/noticeDetail/" + n_no);
+			request.getServletContext().setAttribute("noti", mainNoticeDto);
+		}
 		rttr.addFlashAttribute("noticeMod", n_no);
 		return "redirect:/hn/manager/notice/noticeList";
 	}
@@ -177,10 +197,8 @@ public class NoticeController {
 	@ResponseBody
 	public NoticeVo importantShow() {
 		NoticeVo noticeVo = noticeService.managerNoticeShow();
+		
+		log.info("noticeVo:" + noticeVo);
 		return noticeVo;
 	}
-	
-
-	
-
 }

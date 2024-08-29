@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <title>디테일 뷰</title>
 <%
-    // 현재 요청의 URL을 가져와서 세션에 저장
+   /*  // 현재 요청의 URL을 가져와서 세션에 저장
     String prefixToRemove = "/WEB-INF/views";
     String uri = request.getRequestURI().substring(prefixToRemove.length()); // ? 앞에 문자열
     uri = uri.substring(0, uri.length() - 4);
@@ -26,7 +26,7 @@
 	} else {
 		query = "";
 	}
-    session.setAttribute("targetLocation", uri + query);
+    session.setAttribute("targetLocation", uri + query); */
 %>
     
 <script type="text/javascript">
@@ -142,7 +142,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("좋아요 취소");
+					//alert("좋아요 취소");
 					$.ajax({
 						type : "post",
 						url : "/hc/like/getSumLike",
@@ -176,7 +176,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("좋아요 클릭");
+					//alert("좋아요 클릭");
 					$.ajax({
 						type : "post",
 						url : "/hc/like/getSumLike",
@@ -222,7 +222,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("팔로우 취소");
+					//alert("팔로우 취소");
 					$.ajax({
 						type : "post",
 						url : "/hc/follow/getSumFollow",
@@ -253,7 +253,7 @@ $(function () {
 				data : JSON.stringify(sData),
 				contentType : "application/json; charset=utf-8",
 				success : function (rData) {
-					alert("팔로우 클릭");
+					//alert("팔로우 클릭");
 					$.ajax({
 						type : "post",
 						url : "/hc/follow/getSumFollow",

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class imgVo {
+public class ProductImageDto {
 	private int ino;
 	private int pno;
 	private String img_path;

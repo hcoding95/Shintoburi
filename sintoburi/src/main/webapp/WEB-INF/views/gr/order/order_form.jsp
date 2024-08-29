@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="/WEB-INF/views/gr/include/top.jsp"%> 
+<%@ include file="/WEB-INF/views/include/top.jsp"%> 
 
 <script>
 $(function(){
@@ -30,6 +30,20 @@ $(function(){
 			$("#address").val("");
 		}
 	});
+	
+	
+	 // 입력 필드에 값이 변경되었을 때 값을 가져오는 이벤트 리스너
+//     $("#user_name, #user_phone, #address").change(function(){
+//         let userName = $("#user_name").val().trim();
+//         let userPhone = $("#user_phone").val().trim();
+//         let address = $("#address").val().trim();
+
+//         console.log("현재 입력된 값:", {
+//             userName: userName,
+//             userPhone: userPhone,
+//             address: address
+//         });
+//     });
 });
 </script>
 

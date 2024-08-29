@@ -30,4 +30,5 @@ public class OrderDto {
 	private String delivery_status;
     public String user_id;
 	public String payment_type;
+	public String delivery_number;
 }

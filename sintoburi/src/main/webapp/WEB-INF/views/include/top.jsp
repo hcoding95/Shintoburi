@@ -168,11 +168,14 @@ main {
 
 </style>
 <body>
+<script>
+console.log()
+</script>
     <header class="main-header">
         <div class="top-bar">
             <div class="main-container">
                 <div class="announcement">
-                    <a href="#" class="btn ">공지사항[24/07/22] 당첨자발표 | 7월 고기데이 기획전 경품 당첨자</a>
+                  <a href="${noti.url}" class="btn ">${noti.title}</a>
                 </div>
                 <div class="user-menu">
                 	<c:choose>
@@ -185,7 +188,7 @@ main {
                 		</c:otherwise>
                 	</c:choose>
                     <a href="/hn/mypage/enqList" class="btn">마이페이지</a>
-                    <a href="#" class="btn">주문조회</a>
+                    <a href="/gr/order/payment_list" class="btn">주문조회</a>
                     <a href="/hn/mypage/noticeList" class="btn">고객센터</a>
                 </div>
             </div>
@@ -197,6 +200,7 @@ main {
                 </div>
             </div>
         </div>
+        
         <nav class="main-nav">
             <div class="main-container">
                 <ul>
@@ -205,7 +209,7 @@ main {
                     <li><a href="/ds/board/index" class="btn btn-success">커뮤니티</a></li>
                     <li><a href="javascript:void(0);" onclick="openEventPopup();" class="btn btn-success" id="event">이벤트</a></li>
                		<li><a href="javascript:void(0);" onclick="openChatPopup();" class="btn btn-success" id="chat">채팅</a></li>
-                    <li><a href="#" class="btn btn-success">장바구니</a></li>
+                    <li><a href="/gr/basket/list" class="btn btn-success">장바구니</a></li>
                 </ul>
             </div>
         </nav>
@@ -244,6 +248,39 @@ main {
         console.log("이벤트실행");
         
     }
+    
+    function openEventQuizPopup(){
+    	
+    	if(${login.user_id==null}){
+    		alert("로그인을 해주세요");
+    		return;
+    	}
+    	
+        let url = "/ds/board/quizGame";
+        let name = "이벤트";
+        let option = "width=600,height=700,top=100,left=200"
+        window.open(url, name, option);
+        console.log("이벤트실행");
+        
+    }
+    
+    function openEventRunPopup(){
+    	
+    	if(${login.user_id==null}){
+    		alert("로그인을 해주세요");
+    		return;
+    	}
+    	
+        let url = "/ds/board/runGame";
+        let name = "이벤트";
+        let option = "width=600,height=700,top=100,left=200"
+        window.open(url, name, option);
+        console.log("이벤트실행");
+        
+    }
+    
+    
+    
     
 	    // 특정 글자 수로 텍스트 자르기
 	    function truncateText(selector, maxLength) {

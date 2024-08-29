@@ -29,4 +29,5 @@ public class OrderVo {
 	private int payment_state;
 	public String payment_type;
 	public int sum_total;
+	public String delivery_number;
 }

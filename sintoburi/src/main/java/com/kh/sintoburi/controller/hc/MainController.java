@@ -2,6 +2,7 @@ package com.kh.sintoburi.controller.hc;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,10 @@ public class MainController {
 	
 	@GetMapping("/home")
 
-	public void home(Model model, HttpSession session, BlogPageDto blogPageDto) {
+	public void home(Model model, HttpSession session, BlogPageDto blogPageDto, HttpServletRequest request) {
 		List<BlogVo> list = blogService.getList(blogPageDto);
 		UserVo loginUser = (UserVo)session.getAttribute("login");
-
+		
 		String login_id = "";
 		if(loginUser != null) {
 			login_id = loginUser.getUser_id();
