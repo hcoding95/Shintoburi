@@ -1,6 +1,7 @@
 package com.kh.sintoburi.controller.hc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class HcFollowController {
 		return followService.removeFollow(followDto);
 	}
 	
-	@PostMapping("/getSumFollow")
+	@GetMapping("/getSumFollow")
 	public int getSumFollow (String follow_id) {
 		int sumFollow = followService.getCountFollower(follow_id);
 		return sumFollow;

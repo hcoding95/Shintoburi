@@ -43,7 +43,7 @@ public class HcReplyController {
 		}
 		return false;
 	}
-	// 댓글 수정
+	// 댓글 삭제
 	@PostMapping("/delete")
 	public boolean delete(int blog_rno) {
 		System.out.println("내가받은 댓글 번호는 ?" + blog_rno);

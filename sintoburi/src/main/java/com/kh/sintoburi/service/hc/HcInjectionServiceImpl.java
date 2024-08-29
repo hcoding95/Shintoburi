@@ -16,7 +16,7 @@ public class HcInjectionServiceImpl implements HcInjectionService {
 	private HcLikeService likeService;
 	@Autowired
 	private HcFollowService followService;
-	
+	// 사용자가 좋아요랑 팔로우를 했는지 체크해줌
 	@Transactional
 	@Override
 	public List<BlogVo> checkListFollowAndLike(List<BlogVo> blogList, String login_id) {
