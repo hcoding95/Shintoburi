@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%-- <%@ include file="../include/top.jsp"%> --%>
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
 
 <!-- 별점 관련 아이콘css -->
@@ -24,7 +23,7 @@ $(function() {
         
         $.ajax({
             type: 'get',
-            url: '/review/averageRating/' + pno,
+            url: '/ji/review/averageRating/' + pno,
             success: function(averageRating) {
                 let starHtml = generateStars(averageRating);
                 starContainer.html(starHtml);
@@ -74,7 +73,7 @@ $(function() {
 
 		<section class="py-1">
 			<c:if test="${isLoggedIn}">
-		        <a id="btnRegister" class="btn btn-outline-success" href="/manager/register" style="margin-left: 985px;">상품등록</a>
+		        <a id="btnRegister" class="btn btn-outline-success" href="/ji/manager/register" style="margin-left: 985px;">상품등록</a>
 		    </c:if>
 		</section>
 		
@@ -89,9 +88,9 @@ $(function() {
 		                	
 		                    <div class="col mb-5 float-left product-item" data-pno="${dto.product_no}">
 		                        <div class="card h-100">
-									<a href="/product/productDetail?pno=${dto.product_no}">
+									<a href="/ji/product/productDetail?pno=${dto.product_no}">
 					                    <img class="card-img-top" 
-					                         src="/display?fileName=/upload/${dto.uuid}_${dto.img_name}"
+					                         src="/display?file_name=/upload/${dto.uuid}_${dto.img_name}"
 					                         alt="${dto.product_name}"/>
 		                            </a>
 		                            <div class="card-body p-4">
@@ -119,6 +118,5 @@ $(function() {
             
         </section>
         
-<%-- <%@ include file="../include/bottom.jsp"%> --%>
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>
 

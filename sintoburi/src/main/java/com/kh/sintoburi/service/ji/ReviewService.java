@@ -6,13 +6,13 @@ import com.kh.sintoburi.domain.ji.ReviewVo;
 
 public interface ReviewService {
 
-//    public List<ReviewVo> getReviewsByProductNo(int pno, String sortOrder);
-	
-
+	// 리뷰 등록
     public boolean insertReview(ReviewVo reviewVo);
 
+    // 리뷰 수정
     public boolean modifyReview(ReviewVo reviewVo);
 
+    // 리뷰 삭제
     public boolean removeReview(int review_no, int pno);
 
     public List<ReviewVo> getReviewsByProductNo(ReviewVo ReviewVo);

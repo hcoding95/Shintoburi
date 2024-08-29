@@ -20,10 +20,10 @@ $(function () {
         if(confirm('정말로 삭제하시겠습니까?')) {
             $.ajax({
                 type: 'POST',
-                url: '/manager/remove',
+                url: '/ji/manager/remove',
                 data: { pno: pno },
                 success: function(response) {
-                    location.href = '/manager/productList';
+                    location.href = '/ji/manager/productList';
                 },
                 error: function() {
                     alert('삭제에 실패했습니다.');
@@ -64,7 +64,7 @@ $(function () {
 						<td>${productListDto.status}</td>
 						<td><fmt:formatDate value="${productListDto.reg_date}" pattern="yyyy/MM/dd"/></td>
 						<td><fmt:formatDate value="${productListDto.upd_date}" pattern="yyyy/MM/dd"/></td>
-						<td><a href="/manager/modifyProduct?pno=${productListDto.product_no}" class="btn btn-warning" >상품수정</a></td>
+						<td><a href="/ji/manager/modifyProduct?pno=${productListDto.product_no}" class="btn btn-warning" >상품수정</a></td>
 						<td><button type="button" class="btn btn-danger" id="btnDelete" >상품 삭제</button></td>
 					</tr>
 					</c:forEach>

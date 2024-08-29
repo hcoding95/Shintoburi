@@ -60,7 +60,7 @@ $(function() {
 		console.log("showImage...:", fileCallPath);
 		
 		$(".bigPictureWrapper").css("display", "flex").show();
-		$(".bigPicture").html(`<img src="/display?fileName=\${fileCallPath}">`)
+		$(".bigPicture").html(`<img src="/display?file_name=\${fileCallPath}">`)
 						.animate({
 							width: "100%",	
 							height: "100%"
@@ -105,7 +105,7 @@ $(function() {
 		// 비동기 전송
 		$.ajax({
 			type: "post",
-			url: "/uploadFormAction",
+			url: "/ji/uploadFormAction",
 			contentType: false, 
 			processData: false,
 			data: formData,
@@ -117,15 +117,16 @@ $(function() {
 					let isImage = checkImage(obj.img_name);
 					let imgTag;
 					let fileName = `\${obj.img_path}/\${obj.uuid}_\${obj.img_name}`;
+					console.log(fileName);
 					if (!isImage) {
-							imgTag = `<a href='/download?fileName=\${obj.img_path}/\${obj.uuid}_\${obj.img_name}'>
+							imgTag = `<a href='/download?file_name=\${obj.img_path}/\${obj.uuid}_\${obj.img_name}'>
 									<img src='/resources/images/default.png' width='100'></a>`;
 					} 
 					else {
 						let path = `\${obj.img_path}/s_\${obj.uuid}_\${obj.img_name}`;
-						
+						console.log("path?" + path);
 						let callPath = `\${obj.img_path}/\${obj.uuid}_\${obj.img_name}`;
-						imgTag = `<img class="imgImage" src="/display?fileName=\${path}" 
+						imgTag = `<img class="imgImage" src="/display?file_name=\${path}" 
 									data-callpath="\${callPath}">`;
 					}
 					
@@ -217,7 +218,7 @@ $(function() {
 <!-- 등록 폼 -->
 <div class="row justify-content-center pt-5 mt-5">
     <div class="col-md-6">
-        <form id="frmRegister" action="/manager/register" method="post" role="form">
+        <form id="frmRegister" action="/ji/manager/register" method="post" role="form">
         	<!-- product name -->
             <div class="form-group">
                 <label for="product_name">상품 이름</label>

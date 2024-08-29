@@ -24,7 +24,7 @@ import com.kh.sintoburi.service.ji.ReviewService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/product/*")
+@RequestMapping("/ji/product/*")
 @Log4j
 public class ProductController {
 
@@ -57,20 +57,29 @@ public class ProductController {
 	    
 	    model.addAttribute("list", productList); 
 	    
-	    return "product/productMain";
+	    return "/ji/product/productMain";
 	}
 	
 	
 	
 	// Main화면에서 해당 카테고리만 나오는 productMainCate
 	@GetMapping("/productMainCate") 
-	public String productMainCate(@RequestParam(required = true, name = "cate_no") int cate_no, Model model) {
-//		log.info("cate_no:" + cate_no);
+	public String productMainCate(@RequestParam(required = true, name = "cate_no") int cate_no, Model model, HttpSession session) {
+		
+		UserVo userVo = (UserVo) session.getAttribute("login");
+	    
+		if (userVo != null) {
+            model.addAttribute("isLoggedIn", true);
+            model.addAttribute("loginUser", userVo);
+        } else {
+            model.addAttribute("isLoggedIn", false);
+        }
+		
 		List<DefaultProductListDto> list = productService.selectProductsByCate(cate_no);
 		
 		model.addAttribute("list", list);
 		
-		return "product/productMainCate";
+		return "/ji/product/productMainCate";
 	}
 	
 	
@@ -82,18 +91,22 @@ public class ProductController {
 	 * @return "product/productDetail" 로 포워드
 	 */
 	@GetMapping("/productDetail")
-	public String productDetail(@RequestParam("pno") int pno, Model model) {
-//		log.info("pno:" + pno);
+	public String productDetail(@RequestParam("pno") int pno, Model model, HttpSession session) {
+		// 상품 정보, 이미지 리스트 가져오기
 		ProductVo product = productService.getProductByNo(pno);
 		List<ProductImageVo> images = imageService.getImgList(pno);
 		List<RelatedProdDto> relatedProducts = productService.selectRelatedProdByUser(product.getUser_id(), pno);
 		
-	    
+		UserVo userVo = (UserVo) session.getAttribute("login");
+		if (userVo != null) {
+			
+		}
+		
 	    model.addAttribute("relatedProducts", relatedProducts);
 		model.addAttribute("product", product);
 		model.addAttribute("images", images);
         
-		return "product/productDetail";
+		return "/ji/product/productDetail";
 	}
 	
 	

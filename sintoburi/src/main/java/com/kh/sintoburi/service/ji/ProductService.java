@@ -39,7 +39,7 @@ public interface ProductService {
 	 * @return
 	 */
 	// 유저 상품내역 가져오기 
-	public List<ProductListDto> selectProductsByUser();
+	public List<ProductListDto> selectProductsByUser(String user_id);
 
 	// 유저 상품내역에서 상품 삭제
 	public boolean remove(int pno);
@@ -57,6 +57,8 @@ public interface ProductService {
 	
 	// 상품 정보 업데이트
     public boolean updateProduct(ProductVo productVo);
+
+
 
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	

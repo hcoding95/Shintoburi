@@ -22,7 +22,7 @@ import com.kh.sintoburi.service.ji.ReviewService;
 import lombok.extern.log4j.Log4j;
 
 @RestController
-@RequestMapping("/review/*")
+@RequestMapping("/ji/review/*")
 @Log4j
 public class ReviewController {
 
@@ -32,6 +32,7 @@ public class ReviewController {
 	 // 리뷰 작성
     @PostMapping("/register")
     public boolean register(@RequestBody ReviewVo reviewVo) {
+    	System.out.println("내가받은 리뷰 vo는?" + reviewVo);
         return reviewService.insertReview(reviewVo);
     }
 
@@ -45,7 +46,8 @@ public class ReviewController {
     @DeleteMapping("/remove/{review_no}/{pno}")
     public boolean remove(@PathVariable("review_no") int review_no,
                           @PathVariable("pno") int pno) {
-        return reviewService.removeReview(review_no, pno);
+        boolean result = reviewService.removeReview(review_no, pno);
+        return result;
     }
 
     // 특정 상품에 대한 리뷰 목록

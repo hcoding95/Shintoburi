@@ -29,13 +29,14 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
 		NoticeVo noticeVo = noticeService.importantNoticeShow();
-		System.out.println("noticeVo:" + noticeVo);
-		MainNoticeDto dto = new MainNoticeDto();
-		dto.setTitle(noticeVo.getTitle());
-		dto.setUrl("/hn/mypage/noticeRead?n_no=" + noticeVo.getN_no());
-		System.out.println("dto:" + dto);
-		request.getServletContext().setAttribute("noti", dto);
-		
+		if(noticeVo != null) {
+			System.out.println("noticeVo:" + noticeVo);
+			MainNoticeDto dto = new MainNoticeDto();
+			dto.setTitle(noticeVo.getTitle());
+			dto.setUrl("/hn/mypage/noticeRead?n_no=" + noticeVo.getN_no());
+			System.out.println("dto:" + dto);
+			request.getServletContext().setAttribute("noti", dto);
+		}
 //		context.setAttribute("noti", "테스트공지");
 		return "redirect:/hc/main/home";
 	}

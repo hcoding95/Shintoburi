@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.project01.mapper.ProductMapper">
+<mapper namespace="com.kh.sintoburi.mapper.ji.ProductMapper">
 
 
 	<!-- insert -->
@@ -99,11 +99,9 @@
 		p.product_no, p.product_name, p.price, p.stock, p.status, p.reg_date,
 		p.upd_date, p.user_id
 		from tbl_product p
-		join tbl_user u on p.user_id =
-		u.user_id
+		join tbl_user u on p.user_id = u.user_id
 		where p.user_id = #{user_id}
 	</select>
-	<!-- !!!!!!!!!!!!! 상품 리스트 test2 나중에 바꾸기 !!!!!!!!!!! -->
 
 
 	<!-- delete -->
@@ -127,10 +125,17 @@
 		where product_no = #{product_no}
 	</update>
 
-	<!-- 문의사항 카운트 -->
+	<!-- 문의사항 갱신 -->
 	<update id="updateSuggestionCnt">
 		update tbl_product set
 			suggestioncnt = suggeestioncnt + #{amount}
+		where product_no = #{product_no}
+	</update>
+	
+	<!-- 리뷰 갱신 -->
+	<update id="updateReviewCnt">
+		update tbl_product set
+			reviewcnt = reviewcnt + #{amount}
 		where product_no = #{product_no}
 	</update>
 </mapper>

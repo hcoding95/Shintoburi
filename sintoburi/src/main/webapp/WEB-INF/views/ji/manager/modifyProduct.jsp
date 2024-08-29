@@ -49,7 +49,7 @@ $(function() {
         console.log("showImage...:", fileCallPath);
         
         $(".bigPictureWrapper").css("display", "flex").show();
-        $(".bigPicture").html(`<img src="/display?fileName=\${fileCallPath}">`)
+        $(".bigPicture").html(`<img src="/display?file_name=\${fileCallPath}">`)
                         .animate({
                             width: "100%",    
                             height: "100%"
@@ -118,7 +118,7 @@ $(function() {
                         console.log("callPath:", callPath);
                         imgTag = `<img class="imgImage img-thumbnail"
                         			style="width: 100px; height: 100px;"
-                        			src="/display?fileName=\${path}" 
+                        			src="/display?file_name=\${path}" 
                                     data-callpath="\${callPath}">`;
                     }
                     
@@ -155,19 +155,6 @@ $(function() {
     
     // 첨부파일 삭제
     $("#uploadedList").on("click", "li > span", function() {
-//         let that = $(this);
-//         let filename = that.data("filename");
-//         let sData = {fileName: filename};
-//         console.log("sData:", sData);
-//         $.ajax({
-//             type: "delete",
-//             url: "/delete",
-//             data: sData,
-//             success: function(rData) {
-//                 console.log(rData);
-//                 that.parent().fadeOut(1000);
-//             }
-//         });
 		// x 링크 클릭하면
 		// 해당 li를 화면에서 안보이게 - display:none, old-li 클래스 추가
 		let li = $(this).parent();
@@ -226,7 +213,7 @@ $(function() {
 <!-- 수정 폼 -->
 <div class="row justify-content-center pt-5 mt-5">
     <div class="col-md-6">
-        <form id="frmUpdate" action="/manager/modifyProduct" method="post" role="form">
+        <form id="frmUpdate" action="/ji/manager/modifyProduct" method="post" role="form">
             <input type="hidden" name="product_no" value="${productVo.product_no}">
         
             <!-- product name -->
@@ -299,7 +286,7 @@ $(function() {
                                 <c:forEach var="image" items="${productVo.imgList}">
                                     <li data-filename="${image.img_name}" data-uploadpath="/upload" data-uuid="${image.uuid}"
                                     	style="width:150px;text-align:center">
-                                        <img src="/display?fileName=/upload/${image.uuid}_${image.img_name}" 
+                                        <img src="/display?file_name=/upload/${image.uuid}_${image.img_name}" 
                                              class="img-thumbnail" style="width: 100px; height: 100px;">
                                         
                                         ${image.img_name}

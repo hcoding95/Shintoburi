@@ -70,8 +70,8 @@ public class ProductServiceImpl implements ProductService {
 
 	// 유저 상품내역 가져오기(마이페이지)
 	@Override
-	public List<ProductListDto> selectProductsByUser() {
-		List<ProductListDto> list = productMapper.selectProductsByUser();
+	public List<ProductListDto> selectProductsByUser(String user_id) {
+		List<ProductListDto> list = productMapper.selectProductsByUser(user_id);
 		return list;
 	}
 
@@ -121,6 +121,12 @@ public class ProductServiceImpl implements ProductService {
 		int count = productMapper.updateProduct(productVo);
 		return (count > 0) ? true : false;
 	}
+
+
+
+
+
+
 
 		
 

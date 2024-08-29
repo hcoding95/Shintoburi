@@ -18,7 +18,7 @@ import com.kh.sintoburi.service.ji.SuggestionService;
 import lombok.extern.log4j.Log4j;
 
 @RestController
-@RequestMapping("/suggestion/*")
+@RequestMapping("/ji/suggestion/*")
 @Log4j
 public class SuggestionController {
 

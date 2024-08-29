@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -36,21 +37,16 @@ $(function() {
 		
 		$.ajax({
 			type:"POST",
-			url:"/user/loginPost",
+			url:"/ds/user/login",
 			data:JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8",
 			success: function(result){
-				
-				// 전 페이지로 이동
-				
-				//history.back();
-				
 				//$(location).attr("href","/ds/board/index");
 				if(result=="success"){
 					//alert("로그인 성공");
-					//$(location).attr("href","/ds/board/index");
+					
 					location.href = document.referrer;
-					console.log(result);
+					
 				} else{
 					alert("아이디 또는 비밀번호를 확인해주세요");
 				}					
@@ -75,8 +71,7 @@ $(function() {
 <body class="bg-gradient-primary">
 
     <div class="container">
-    <a href="/hc/main/home"><img src="/resources/images/logo.png" alt="농사랑 로고" style="width:112px;height:88px;">
-    </a>
+<img src="/resources/images/logo.png" alt="농사랑 로고" style="width:112px;height:88px;">
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
@@ -116,7 +111,7 @@ $(function() {
 <!--                                 <a class="small" href="forgot-password.html">비밀번호 찾기</a> -->
 <!--                             </div> -->
                             <div class="text-center">
-                                <a class="small" href="/product/productMain">회원가입</a>
+                                <a class="small" href="/ds/board/register">회원가입</a>
                             </div>
                         </div>
                     </div>

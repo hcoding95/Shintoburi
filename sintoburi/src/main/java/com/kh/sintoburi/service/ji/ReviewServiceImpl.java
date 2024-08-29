@@ -1,13 +1,12 @@
 package com.kh.sintoburi.service.ji;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.ji.ReviewVo;
+import com.kh.sintoburi.mapper.ji.ProductMapper;
 import com.kh.sintoburi.mapper.ji.ReviewMapper;
 
 @Service
@@ -15,6 +14,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Autowired
     private ReviewMapper reviewMapper;
+    
+    @Autowired
+    private ProductMapper prodMapper;
 
     @Override
     public boolean insertReview(ReviewVo reviewVo) {
@@ -29,11 +31,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public boolean removeReview(int review_no, int pno) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("review_no", review_no);
-        params.put("pno", pno);
-        int count = reviewMapper.deleteReview(params);
+    public boolean removeReview(int review_no, int product_no) {
+        int count = reviewMapper.deleteReview(review_no);
         return (count > 0) ? true : false;
     }
 

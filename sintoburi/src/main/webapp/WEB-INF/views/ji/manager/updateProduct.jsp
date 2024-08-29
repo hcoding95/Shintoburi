@@ -94,7 +94,7 @@ $(function() {
 
     function displayUploadedImages(images) {
         images.forEach(image => {
-            let imgElement = `<li><img src="/display?fileName=${image.imgPath}/s_${image.uuid}_${image.imgName}" alt="${image.imgName}" />
+            let imgElement = `<li><img src="/display?file_name=${image.imgPath}/s_${image.uuid}_${image.imgName}" alt="${image.imgName}" />
                               <span class="delete-btn" data-uuid="${image.uuid}">&times;</span></li>`;
             $("#uploadedList").append(imgElement);
         });
@@ -105,7 +105,7 @@ $(function() {
 <!-- 수정 폼 -->
 <div class="row justify-content-center pt-5 mt-5">
     <div class="col-md-6">
-        <form id="frmUpdate" action="/manager/updateProduct" method="post" role="form">
+        <form id="frmUpdate" action="/ji/manager/updateProduct" method="post" role="form">
             <!-- Hidden input for product ID -->
             <input type="hidden" id="pno" name="pno" value="${product.pno}"/>
 
@@ -174,7 +174,7 @@ $(function() {
                 <ul id="uploadedList">
                     <c:forEach var="img" items="${product.imgList}">
                         <li data-filename="${img.img_name}" data-uploadpath="${img.img_path}" data-uuid="${img.uuid}">
-                            <img src="/display?fileName=${img.img_path}/s_${img.uuid}_${img.img_name}" 
+                            <img src="/display?file_name=${img.img_path}/s_${img.uuid}_${img.img_name}" 
                                  class="img-thumbnail" width="100">
                             <span class="delete-btn" data-uuid="${img.uuid}">&times;</span>
                         </li>

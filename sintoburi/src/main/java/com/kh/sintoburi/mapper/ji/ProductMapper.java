@@ -35,15 +35,12 @@ public interface ProductMapper {
 	// 상품 카테고리별 가져오기
 	public List<DefaultProductListDto> selectProductsByCate(@Param("cate_no") int cateNo);
 	
-	
-	
-	
 	/**
 	 * 유저가 등록한 상품내역 가져오기
 	 * @return
 	 */
 	// 유저 상품내역 가져오기
-	public List<ProductListDto> selectProductsByUser();
+	public List<ProductListDto> selectProductsByUser(String user_id);
 	
 	// 유저 상품내역에서 상품삭제 - 나중에 수정하기
 	public int delete(int pno);
@@ -57,10 +54,13 @@ public interface ProductMapper {
 	
 	public int Insert (ProductVo testVo);
 	
-	
+	// 상품 수정
 	public int updateProduct(ProductVo productVo);
 	
-	//----------------------// test section--------------------
+	// 문의사항 수정
     public int updateSuggestionCnt(@Param("product_no") int product_no,
     							   @Param("amount") int amount);
+    // 상품후기 수정
+    public int updateReviewCnt(@Param("product_no") int product_no,
+    						   @Param("amount") int amount);	
 }

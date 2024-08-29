@@ -17,16 +17,17 @@ import com.kh.sintoburi.service.ji.JiuserService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("/ji/user/*")
 @Log4j
-public class JiuserController {
+public class JiUserController {
 
 	@Autowired
 	private JiuserService userService;
 	
 	@GetMapping("/login")
-	public void login() {
+	public String login() {
 		System.out.println("login...");
+		return "/ds/board/login";
 	}
 	
 	@PostMapping("/loginPost")
@@ -37,9 +38,9 @@ public class JiuserController {
 		
 	}
 	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/product/productMain";
-	}
+//	@GetMapping("/logout")
+//	public String logout(HttpSession session) {
+//		session.invalidate();
+//		return "redirect:/product/productMain";
+//	}
 }

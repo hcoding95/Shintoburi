@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.ji;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.common.ProductImageVo;
 import com.kh.sintoburi.domain.common.ProductVo;
 import com.kh.sintoburi.domain.ji.ProductListDto;
@@ -21,7 +24,7 @@ import com.kh.sintoburi.util.ji.JiMyFileUtil;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/manager/*")
+@RequestMapping("/ji/manager/*")
 @Log4j
 public class ProductMgmtController {
 
@@ -33,11 +36,16 @@ public class ProductMgmtController {
 	
 	// 내 상품 리스트
 	@GetMapping("/productList")
-	public String list(Model model) {
-		List<ProductListDto> list = productService.selectProductsByUser();
+	public String list(Model model, HttpSession session) {
+
+		UserVo uservo = (UserVo)session.getAttribute("login");
+		
+		
+		List<ProductListDto> list = productService.selectProductsByUser(uservo.getUser_id());
+		log.info("list:" + list);
+		
 		model.addAttribute("list", list);
-//		log.info("productList...");
-		return "manager/productList";
+		return "/ji/manager/productList";
 	}
 	
 	// 상품 리스트에서 상품 삭제
@@ -45,7 +53,7 @@ public class ProductMgmtController {
 	public String delete(@RequestParam("pno") int pno, RedirectAttributes rttr) {
 		boolean result = productService.remove(pno);
 		rttr.addFlashAttribute("resultRemove", result);
-		return "redirect:/manager/productList";
+		return "redirect:/ji/manager/productList";
 	}
 	
 	// 상품 등록 폼
@@ -61,7 +69,7 @@ public class ProductMgmtController {
 		int pno = productService.productRegister(testVo);
 		log.info("prodMgmtCon/pno:" + pno);
 		rttr.addFlashAttribute("resultRegister", pno);
-		return "redirect:/product/productMain";
+		return "redirect:/ji/product/productMain";
 	}
 	
 	
@@ -75,7 +83,7 @@ public class ProductMgmtController {
 		log.info("productVo:" + productVo);
 		
 		
-		return "manager/modifyProduct";
+		return "/ji/manager/modifyProduct";
 	}
 	
 	// 수정 처리
@@ -108,7 +116,7 @@ public class ProductMgmtController {
 	        rttr.addFlashAttribute("message", "상품 수정에 실패했습니다.");
 	    }
 		
-	    return "redirect:/manager/productList"; 
+	    return "redirect:/ji/manager/productList"; 
 	}
 	
 	

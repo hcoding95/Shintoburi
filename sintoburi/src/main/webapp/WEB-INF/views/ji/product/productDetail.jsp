@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
 
 <!-- 별점 관련 아이콘css -->
@@ -50,7 +51,7 @@ $(function() {
 
     $.ajax({
         type: 'get',
-        url: '/review/averageRating/' + pno,
+        url: '/ji/review/averageRating/' + pno,
         success: function(averageRating) {
             let starHtml = generateStars(averageRating);
             $('#averageRating').html(starHtml); 
@@ -72,13 +73,16 @@ function sortReviews() {
 
     $.ajax({
         type: 'get',
-        url: '/review/list/' + pno + '/' + sortOrder,
+        url: '/ji/review/list/' + pno + '/' + sortOrder,
         success: function(data) {
         	console.log(data);
             $('#reviewList').html('');
             if (data.length > 0) {
                 $.each(data, function(index, review) {
-                	console.log(review)
+                	
+//                 	console.log("리뷰의 사용자 ID:", review.user_id);
+//                 	console.log("로그인된 사용자 ID:", "${sessionScope.loggedInUser.user_id}");
+                	
                     let reviewDate = new Date(review.review_reg_date).toLocaleDateString();
                 	let starHtml = generateStars(review.review_rating);
                 	
@@ -90,9 +94,10 @@ function sortReviews() {
                                 <p class="card-text">\${review.review_content}</p>
                                 <small class="text-muted">작성일: \${reviewDate}</small>`;
                                 
-                    if (review.user_id == "${sessionScope.loggedInUser.user_id}") {
+                    if (review.user_id == "${sessionScope.login.user_id}") {
                         reviewHtml += `
-                                <button onclick="deleteReview(${review.review_no}, ${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
+                                <button onclick="deleteReview(\${review.review_no}, \${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
+                                
                     }
 
                     reviewHtml += `</div></div>`;
@@ -113,7 +118,7 @@ $(function() {
     let pno = '${product.product_no}';
     $.ajax({
         type: 'get',
-        url: '/review/averageRating/' + pno,
+        url: '/ji/review/averageRating/' + pno,
         success: function(averageRating) {
             let starHtml = generateStars(averageRating);
             $('#averageRating').html(starHtml);
@@ -130,7 +135,7 @@ $(function() {
 
         $.ajax({
             type: 'get',
-            url: '/review/averageRating/' + pno,
+            url: '/ji/review/averageRating/' + pno,
             success: function(averageRating) {
                 let starHtml = generateStars(averageRating);
                 starContainer.html(starHtml);
@@ -149,7 +154,7 @@ function deleteReview(review_no, pno) {
     if(confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
         $.ajax({
             type: 'delete',
-            url: '/review/remove/' + review_no + '/' + pno,
+            url: '/ji/review/remove/' + review_no + '/' + pno,
             success: function(response) {
                 if(response) {
                     alert('리뷰가 삭제되었습니다.');
@@ -171,15 +176,16 @@ $(function() {
         event.preventDefault();
 
         let review = {
-            pno: '${product.product_no}',
-            user_id: '${sessionScope.loggedInUser.userId}',
+            product_no: '${product.product_no}',
+            user_id: '${login.user_id}',
             review_content: $('#reviewContent').val(),
             review_rating: $('#reviewRating').val()
         };
+        console.log(review);
 
         $.ajax({
             type: 'post',
-            url: '/review/register',
+            url: '/ji/review/register',
             contentType: 'application/json',
             data: JSON.stringify(review),
             success: function(response) {
@@ -202,8 +208,8 @@ $(function() {
     $('.card-img-top').each(function() {
         let img = $(this);
         img.on('load', function() {
-            console.log('Width: ' + img.width());
-            console.log('Height: ' + img.height());
+//             console.log('Width: ' + img.width());
+//             console.log('Height: ' + img.height());
         });
     });
 });
@@ -216,7 +222,7 @@ $(function() {
 
         $.ajax({
             type: "get",
-            url: "/suggestion/list/" + pno,
+            url: "/ji/suggestion/list/" + pno,
             contentType: "application/json; charset=utf-8",
             success: function(rData) {
                 console.log(rData);
@@ -233,7 +239,7 @@ $(function() {
                             <td>\${toDateString(suggestion.suggestion_upd_date)}</td>
                         `;
                         
-                        if (suggestion.user_id == "\${sessionScope.loggedInUser.user_id}") {
+                        if (suggestion.user_id == "\${sessionScope.login.user_id}") {
                             tr += `<td><button class="btn btn-sm btn-warning btnSuggestionModify" data-rno="\${suggestion.suggestion_no}">수정</button></td>
                                    <td><button class="btn btn-sm btn-danger btnSuggestionRemove" data-rno="\${suggestion.suggestion_no}">삭제</button></td>`;
                         }
@@ -270,7 +276,7 @@ $(function() {
                 <c:forEach var="image" items="${images}" varStatus="status">
                     <c:if test="${image.product_no == product.product_no && status.index == 0}">
                         <img class="card-img-top mb-5 mb-md-0" 
-                             src="/display?fileName=/upload/${image.uuid}_${image.img_name}" 
+                             src="/display?file_name=/upload/${image.uuid}_${image.img_name}" 
                              alt="${product.product_name}"
                              style="width: 450px; height: 350px; object-fit: cover; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px;" />
                     </c:if>
@@ -324,9 +330,9 @@ $(function() {
             <c:forEach var="relatedProducts" items="${relatedProducts}" begin="0" end="3">
                 <div class="col mb-5">
                     <div class="card h-100" data-pno="${relatedProducts.product_no}">
-                        <a href="/product/productDetail?pno=${relatedProducts.product_no}">
+                        <a href="/ji/product/productDetail?pno=${relatedProducts.product_no}">
                             <img class="card-img-related" 
-                                 src="/display?fileName=/upload/${relatedProducts.uuid}_${relatedProducts.img_name}" 
+                                 src="/display?file_name=/upload/${relatedProducts.uuid}_${relatedProducts.img_name}" 
                                  alt="${relatedProducts.product_name}" />
                         </a>
                         <div class="card-body p-4">
@@ -358,7 +364,7 @@ $(function() {
                 <c:forEach var="image" items="${images}">
                     <c:if test="${image.product_no == product.product_no}">
                         <img class="card-img-top mb-5 mb-md-0" 
-                             src="/display?fileName=/upload/${image.uuid}_${image.img_name}" 
+                             src="/display?file_name=/upload/${image.uuid}_${image.img_name}" 
                              alt="${product.product_name}"
                              style="width: 450px; height: 350px; object-fit: cover; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; margin-bottom: 30px;" />
                     </c:if>
@@ -455,7 +461,7 @@ $(function() {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="reviewForm" action="/product/addReview" method="post">
+                                <form id="reviewForm" action="/ji/product/addReview" method="post">
                                     <input type="hidden" name="product_no" value="${product.product_no}">
                                     <input type="hidden" name="user_id" value="${sessionScope.loggedInUser.user_id}"> <!-- 로그인된 유저 ID -->
                                     
@@ -521,7 +527,7 @@ $(function() {
 						<div class="jumbotron card card-block"  style="background-color: white">
 							<div class="clearFix" style="display: flex;">
 							    <h4 class="prod-suggestion-list-title">상품문의</h4>
-							    <a class="prod-suggestion-list-write-btn btn btn-primary" 
+							    <a class="prod-suggestion-list-write-btn btn btn-outline-primary" 
 							       style="width: 90px; height: 35px; display: flex;">
 							       문의하기
 							    </a>
@@ -539,11 +545,12 @@ $(function() {
 												
 							
 							<table class="table" id="suggestion_table">
-								<tbody></tbody>
+								<tbody>
+								</tbody>
 							</table>
+							
 						</div>
 					</div>
-				
                 </div>
             </div>
         </div>
@@ -551,5 +558,5 @@ $(function() {
 </div>
 <!-- //탭 -->
 
-<%@ include file="/WEB-INF/views/include/bottom.jsp"%>
+<%@ include file="/WEB-INF/views/ji/include/bottom.jsp"%>
 </html>

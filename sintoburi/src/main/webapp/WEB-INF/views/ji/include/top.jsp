@@ -226,13 +226,13 @@ main {
                 <div class="user-menu">
 				    <!-- 로그인 상태 O -->
 				    <c:if test="${isLoggedIn}">
-				        <a href="/user/logout" class="btn">로그아웃</a>
+				        <a href="/ds/user/logout" class="btn">로그아웃</a>
 				        <a href="/user/myPage" class="btn">마이페이지</a>
 				    </c:if>
 				    
 				    <!-- 로그인 상태 X -->
 				    <c:if test="${not isLoggedIn}">
-				        <a href="/user/login" class="btn">로그인</a>
+				        <a href="/ds/board/login" class="btn">로그인</a>
 				        <a href="/user/register" class="btn">회원가입</a>
 				    </c:if>
 				
@@ -251,13 +251,10 @@ main {
         <nav class="main-nav">
             <div class="main-container">
                 <ul>
-                    <li><a href="/product/productMain" class="btn btn-success">메인화면</a></li>
+                    <li><a href="/ji/product/productMain" class="btn btn-success">메인화면</a></li>
                     <li><a href="#" class="btn btn-success">정기배송</a></li>
                     <li><a href="#" class="btn btn-success">베스트</a></li>
                     <li><a href="#" class="btn btn-success">신상품</a></li>
-                    <li><a href="#" class="btn btn-success">지역특산물</a></li>
-                    <li><a href="#" class="btn btn-success">기획전</a></li>
-                    <li><a href="#" class="btn btn-success">푸드체험단</a></li>
                     <li><a href="#" class="btn btn-success">상품후기</a></li>
                     <li><a href="#" class="btn btn-success">장바구니</a></li>
                 </ul>

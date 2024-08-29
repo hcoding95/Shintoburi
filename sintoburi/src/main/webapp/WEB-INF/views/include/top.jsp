@@ -166,6 +166,58 @@ main {
 }
 
 
+/* 지환 스타일 추가  */
+
+.product-list {
+	margin-top: 20px;
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid #ddd;          /* 사각 테두리 추가 */
+    padding: 10px 15px;              /* 내부 여백 설정 */
+    white-space: nowrap;             /* 텍스트 줄 바꿈 방지 */
+    border-radius: 5px;              /* 테두리 둥글게 만들기 */
+    margin-right: 10px;              /* 탭 간 간격 설정 */
+    background-color: white;         /* 배경색 설정 */
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #f8f9fa;       /* 활성화된 탭의 배경색 설정 */
+    border-color: #ddd;              /* 활성화된 탭의 테두리 색상 */
+}
+
+.nav-tabs {
+    border-bottom: none;             /* 기본 하단 경계선 제거 */
+}
+
+.col-md-6 img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.star-rating {
+    font-size: 0; /* 텍스트 크기를 0으로 설정하여 별 이미지만 표시 */
+    display: inline-block;
+}
+
+.star-rating i {
+    font-size: 22px; /* 별의 크기를 설정 */
+    color: #ffcc00; /* 별의 색상 */
+}
+
+.star-rating .half-star {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 11px; /* 반 별의 너비 */
+}
+.gold-star {
+        color: gold;
+}
+
+/*// 지환 스타일 추가 */
+
 </style>
 <body>
 <script>
@@ -205,7 +257,7 @@ console.log()
             <div class="main-container">
                 <ul>
                     <li><a href="/hc/main/home" class="btn btn-success">홈</a></li>
-                    <li><a href="#" class="btn btn-success">상품몰</a></li>
+                    <li><a href="/ji/product/productMain" class="btn btn-success">상품몰</a></li>
                     <li><a href="/ds/board/index" class="btn btn-success">커뮤니티</a></li>
                     <li><a href="javascript:void(0);" onclick="openEventPopup();" class="btn btn-success" id="event">이벤트</a></li>
                		<li><a href="javascript:void(0);" onclick="openChatPopup();" class="btn btn-success" id="chat">채팅</a></li>

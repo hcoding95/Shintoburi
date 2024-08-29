@@ -26,7 +26,7 @@
 		
 		<multipart-config>
 			<!-- location에 //192.168.0.88/upload_shard/ 가틍ㄴ  -->
-			<location>D:/upload/tmp</location>
+			<location>G:/upload/tmp</location>
 			<max-file-size>20971520</max-file-size><!-- 20MB  -->
 			<max-request-size>41943040</max-request-size><!-- 40MB  -->
 			<file-size-threshold>20971520</file-size-threshold><!-- 20MB  -->
