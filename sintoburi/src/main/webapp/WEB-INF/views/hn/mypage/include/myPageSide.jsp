@@ -116,6 +116,7 @@
                         <li><a href="gr/order/payment_list">주문/배송 조회</a></li>
                         <c:if test="${login.grade == '판매자'}">
                         <li><a href="">판매 상품 조회</a></li>
+                        <li><a href="">판매 내역 조회</a></li>
                         </c:if>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">
