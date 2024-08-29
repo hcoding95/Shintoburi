@@ -4,38 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="/WEB-INF/views/gr/sales_manage/include/header.jsp"%>     
 <script>
-$(function() {
-$(".btnMod").click(function() {
-       let ono = $(this).attr("data-ono");
-       let delivery_status = $(this).closest('tr').find('select').val();
-       console.log(ono);
-       console.log(delivery_status);
-       
-       let sData = {
-           "ono": ono,
-           "delivery_status": delivery_status
-       };
-       console.log("sData:", sData);
-       $.ajax({
-			type: "post",
-			url : "/gr/sales_manage/updateDeliveryStatus",
-			data : JSON.stringify(sData),
-			contentType: "application/json; charset=utf-8",
-			 success: function(rData) {
-				 	console.log("rData:", rData);
-	                if (rData) {
-	                    alert(delivery_status + "로 변경 되었습니다.");
-	                    window.location.reload();
-	                } else {
-	                    alert("변경 실패 , 다시 시도해 주세요.");
-	                }
-	            }
-		});
-       
-   });
-});
-
-
 </script>
   
 		  <!-- Card Body -->
@@ -52,9 +20,7 @@ $(".btnMod").click(function() {
 					<th>총상품금액</th>
 					<th>결제금액</th>
 					<th>배송상태</th>
-					<th>배송수정</th>
 					<th>결제일</th>
-					<th>수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -67,16 +33,7 @@ $(".btnMod").click(function() {
 				        <td>${orderDto.sum_total}</td>
 				        <td>${orderDto.pay_amount}</td>
 				        <td>${orderDto.delivery_status}</td>
-				        <td>
-				            <select name="delivery_status_${orderDto.ono}">
-				                <option value="배송전" ${orderDto.delivery_status == '배송전' ? 'selected' : ''}>배송전</option>
-				                <option value="배송준비중" ${orderDto.delivery_status == '배송준비중' ? 'selected' : ''}>배송준비중</option>
-				                <option value="배송중" ${orderDto.delivery_status == '배송중' ? 'selected' : ''}>배송중</option>
-				                <option value="배송완료" ${orderDto.delivery_status == '배송완료' ? 'selected' : ''}>배송완료</option>
-				            </select>
-				        </td>
 				        <td><fmt:formatDate value="${orderDto.order_date}" pattern="yyyy-MM-dd"/></td>
-						<td> <button class="btnMod btn btn-outline-dark" data-ono="${orderDto.ono}" type="button">수정</button></td>			    
 				    </tr>
 				</c:forEach>
 			</tbody>

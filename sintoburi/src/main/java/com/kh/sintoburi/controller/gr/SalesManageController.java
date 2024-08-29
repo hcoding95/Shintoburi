@@ -3,6 +3,8 @@ package com.kh.sintoburi.controller.gr;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.service.gr.SalesManageService;
 
@@ -26,25 +29,19 @@ public class SalesManageController {
 	@Autowired
 	public SalesManageService salesManageService; 
 	
+	//관리자 판매 목록 전체 보기
+	//TODO 로그인 처리
 	@GetMapping("/list")
-	public String deliveryManage(Model model) {
-	    List<OrderDto> deliveryList	= salesManageService.getSalesManageList();
+	public String deliveryManage(Model model, HttpSession session) {
+		UserVo dto = (UserVo)session.getAttribute("login");
+//		if (dto == null) {
+//			//return "redirect:/hc/main/home";
+//		}
+		String user_id = dto.getUser_id();
+		
+	    List<OrderDto> deliveryList	= salesManageService.getSalesManageList(user_id);
 	    model.addAttribute("deliveryList", deliveryList);
 	    return "/gr/sales_manage/list";
 	}
-	
-//	@PostMapping("/updateDeliveryStatus")
-//	@ResponseBody
-//	public boolean updateDeliveryStatus(@RequestBody OrderDto orderDto)  {
-//		log.info("OrderDto" + orderDto);
-//		
-//		int ono = orderDto.getOno();
-//		String delivery_status = orderDto.getDelivery_status();
-//		log.info("ono" + ono);
-//		log.info("delivery_status" + delivery_status);
-//		boolean result = salesManageService.updateDeliveryStatus(ono,delivery_status);
-//		return result;
-//	}
-
 	
 }

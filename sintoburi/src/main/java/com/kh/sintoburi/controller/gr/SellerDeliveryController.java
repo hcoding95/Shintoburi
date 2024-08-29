@@ -30,9 +30,9 @@ public class SellerDeliveryController {
 	@GetMapping("/list")
 	public String deliveryManage(Model model,HttpSession session) {
 		UserVo dto = (UserVo)session.getAttribute("login");
-	    if (dto == null) {
-	        return "redirect:/"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
-	    }
+//	    if (dto == null) {
+//	        //return "redirect:/"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
+//	    }
 		String user_id = dto.getUser_id();
 		
 		List<OrderDto> deliveryList	= sellerDeliveryService.getDeliveryManageList(user_id);

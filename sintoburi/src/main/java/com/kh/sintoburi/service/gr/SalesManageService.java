@@ -5,7 +5,7 @@ import java.util.List;
 import com.kh.sintoburi.domain.gr.OrderDto;
 
 public interface SalesManageService {
-	public List<OrderDto> getSalesManageList();
+	//관리자 판매 목록 전체 보기
+	public List<OrderDto> getSalesManageList(String user_id);
 	
-	//public boolean updateDeliveryStatus(int ono, String delivery_status);
 }

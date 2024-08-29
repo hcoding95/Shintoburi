@@ -1,14 +1,6 @@
 package com.kh.sintoburi.controller.gr;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.kh.sintoburi.domain.common.UserVo;
-import com.kh.sintoburi.domain.gr.LoginUser;
 
 @Controller
 public class GyurimController {

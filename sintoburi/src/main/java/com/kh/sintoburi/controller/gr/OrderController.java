@@ -47,9 +47,9 @@ public class OrderController {
 		}
 			
 		//로그인한 상태
-		if (dto == null) {
-			return "redirect:/hc/main/home";
-		}
+//		if (dto == null) {
+//			return "redirect:/hc/main/home";
+//		}
 		String user_id = dto.getUser_id();
 		orderVo.setUser_id(user_id);
 		
@@ -93,24 +93,22 @@ public class OrderController {
 	public String orderList(Model model, HttpSession session, Integer ono){
 		UserVo dto = (UserVo)session.getAttribute("login");
 		//System.out.println("ono:" + ono);
-	    if (dto == null) {
-	        return "redirect:/hc/main/home"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
-	    }
+//	    if (dto == null) {
+//	        return "redirect:/hc/main/home"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
+//	    }
 		//System.out.println("dto:" + dto);
 		String user_id = dto.getUser_id();
 		//System.o//ut.println("user_id: "+ user_id);
 		
 		System.out.println("id:"+user_id+"ono:"+ono);
-//		 TODO 결제하기로 이동
-//		결제(가격 계산)
+//		결제(가격 계산): 결제 전 정보 처리
 		PaymentDto paymentDto = orderService.payment(user_id, ono);
 		model.addAttribute("paymentDto",paymentDto);
 //		System.out.println("paymentDto" + paymentDto);
-//		
+		
 		List<OrderDto> orderList = orderService.getOrderList(user_id);
 		model.addAttribute("orderList", orderList);
 		return "/gr/order/order_list";
-		
 	}
 	
 	//주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
@@ -119,9 +117,9 @@ public class OrderController {
 			Model model, HttpSession session ){
 		UserVo dto = (UserVo)session.getAttribute("login");
 		// dto가 null인지 확인
-	    if (dto == null) {
-	        return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
-	    }
+//	    if (dto == null) {
+//	       // return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
+//	    }
 		//System.out.println("dto:" + dto);
 		String user_id = dto.getUser_id();
 		//System.out.println("user_id: "+ user_id);
@@ -131,15 +129,15 @@ public class OrderController {
 		return "/gr/order/detail";
 	}
 	
-	//결제하기: 포인트가 결제금액보다 적으면 alert, 포인트-결제금액(pay_amount)해서 가격계산
-	// tbl_user 포인트 수정, tbl_order에 결제완료1 상태로 바꾸기 
-	//해야할 일: 사용자테이블의 포인트: 갱신
-    //해야할 일: 포인트테이블에 포인트 사용 내역: 추가
+	//결제하기: 포인트가 결제금액보다 적으면 alert, 포인트-결제금액(pay_amount)해서 가격계산,
+	//        tbl_user 포인트 수정, tbl_order에 결제완료1 상태로 바꾸기 
+	//TODO 사용자테이블의 포인트: 갱신
+    //TODO 포인트테이블에 포인트 사용 내역: 추가
 	@PostMapping("/do_pay")
 	@ResponseBody
 	public void doPay(@RequestBody PaymentDto paymentDto, 
 			Model model, HttpSession session) {
-		//ystem.out.println(paymentDto.toString());
+		//system.out.println(paymentDto.toString());
 		
 		//UserVo dto = (UserVo)session.getAttribute("login");
 //		 if (dto == null) {
@@ -153,11 +151,10 @@ public class OrderController {
 			System.out.println( "paymentDto" + paymentDto);
 			
 		 orderService.updatePaymentState(paymentDto);
-		orderService.updatePoint(paymentDto);
+		 orderService.updatePoint(paymentDto);
 		 
-		
 		 //System.out.println(result);
-		 //return "redirect:/gr/order/payment_list";
+		 //JSP에 리턴 만듦 return "redirect:/gr/order/payment_list";
 	}
 	
 	//결제완료 목록
@@ -166,20 +163,14 @@ public class OrderController {
 			Integer ono, PaymentDto paymentDto) {
 		 System.out.println("Received ono: " + ono);
 		UserVo dto = (UserVo)session.getAttribute("login");
-	    if (dto == null) {
-	        return "redirect:/gr"; 
-	    }
+//	    if (dto == null) {
+//	       // return "redirect:/gr"; 
+//	    }
 		String user_id = dto.getUser_id();
 							
 		List<OrderDto> paymentList = orderService.getPaymentList(user_id);
 		model.addAttribute("paymentList", paymentList);
-		
 		return "/gr/order/payment_list";
 	}
 	
-	//배송관리: 결제전 0 이면 주문상세 목록에, 결제완료 1이면 배송관리 목록에 넣음.
-	
-	
-	
-	//배송관리 목록 배송리스트에 배송 준비중, 배송중, 배송완료 선택할 수 있게 하고 tbl_order DELIVERY_STATUS에 정보 넘겨주기
 }

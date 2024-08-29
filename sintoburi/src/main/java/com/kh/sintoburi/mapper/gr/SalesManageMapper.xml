@@ -4,21 +4,16 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kh.sintoburi.mapper.gr.SalesManageMapper">
+<!-- 	  관리자 판매 목록 전체 보기 -->
 	  <select id="getSalesManageList" resultType="OrderDto">
 		select ono, user_phone, user_name, address, user_id,
   				delivery_charge, delivery_status, 
   				pay_amount, sum_total, order_date
         from tbl_order
         where payment_state = '1'
+        and user_id = #{user_id}
 		order by order_date, ono
 	  </select>
-	  
-	  
-<!-- 	  <update id="updateDeliveryStatus"> -->
-<!-- 	  update tbl_order set -->
-<!-- 		delivery_status = #{delivery_status} -->
-<!-- 	 where ono = #{ono} -->
-<!-- 	  </update> -->
 	  
   </mapper>
   

@@ -14,16 +14,11 @@ public class SalesManageServiceImpl implements SalesManageService{
 	@Autowired
 	private SalesManageMapper salesManageMapper;
 	
+	//관리자 판매 목록 전체 보기
 	@Override
-	public List<OrderDto> getSalesManageList() {
-		List<OrderDto> list = salesManageMapper.getSalesManageList();
+	public List<OrderDto> getSalesManageList(String user_id) {
+		List<OrderDto> list = salesManageMapper.getSalesManageList(user_id);
 		return list;
 	}
-
-//	@Override
-//	public boolean updateDeliveryStatus(int ono, String delivery_status) {
-//		int count = salesManageMapper.updateDeliveryStatus(ono, delivery_status);
-//		return (count == 1)? true: false;
-//	}
 
 }

@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.kh.sintoburi.domain.gr.OrderDto;
 
 public interface SalesManageMapper {
-	public List<OrderDto> getSalesManageList();
+	//관리자 판매 목록 전체 보기
+	public List<OrderDto> getSalesManageList(@Param("user_id") String user_id);
 
-	//public int updateDeliveryStatus(@Param("ono") int ono, @Param("delivery_status") String delivery_status);
 
 }

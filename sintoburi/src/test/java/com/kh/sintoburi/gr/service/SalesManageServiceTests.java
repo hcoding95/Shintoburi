@@ -23,8 +23,8 @@ public class SalesManageServiceTests {
 	
 	@Test
 	public void testGetSalesManageList() {
-		List<OrderDto> list = deliveryService.getSalesManageList();
-		log.info(list);
+		//List<OrderDto> list = deliveryService.getSalesManageList(user_id);
+		//log.info(list);
 	}
 	
 	

@@ -30,14 +30,14 @@ public class BasketController {
 	@Autowired
 	private BasketService basketService;
 	
-	//장바구니 담기(더 해야 함:구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기, 상품 이미지 넣기)
+	//장바구니 담기(TODO 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기, 상품 이미지 넣기)
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
 		//장바구니 번호 가져오기
 		UserVo dto = (UserVo)session.getAttribute("login");
-		if (dto == null) {
-			return "redirect:/hc/main/home";
-		}
+//		if (dto == null) {
+//			return "redirect:/hc/main/home";
+//		}
 		String user_id = dto.getUser_id();
 		int bno =basketService.getBnoByUserId(user_id);
 		
@@ -61,9 +61,9 @@ public class BasketController {
 		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
 		UserVo dto = (UserVo)session.getAttribute("login");
 		System.out.println("로그인한 유저는?" + dto);
-		if (dto == null) {
-			return "redirect:/hc/main/home";
-		}
+//		if (dto == null) {
+//			//return "redirect:/hc/main/home";
+//		}
 		String user_id = dto.getUser_id();
 		criteria.setUser_id(user_id);
 //		System.out.println("Page Number: " + criteria.getPageNum());
@@ -115,9 +115,9 @@ public class BasketController {
 	public String removeAll(/* @RequestBody Map<String, Integer> map, */HttpSession session) {
 		
 		UserVo dto = (UserVo)session.getAttribute("login");
-		if (dto == null) {
-			return "redirect:/hc/main/home";
-		}
+//		if (dto == null) {
+//			//return "redirect:/hc/main/home";
+//		}
 		String user_id = dto.getUser_id();
 	
 		int bno = basketService.getBnoByUserId(user_id);

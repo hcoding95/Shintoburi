@@ -30,14 +30,14 @@ $(function() {
 				if (result) {
 					let modCount = inputp_count; // 업데이트
 					if (modCount === p_count) {
-						alert("수정 값을 입력해주세요");
+						alert("값을 수정해서 입력해주세요");
 					} else {
 						$(".p_count").text(modCount);
-						alert("수정 완료");
+						alert("상품수가 수정되었습니다");
 						location.reload();
 					}
 				} else {
-					alert("수정 실패");
+					alert("상품수가 수정되지 않았습니다");
 				}
 			}
 		});
