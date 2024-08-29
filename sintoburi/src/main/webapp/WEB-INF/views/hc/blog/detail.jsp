@@ -144,9 +144,8 @@ $(function () {
 				success : function (rData) {
 					//alert("좋아요 취소");
 					$.ajax({
-						type : "post",
-						url : "/hc/like/getSumLike",
-						data : { 'blog_no' : blog_no},
+						type : "get",
+						url : "/hc/like/getSumLike?blog_no=" + blog_no,
 						success : function (rData) {
 							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
 							$(window.parent.document).find("#likeBtn" + blog_no).attr("data-liked", false);
@@ -178,9 +177,8 @@ $(function () {
 				success : function (rData) {
 					//alert("좋아요 클릭");
 					$.ajax({
-						type : "post",
-						url : "/hc/like/getSumLike",
-						data : { 'blog_no' : blog_no},
+						type : "get",
+						url : "/hc/like/getSumLike?blog_no=" + blog_no,
 						success : function (rData) {
 							$(window.parent.document).find("#sumLike" + blog_no).text(rData);
 							$(window.parent.document).find("#likeBtn" + blog_no).attr("data-liked", true);
@@ -224,9 +222,9 @@ $(function () {
 				success : function (rData) {
 					//alert("팔로우 취소");
 					$.ajax({
-						type : "post",
-						url : "/hc/follow/getSumFollow",
-						data : { 'follow_id' : followed_id},
+						type : "get",
+						url : "/hc/follow/getSumFollow?follow_id=" + followed_id ,
+						/* data : { 'follow_id' : followed_id}, */
 						success : function (rData) {
 							$(window.parent.document).find("#sumFollow" + ${blogVo.blog_no}).text(rData);
 						}
@@ -255,9 +253,9 @@ $(function () {
 				success : function (rData) {
 					//alert("팔로우 클릭");
 					$.ajax({
-						type : "post",
-						url : "/hc/follow/getSumFollow",
-						data : { 'follow_id' : followed_id},
+						type : "get",
+						url : "/hc/follow/getSumFollow?follow_id=" + followed_id,
+						/* data : { 'follow_id' : followed_id}, */
 						success : function (rData) {
 							$(window.parent.document).find("#sumFollow" + ${blogVo.blog_no}).text(rData);
 						}
