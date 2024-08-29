@@ -48,7 +48,7 @@ public class OrderController {
 			
 		//로그인한 상태
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 		orderVo.setUser_id(user_id);
@@ -94,7 +94,7 @@ public class OrderController {
 		UserVo dto = (UserVo)session.getAttribute("login");
 		//System.out.println("ono:" + ono);
 	    if (dto == null) {
-	        return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
+	        return "redirect:/hc/main/home"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
 	    }
 		//System.out.println("dto:" + dto);
 		String user_id = dto.getUser_id();

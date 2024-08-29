@@ -36,7 +36,7 @@ public class BasketController {
 		//장바구니 번호 가져오기
 		UserVo dto = (UserVo)session.getAttribute("login");
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 		int bno =basketService.getBnoByUserId(user_id);
@@ -62,7 +62,7 @@ public class BasketController {
 		UserVo dto = (UserVo)session.getAttribute("login");
 		System.out.println("로그인한 유저는?" + dto);
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 		criteria.setUser_id(user_id);
@@ -116,7 +116,7 @@ public class BasketController {
 		
 		UserVo dto = (UserVo)session.getAttribute("login");
 		if (dto == null) {
-			return "redirect:/gr";
+			return "redirect:/hc/main/home";
 		}
 		String user_id = dto.getUser_id();
 	

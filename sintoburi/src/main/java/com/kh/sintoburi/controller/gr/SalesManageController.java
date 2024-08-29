@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.sintoburi.domain.gr.OrderDto;
 import com.kh.sintoburi.service.gr.SalesManageService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
 @RequestMapping("/gr/sales_manage/*")
+@Log4j
 public class SalesManageController {
 
 	@Autowired
@@ -32,11 +35,16 @@ public class SalesManageController {
 	
 //	@PostMapping("/updateDeliveryStatus")
 //	@ResponseBody
-//	public boolean updateDeliveryStatus(@RequestBody Map<String, Integer> map)  {
-//		int ono = map.get("ono");
-//		int delivery_status = map.get("delivery_status");
+//	public boolean updateDeliveryStatus(@RequestBody OrderDto orderDto)  {
+//		log.info("OrderDto" + orderDto);
+//		
+//		int ono = orderDto.getOno();
+//		String delivery_status = orderDto.getDelivery_status();
+//		log.info("ono" + ono);
+//		log.info("delivery_status" + delivery_status);
 //		boolean result = salesManageService.updateDeliveryStatus(ono,delivery_status);
 //		return result;
 //	}
+
 	
 }
