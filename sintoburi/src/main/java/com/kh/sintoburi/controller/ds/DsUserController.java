@@ -80,24 +80,15 @@ public class DsUserController {
 		
 		UserVo vo = userService.login(dto);
 		
+		
 		if(vo!=null) {
-			System.out.println("세션저장");
 			session.setAttribute("login", vo);
 			return "success";
 		} else {
 			return "fail";
 		}
 		
-		
-		
-			
 	}
 		
-	
-		
-		
-	
-	
-	
 
 }

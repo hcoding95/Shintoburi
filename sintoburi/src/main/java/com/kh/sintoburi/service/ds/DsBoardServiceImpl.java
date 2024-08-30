@@ -70,4 +70,11 @@ public class DsBoardServiceImpl implements DsBoardService {
 		return boardMapper.getTotalCount(criteria);
 	}
 
+
+	@Override
+	public List<DsBoardVo> getPopularList(DsCriteria criteria) {
+		List<DsBoardVo> list = boardMapper.selectListMostLike(criteria);
+		return list;
+	}
+
 }

@@ -15,4 +15,5 @@ public class DsBoardVo {
 	private Date updatedate;
 	private String thumbnail;
 	private Long view_count;
+	private Integer like_count;
 }

@@ -32,9 +32,11 @@
 <script>
 
 $(function(){
-	
+	let search = window.location.search;
+	let param = new URLSearchParams(search);
+	let keyword = param.get('keyword');
 
-	
+	$("#searchInput").val(keyword);
 
 });
 
@@ -87,7 +89,7 @@ $(function(){
 					<option value="TW" ${criteria.type=='TW'? 'selected' : '' }>제목+작성자</option>
 					<option value="CW" ${criteria.type=='CW'? 'selected' : '' }>내용+작성자</option>
 					<option value="TCW" ${criteria.type=='TCW'? 'selected' : ''}>제목+내용+작성자</option>
-				</select> <input type="text" name="keyword" class="form-control me-2" placeholder="검색" aria-label="Search"
+				</select> <input type="text" name="keyword" class="form-control me-2" placeholder="검색" aria-label="Search" id="searchInput"
 				
 				value="${criteria.keyword}">
 				<button id="btnSearch" class="btn btn-outline-success"><i class="bi bi-search"></i></button>

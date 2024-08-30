@@ -13,4 +13,8 @@ public interface DsLikeService {
 	public boolean checkLike(String user_id,Long bno);
 	// 좋아요 갯수
 	public Integer getLikeCount(Long bno);
+	// 좋아요 수 게시글 업데이트
+	public boolean updateLikeCount(Long bno, Integer like_count);
+	
+	
 }

@@ -190,7 +190,8 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 
 	$("#btnShowComplain").click(function(){
 		if(${login.user_id==null}){
-			alert("로그인을 해주세요")
+			alert("로그인을 해주세요");
+			$(location).attr("href","/ds/board/login");
 			return;
 		}
 		console.log("모달");

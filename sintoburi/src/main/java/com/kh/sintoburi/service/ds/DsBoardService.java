@@ -14,6 +14,7 @@ public interface DsBoardService {
 	public boolean updatePost(DsBoardVo vo);
 	public List<DsBoardVo> getList();
 	public List<DsBoardVo> getList(DsCriteria criteria);
+	public List<DsBoardVo> getPopularList(DsCriteria criteria);
 	public boolean deletePost(Long bno);
 	public boolean upViewCount(Long bno);
 	public Integer getTotal(DsCriteria criteria);

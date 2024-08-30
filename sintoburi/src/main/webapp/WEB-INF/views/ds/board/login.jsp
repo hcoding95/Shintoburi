@@ -42,10 +42,10 @@ $(function() {
 			success: function(result){
 				//$(location).attr("href","/ds/board/index");
 				if(result=="success"){
-					//alert("로그인 성공");
-					
-					location.href = document.referrer;
-					
+		
+						location.href = document.referrer;
+
+				
 				} else{
 					alert("아이디 또는 비밀번호를 확인해주세요");
 				}					

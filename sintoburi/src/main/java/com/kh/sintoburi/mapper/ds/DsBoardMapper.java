@@ -19,6 +19,8 @@ public interface DsBoardMapper {
 	public List<DsBoardVo> selectList();
 	// 페이징 처리
 	public List<DsBoardVo> selectListWithPaging(DsCriteria ci);
+	// 인기글 처리
+	public List<DsBoardVo> selectListMostLike(DsCriteria ci);
 	// 게시글 쓰기
 	public Integer insert(DsBoardVo vo);
 	// 게시글 삭제
@@ -27,8 +29,5 @@ public interface DsBoardMapper {
 	public Integer update(DsBoardVo vo);
 	// 조회수 증가
 	public Integer updataViewCount(Long bno);
-	
 
-	
-	
 }

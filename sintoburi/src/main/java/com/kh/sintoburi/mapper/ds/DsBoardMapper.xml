@@ -11,7 +11,7 @@
 
 <select id="selectListWithPaging" resultType="DsBoardVo">
 
- 	select* from(select /*+ INDEX_DESC (TBL_BOARD PK_BOARD) */ 
+ 	select * from(select  
     				ROWNUM AS RN, 
     				BNO, 
     				TITLE, 
@@ -19,11 +19,14 @@
     				REGDATE, 
     				UPDATEDATE,
     				VIEW_COUNT,
+    				LIKE_COUNT,
     				THUMBNAIL,
     				CATEGORY
+    			
 					from TBL_BOARD
-<where> 
+
 	<if test="type!=null">
+	<where> 
 		<trim prefix="(" suffix=")" prefixOverrides="or">
 			<foreach item="type" collection="typeArr">
 				<trim prefix="or">
@@ -42,12 +45,62 @@
 			
 			</foreach>
 			</trim>
-				</if>
-				and ROWNUM &lt;=#{pageNum}*#{amount}) 
 				
-			</where>
-					where RN &gt;(#{pageNum}-1)*#{amount}
+				</where>
+				</if>
+				order by bno desc)
+				WHERE RN &lt;=#{pageNum}*#{amount}
+				
+			
+					AND RN &gt;(#{pageNum}-1)*#{amount}
 					
+
+</select>
+
+<select id="selectListMostLike" resultType="DsBoardVo">
+	select * from(select  
+    				ROWNUM AS RN, 
+    				BNO, 
+    				TITLE, 
+    				WRITER, 
+    				REGDATE, 
+    				UPDATEDATE,
+    				VIEW_COUNT,
+    				LIKE_COUNT,
+    				THUMBNAIL,
+    				CATEGORY
+    			
+					from TBL_BOARD
+
+	<if test="type!=null">
+	<where> 
+		<trim prefix="(" suffix=")" prefixOverrides="or">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString">
+						 title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString">
+						 content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString">
+						 writer like '%' || #{keyword} || '%'
+						</when>	
+					</choose>
+				</trim>
+			
+			</foreach>
+			</trim>
+				
+				</where>
+				</if>
+				order by like_count desc)
+				WHERE RN &lt;=#{pageNum}*#{amount}
+				
+			
+					AND RN &gt;(#{pageNum}-1)*#{amount}
+				order by like_count desc		
 
 </select>
 

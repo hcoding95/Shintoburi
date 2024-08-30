@@ -209,6 +209,10 @@ $(function() {
 					if(result){
 						alert(`\${playerScore}포인트 획득!`);
 						$(location).attr("href","/ds/board/event");
+						
+						
+						
+						
 					}
 				}
 				,error: function(){
