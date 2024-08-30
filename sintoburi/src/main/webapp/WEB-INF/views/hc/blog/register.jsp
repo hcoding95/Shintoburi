@@ -171,10 +171,10 @@ $(function () {
 		});
 		
 		$("#productList > li").each(function (i) {
-			let product_id = $(this).attr("data-product_id");
+			let product_name = $(this).attr("data-product_name");
 			let product_name = $(this).attr("data-product_name");
 			let productTag = `
-				<input type="hidden" name="productTagList[\${i}].product_id" value="\${product_id}" >
+				<input type="hidden" name="productTagList[\${i}].product_name" value="\${product_name}" >
 				<input type="hidden" name="productTagList[\${i}].product_name" value="\${product_name}" >
 			`;
 			$("#frmRegister").prepend(productTag);
@@ -192,12 +192,12 @@ $(function () {
 	});
 	
 	$("#modal-product-tag-list").on("click", "a", function () {
-		let productId = $(this).attr("data-product_id");
+		let productId = $(this).attr("data-product_name");
         let productName = $(this).attr("data-product_name");
         
         let isExist = false;
         $("#productList li").each(function() {
-			if($(this).attr("data-product_id") == productId) {
+			if($(this).attr("data-product_name") == productId) {
 				isExist = true;
 				return false;
 			}
@@ -205,7 +205,7 @@ $(function () {
         if(!isExist) {
 	        let liTag = `
 	        	<li class="tag-delete" style="cursor:pointer" ;
-	        		data-product_id="\${productId}"
+	        		data-product_name="\${productId}"
 					data-product_name="\${productName}"
 	        	>(<span>\${productId}</span>)\${productName}</li>
 	        `;
@@ -229,7 +229,7 @@ $(function () {
 		console.log(value);
 		let sData;
 		if(type == 'tag-number') {
-			sData = { 'product_id' : parseInt(value) };
+			sData = { 'product_name' : parseInt(value) };
 		} else {
 			sData = { 'product_name' : value };
 		}
@@ -243,9 +243,9 @@ $(function () {
 				$.each(rData, function (index, vo) {
 					let tag = `
 					<tr>
-						<td>\${vo.product_id }</td>
+						<td>\${vo.product_name }</td>
 						<td><a class="text-primary"
-							data-product_id="\${vo.product_id }"
+							data-product_name="\${vo.product_name }"
 							data-product_name="\${vo.product_name }"
 							>\${vo.product_name }</a></td>
 					</tr>

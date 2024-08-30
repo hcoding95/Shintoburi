@@ -97,10 +97,10 @@ public class BlogServiceImpl implements BlogService {
 		if(productTagList != null) {
 			// 기존 데이터와 중복 체크
 			for ( HcProductTagDto dbDto : tbl_productTagList) {
-				int dbProduct_id = dbDto.getProduct_id();
+				int dbProduct_id = dbDto.getProduct_no();
 				dbDto.setDuplicate(false);
 				for (HcProductTagDto insertDto : productTagList) {
-					int insertProduct_id = insertDto.getProduct_id();
+					int insertProduct_id = insertDto.getProduct_no();
 					if(dbProduct_id == insertProduct_id) {
 						dbDto.setDuplicate(true);
 						break;

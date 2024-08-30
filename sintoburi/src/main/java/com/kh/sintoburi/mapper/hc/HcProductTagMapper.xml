@@ -6,24 +6,28 @@
   <mapper namespace="com.kh.sintoburi.mapper.hc.HcProductTagMapper">
   	
   	<insert id="insert">
-  		insert into tbl_blog_tag(blog_no, product_id, product_name)
-  		values(#{blog_no}, #{product_id}, #{product_name})
+  		insert into tbl_blog_tag(blog_no, product_no, product_name)
+  		values(#{blog_no}, #{product_no}, #{product_name})
   	</insert>
   	
   	<delete id="deleteByPrimaryKey">
   		delete from tbl_blog_tag
   		where blog_no = #{blog_no}
-  		and product_id = #{product_id}
+  		and product_no = #{product_no}
   	</delete>
   	
   	<update id="update">
   		update tbl_blog_tag
   		set	product_name = #{product_name}
-  		where  product_id = #{product_id} and blog_no = #{blog_no}
+  		where  product_no = #{product_no} and blog_no = #{blog_no}
   	</update>
   	
   	<select id="getTagList" resultType="HcProductTagDto">
-  		select * from tbl_blog_tag
+  		select blog_no, product_no, product_name,
+  			(select UUID from tbl_img where product_no = #{product_no} ) as uuid, 
+  			(select IMG_NAME from tbl_img where product_no = #{product_no} ) as file_name, 
+  			(select IMG_PATH from tbl_img where product_no = #{product_no} ) as file_path
+  		from tbl_blog_tag
   		where blog_no = #{blog_no}
   	</select>
   	
@@ -31,15 +35,15 @@
   		select * from tbl_product
   		<where>
   		<choose>
-  			<when test="product_id == 0">
+  			<when test="product_no == 0">
   				product_name like '%' || #{product_name} || '%' 
   			</when>
   			<when test="product_name == null">
-  				product_id like #{product_id} || '%' 
+  				product_no like #{product_no} || '%' 
   			</when>
   		</choose>
   		</where>
-  		order by product_id asc
+  		order by product_no asc
   	</select>
   	
   	

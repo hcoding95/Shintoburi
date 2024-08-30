@@ -323,7 +323,7 @@ $(function () {
 				$.each(rData, function (index, obj) {
 					let tag = `
 						<div class="cover">
-	            			<a href="#"><img src="/resources/images/logo.png" alt="Icon 1">\${obj.product_id}</a>
+	            			<a href="/product/productDetail?pno=\${obj.product_no}"><img src="/display?file_name=\${obj.file_path }/\${obj.uuid}_\${obj.file_name}" alt="/resources/images/logo.png">\${obj.product_name}</a>
 	            		</div>`;
 					$(".modal-left").append(tag);
 				})
@@ -835,7 +835,7 @@ $(function () {
 							     <c:if test="${not empty vo.productTagList }">
 							     <div class="post-icons">
 							     	<c:forEach items="${vo.productTagList }" var="tag" >
-							         <a href="/product/productDetail?pno=${tag.product_id}"><img src="/resources/images/logo.png" alt="Icon 1">${tag.product_name}</a>
+							         <a href="/product/productDetail?pno=${tag.product_no}"><img src="/display?file_name=${tag.file_path }/${tag.uuid}_${tag.file_name}" alt="/resources/images/logo.png">${tag.product_name}</a>
 							     	</c:forEach>
 							     </div>
 							     </c:if>
