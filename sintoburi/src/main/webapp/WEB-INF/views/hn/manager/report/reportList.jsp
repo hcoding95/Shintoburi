@@ -127,7 +127,14 @@ $(function() {
                 <td>${vo.post_id}</td>
                 <td>${vo.re_reason}</td>
                 <td><fmt:formatDate value="${vo.re_date}" pattern="yyyy-MM-dd"/></td>
-                <td>${vo.status}</td>
+                <c:choose>
+				    <c:when test="${vo.status == '미처리'}">
+				        <td style="color: red;">${vo.status}</td>
+				    </c:when>
+				    <c:otherwise>
+				        <td style="color: green;">${vo.status}</td>
+				    </c:otherwise>
+				</c:choose>
                <td>
 				<button class="btn-sm btn-danger btnDelete" data-delete-url="${vo.delete_url}" 
 					data-num="${vo.write_num}" data-cate="${vo.category }" data-re-no="${vo.re_no}"	type="button">삭제</button>

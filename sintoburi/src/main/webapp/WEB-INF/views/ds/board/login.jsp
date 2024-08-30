@@ -46,7 +46,7 @@ $(function() {
 				// 전 페이지로 이동
 				
 				//history.back();
-				
+				console.log(result);
 		
 				if (result == "manager") {
 	
@@ -57,7 +57,7 @@ $(function() {
 						location.href = document.referrer;
 					}
 
-					console.log(result);
+					console.log(result); 
 
 				},
 				error : function() {
@@ -77,7 +77,7 @@ $(function() {
 <body class="bg-gradient-primary">
 
     <div class="container">
-<img src="/resources/images/logo.png" alt="농사랑 로고" style="width:112px;height:88px;">
+<a href="/hc/main/home"><img src="/resources/images/logo.png" alt="농사랑 로고" style="width:112px;height:88px;"></a>
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->

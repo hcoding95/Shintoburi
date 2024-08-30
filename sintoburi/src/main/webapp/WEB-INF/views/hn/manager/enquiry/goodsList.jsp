@@ -91,7 +91,14 @@ $(function() {
                 <td>상품</td>
                 <td><a href="/hn/manager/enquiry/goodsDetail/${vo.eno}">${vo.enquiry_type}</a></td>
                 <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
-                <td>${vo.status}</td>
+                <c:choose>
+				    <c:when test="${vo.status == '미처리'}">
+				        <td style="color: red;">${vo.status}</td>
+				    </c:when>
+				    <c:otherwise>
+				        <td style="color: green;">${vo.status}</td>
+				    </c:otherwise>
+				</c:choose>
                 <td>
                     <c:choose>
                         <c:when test="${vo.status == '답변완료'}">

@@ -128,9 +128,9 @@ $(function() {
 <!--             </li> -->
 
 			 <li class="nav-item">
-                <a class="nav-link" href="/gr/sales_manager/list">
+                <a class="nav-link" href="/gr/sales_manage/list">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>주문/배송관리</span>
+                    <span>결제/배송관리</span>
                 </a>
 
             </li>

@@ -104,6 +104,9 @@
                  <ul class="sub-menu" style="margin-top: 0px; margin-bottom: 0px;">
 				    <li>
 				        <span style="color: green;font-weight: bold;">${login.user_id}님</span> 반갑습니다.
+				        <c:if test="${login.grade == '관리자' || login.grade == '마스터'}">
+				         <li><a href="/hn/manager/user/userList" style="color: green;">관리자 페이지</a></li>
+				         </c:if>
 				    </li>
 				</ul>
                       
@@ -116,7 +119,7 @@
                         <li><a href="gr/order/payment_list">주문/배송 조회</a></li>
                         <c:if test="${login.grade == '판매자'}">
                         <li><a href="/ji/manager/productList">판매 상품 조회</a></li>
-                        <li><a href="">판매 내역 조회</a></li>
+                        <li><a href="/gr/seller_delivery/list">판매 내역 조회</a></li>
                         </c:if>
                     </ul>
                     <div class="list-group-item list-group-item-action list-group-item-light p-3">

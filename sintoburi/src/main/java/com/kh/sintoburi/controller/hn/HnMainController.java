@@ -53,6 +53,9 @@ public class HnMainController {
 			case "관리자":
 				location = "/hn/manager/user/userList";
 				break;
+			case "마스터":
+				location = "/hn/manager/user/userList";
+				break;
 			default:
 				location = "/";
 				break;
