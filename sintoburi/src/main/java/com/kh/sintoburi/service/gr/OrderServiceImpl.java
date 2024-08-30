@@ -69,6 +69,46 @@ public class OrderServiceImpl implements OrderService{
 		return true;
 	}
 	
+	@Override
+	public boolean runOrderNow(int product_no, int p_count, OrderVo orderVo) {
+		// 주문에 추가
+		orderMapper.insert(orderVo);
+		int ono = orderVo.getOno();
+		
+		
+		// 주문 상세에 추가
+//		for(int bdno : bdnos) {
+//			BasketDetailDto dto = basketMapper.selectByBdno(bdno);
+//			int product_no = dto.getProduct_no();
+//			int p_count = dto.getP_count();
+			OrderDetailDto orderDetailDto = new OrderDetailDto();
+			orderDetailDto.setOno(ono);
+			orderDetailDto.setProduct_no(product_no);
+			orderDetailDto.setP_count(p_count);
+			orderMapper.insertDetail(orderDetailDto);
+//			log.info(bdno + "주문 상세에 추가됨.");
+//		}
+		
+		
+		//배송비 계산
+		orderMapper.updateDeliveryCharge(ono);
+		log.info("배송비 계산.");
+		//상품 가격 합계 계산
+		orderMapper.updateSumTotal(ono);
+		log.info("상품 가격 합계 계산.");
+		//결제금액 계산
+		orderMapper.updatePayAmount(ono);
+		log.info("결제금액 계산.");
+		
+		// 장바구니 상세에서 삭제
+//		for(int bdno : bdnos) {
+//			basketMapper.delete(bdno);
+//			log.info(bdno + "삭제.");
+//		}
+		
+		return true;
+	};
+	
 	//배송정보 입력
 	@Override
 	public DeliveryDto getDeliveryInfo(String user_id) {
@@ -85,8 +125,8 @@ public class OrderServiceImpl implements OrderService{
 
 	//주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
 	@Override
-	public List<OrderDetailDto> getDetailList(String user_id, int ono) {
-		List<OrderDetailDto> detailList = orderMapper.getDetailList(user_id, ono);
+	public List<OrderDetailDto> getDetailList(int ono) {
+		List<OrderDetailDto> detailList = orderMapper.getDetailList(ono);
 		return detailList;
 	}
 
@@ -116,7 +156,9 @@ public class OrderServiceImpl implements OrderService{
 	public List<OrderDto> getPaymentList(String user_id){
 		List<OrderDto> list = orderMapper.getPaymentList(user_id);
 		return list;
-	};
+	}
+
+	
 
 
 }

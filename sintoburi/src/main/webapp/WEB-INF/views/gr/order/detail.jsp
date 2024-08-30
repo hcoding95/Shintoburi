@@ -14,7 +14,7 @@
 			
 			<c:set var="user_id" value="${detailDto.user_id}" />
 			 <div>
-				${login.user_id}님의 주문 상세내역입니다.
+				주문 상세내역입니다.
 			 </div>
 			 
 			<table class="table">

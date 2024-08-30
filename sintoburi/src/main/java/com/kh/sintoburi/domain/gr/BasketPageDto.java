@@ -35,7 +35,6 @@ public class BasketPageDto {
 		this.prev = this.startPage > 1; // 11,21,31
 		//다음 버튼을 보일 것인지 여부
 		this.next = this.endPage < realEnd;
-		
 	}
 	
 }

@@ -15,6 +15,9 @@ public interface OrderService {
 	//주문하기 생성, 주문상세 생성, 배송비 계산
 	public boolean runOrder(OrderVo orderVo, int[] bdnos);
 	
+	//주문하기 생성, 주문상세 생성, 배송비 계산
+	public boolean runOrderNow(int product_no, int p_count, OrderVo orderVo);
+	
 	//배송정보 입력
 	public DeliveryDto getDeliveryInfo(String user_id);
 	
@@ -22,7 +25,7 @@ public interface OrderService {
 	public List<OrderDto> getOrderList(String user_id);
 	
 	//주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
-	public List<OrderDetailDto> getDetailList(String user_id, int ono);
+	public List<OrderDetailDto> getDetailList(int ono);
 	
 	//결제하기(가격계산)
 	public PaymentDto payment(String user_id, int ono); 

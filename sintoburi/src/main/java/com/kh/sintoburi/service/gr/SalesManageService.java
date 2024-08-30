@@ -6,6 +6,6 @@ import com.kh.sintoburi.domain.gr.OrderDto;
 
 public interface SalesManageService {
 	//관리자 판매 목록 전체 보기
-	public List<OrderDto> getSalesManageList(String user_id);
+	public List<OrderDto> getSalesManageList();
 	
 }
