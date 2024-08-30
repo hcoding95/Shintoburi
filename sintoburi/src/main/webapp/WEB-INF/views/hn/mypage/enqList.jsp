@@ -50,7 +50,6 @@ $(function() {
                            <thead>
                                <tr class="text-center">
                                    <th>번호</th>
-                                   <th>상품정보</th>
                                    <th>제목</th>
                                    <th>작성일</th>
                                    <th>답변상태</th>
@@ -62,7 +61,6 @@ $(function() {
                                <c:forEach items="${list}" var="vo">
                                    <tr class="text-center">
                                        <td>${vo.eno}</td>
-                                       <td>상품</td>
                                        <td><a href="/hn/mypage/enqRead?eno=${vo.eno}">${vo.enquiry_type}</a></td>
                                        <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
                                        <td>${vo.status}</td>

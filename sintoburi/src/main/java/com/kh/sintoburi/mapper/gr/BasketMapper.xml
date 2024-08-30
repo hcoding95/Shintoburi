@@ -17,6 +17,7 @@
 	  </insert>
 	  
 <!-- 	  장바구니에 넣기 -->
+<!-- 지환 TODO !!!!!!!!!!!!!!!!!!!!!!-->
 	  <insert id="insertDetail">
 		insert into tbl_basket_detail
 			(bdno, product_no, bno, p_count)

@@ -76,7 +76,8 @@
   </select>
  
 <!--  주문상세 생성  -->
- <insert id="insertDetail">
+<!-- 지환 TODO !!!!!!!!!!!!!!!!!!!!!!-->
+ <insert id="insertDetail"> 
   	insert into tbl_order_detail
   		(odno, ono, product_no, p_count)
   	values

@@ -119,7 +119,7 @@ public class NoticeController {
 		if (dto.getImportant() != null && dto.getImportant().equals("Y")) {
 			MainNoticeDto mainNoticeDto = new MainNoticeDto();
 			mainNoticeDto.setTitle(noticeVo.getTitle());
-			mainNoticeDto.setUrl("/hn/manager/notice/noticeDetail/" + n_no);
+			mainNoticeDto.setUrl("/hn/mypage/noticeRead/?n_no=" + n_no);
 			request.getServletContext().setAttribute("noti", mainNoticeDto);
 		}
 		
@@ -177,7 +177,7 @@ public class NoticeController {
 		if (dto.getImportant() != null && dto.getImportant().equals("Y")) {
 			MainNoticeDto mainNoticeDto = new MainNoticeDto();
 			mainNoticeDto.setTitle(noticeVo.getTitle());
-			mainNoticeDto.setUrl("/hn/manager/notice/noticeDetail/" + n_no);
+			mainNoticeDto.setUrl("/hn/mypage/noticeRead/?n_no=" + n_no);
 			request.getServletContext().setAttribute("noti", mainNoticeDto);
 		}
 		rttr.addFlashAttribute("noticeMod", n_no);

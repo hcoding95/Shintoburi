@@ -75,7 +75,6 @@ $(function() {
         <tr class="text-center">
             <th>번호</th>
             <th>작성 아이디</th>
-            <th>상품</th>
             <th>문의내용</th>
             <th>작성일</th>
             <th>답변상태</th>
@@ -88,7 +87,6 @@ $(function() {
             <tr class="text-center">
                 <td>${vo.eno}</td>
                 <td>${vo.user_id}</td>
-                <td>상품</td>
                 <td><a href="/hn/manager/enquiry/goodsDetail/${vo.eno}">${vo.enquiry_type}</a></td>
                 <td><fmt:formatDate value="${vo.write_date}" pattern="yyyy-MM-dd"/></td>
                 <c:choose>

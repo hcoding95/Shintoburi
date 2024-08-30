@@ -280,7 +280,7 @@ public class MypageController {
 	public String userInfoMod(UserVo userVo, RedirectAttributes rttr) {
 		boolean result = userService.userInfoMod(userVo);
 		rttr.addFlashAttribute("infoMod", result);
-		return "redirect:/hn/mypage/myPageMain";
+		return "redirect:/hn/mypage/enqList";
 	}
 
 	// 회원정보 수정 전 비밀번호 체크
@@ -316,7 +316,7 @@ public class MypageController {
 	// 회원탈퇴
 	@PostMapping("/unRegister")
 	public String unRegister(HttpSession session, RedirectAttributes rttr ) {
-		HnUserDto login = (HnUserDto)session.getAttribute("login");
+		UserVo login = (UserVo)session.getAttribute("login");
 		String user_id = login.getUser_id();
 		boolean result = userService.unRegister(user_id);
 		session.invalidate();
