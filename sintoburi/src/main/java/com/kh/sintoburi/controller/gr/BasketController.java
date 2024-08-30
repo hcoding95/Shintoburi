@@ -33,7 +33,7 @@ public class BasketController {
 	@Autowired
 	private BasketService basketService;
 	
-	//장바구니 담기(TODO 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기, 상품 이미지 넣기)
+	//장바구니에 물건 담기(TODO 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기)
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
 		//장바구니 번호 가져오기
@@ -83,7 +83,7 @@ public class BasketController {
 		return "/gr/basket/list";
 	}
 		
-	// 장바구니 상품 개수 수정
+	// 장바구니에 담긴 상품 개수 수정
 	@PostMapping("/modCount")
 	@ResponseBody
 	public boolean modCount(@RequestBody Map<String, Integer> map) {
@@ -101,7 +101,7 @@ public class BasketController {
 		return result;
 	}
 	
-	//장바구니 상세에서 상품 제거 - 1개씩 제거
+	//장바구니 목록에서 체크한 상품 제거
 	@PostMapping("/removeOne")
 	@ResponseBody
 	public boolean removeOne(@RequestBody Map<String, List<Integer>> bdnos) {

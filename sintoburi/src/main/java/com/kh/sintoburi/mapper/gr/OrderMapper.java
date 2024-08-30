@@ -34,8 +34,7 @@ public interface OrderMapper {
 public int insertDetail(OrderDetailDto dto);
  
 //주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
- public List<OrderDetailDto> getDetailList(@Param("user_id") String user_id,
-		 @Param("ono") int ono);
+ public List<OrderDetailDto> getDetailList(@Param("ono") int ono);
  
  //결제하기(더 해야 함: 포인트 조회해서 가격(pay_amount)만큼 빼야 함)
  public PaymentDto payment(@Param("user_id") String user_id,

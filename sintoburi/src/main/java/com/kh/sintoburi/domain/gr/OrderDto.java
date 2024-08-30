@@ -31,5 +31,5 @@ public class OrderDto {
     public String user_id;
 	public String payment_type;
 	public String delivery_number;
-	public int point;
+	public int user_point;
 }
