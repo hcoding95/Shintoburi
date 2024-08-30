@@ -42,6 +42,8 @@ $(function() {
             }
         });
     });
+    
+    
 });
 </script>
 
@@ -53,7 +55,7 @@ $(function() {
              <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">관리자 변경</h6>
-				<form id="searchForm" action="/hn/manager/user/userList" method="get" style="display: flex; align-items: center;">
+				<form id="searchForm" action="/hn/manager/user/managerList" method="get" style="display: flex; align-items: center;">
 			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
 			            <option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
 			            <option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>

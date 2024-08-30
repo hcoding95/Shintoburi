@@ -59,7 +59,7 @@ public class HnUserController {
 
 		if (login == null || !"마스터".equals(login.getGrade().trim())) {
 			session.invalidate();
-			return "redirect:/hn/main/login";
+			return "redirect:/ds/board/login";
 		}
 
 		List<HnUserDto> managerList = userService.managerList(criteria);

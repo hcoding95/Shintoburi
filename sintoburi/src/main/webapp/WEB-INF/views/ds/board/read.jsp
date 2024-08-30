@@ -193,7 +193,7 @@ $("#replyView").on("click", ".btnReplyMod", function() {
 		
 		let data={
 				
-				"post_url":$(location).attr('href'),
+				"post_url":"/ds/board/read?bno=",
 				"post_id":"${detail.writer}",
 				"re_reason":$(".complain:checked").val(),
 				"re_id":"${login.user_id}",

@@ -24,7 +24,7 @@
             delete_url,
             category,
             write_num,
-            row_number() over (order by case when status = '미처리' then 1 else 0 end desc) as rn
+            row_number() over (order by case when status = '미처리' then 1 else 0 end desc,re_no desc) as rn
         from tbl_reportPost
         <where>
             <if test="typeArr != null and typeArr.length > 0">

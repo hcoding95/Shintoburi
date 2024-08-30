@@ -65,7 +65,7 @@ public class HnMainController {
 		} else {
 			// 로그인실패
 			model.addAttribute("loginError", "아이디 또는 비밀번호가 잘못되었습니다.");
-			return "/ds/board/login";
+			return "/hn/main/login";
 		}
 	}
 
