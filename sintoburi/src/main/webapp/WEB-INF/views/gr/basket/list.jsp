@@ -62,10 +62,10 @@ $(function() {
 			contentType: "application/json; charset=utf-8",
 			success: function(result) {
 				if (result) {
-					alert("삭제 완료");
+					alert("삭제 완료되었습니다");
 					location.reload();
 				} else {
-					alert("삭제 실패");
+					alert("삭제 실패했습니다");
 				}
 			}
 		});
