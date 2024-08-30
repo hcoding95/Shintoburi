@@ -33,7 +33,7 @@ public class BasketController {
 	@Autowired
 	private BasketService basketService;
 	
-	//장바구니에 물건 담기(TODO 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기)
+	//장바구니에 물건 담기(TODO 지환: 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기)
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
 		//장바구니 번호 가져오기
@@ -61,7 +61,6 @@ public class BasketController {
 	// 장바구니 목록 보기(페이징)
 	@GetMapping("/list")
 	public String list(Model model, HttpSession session, BasketCriteria criteria) {
-		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
 		UserVo dto = (UserVo)session.getAttribute("login");
 		System.out.println("로그인한 유저는?" + dto);
 //		if (dto == null) {

@@ -300,14 +300,8 @@ $(function() {
                     <input class="form-control text-center me-3" id="count" name="count" type="number" value="1" style=" max-width: 5rem" />
                 </div>
                 <div class="d-flex">
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        바로구매▶
-                    </button>
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        장바구니 담기
-                    </button><br>
+                    <a href="/gr/order/order_form_now"> 바로구매</a>
+                    <a href="/gr/basket/list"> 장바구니</a>
                 </div>
                 <hr class="flex-grow-1">
                 <div class="prod-sale-vender" style="font-size:20px;">

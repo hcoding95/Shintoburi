@@ -36,11 +36,7 @@ $(".btnMod").click(function() {
 		});
        
    });
-   
-   
-   
-   
-   
+      
 });
 
 
