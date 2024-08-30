@@ -787,18 +787,18 @@ $(function () {
 					            	</c:forEach>
 					            </div>
 				        	</div>
-				        	<c:if test="${login.grade eq '판매자'}">
-				        	</c:if>
+				        	<c:if test="${not empty product_list}">
 				        	<div class="blog-control">
 					            <h3 class="text-end">브랜드몰<div class="filters">
 					            <!-- <a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a> -->
 					            </div></h3>
 					            <div class="product-photo-grid">
-					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
-					                <div class="photo"><a href="/product/productDetail?pno="><img src="/resources/images/logo.png"></a></div>
+					            	<c:forEach items="${product_list }" var="tag">
+						                <div class="photo"><a href="/product/productDetail?pno=${tag.product_no }"><img src="/display?file_name=${tag.file_path }/${tag.uuid}_${tag.file_name}" alt="/resources/images/logo.png"></a></div>
+					            	</c:forEach>
 					            </div>
 				        	</div>
+				        	</c:if>
 				        </div>
 				        <div class="blog-main-content">
 				        	<div class="blog-control">

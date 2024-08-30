@@ -16,11 +16,13 @@ import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hc.BlogSettingVo;
 import com.kh.sintoburi.domain.hc.BlogVo;
 import com.kh.sintoburi.domain.hc.HcFollowDto;
+import com.kh.sintoburi.domain.hc.HcProductTagDto;
 import com.kh.sintoburi.domain.hc.HcReplyDto;
 import com.kh.sintoburi.service.hc.BlogService;
 import com.kh.sintoburi.service.hc.BlogSettingService;
 import com.kh.sintoburi.service.hc.HcFollowService;
 import com.kh.sintoburi.service.hc.HcInjectionService;
+import com.kh.sintoburi.service.hc.HcProductService;
 import com.kh.sintoburi.service.hc.HcReplyService;
 import com.kh.sintoburi.service.hc.HcUserService;
 
@@ -46,6 +48,9 @@ public class BlogController {
 	@Autowired
 	private BlogSettingService blogSettingService;
 	
+	@Autowired
+	private HcProductService hcProductService;
+	
 	@GetMapping("/blog")
 	public void blog(String user_id, HttpSession session,Model model) {
 		String url = (String) session.getAttribute("targetLocation");
@@ -65,6 +70,10 @@ public class BlogController {
 		}
 		list = injectionService.checkListFollowAndLike(list, login_id);
 		List<BlogSettingVo> blog_setting = blogSettingService.getSettingList(user_id);
+		if(blog_userVo.getGrade().equals("판매자")) {
+			List<HcProductTagDto> product_list = hcProductService.getProductListByUserId(user_id);
+			model.addAttribute("product_list", product_list);
+		}
 		model.addAttribute("list", list);
 		model.addAttribute("blog_userVo", blog_userVo);
 		model.addAttribute("blog_setting", blog_setting);

@@ -27,6 +27,15 @@ public class HcProductServiceImpl implements HcProductService {
 		
 		return list;
 	}
+
+	@Override
+	public List<HcProductTagDto> getProductListByUserId(String user_id) {
+		List<HcProductTagDto> list = productMapper.getProductListWithUserId(user_id);
+		
+		return list;
+	}
+	
+	
 	
 	
 	

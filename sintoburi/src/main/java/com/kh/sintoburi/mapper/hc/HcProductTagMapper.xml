@@ -46,6 +46,19 @@
   		order by product_no asc
   	</select>
   	
+  	<select id="getProductListWithUserId" resultType="ProductVo">
+  		select p.product_no, p.product_name, i.UUID as uuid, 
+  		i.IMG_NAME as file_name, i.IMG_PATH as file_path
+	  	from 
+	  		tbl_product p
+	  	left join 
+	  		tbl_img i 
+	  	on 
+	  		p.product_no = i.product_no
+	  	where 
+	  		p.user_id = #{user_id}
+  	</select>
+  	
   	
   
   </mapper>
