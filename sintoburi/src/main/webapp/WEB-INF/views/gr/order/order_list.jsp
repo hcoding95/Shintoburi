@@ -40,7 +40,7 @@ $(function(){
             contentType: 'application/json',  //JSON 형식으로 전송
             data: JSON.stringify(data),
             success: function(response) {
-             alert("결제완료 되었습니다.");
+             alert("결제 완료되었습니다.");
                $(location).attr("href","/gr/order/payment_list"); //서버에서 리다이렉트 URL을 받아서 이동
             },
             error: function() {
