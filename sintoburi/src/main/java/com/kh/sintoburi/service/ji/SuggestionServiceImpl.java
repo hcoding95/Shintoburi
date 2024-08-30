@@ -24,15 +24,18 @@ public class SuggestionServiceImpl implements SuggestionService{
 	@Override
 	public boolean register(SuggestionVo suggestionVo) {
 
-		// 상품 등록자와 유저 아이디가 같고, role_type이 "ANSWER"로 설정된 경우
-	    String productOwner = prodMapper.getProductOwner(suggestionVo.getProduct_no());
-	    if (suggestionVo.getRole_type().equals("ANSWER") && suggestionVo.getUser_id().equals(productOwner)) {
-	        suggestionVo.setRole_type("ANSWER");
-	    } else {
-	        suggestionVo.setRole_type("QUESTION");
-	    }
-
 	    int count = suggMapper.insert(suggestionVo);
+		
+		return (count > 0) ? true : false;
+	}
+	
+	// 답변 등록
+	@Transactional
+	@Override
+	public boolean registerAnswer(SuggestionVo suggestionVo) {
+
+	    int count = suggMapper.insertAnswer(suggestionVo);
+	    count += suggMapper.updateParentNo(suggestionVo.getSuggestion_no());
 		
 		return (count > 0) ? true : false;
 	}

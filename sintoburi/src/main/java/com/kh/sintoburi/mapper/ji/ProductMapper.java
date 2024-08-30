@@ -50,10 +50,10 @@ public interface ProductMapper {
 	public List<RelatedProdDto> selectRelatedProdByUser(@Param("user_id") String user_id, @Param("product_no") int product_no);
 
 	// 상품 등록
-	public int InsertSelectKey(ProductVo testVo);
+	public int InsertSelectKey(ProductVo vo);
 	
 	
-	public int Insert (ProductVo testVo);
+	public int Insert (ProductVo vo);
 	
 	// 상품 수정
 	public int updateProduct(ProductVo productVo);
@@ -70,4 +70,6 @@ public interface ProductMapper {
     // 상품 문의사항 관련 / 상품 등록한 유저 가져오기
     @Select("SELECT user_id FROM tbl_product WHERE product_no = #{product_no}")
     public String getProductOwner(int product_no);
+    
+    public List<DefaultProductListDto> selectSearchProducts(@Param("type") String type, @Param("keyword") String keyword);
 }

@@ -73,6 +73,36 @@
 		where p.product_no = i.product_no
 	</select>
 	
+	<select id="selectSearchProducts" resultType="DefaultProductListDto">
+		select p.product_no, p.product_name, p.price, p.cate_no,
+		p.user_id, i.uuid, i.img_name, i.img_path
+		from (select *
+		from (
+		select rownum rn, a.*
+		from (select *
+		from tbl_product
+		<where>
+		<choose>
+			<when test="type == 'P'.toString()">
+				product_name like '%' || #{keyword} || '%'
+			</when>
+			<when test="type == 'U'.toString()">
+				user_id like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+		</where>
+		
+		
+		order by stock desc, price desc
+		) a
+		)
+		) p
+		,
+		(select * from tbl_img
+		where represent = '1') i
+		where p.product_no = i.product_no
+	</select>
+	
 	<!-- 상품 상세보기 / productDetail-->
 	<select id="selectByPno" resultType="ProductVo">
 		select * from tbl_product
@@ -138,4 +168,5 @@
 			reviewcnt = reviewcnt + #{amount}
 		where product_no = #{product_no}
 	</update>
+	
 </mapper>

@@ -53,7 +53,7 @@ public interface ProductService {
 	public List<RelatedProdDto> selectRelatedProdByUser(String user_id, int pno);
 
 	// 상품등록
-	public int productRegister (ProductVo testVo);
+	public int productRegister (ProductVo vo);
 	
 	// 상품 정보 업데이트
     public boolean updateProduct(ProductVo productVo);
@@ -62,7 +62,7 @@ public interface ProductService {
 
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	
-	
+	public List<DefaultProductListDto> selectSearchProducts(String type, String keyword);
 	
 	
 	

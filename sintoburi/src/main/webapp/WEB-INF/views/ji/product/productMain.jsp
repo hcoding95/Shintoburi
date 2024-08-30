@@ -70,19 +70,33 @@ $(function() {
 
 
 </script>
-
-		<section class="py-1">
-			<c:if test="${isLoggedIn}">
-		        <a id="btnRegister" class="btn btn-outline-success" href="/ji/manager/register" style="margin-left: 985px;">상품등록</a>
-		    </c:if>
-		</section>
-		
 		<%@include file="/WEB-INF/views/ji/include/cateMenu.jsp" %>
 		
+		<hr>
+		
+		<section class="py-1 d-flex align-items-center">
+		    <!-- productList / 출력 -->
+		    <div class="btn-product-register mX-auto">
+		    	<form action="/ji/product/selectSearchProducts">
+		    		<select name="type">
+		    			<option value="P">상품이름</option>
+		    			<option value="U">작성자</option>
+		    		</select>
+		    		<input type="text" name="keyword" value="">
+		    		<button type="submit" class="btn btn-success">검색</button>
+		    	</form>
+		        <c:if test="${login.grade eq '판매자'}">
+		            <a id="btnRegister" class="btn btn-outline-success" href="/ji/manager/register">상품등록</a>
+		        </c:if>
+		    </div>
+		</section>
+		
+		
+		
+		
 		<section class="py-1 product-list">
-				
+					
 					<div class="container px-4 px-lg-5 mt-3">
-						
 		                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
 		                <c:forEach items="${list}" var="dto" varStatus="status">
 		                	
@@ -90,7 +104,7 @@ $(function() {
 		                        <div class="card h-100">
 									<a href="/ji/product/productDetail?pno=${dto.product_no}">
 					                    <img class="card-img-top" 
-					                         src="/display?file_name=/upload/${dto.uuid}_${dto.img_name}"
+					                         src="/display?file_name=/${dto.img_path}/${dto.uuid}_${dto.img_name}"
 					                         alt="${dto.product_name}"/>
 		                            </a>
 		                            <div class="card-body p-4">

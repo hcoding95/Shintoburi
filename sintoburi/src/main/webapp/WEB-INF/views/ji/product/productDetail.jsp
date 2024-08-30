@@ -89,7 +89,7 @@ function sortReviews() {
                              <p class="card-text">\${review.review_content}</p>
                              <small class="text-muted">작성일: \${reviewDate}</small>`;
                              
-                 if (review.user_id == "\${login.user_id}") {
+                 if (review.user_id == "${login.user_id}") {
                      reviewHtml += `
                              <button onclick="deleteReview(\${review.review_no}, \${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
                  }
@@ -174,7 +174,7 @@ $(function() {
         };
 
         $.ajax({
-            type: 'POST',
+            type: 'post',
             url: '/ji/suggestion/register',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(formData),
@@ -183,24 +183,27 @@ $(function() {
                 $('#questionModal').modal('hide');
                 loadSuggestions();
             },
-            error: function(xhr, status, error) {
+            error: function() {
                 alert('문의사항 등록 중 오류가 발생했습니다.');
             }
         });
     });
 
-    // 답변 등록 버튼 클릭 시 (상품 등록자 전용)
+    // 답변 등록 버튼 클릭 시 
     $('#submitAnswer').on('click', function() {
+    	let suggestion_no = $(this).attr("data-sno");
         let formData = {
             product_no: $('input[name="product_no"]').val(),
             user_id: '${login.user_id}',
             suggestion_content: $('#answerContent').val(),
-            role_type: 'ANSWER'
+            suggestion_no : suggestion_no 
         };
+        
+        console.log("formData:", formData);
 
         $.ajax({
-            type: 'POST',
-            url: '/ji/suggestion/register',
+            type: 'post',
+            url: '/ji/suggestion/registerAnswer',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(formData),
             success: function(response) {
@@ -209,7 +212,7 @@ $(function() {
                 $('#suggestionTab').tab('show');
                 loadSuggestions();
             },
-            error: function(xhr, status, error) {
+            error: function() {
                 alert('답변 등록 중 오류가 발생했습니다.');
             }
         });
@@ -237,18 +240,20 @@ $(function() {
 
                         // 현재 유저가 문의 작성자일 경우 수정/삭제 버튼 표시
                         if (suggestion.user_id === $('input[name="user_id"]').val()) {
-                            tr += `<td><button class="btn btn-sm btn-warning btnSuggestionModify" data-rno="\${suggestion.suggestion_no}">수정</button></td>
-                                   <td><button class="btn btn-sm btn-danger btnSuggestionRemove" data-rno="\${suggestion.suggestion_no}">삭제</button></td>`;
+                            tr += `<td><button class="btn btn-sm btn-warning btnSuggestionModify" data-sno="\${suggestion.suggestion_no}">수정</button></td>
+                                   <td><button class="btn btn-sm btn-danger btnSuggestionRemove" data-sno="\${suggestion.suggestion_no}">삭제</button></td>`;
                         } else {
                             tr += `<td></td><td></td>`;
                         }
 
                         // 현재 유저가 상품 등록자일 경우 답변하기 버튼 표시
-                        if ('\${login.user_id}' === '\${product.user_id}' && suggestion.role_type === 'QUESTION') {
-	                        tr += `<td><button class="btn btn-sm btn-primary btnSuggestionAnswer" data-rno="\${suggestion.suggestion_no}" data-toggle="modal" data-target="#answerModal">답변하기</button></td>`;
-	                    } else {
-	                        tr += `<td></td>`;
-	                    }
+                        if ('${login.user_id}' === '${product.user_id}' && suggestion.parent_no === 0) {
+                            tr += `<td><button class="btn btn-sm btn-primary btnSuggestionAnswer" data-sno="\${suggestion.suggestion_no}" data-toggle="modal" data-target="#answerModal">답변하기</button></td>`;
+                        } else if(suggestion.parent_no == -1) {
+                            tr += `<td><button class="btn btn-sm btn-success btnGetAnswer" data-sno="\${suggestion.suggestion_no}">답변보기</button></td>`;
+                        } else {
+                        	tr += `<td></td>`;
+                        }
 
                         tr += `</tr>`;
                         $("#suggestion_table tbody").append(tr);
@@ -263,21 +268,57 @@ $(function() {
         });
     }
     
+    // 답변하기 버튼
     $('#suggestion_table').on('click', '.btnSuggestionAnswer', function() {
-        let suggestionNo = $(this).data('rno');
-        $('#answerContent').data('rno', suggestionNo); // 답변할 문의사항 번호 저장
+        let suggestionNo = $(this).data('sno');
+        console.log("suggestionNo:", suggestionNo);
+        $('#submitAnswer').attr('data-sno', suggestionNo);
+    });
+    
+    // 답변보기 버튼
+    $('#suggestion_table').on('click', '.btnGetAnswer', function() {
+    	let that = $(this);
+        let suggestionNo = that.data('sno');
+        $.ajax({
+            type: "get",
+            url: "/ji/suggestion/get/" + suggestionNo,
+            contentType: "application/json; charset=utf-8",
+            success: function(rData) {
+            	console.log("rData:" , rData);
+            	if (!rData) {
+            		alert("등록된 답변이 없습니다.");
+            		return;
+            	}
+            	let trTag = `<tr style="font-weight:bold">
+                    <td style="padding-left:50px;">ㄴ \${rData.suggestion_content}</td>
+                    <td>\${rData.user_id}</td>
+                    <td>\${toDateString(rData.suggestion_reg_date)}</td>
+                    <td>\${toDateString(rData.suggestion_upd_date)}</td>
+                    <td></td><td></td>
+                    <td>답변완료</td></tr>`;
+                    that.closest("tr").after(trTag).show("slow");
+                
+            },
+            error: function() {
+                alert("문의사항을 불러오는 데 실패했습니다.");
+            }
+        });
+        
+        
     });
 
- 	// 수정 버튼 클릭 시 모달에 기존 내용을 로드
+ 	// 수정 버튼 클릭 -> 모달에 기존 내용 로드
     $('#suggestion_table').on('click', '.btnSuggestionModify', function() {
         console.log('#btnSuggestionModify');
-    	let suggestionNo = $(this).data('rno');
-        
+    	let suggestionNo = $(this).data('sno');
+        $('#suggestion_no').val(suggestionNo);
+    	
         // 서버로부터 해당 문의 내용을 가져와서 모달에 채움
         $.ajax({
             type: 'get',
-            url: '/ji/suggestion/get/' + suggestionNo, // 해당 경로에서 suggestion 데이터를 가져온다고 가정
+            url: '/ji/suggestion/get/' + suggestionNo,
             success: function(suggestion) {
+            	console.log("suggestion", suggestion);
                 $('#editSuggestionNo').val(suggestion.suggestion_no);
                 $('#editSuggestionContent').val(suggestion.suggestion_content);
                 
@@ -297,25 +338,19 @@ $(function() {
             product_no: $('input[name="product_no"]').val(),
             suggestion_content: $('#editSuggestionContent').val(),
             user_id: $('input[name="user_id"]').val(), 
+            role_type: $('#role_type').val()
         };
         
-        console.log("FormData:", formData);
+        console.log("formData:", formData);
         
-        if (!formData.user_id) {
-            console.log('유효한 사용자 ID가 필요합니다.');
-            return;
-        }
-        if (!formData.product_no) {
-        	console.log('유효한 상품 ID가 필요합니다.');
-            return;
-        }
 
         $.ajax({
             type: 'put',
-            url: '/ji/suggestion/modify', // 수정 요청을 처리하는 경로
+            url: '/ji/suggestion/modify', 
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(formData),
             success: function(response) {
+            	console.log("response:", response);
                 if(response) {
                     alert('문의사항이 수정되었습니다.');
                     $('#editQuestionModal').modal('hide');
@@ -323,9 +358,6 @@ $(function() {
                 } else {
                     alert('문의사항 수정에 실패했습니다.');
                 }
-            },
-            error: function(xhr, status, error) {
-                alert('문의사항 수정 중 오류가 발생했습니다.');
             }
         });
     });
@@ -335,7 +367,7 @@ $(function() {
     $('#suggestion_table').on('click', '.btnSuggestionRemove', function() {
     	console.log('#btnSuggestionRemove');
         if(confirm('정말로 이 문의사항을 삭제하시겠습니까?')) {
-            let suggestionNo = $(this).data('rno');
+            let suggestionNo = $(this).data('sno');
 
             $.ajax({
                 type: 'delete',
@@ -347,9 +379,6 @@ $(function() {
                     } else {
                         alert('문의사항 삭제에 실패했습니다.');
                     }
-                },
-                error: function(xhr, status, error) {
-                    alert('문의사항 삭제 중 오류가 발생했습니다.');
                 }
             });
         }
@@ -523,11 +552,12 @@ $(function() {
 							    </div>
 							    
 							    <!-- 리뷰 작성 버튼 -->
-							    <c:if test="${not empty login}">
+							    <c:if test="${login.user_id != product.user_id}">
 							        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal">
 							            리뷰 작성
 							        </button>
 							    </c:if>
+							    <!-- 상품 등록자와 로그인한 유저가 다를 경우에만 문의하기 버튼을 표시 -->
 							</div>
 							
                             <!-- 작성된 리뷰 리스트 -->
@@ -651,6 +681,7 @@ $(function() {
 					                        <th>수정일</th>
 					                        <th>수정</th>
 					                        <th>삭제</th>
+					                        <th>답변</th>
 					                    </tr>
 					                </thead>
 					                <tbody>
@@ -675,7 +706,6 @@ $(function() {
 					                <form id="questionForm">
 					                    <input type="hidden" name="product_no" value="${product.product_no}">
 					                    <input type="hidden" name="user_id" value="${login.user_id}">
-					                    <input type="hidden" name="role_type" value="QUESTION"> <!-- 질문임을 표시 -->
 					                    <div class="form-group">
 					                        <label for="suggestionContent">문의 내용</label>
 					                        <textarea class="form-control" id="suggestionContent" name="suggestion_content" rows="4" required></textarea>
@@ -742,7 +772,7 @@ $(function() {
 					            </div>
 					            <div class="modal-footer">
 					                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					                <button type=d"button" class="btn btn-primary" id="submitEditQuestion">수정</button>
+					                <button type="button" class="btn btn-primary" id="submitEditQuestion">수정</button>
 					            </div>
 					        </div>
 					    </div>

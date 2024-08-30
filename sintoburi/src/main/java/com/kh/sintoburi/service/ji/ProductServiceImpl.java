@@ -123,6 +123,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
+	@Override
+	public List<DefaultProductListDto> selectSearchProducts(String type, String keyword) {
+		List<DefaultProductListDto> list = productMapper.selectSearchProducts(type, keyword);
+		log.info("list:" + list);
+		return list;
+	}
+
+
 
 
 

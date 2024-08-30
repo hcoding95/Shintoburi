@@ -29,8 +29,17 @@ public class SuggestionController {
 	// 문의사항 등록
     @PostMapping("/register")
     public boolean register(@RequestBody SuggestionVo suggestionVo) {
+    	log.info("suggestionVo:" + suggestionVo);
     	boolean result = suggService.register(suggestionVo);
         return result;
+    }
+    
+    // 답변 등록
+    @PostMapping("/registerAnswer")
+    public boolean registerAnswer(@RequestBody SuggestionVo suggestionVo) {
+    	log.info("suggestionVo:" + suggestionVo);
+    	boolean result = suggService.registerAnswer(suggestionVo);
+    	return result;
     }
 	
 	// 문의사항 수정
@@ -38,7 +47,7 @@ public class SuggestionController {
 	public boolean modify(@RequestBody SuggestionVo suggestionVo) {
 		System.out.println("suggestionVo:" + suggestionVo);
 		boolean result = suggService.modify(suggestionVo);
-		System.out.println("result:" + result);
+		log.info("result:" +result);
 		return result;
 	}
 	

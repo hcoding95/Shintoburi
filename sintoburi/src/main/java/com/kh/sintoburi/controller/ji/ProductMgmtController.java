@@ -63,8 +63,9 @@ public class ProductMgmtController {
 	
 	// 상품 등록 처리
 	@PostMapping("/register")
-	public String register(ProductVo testVo, RedirectAttributes rttr) {
-		int pno = productService.productRegister(testVo);
+	public String register(ProductVo vo, RedirectAttributes rttr) {
+		log.info("vo:" + vo);
+		int pno = productService.productRegister(vo);
 		rttr.addFlashAttribute("resultRegister", pno);
 		return "redirect:/ji/product/productMain";
 	}

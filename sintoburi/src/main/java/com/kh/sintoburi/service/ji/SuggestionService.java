@@ -8,6 +8,8 @@ public interface SuggestionService {
 
 	public boolean register(SuggestionVo vo);
 	
+	public boolean registerAnswer(SuggestionVo vo);
+	
 	public SuggestionVo get(int suggestion_no);
 	
 	public boolean remove(int suggestion_no, int product_no);
