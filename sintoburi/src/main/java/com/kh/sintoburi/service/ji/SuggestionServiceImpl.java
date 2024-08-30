@@ -22,10 +22,22 @@ public class SuggestionServiceImpl implements SuggestionService{
 	// 문의사항 등록
 	@Transactional
 	@Override
-	public boolean register(SuggestionVo vo) {
-		int count = suggMapper.insert(vo);
-		count += prodMapper.updateSuggestionCnt(vo.getProduct_no(), 1);
-		return (count == 2) ? true : false;
+	public boolean register(SuggestionVo suggestionVo) {
+
+	    int count = suggMapper.insert(suggestionVo);
+		
+		return (count > 0) ? true : false;
+	}
+	
+	// 답변 등록
+	@Transactional
+	@Override
+	public boolean registerAnswer(SuggestionVo suggestionVo) {
+
+	    int count = suggMapper.insertAnswer(suggestionVo);
+	    count += suggMapper.updateParentNo(suggestionVo.getSuggestion_no());
+		
+		return (count > 0) ? true : false;
 	}
 
 	
@@ -39,14 +51,13 @@ public class SuggestionServiceImpl implements SuggestionService{
 	@Override
 	public boolean remove(int suggestion_no, int product_no) {
 		int count = suggMapper.delete(suggestion_no);
-		count += prodMapper.updateSuggestionCnt(product_no, -1);
-		return (count == 2)? true : false;
+		return (count > 0)? true : false;
 	}
 	
 	// 문의사항 수정
 	@Override
-	public boolean modify(SuggestionVo vo) {
-		int count = suggMapper.update(vo);
+	public boolean modify(SuggestionVo suggestionVo) {
+		int count = suggMapper.update(suggestionVo);
 		return (count > 0) ? true : false;
 	}
 

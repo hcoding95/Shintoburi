@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,9 +18,7 @@ import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.ji.DefaultProductListDto;
 import com.kh.sintoburi.domain.ji.RelatedProdDto;
 import com.kh.sintoburi.service.ji.ImageService;
-import com.kh.sintoburi.service.ji.JiuserService;
 import com.kh.sintoburi.service.ji.ProductService;
-import com.kh.sintoburi.service.ji.ReviewService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -34,33 +33,30 @@ public class ProductController {
 	@Autowired
 	private ImageService imageService;
 	
-	@Autowired
-	private ReviewService reviewService;
-	
-	@Autowired
-	private JiuserService userService;
 	
 	// 쇼핑몰 메인
 	@GetMapping("/productMain")
 	public String list(Model model, HttpSession session) {
 	    List<DefaultProductListDto> productList = productService.getProducts();
-//	    log.info("productList:" + productList);
-	    
-	    UserVo userVo = (UserVo) session.getAttribute("login");
-	    
-	    if (userVo != null) {
-            model.addAttribute("isLoggedIn", true);
-            model.addAttribute("loginUser", userVo);
-        } else {
-            model.addAttribute("isLoggedIn", false);
-        }
 	    
 	    model.addAttribute("list", productList); 
 	    
 	    return "/ji/product/productMain";
 	}
 	
-	
+	@GetMapping("/selectSearchProducts")
+	public String selectSearchProdcuts(
+			@ModelAttribute("type") String type, 
+			@ModelAttribute("keyword") String keyword, 
+			Model model) {
+		log.info("keyword:" + keyword);
+		List<DefaultProductListDto> list = productService.selectSearchProducts(type, keyword);
+		log.info("list:" + list);
+		model.addAttribute("list", list);
+		
+		return "/ji/product/selectSearchProducts";
+		
+	}
 	
 	// Main화면에서 해당 카테고리만 나오는 productMainCate
 	@GetMapping("/productMainCate") 
@@ -99,7 +95,7 @@ public class ProductController {
 		
 		UserVo userVo = (UserVo) session.getAttribute("login");
 		if (userVo != null) {
-			
+			model.addAttribute("login", userVo);
 		}
 		
 	    model.addAttribute("relatedProducts", relatedProducts);

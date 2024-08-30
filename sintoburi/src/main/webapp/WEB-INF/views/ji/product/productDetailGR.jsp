@@ -418,7 +418,7 @@ $(function() {
 			<input type="hidden" name="product_no" value="\${product_no}">
 		`;
 		$("#orderNowForm").append(tag);
-		$("#orderNowForm").submit();
+		//$("#orderNowForm").submit();
 		
 		
 	})
@@ -461,7 +461,7 @@ $(function() {
                     <input class="form-control text-center me-3" id="count" name="count" type="number" value="1" style=" max-width: 5rem" />
                 </div>
                 <div class="d-flex">
-                	 <form action="/gr/order/order_form_now" id="orderNowForm" method="get">
+                	 <form action="/gr/order/order_form_now" id="orderNowForm" method="post">
                     <button id="order"class="btn btn-outline-dark flex-shrink-0" type="button" data-product_no="${product.product_no}">
                         <i class="bi-cart-fill me-1"></i>
                         바로구매▶

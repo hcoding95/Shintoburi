@@ -124,7 +124,7 @@ $(function() {
 					} 
 					else {
 						let path = `\${obj.img_path}/s_\${obj.uuid}_\${obj.img_name}`;
-						console.log("path?" + path);
+						console.log("path:" + path);
 						let callPath = `\${obj.img_path}/\${obj.uuid}_\${obj.img_name}`;
 						imgTag = `<img class="imgImage" src="/display?file_name=\${path}" 
 									data-callpath="\${callPath}">`;
@@ -170,7 +170,7 @@ $(function() {
 	$("#uploadedList").on("click", "li > span", function() {
 		let that = $(this);
 	  	let filename = that.data("filename");
-		let sData = {fileName: filename};
+		let sData = {file_name: filename};
 		console.log("sData:", sData);
 		$.ajax({
 			type: "delete",
@@ -192,6 +192,7 @@ $(function() {
 			let fileName = $(this).data("filename");
 			let uploadPath = $(this).data("uploadpath");
 			let uuid = $(this).data("uuid");
+			
 			
 			console.log("FileName:", fileName);
 	        console.log("UploadPath:", uploadPath);

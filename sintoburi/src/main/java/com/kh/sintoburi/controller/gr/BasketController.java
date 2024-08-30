@@ -36,6 +36,7 @@ public class BasketController {
 	//장바구니에 물건 담기(TODO 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기)
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
+		System.out.println("지금받은 디테일vo는?" + detailVo);
 		//장바구니 번호 가져오기
 		UserVo dto = (UserVo)session.getAttribute("login");
 //		if (dto == null) {
@@ -51,7 +52,7 @@ public class BasketController {
 			basketService.getBasketKey(vo);
 			bno = vo.getBno();
 		}
-		
+		detailVo.setBno(bno);
 		//장바구니 상세에 담기
 		boolean result = basketService.putBasket(detailVo);
 		rttr.addFlashAttribute("resultputBasket", result);

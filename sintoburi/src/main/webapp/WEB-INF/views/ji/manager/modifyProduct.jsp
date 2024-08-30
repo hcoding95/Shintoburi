@@ -286,7 +286,7 @@ $(function() {
                                 <c:forEach var="image" items="${productVo.imgList}">
                                     <li data-filename="${image.img_name}" data-uploadpath="/upload" data-uuid="${image.uuid}"
                                     	style="width:150px;text-align:center">
-                                        <img src="/display?file_name=/upload/${image.uuid}_${image.img_name}" 
+                                        <img src="/display?file_name=/${imgae_path}/${image.uuid}_${image.img_name}" 
                                              class="img-thumbnail" style="width: 100px; height: 100px;">
                                         
                                         ${image.img_name}

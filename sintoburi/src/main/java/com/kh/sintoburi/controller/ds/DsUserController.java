@@ -78,8 +78,6 @@ public class DsUserController {
 	@PostMapping("/login")
 	@ResponseBody
 	public String login(@RequestBody LoginDto dto, HttpSession session) {
-			
-
 		UserVo vo = userService.login(dto);
 		log.info("vo:" + vo);
 		session.setAttribute("login", vo);
