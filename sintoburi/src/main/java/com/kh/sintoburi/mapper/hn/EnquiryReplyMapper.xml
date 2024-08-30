@@ -6,7 +6,7 @@
 
 <!-- 답변작성 -->
 <insert id="insertReply">
-    insert into tbl_reply 
+    insert into tbl_manager_reply 
     (rno, eno, user_id, reply_content, manager_id)
     values 
     (seq_reply.nextval, #{eno}, #{user_id}, #{reply_content}, #{manager_id})
@@ -15,13 +15,13 @@
   
  <!-- 답변게시글 목록 -->
   <select id="selectReply" resultType="EnquiryReplyVo">
-  	select * from tbl_reply
+  	select * from tbl_manager_reply
   	order by eno
   </select>
   
   <!--  답변게시글 한개 데이터 -->
   <select id="selectByReplyEno" resultType="EnquiryReplyVo">
-  	select * from tbl_reply
+  	select * from tbl_manager_reply
   	where eno = ${eno}
   </select>
   

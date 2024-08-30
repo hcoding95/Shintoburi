@@ -58,28 +58,26 @@ $(function() {
 				console.log(sData);
 			    
 				$.ajax({
-				  	 type: "post",
-                     url: "/hn/manager/enquiry/gradeupdateStatus",
-                     data: { eno: eno , status: selectedStatus},
-                     success: function() {
-                    	 
-                    	
-                    	
-                    	 if (selectedStatus === "처리완료") {
-                         $.ajax({
-        				  	 type: "post",
-                             url: "/hn/manager/enquiry/updateBusiness/" + user_id,
-                             data: { user_id : user_id},
-                             success: function() {
-                            	 
-                            	 
-                            	 alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
-                                 location.href = "/hn/manager/enquiry/gradeList";
-                             }
-                         });
-        				}
-                     }
-			
+				    type: "post",
+				    url: "/hn/manager/enquiry/gradeupdateStatus",
+				    data: { eno: eno, status: selectedStatus },
+				    success: function() {
+				        if (selectedStatus === "처리완료") {
+				            $.ajax({
+				                type: "post",
+				                url: "/hn/manager/enquiry/updateBusiness/" + user_id,
+				                data: { user_id: user_id },
+				                success: function() {
+				                    alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
+				                    location.href = "/hn/manager/enquiry/gradeList";
+				                }
+				            });
+				        } else {
+				            
+				            alert("문의사항 상태가 '" + selectedStatus + "'로 업데이트되었습니다.");
+				            location.href = "/hn/manager/enquiry/gradeList";
+				        }
+				    }
 				});
 				
 			}
