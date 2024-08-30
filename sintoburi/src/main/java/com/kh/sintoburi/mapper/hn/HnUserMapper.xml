@@ -111,7 +111,7 @@
         <where>
         grade not in('마스터') 
             <if test="typeArr != null and typeArr.length > 0">
-                <trim prefix="(" suffix=")" prefixOverrides="or">
+                <trim prefix="and(" suffix=")" prefixOverrides="or">
                     <foreach item="type" collection="typeArr" separator="or">
                         <choose>
                         	<when test="type == 'A'.toString()">
