@@ -16,8 +16,8 @@ public class SalesManageServiceImpl implements SalesManageService{
 	
 	//관리자 판매 목록 전체 보기
 	@Override
-	public List<OrderDto> getSalesManageList(String user_id) {
-		List<OrderDto> list = salesManageMapper.getSalesManageList(user_id);
+	public List<OrderDto> getSalesManageList() {
+		List<OrderDto> list = salesManageMapper.getSalesManageList();
 		return list;
 	}
 

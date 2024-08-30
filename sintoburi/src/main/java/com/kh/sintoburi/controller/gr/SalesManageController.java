@@ -29,17 +29,12 @@ public class SalesManageController {
 	@Autowired
 	public SalesManageService salesManageService; 
 	
-	//관리자 판매 목록 전체 보기
-	//TODO 로그인 처리
+	//사이트 관리자 판매 목록 전체 보기
 	@GetMapping("/list")
-	public String deliveryManage(Model model, HttpSession session) {
-		UserVo dto = (UserVo)session.getAttribute("login");
-//		if (dto == null) {
-//			//return "redirect:/hc/main/home";
-//		}
-		String user_id = dto.getUser_id();
+	public String deliveryManage(Model model) {
 		
-	    List<OrderDto> deliveryList	= salesManageService.getSalesManageList(user_id);
+		
+	    List<OrderDto> deliveryList	= salesManageService.getSalesManageList();
 	    model.addAttribute("deliveryList", deliveryList);
 	    return "/gr/sales_manage/list";
 	}

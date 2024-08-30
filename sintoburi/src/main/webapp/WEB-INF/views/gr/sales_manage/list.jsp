@@ -41,31 +41,31 @@
 	</div>
 </div>
 
-<!-- Pagination -->
-<div class="row">
-    <div class="col-md-12">
-        <nav>
-            <ul class="pagination justify-content-center">
-                <c:if test="${pageMaker.prev}">
-                    <li class="page-item">
-                        <a class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a>
-                    </li>
-                </c:if>
-                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
-                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
-                        <a class="page-link userPage" href="${v}">${v}</a>
-                    </li>
-                </c:forEach>
-                <c:if test="${pageMaker.next}">
-                    <li class="page-item">
-                        <a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
-</div>
-<!-- // Pagination -->
+<!-- <!-- Pagination --> -->
+<!-- <div class="row"> -->
+<!--     <div class="col-md-12"> -->
+<!--         <nav> -->
+<!--             <ul class="pagination justify-content-center"> -->
+<%--                 <c:if test="${pageMaker.prev}"> --%>
+<!--                     <li class="page-item"> -->
+<%--                         <a class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a> --%>
+<!--                     </li> -->
+<%--                 </c:if> --%>
+<%--                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v"> --%>
+<%--                     <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> --%>
+<%--                         <a class="page-link userPage" href="${v}">${v}</a> --%>
+<!--                     </li> -->
+<%--                 </c:forEach> --%>
+<%--                 <c:if test="${pageMaker.next}"> --%>
+<!--                     <li class="page-item"> -->
+<%--                         <a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a> --%>
+<!--                     </li> -->
+<%--                 </c:if> --%>
+<!--             </ul> -->
+<!--         </nav> -->
+<!--     </div> -->
+<!-- </div> -->
+<!-- // Pagination --> 
             </div> <!-- card-body -->
     
 

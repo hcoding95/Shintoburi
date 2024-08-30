@@ -27,6 +27,7 @@ public class SellerDeliveryController {
 	@Autowired
 	public SellerDeliveryService sellerDeliveryService; 
 	
+	//판매자가 판매한 상품 목록 보기
 	@GetMapping("/list")
 	public String deliveryManage(Model model,HttpSession session) {
 		UserVo dto = (UserVo)session.getAttribute("login");
@@ -40,6 +41,7 @@ public class SellerDeliveryController {
 	    return "/gr/seller_delivery/list";
 	}
 	
+	//배송상태 바꾸기(배송전, 배송준비중, 배송중, 배송완료)
 	@PostMapping("/updateDeliveryStatus")
 	@ResponseBody
 	public boolean updateDeliveryStatus(@RequestBody OrderDto orderDto)  {
