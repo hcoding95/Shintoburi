@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.ds.DsBoardVo;
+import com.kh.sintoburi.domain.ds.DsCriteria;
 import com.kh.sintoburi.domain.ds.DsLikeDto;
+import com.kh.sintoburi.domain.ds.DsPageDto;
 import com.kh.sintoburi.service.ds.DsBoardService;
 import com.kh.sintoburi.service.ds.DsLikeService;
 
@@ -36,8 +39,7 @@ public class DsBoardController {
 	@GetMapping("/read")
 	public void read(Long bno,Model model,HttpSession session) {
 		boardService.upViewCount(bno);
-		DsBoardVo vo = boardService.getDetail(bno);
-		
+
 		
 		// 좋아요 갯수와 좋아요 했는지를 판단하는 부분
 		
@@ -46,10 +48,7 @@ public class DsBoardController {
 		System.out.println("likeCount:" + likeCount);
 		UserVo user = (UserVo) session.getAttribute("login");
 
-		
 		if (user != null) {
-
-		
 
 			boolean result = likeService.checkLike(user.getUser_id(), bno);
 			model.addAttribute("result", result);
@@ -65,7 +64,7 @@ public class DsBoardController {
 		
 		
 		
-		model.addAttribute("detail",vo);
+		model.addAttribute("detail",boardVo);
 		
 	}
 	
@@ -74,12 +73,15 @@ public class DsBoardController {
 	@ResponseBody
 	@PostMapping("/checkLike")
 	public boolean checkLike(@RequestBody DsLikeDto dto) {
-		
+	
 		
 		boolean result = likeService.doLike(dto);
 
 		System.out.println("result:" + result);
-
+		
+		DsBoardVo boardVo = boardService.getDetail(dto.getBno());
+		Integer likeCount = likeService.getLikeCount(boardVo.getBno());
+		likeService.updateLikeCount(boardVo.getBno(), likeCount);
 		return result;
 		
 	}
@@ -91,6 +93,12 @@ public class DsBoardController {
 		
 		boolean result = likeService.undoLike(dto);
 		System.out.println("result:" + result);
+		
+		DsBoardVo boardVo = boardService.getDetail(dto.getBno());
+		Integer likeCount = likeService.getLikeCount(boardVo.getBno());
+		likeService.updateLikeCount(boardVo.getBno(), likeCount);
+		
+		
 		return result;
 	}
 	
@@ -173,11 +181,21 @@ public class DsBoardController {
 	
 	// 커뮤니티-홈화면
 	@GetMapping("/index")
-	public void index(Model model) {
-		List<DsBoardVo> list = boardService.getList();
+	public void index(Model model, DsCriteria criteria) {
+		System.out.println("criteria:"+criteria);
+		List<DsBoardVo> list = boardService.getList(criteria);
+		List<DsBoardVo> popularList = boardService.getPopularList(criteria);
 		
+		System.out.println(popularList.toString());
+		Integer total = boardService.getTotal(criteria);
+		DsPageDto pageMaker = new DsPageDto(criteria, total);
+		
+		System.out.println("total:"+total);
 		System.out.println("list:"+list.toString());
 		model.addAttribute("list", list);
+		model.addAttribute("popularList", popularList);
+		
+		model.addAttribute("pageMaker",pageMaker);
 	}
 	
 	// 이벤트 페이지
@@ -212,9 +230,5 @@ public class DsBoardController {
 	}
 	
 	
-	
-	
-	
-	
-	
+
 }

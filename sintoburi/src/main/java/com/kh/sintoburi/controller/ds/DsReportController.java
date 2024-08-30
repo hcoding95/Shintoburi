@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.sintoburi.domain.ds.DsReportVo;
+
+import com.kh.sintoburi.domain.common.ReportVo;
+
 import com.kh.sintoburi.service.ds.DsReportService;
 
 import lombok.extern.log4j.Log4j;
@@ -22,7 +24,7 @@ public class DsReportController {
 	
 	@PostMapping("/addReport")
 	@ResponseBody
-	public boolean addReport(@RequestBody DsReportVo vo) {
+	public boolean addReport(@RequestBody ReportVo vo) {
 		
 	
 		return reportService.addReport(vo);

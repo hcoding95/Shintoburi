@@ -55,7 +55,7 @@ $(function() {
 		$(".horse").eq(playerHorseNum).css("background-color","gray");
 		let rank = 1;
 		for (let i = 0; i < $(".horse").length; i++) {
-			let elapsedTime = parseInt(Math.random() * 3000) + 5000;
+			let elapsedTime = parseInt(Math.random() * 2000) + 3000;
 			let delayTime = parseInt(Math.random() * 900) + 100;
 			
 	

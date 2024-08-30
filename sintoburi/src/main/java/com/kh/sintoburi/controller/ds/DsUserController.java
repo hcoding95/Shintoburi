@@ -79,6 +79,7 @@ public class DsUserController {
 	@ResponseBody
 	public String login(@RequestBody LoginDto dto, HttpSession session) {
 			
+
 		UserVo vo = userService.login(dto);
 		log.info("vo:" + vo);
 		session.setAttribute("login", vo);
@@ -89,36 +90,10 @@ public class DsUserController {
 			return "manager";
 		}
 		
-	
-		
-		
+
 		return null;
 	}
 		
-//	@PostMapping("/login")	
-//	@ResponseBody
-//	public String loginAction(@RequestBody LoginDto dto, HttpSession session) {			
-//				
-//		UserVo vo = userService.login(dto);
-//		
-//		String path = "";		
-//		if(vo != null) {		
-//			session.setAttribute("login", vo);	
-////			String realPath = (String)session.getAttribute("targetLocation");	
-////
-////			System.out.println("내가보낼 타겟은?" + realPath);	
-////			path = "redirect:" + realPath;	
-//		} else {		
-//			path = "redirect:/ds/board/login";	
-//		}		
-//		return path;		
-//	}			
 
-		
-		
-		
-	
-	
-	
 
 }

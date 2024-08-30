@@ -15,10 +15,6 @@ public class DsLikeServiceImpl implements DsLikeService {
 	@Autowired
 	private DsLikeMapper likeMapper;
 
-	
-
-
-
 
 
 	@Override
@@ -53,6 +49,16 @@ public class DsLikeServiceImpl implements DsLikeService {
 	public Integer getLikeCount(Long bno) {
 		
 		return likeMapper.selectCount(bno);
+	}
+
+
+
+	@Override
+	public boolean updateLikeCount(Long bno, Integer like_count) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("like_count", like_count);
+		return likeMapper.updateLikeCountByBno(map)>0?true:false;
 	}
 	
 	

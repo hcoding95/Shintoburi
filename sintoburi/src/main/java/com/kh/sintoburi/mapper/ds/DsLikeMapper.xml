@@ -33,6 +33,16 @@
   	where bno =#{bno}
   
   </select>
+  
+  <!-- 게시글 좋아요 수 업데이트 -->
+  
+  <update id="updateLikeCountByBno">
+  
+  update tbl_board 
+  set like_count=#{like_count}
+  where bno=#{bno}
+  
+  </update>
 
 
 

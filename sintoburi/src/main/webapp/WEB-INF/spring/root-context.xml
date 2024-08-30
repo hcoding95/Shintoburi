@@ -29,7 +29,7 @@
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
 		<property name="username"
-			value="spring"></property>
+			value="sintoburi"></property>
 		<property name="password"
 			value="1234"></property>
 	</bean>
@@ -46,6 +46,7 @@
 	<bean id="sqlSessionFactory11"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+
 
 
 		<property name="typeAliasesPackage" value="com.kh.sintoburi.domain"/>	

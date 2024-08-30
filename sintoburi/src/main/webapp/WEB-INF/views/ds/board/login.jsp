@@ -41,13 +41,10 @@ $(function() {
 			data:JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8",
 			success: function(result){
-
 				
 				// 전 페이지로 이동
 				
 				//history.back();
-				console.log(result);
-		
 				if (result == "manager") {
 	
 						$(location).attr("href", "/hn/manager/user/userList");
