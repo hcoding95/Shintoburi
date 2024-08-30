@@ -110,9 +110,9 @@ public class HcUploadController {
 	///{map:.+}
 	@DeleteMapping("/delete")
 	@ResponseBody
-	public String delete(String fileName) {
-		System.out.println("내가받은 파일 네임은" + fileName);
-		String result = MyfileUtil.delete(fileName);
+	public String delete(String file_name) {
+		System.out.println("내가받은 파일 네임은" + file_name);
+		String result = MyfileUtil.delete(file_name);
 		return result;
 	}
 	
