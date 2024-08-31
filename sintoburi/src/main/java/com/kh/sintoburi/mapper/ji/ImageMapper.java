@@ -20,7 +20,7 @@ public interface ImageMapper {
 	 * @param rno
 	 * @return
 	 */
-	public List<ProductImageVo> getImgList(Integer pno);
+	public List<ProductImageVo> getImgList(Integer product_no);
 	
 	// 상품 상세보기 
 	/**
@@ -30,7 +30,7 @@ public interface ImageMapper {
 	 */
 	public ProductImageVo getImageByProductNo(int pno);
 
-	public int delete(int pno);
+	public int delete(int product_no);
 	
 	// test
 	public List<ProductImageVo> getImageListByPno(int pno);

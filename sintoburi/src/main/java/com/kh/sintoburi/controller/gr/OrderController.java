@@ -166,7 +166,8 @@ public class OrderController {
 	@GetMapping("/payment_list")
 	public String paymentList(Model model, HttpSession session,  
 			Integer ono, PaymentDto paymentDto) {
-		 System.out.println("Received ono: " + ono);
+		 log.info("oto:" + ono);
+		 log.info("paymentDto:" + paymentDto);
 		UserVo dto = (UserVo)session.getAttribute("login");
 //	    if (dto == null) {
 //	       // return "redirect:/gr"; 

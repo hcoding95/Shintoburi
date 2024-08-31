@@ -17,13 +17,13 @@ $(function () {
 	
 	
 	$(".btn-danger").click(function() {
-        let pno = $(this).closest('tr').find('td:first').text();
+        let product_no = $(this).closest('tr').find('td:first').text();
         
         if(confirm('정말로 삭제하시겠습니까?')) {
             $.ajax({
                 type: 'POST',
                 url: '/ji/manager/remove',
-                data: { pno: pno },
+                data: {product_no: product_no},
                 success: function(response) {
                     location.href = '/ji/manager/productList';
                 },
@@ -66,7 +66,7 @@ $(function () {
 						<td>${productListDto.status}</td>
 						<td><fmt:formatDate value="${productListDto.reg_date}" pattern="yyyy/MM/dd"/></td>
 						<td><fmt:formatDate value="${productListDto.upd_date}" pattern="yyyy/MM/dd"/></td>
-						<td><a href="/ji/manager/modifyProduct?pno=${productListDto.product_no}" class="btn btn-warning" >상품수정</a></td>
+						<td><a href="/ji/manager/modifyProduct?product_no=${productListDto.product_no}" class="btn btn-warning" >상품수정</a></td>
 						<td><button type="button" class="btn btn-danger" id="btnDelete" >상품 삭제</button></td>
 					</tr>
 					</c:forEach>

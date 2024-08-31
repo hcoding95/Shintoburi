@@ -19,12 +19,12 @@
 
 $(function() {
     $('.product-item').each(function() {
-        let pno = $(this).data('pno');
+        let product_no = $(this).data('product_no');
         let starContainer = $(this).find('.star-rating-container');
         
         $.ajax({
             type: 'get',
-            url: '/ji/review/averageRating/' + pno,
+            url: '/ji/review/averageRating/' + product_no,
             success: function(averageRating) {
                 let starHtml = generateStars(averageRating);
                 starContainer.html(starHtml);
@@ -69,11 +69,6 @@ $(function() {
 });
 </script>
 
-		<section class="py-1">
-			<c:if test="${isLoggedIn}">
-		        <a id="btnRegister" class="btn btn-outline-success" href="/ji/manager/register" style="margin-left: 985px;">상품등록</a>
-		    </c:if>
-		</section>
 		
 		<%@include file="/WEB-INF/views/ji/include/cateMenu.jsp" %>
 		
@@ -82,7 +77,7 @@ $(function() {
 		<section class="py-1 d-flex align-items-center">
 		    <!-- productList / 출력 -->
 		    <div class="btn-product-register mX-auto">
-		    	<form action="/ji/product/selectSearchProducts">
+		    	<form action="/ji/product/productSearch">
 		    		<select name="type">
 		    			<option value="P"
 		    				${type == 'P' ? 'selected' : '' }
@@ -94,18 +89,19 @@ $(function() {
 		    		<input type="text" name="keyword" value="${keyword}">
 		    		<button type="submit" class="btn btn-success">검색</button>
 		    	</form>
-		        
 		    </div>
 		</section>
+		
+		
 		<section class="py-1 product-list">
 					<div class="container px-4 px-lg-5 mt-3">
 						
 		                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
 		                <c:forEach items="${list}" var="dto" varStatus="status">
 		                
-		                    <div class="col mb-5 float-left product-item" data-pno="${dto.product_no}">
+		                    <div class="col mb-5 float-left product-item" data-product_no="${dto.product_no}">
 		                        <div class="card h-100">
-									<a href="/ji/product/productDetail?pno=${dto.product_no}">
+									<a href="/ji/product/productDetail?product_no=${dto.product_no}">
 					                    <img class="card-img-top" 
 					                         src="/display?file_name=/${dto.img_path}/${dto.uuid}_${dto.img_name}"
 					                         alt="${dto.product_name}"/>

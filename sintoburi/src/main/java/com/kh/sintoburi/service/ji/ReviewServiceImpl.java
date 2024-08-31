@@ -42,8 +42,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
 	@Override
-	public Double getAverageRating(int pno) {
-		return reviewMapper.selectAverageRating(pno);
+	public Double getAverageRating(int product_no) {
+		return reviewMapper.selectAverageRating(product_no);
 	}
     
 //    @Override

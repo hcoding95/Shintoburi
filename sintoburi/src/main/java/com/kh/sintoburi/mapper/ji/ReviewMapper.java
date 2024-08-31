@@ -16,6 +16,6 @@ public interface ReviewMapper {
 
 	 public List<ReviewVo> selectReviewsByProductNo(ReviewVo ReviewVo);
 	 
-	 public Double selectAverageRating(int pno);
+	 public Double selectAverageRating(int product_no);
 }
 	

@@ -44,7 +44,7 @@ public class ProductController {
 	    return "/ji/product/productMain";
 	}
 	
-	@GetMapping("/selectSearchProducts")
+	@GetMapping("/productSearch")
 	public String selectSearchProdcuts(
 			@ModelAttribute("type") String type, 
 			@ModelAttribute("keyword") String keyword, 
@@ -54,7 +54,7 @@ public class ProductController {
 		log.info("list:" + list);
 		model.addAttribute("list", list);
 		
-		return "/ji/product/selectSearchProducts";
+		return "/ji/product/productSearch";
 		
 	}
 	
@@ -87,11 +87,11 @@ public class ProductController {
 	 * @return "product/productDetail" 로 포워드
 	 */
 	@GetMapping("/productDetail")
-	public String productDetail(@RequestParam("pno") int pno, Model model, HttpSession session) {
+	public String productDetail(@RequestParam("product_no") int product_no, Model model, HttpSession session) {
 		// 상품 정보, 이미지 리스트 가져오기
-		ProductVo product = productService.getProductByNo(pno);
-		List<ProductImageVo> images = imageService.getImgList(pno);
-		List<RelatedProdDto> relatedProducts = productService.selectRelatedProdByUser(product.getUser_id(), pno);
+		ProductVo product = productService.getProductByNo(product_no);
+		List<ProductImageVo> images = imageService.getImgList(product_no);
+		List<RelatedProdDto> relatedProducts = productService.selectRelatedProdByUser(product.getUser_id(), product_no);
 		
 		UserVo userVo = (UserVo) session.getAttribute("login");
 		if (userVo != null) {

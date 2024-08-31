@@ -23,7 +23,7 @@ public interface ProductService {
 	 * @return
 	 */
 	// 상품 상세보기
-	public ProductVo getProductByNo(Integer pno);	
+	public ProductVo getProductByNo(Integer product_no);	
 		
 
 	/**
@@ -34,7 +34,7 @@ public interface ProductService {
 	// Main화면에서 해당 카테고리만 나오는 productMainCate
 	public List<DefaultProductListDto> selectProductsByCate(int cate_no);
 	
-	/**
+	/**product_no
 	 * 유저가 등록한 상품내역 가져오기
 	 * @return
 	 */
@@ -42,7 +42,7 @@ public interface ProductService {
 	public List<ProductListDto> selectProductsByUser(String user_id);
 
 	// 유저 상품내역에서 상품 삭제
-	public boolean remove(int pno);
+	public boolean remove(int product_no);
 	
 	/**
 	 *  동일한 유저가 등록한 상품내역 가져오기
@@ -50,7 +50,7 @@ public interface ProductService {
 	 *  -related items section에서 사용
 	 */
 	// 동일 유저 연관된 상품 가져오기
-	public List<RelatedProdDto> selectRelatedProdByUser(String user_id, int pno);
+	public List<RelatedProdDto> selectRelatedProdByUser(String user_id, int product_no);
 
 	// 상품등록
 	public int productRegister (ProductVo vo);

@@ -26,7 +26,7 @@ public interface ProductMapper {
 	 * @return
 	 */
 	// 상품 상세보기
-	public ProductVo selectByPno(Integer pno);
+	public ProductVo selectByPno(Integer product_no);
 	
 	/**
 	 * 카테고리별 상품 가져오기
@@ -44,7 +44,7 @@ public interface ProductMapper {
 	public List<ProductListDto> selectProductsByUser(String user_id);
 	
 	// 유저 상품내역에서 상품삭제 - 나중에 수정하기
-	public int delete(int pno);
+	public int delete(int product_no);
 	
 	// 동일유저 연관된 상품 가져오기
 	public List<RelatedProdDto> selectRelatedProdByUser(@Param("user_id") String user_id, @Param("product_no") int product_no);

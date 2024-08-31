@@ -43,10 +43,10 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 상세보기 (productDetail 화면)
 	@Override
 	@Transactional
-	public ProductVo getProductByNo(Integer pno) {
+	public ProductVo getProductByNo(Integer product_no) {
 		System.out.println("get...");
-		ProductVo vo = productMapper.selectByPno(pno);
-		List<ProductImageVo> imageList = imageMapper.getImgList(pno);
+		ProductVo vo = productMapper.selectByPno(product_no);
+		List<ProductImageVo> imageList = imageMapper.getImgList(product_no);
 		vo.setImgList(imageList);
 		return vo;
 	}
@@ -54,10 +54,10 @@ public class ProductServiceImpl implements ProductService {
     // 상품 삭제
 	@Transactional
 	@Override
-	public boolean remove(int pno) {
+	public boolean remove(int product_no) {
 		System.out.println("remove...");
-		imageMapper.delete(pno);
-		int count = productMapper.delete(pno);
+		imageMapper.delete(product_no);
+		int count = productMapper.delete(product_no);
 		return (count > 0) ? true : false;
 	}
 	

@@ -43,129 +43,146 @@ function generateStars(rating) {
 }
 
 $(function() {
- let pno = '${product.product_no}';
-
- // 평균 평점 불러오기
- $.ajax({
-     type: 'get',
-     url: '/ji/review/averageRating/' + pno,
-     success: function(averageRating) {
-         let starHtml = generateStars(averageRating);
-         $('#averageRating').html(starHtml); 
-         $('#averageRatingTop').html(starHtml);
-     },
-     error: function() {
-         alert('평균 평점을 불러오는데 실패했습니다.');
-     }
- });
-
- // 리뷰 탭 클릭 시 리뷰 목록 가져오기
- $("#reviewTab").on("click", function() {
-     sortReviews(); // 리뷰 목록 가져오기
- });
+ let product_no = '${product.product_no}';
+	
+	 let starContainer = $(this).find('.star-rating-container');
+ 
+	 // 평균 평점 불러오기
+	 $.ajax({
+	     type: 'get',
+	     url: '/ji/review/averageRating/' + product_no,
+	     success: function(averageRating) {
+	         let starHtml = generateStars(averageRating);
+	         $('#averageRating').html(starHtml); 
+	         $('#averageRatingTop').html(starHtml);
+	     },
+	     error: function() {
+	         alert('평균 평점을 불러오는데 실패했습니다.');
+	     }
+	 });
+	
+	 // 리뷰 탭 클릭 시 리뷰 목록 가져오기
+	 $("#reviewTab").on("click", function() {
+	     sortReviews(); // 리뷰 목록 가져오기
+	 });
 });
 
 //리뷰 목록 정렬 함수
 function sortReviews() {
- let sortOrder = document.getElementById('sortOrder').value;
- let pno = '${product.product_no}';
-
- $.ajax({
-     type: 'get',
-     url: '/ji/review/list/' + pno + '/' + sortOrder,
-     success: function(data) {
-    	 console.log("data", data);
-         $('#reviewList').html('');
-         if (data.length > 0) {
-             $.each(data, function(index, review) {
-                 let reviewDate = new Date(review.review_reg_date).toLocaleDateString();
-                 let starHtml = generateStars(review.review_rating);
-                 
-                 var reviewHtml = `
-                     <div class="card mt-3">
-                         <div class="card-body">
-                             <h5 class="card-title">\${review.user_id}님의 리뷰</h5>
-                             <h6 class="card-subtitle mb-2 text-muted">평점: \${starHtml}</h6>
-                             <p class="card-text">\${review.review_content}</p>
-                             <small class="text-muted">작성일: \${reviewDate}</small>`;
-                             
-                 if (review.user_id == "${login.user_id}") {
-                     reviewHtml += `
-                             <button onclick="deleteReview(\${review.review_no}, \${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
-                 }
-
-                 reviewHtml += `</div></div>`;
-                 $('#reviewList').append(reviewHtml);
-             });
-         } else {
-             $('#reviewList').html('<div class="alert alert-info" role="alert">이 상품에 대한 리뷰가 아직 없습니다.</div>');
-         }
-     },
-     error: function() {
-         alert('리뷰를 불러오는데 실패했습니다.');
-     }
- });
+	 let sortOrder = document.getElementById('sortOrder').ue;
+	 let product_no = '${product.product_no}';
+	
+	 $.ajax({
+	     type: 'get',
+	     url: '/ji/review/list/' + product_no + '/' + sortOrder,
+	     success: function(data) {
+	    	 console.log("data", data);
+	         $('#reviewList').html('');
+	         if (data.length > 0) {
+	             $.each(data, function(index, review) {
+	                 let reviewDate = new Date(review.review_reg_date).toLocaleDateString();
+	                 let starHtml = generateStars(review.review_rating);
+	                 
+	                 var reviewHtml = `
+	                     <div class="card mt-3">
+	                         <div class="card-body">
+	                             <h5 class="card-title">\${review.user_id}님의 리뷰</h5>
+	                             <h6 class="card-subtitle mb-2 text-muted">평점: \${starHtml}</h6>
+	                             <p class="card-text">\${review.review_content}</p>
+	                             <small class="text-muted">작성일: \${reviewDate}</small>`;
+	                             
+	                 if (review.user_id == "${login.user_id}") {
+	                     reviewHtml += `
+	                             <button onclick="deleteReview(\${review.review_no}, \${review.product_no})" class="btn btn-danger btn-sm">삭제</button>`;
+	                 }
+	
+	                 reviewHtml += `</div></div>`;
+	                 $('#reviewList').append(reviewHtml);
+	             });
+	         } else {
+	             $('#reviewList').html('<div class="alert alert-info" role="alert">이 상품에 대한 리뷰가 아직 없습니다.</div>');
+	         }
+	     },
+	     error: function() {
+	         alert('리뷰를 불러오는데 실패했습니다.');
+	     }
+	 });
 }
 
+$(function() {
+
+	let isLoggedIn = ${login != null ? 'true' : 'false'}; 
+
+    $('.btn-primary[data-target="#reviewModal"]').click(function(e) {
+        if (!isLoggedIn) {
+            e.preventDefault();
+            alert('리뷰를 작성하려면 로그인이 필요합니다.');
+            window.location.href = '/ds/board/login';
+        }
+    });
+});
+
 //리뷰 삭제 함수
-function deleteReview(review_no, pno) {
- if(confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
-     $.ajax({
-         type: 'delete',
-         url: '/ji/review/remove/' + review_no + '/' + pno,
-         success: function(response) {
-             if(response) {
-                 alert('리뷰가 삭제되었습니다.');
-                 sortReviews();
-             } else {
-                 alert('리뷰 삭제에 실패했습니다.');
-             }
-         },
-         error: function() {
-             alert('리뷰 삭제 중 오류가 발생했습니다.');
-         }
-     });
- }
+function deleteReview(review_no, product_no) {
+	 if(confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
+	     $.ajax({
+	         type: 'delete',
+	         url: '/ji/review/remove/' + review_no + '/' + product_no,
+	         success: function(response) {
+	             if(response) {
+	                 alert('리뷰가 삭제되었습니다.');
+	                 sortReviews();
+	             } else {
+	                 alert('리뷰 삭제에 실패했습니다.');
+	             }
+	         },
+	         error: function() {
+	             alert('리뷰 삭제 중 오류가 발생했습니다.');
+	         }
+	     });
+	 }
 }
 
 //리뷰 작성 폼 제출 (주석 처리된 코드)
 $(function() {
- $('#reviewForm').submit(function(event) {
-     event.preventDefault();
-
-     let review = {
-         product_no: '${product.product_no}',
-         user_id: '${login.user_id}',
-         review_content: $('#reviewContent').val(),
-         review_rating: $('#reviewRating').val()
-     };
-
-     $.ajax({
-         type: 'post',
-         url: '/ji/review/register',
-         contentType: 'application/json',
-         data: JSON.stringify(review),
-         success: function(response) {
-             if(response) {
-                 alert('리뷰가 등록되었습니다.');
-                 $('#reviewModal').modal('hide');
-                 $('#suggestionTab').tab('show');
-                 sortReviews(); 
-             } else {
-                 alert('리뷰 등록에 실패했습니다.');
-             }
-         },
-         error: function() {
-             alert('리뷰 등록 중 오류가 발생했습니다.');
-         }
-     });
- });
+	$('#reviewForm').submit(function(event) {
+	    event.preventDefault();
+		
+	    
+	    let review = {
+	        product_no: '${product.product_no}',
+	        user_id: '${login.user_id}',
+	        review_content: $('#reviewContent').val(),
+	        review_rating: $('#reviewRating').val()
+	    };
+	
+	    $.ajax({
+	        type: 'post',
+	        url: '/ji/review/register',
+	        contentType: 'application/json',
+	        data: JSON.stringify(review),
+	        success: function(response) {
+	            if(response) {
+	                alert('리뷰가 등록되었습니다.');
+	                $('#reviewModal').modal('hide');
+	                $('#reviewTab').tab('show');
+	                sortReviews(); 
+	            } else {
+	                alert('리뷰 등록에 실패했습니다.');
+	            }
+	        },
+	        error: function() {
+	            alert('리뷰 등록 중 오류가 발생했습니다.');
+	        }
+	    });
+	});
 });
 
 //문의사항 작성 및 등록
 $(function() {
     // 질문 등록 버튼 클릭 시
     $('#submitQuestion').on('click', function() {
+    	
         let formData = {
             product_no: $('input[name="product_no"]').val(),
             user_id: '${login.user_id}',
@@ -220,11 +237,24 @@ $(function() {
 
     // 문의사항 목록 로드
     function loadSuggestions() {
-        let pno = '${product.product_no}';
+    	
+    	let isLoggedIn = ${login != null};
+    	
+
+    	$('.btn-outline-primary[data-target="#questionModal"]').click(function(e) {
+            if (!isLoggedIn) {
+                e.preventDefault();
+                alert('문의사항을 작성하려면 로그인이 필요합니다.');
+                window.location.href = '/ds/board/login';  // 로그인 페이지로 리다이렉트
+            }
+        });
+    	
+    	
+        let product_no = '${product.product_no}';
 
         $.ajax({
             type: "get",
-            url: "/ji/suggestion/list/" + pno,
+            url: "/ji/suggestion/list/" + product_no,
             contentType: "application/json; charset=utf-8",
             success: function(rData) {
             	console.log("rData:" , rData);
@@ -394,6 +424,13 @@ $(function() {
     
     
     $("#goBasket").click(function () {
+    	
+    	if (!${login != null}) {  
+            alert('로그인이 필요합니다.');
+            window.location.href = '/ds/board/login'; 
+            return;
+        }
+    	
 		let p_count = $("#count").val();
 		let product_no = $(this).data("product_no");
 		let tag = `
@@ -409,6 +446,13 @@ $(function() {
 	
 	
     $("#order").click(function () {
+    	
+    	if (!${login != null}) { 
+            alert('로그인이 필요합니다.');
+            window.location.href = '/ds/board/login'; 
+            return;
+        }
+    	
 		let p_count = $("#count").val();
 		let product_no = $(this).data("product_no");
 		console.log(p_count);
@@ -496,8 +540,8 @@ $(function() {
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <c:forEach var="relatedProducts" items="${relatedProducts}" begin="0" end="3">
                 <div class="col mb-5">
-                    <div class="card h-100" data-pno="${relatedProducts.product_no}">
-                        <a href="/ji/product/productDetail?pno=${relatedProducts.product_no}">
+                    <div class="card h-100" data-product_no="${relatedProducts.product_no}">
+                        <a href="/ji/product/productDetail?product_no=${relatedProducts.product_no}">
                             <img class="card-img-related" 
                                  src="/display?file_name=/${relatedProducts.img_path}/${relatedProducts.uuid}_${relatedProducts.img_name}" 
                                  alt="${relatedProducts.product_name}" />

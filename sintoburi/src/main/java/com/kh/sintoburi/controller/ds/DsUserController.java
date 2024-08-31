@@ -87,8 +87,8 @@ public class DsUserController {
 			System.out.println("매니저임");
 			return "manager";
 		}
-		
 
+		
 		return null;
 	}
 		

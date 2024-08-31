@@ -28,27 +28,27 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	@Transactional
-	public ProductImageVo getImageByProductNo(int pno) {
-		ProductImageVo imageVo = imageMapper.getImageByProductNo(pno);
+	public ProductImageVo getImageByProductNo(int product_no) {
+		ProductImageVo imageVo = imageMapper.getImageByProductNo(product_no);
 	    return imageVo;
 	}
 
 	@Override
-	public List<ProductImageVo> getImgList(int pno) {
-	    return imageMapper.getImgList(pno);
+	public List<ProductImageVo> getImgList(int product_no) {
+	    return imageMapper.getImgList(product_no);
 	}
 
 	//test
 	@Override
-	public List<ProductImageVo> getImageListByPno(int pno) {
-		return imageMapper.getImageListByPno(pno);
+	public List<ProductImageVo> getImageListByPno(int product_no) {
+		return imageMapper.getImageListByPno(product_no);
 	}
 	
 	@Override
     public boolean delImg(String uuid, String img_name) {
 //		log.info("imgService 삭제img:" + uuid + "/ img_name:" + img_name);
-        int result = imageMapper.deleteImageByUuidAndName(uuid, img_name);
-        return result == 1; 
+        int count = imageMapper.deleteImageByUuidAndName(uuid, img_name);
+        return (count > 0 ) ? true : false; 
     }
 
 }

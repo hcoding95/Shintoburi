@@ -7,5 +7,8 @@
 		<a class="btn btn-outline-secondary" href="/ji/product/productMainCate?cate_no=2" style="margin-left: 10px;">잡곡</a>
 		<a class="btn btn-outline-secondary" href="/ji/product/productMainCate?cate_no=3" style="margin-left: 10px;">과일</a>
 		<a class="btn btn-outline-secondary" href="/ji/product/productMainCate?cate_no=4" style="margin-left: 10px;">야채</a>
+			<c:if test="${login.grade eq '판매자'}">
+	            <a id="btnRegister" class="btn btn-outline-success" href="/ji/manager/register" style="margin-left: 500px;">상품등록</a>
+        	</c:if>
 	</div>
 </section>

@@ -20,7 +20,7 @@ public interface ImageService {
 	 * @param pno
 	 * @return
 	 */
-	public List<ProductImageVo> getImgList(int pno);
+	public List<ProductImageVo> getImgList(int product_no);
 
 	/**
 	 * 메인화면에서 상품 카테고리별 사진 가져오기
@@ -28,10 +28,10 @@ public interface ImageService {
 	 * @return
 	 */
 	// 상품 카테고리 사진 가져오기
-	public ProductImageVo getImageByProductNo(int pno);
+	public ProductImageVo getImageByProductNo(int product_no);
 
 	//test
-	public List<ProductImageVo> getImageListByPno(int pno);
+	public List<ProductImageVo> getImageListByPno(int product_no);
 	
 	// 이미지 삭제
     public boolean delImg(String uuid, String img_name);

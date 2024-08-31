@@ -107,7 +107,7 @@ $(function() {
     <div class="col-md-6">
         <form id="frmUpdate" action="/ji/manager/updateProduct" method="post" role="form">
             <!-- Hidden input for product ID -->
-            <input type="hidden" id="pno" name="pno" value="${product.pno}"/>
+            <input type="hidden" id="product_no" name="product_no" value="${product.product_no}"/>
 
             <!-- product name -->
             <div class="form-group">

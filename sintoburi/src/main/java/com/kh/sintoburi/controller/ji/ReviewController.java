@@ -32,7 +32,6 @@ public class ReviewController {
 	 // 리뷰 작성
     @PostMapping("/register")
     public boolean register(@RequestBody ReviewVo reviewVo) {
-    	System.out.println("내가받은 리뷰 vo는?" + reviewVo);
         return reviewService.insertReview(reviewVo);
     }
 
@@ -43,37 +42,37 @@ public class ReviewController {
     }
 
     // 리뷰 삭제
-    @DeleteMapping("/remove/{review_no}/{pno}")
+    @DeleteMapping("/remove/{review_no}/{product_no}")
     public boolean remove(@PathVariable("review_no") int review_no,
-                          @PathVariable("pno") int pno) {
-        boolean result = reviewService.removeReview(review_no, pno);
+                          @PathVariable("product_no") int product_no) {
+        boolean result = reviewService.removeReview(review_no, product_no);
         return result;
     }
 
     // 특정 상품에 대한 리뷰 목록
-    @GetMapping("/list/{pno}/{sortOrder}")
-    public List<ReviewVo> getReviews(@PathVariable("pno") int pno,
+    @GetMapping("/list/{product_no}/{sortOrder}")
+    public List<ReviewVo> getReviews(@PathVariable("product_no") int product_no,
                                      @PathVariable("sortOrder") String sortOrder, Model model) {
         Map<String, Object> map = new HashMap<>();
-        map.put("pno", pno);
+        map.put("product_no", product_no);
         map.put("sortOrder", sortOrder);
         
         
-        Double averageRating = reviewService.getAverageRating(pno);
+        Double averageRating = reviewService.getAverageRating(product_no);
         model.addAttribute("averageRating", averageRating);
-        System.out.println("pno:" + pno);
+        System.out.println("pno:" + product_no);
         ReviewVo ReviewVo = new ReviewVo();
-        ReviewVo.setProduct_no(pno);
+        ReviewVo.setProduct_no(product_no);
         ReviewVo.setSortOrder(sortOrder);
         List<ReviewVo> reviews = reviewService.getReviewsByProductNo(ReviewVo);
         return reviews;
     }
     
     // 상품 리뷰 평균 평점
-    @GetMapping("/averageRating/{pno}")
+    @GetMapping("/averageRating/{product_no}")
     @ResponseBody
-    public Double getAverageRating(@PathVariable("pno") int pno) {
-        return reviewService.getAverageRating(pno);
+    public Double getAverageRating(@PathVariable("product_no") int product_no) {
+        return reviewService.getAverageRating(product_no);
     }
     
 }

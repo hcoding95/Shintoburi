@@ -42,15 +42,15 @@ public class ProductMgmtController {
 		
 		
 		List<ProductListDto> list = productService.selectProductsByUser(uservo.getUser_id());
-		
+		log.info(list);
 		model.addAttribute("list", list);
 		return "/ji/manager/productList";
 	}
 	
 	// 상품 리스트에서 상품 삭제
 	@PostMapping("/remove")
-	public String delete(@RequestParam("pno") int pno, RedirectAttributes rttr) {
-		boolean result = productService.remove(pno);
+	public String delete(@RequestParam("product_no") int product_no, RedirectAttributes rttr) {
+		boolean result = productService.remove(product_no);
 		rttr.addFlashAttribute("resultRemove", result);
 		return "redirect:/ji/manager/productList";
 	}
@@ -65,19 +65,19 @@ public class ProductMgmtController {
 	@PostMapping("/register")
 	public String register(ProductVo vo, RedirectAttributes rttr, HttpSession session) {
 		vo.setUser_id(((UserVo)session.getAttribute("login")).getUser_id());
-		int pno = productService.productRegister(vo);
+		int product_no = productService.productRegister(vo);
 		log.info("vo:"+ vo);
-		rttr.addFlashAttribute("resultRegister", pno);
+		rttr.addFlashAttribute("resultRegister", product_no);
 		return "redirect:/ji/product/productMain";
 	}
 	
 	
 	// 상품 수정 폼 가져오기
 	@GetMapping("/modifyProduct")
-	public String modify(@RequestParam("pno") int pno, Model model) {
+	public String modify(@RequestParam("product_no") int product_no, Model model) {
 		log.info("modifyProduct...");
 		
-		ProductVo productVo = productService.getProductByNo(pno);
+		ProductVo productVo = productService.getProductByNo(product_no);
 		model.addAttribute("productVo", productVo);
 		
 		

@@ -84,7 +84,7 @@ $(function() {
 		let extName = fileName.substring(dotIndex + 1).toLowerCase();
 		console.log("extName:", extName);
 		
-		if(extName == "jpg" || extName == "png" || extName == "gif") {
+		if(extName == "jpg" || extName == "png" || extName == "gif" || extName == "jfif" || extName == "jpeg" || extName == "avif") {
 			return true;
 		}
 		return false;

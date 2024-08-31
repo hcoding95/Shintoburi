@@ -39,7 +39,7 @@
 					from (select *
 					from tbl_product
 					where cate_no = #{arr}
-					order by stock desc, price desc
+					order by price desc
 					) a
 					)
 					where rn &lt;= 4) p
@@ -63,7 +63,7 @@
 		from (select *
 		from tbl_product
 		where cate_no = #{cate_no}
-		order by stock desc, price desc
+		order by price desc
 		) a
 		)
 		) p
@@ -93,7 +93,7 @@
 		</where>
 		
 		
-		order by stock desc, price desc
+		order by price desc
 		) a
 		)
 		) p

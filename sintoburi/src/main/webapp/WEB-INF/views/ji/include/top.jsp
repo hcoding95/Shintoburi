@@ -225,16 +225,12 @@ main {
                 </div>
                 <div class="user-menu">
 				    <!-- 로그인 상태 O -->
-				    <c:if test="${isLoggedIn}">
 				        <a href="/ds/user/logout" class="btn">로그아웃</a>
 				        <a href="/user/myPage" class="btn">마이페이지</a>
-				    </c:if>
 				    
 				    <!-- 로그인 상태 X -->
-				    <c:if test="${not isLoggedIn}">
 				        <a href="/ds/board/login" class="btn">로그인</a>
 				        <a href="/user/register" class="btn">회원가입</a>
-				    </c:if>
 				
 				    <a href="#" class="btn">주문조회</a>
 				    <a href="#" class="btn">고객센터</a>

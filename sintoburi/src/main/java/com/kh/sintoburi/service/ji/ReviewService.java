@@ -13,9 +13,9 @@ public interface ReviewService {
     public boolean modifyReview(ReviewVo reviewVo);
 
     // 리뷰 삭제
-    public boolean removeReview(int review_no, int pno);
+    public boolean removeReview(int review_no, int product_no);
 
     public List<ReviewVo> getReviewsByProductNo(ReviewVo ReviewVo);
     
-    public Double getAverageRating(int pno);
+    public Double getAverageRating(int product_no);
 }
