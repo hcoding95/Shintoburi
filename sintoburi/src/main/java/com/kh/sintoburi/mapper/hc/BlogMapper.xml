@@ -33,7 +33,7 @@
   			rownum as rn
   		from tbl_blog b
   		<if test="type == 'P'.toString()">
-  			LEFT JOIN tbl_product p ON b.product_id = p.product_id
+  			LEFT JOIN tbl_blog_tag p ON b.blog_no = p.blog_no
   		</if>
  		<where>
   			<if test="type != null">

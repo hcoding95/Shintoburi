@@ -24,9 +24,9 @@
   	
   	<select id="getTagList" resultType="HcProductTagDto">
   		select blog_no, product_no, product_name,
-  			(select UUID from tbl_img where product_no = #{product_no} ) as uuid, 
-  			(select IMG_NAME from tbl_img where product_no = #{product_no} ) as file_name, 
-  			(select IMG_PATH from tbl_img where product_no = #{product_no} ) as file_path
+  			(select UUID from tbl_img where product_no = tbl_blog_tag.product_no ) as uuid, 
+  			(select IMG_NAME from tbl_img where product_no = tbl_blog_tag.product_no ) as file_name, 
+  			(select IMG_PATH from tbl_img where product_no = tbl_blog_tag.product_no ) as file_path
   		from tbl_blog_tag
   		where blog_no = #{blog_no}
   	</select>
@@ -46,7 +46,7 @@
   		order by product_no asc
   	</select>
   	
-  	<select id="getProductListWithUserId" resultType="ProductVo">
+  	<select id="getProductListWithUserId" resultType="HcProductTagDto">
   		select p.product_no, p.product_name, i.UUID as uuid, 
   		i.IMG_NAME as file_name, i.IMG_PATH as file_path
 	  	from 

@@ -44,6 +44,7 @@ public class MainController {
 		}
 		list = injectionService.checkListFollowAndLike(list, login_id);
 		model.addAttribute("list", list);
+		model.addAttribute("BlogPageDto", blogPageDto);
 	}
 	
 	@GetMapping("/data")

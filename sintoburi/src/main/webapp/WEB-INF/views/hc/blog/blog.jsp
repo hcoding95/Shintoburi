@@ -176,9 +176,9 @@ $(function () {
 	            <span class="checkbox-group">
 	            	<label><button class="btn btn-primary move-up"><i class="fa fa-arrow-up"></i></button></label>
 	            	<label><button class="btn btn-primary move-down"><i class="fa fa-arrow-down"></i></button></label>
-			        <label><input type="checkbox" 
+			        <label><input type="checkbox" class="config-visible"
 			        > 숨기기</label>
-			        <label><input type="checkbox"
+			        <label><input type="checkbox" class="config-main"
 			        > 메인노출여부</label>
 			        <label><button class="btn btn-success config-modify-btn" >수정</button></label>
 			        <label><button class="btn btn-danger config-delete-btn" >삭제</button></label>
@@ -323,7 +323,7 @@ $(function () {
 				$.each(rData, function (index, obj) {
 					let tag = `
 						<div class="cover">
-	            			<a href="/product/productDetail?pno=\${obj.product_no}"><img src="/display?file_name=\${obj.file_path }/\${obj.uuid}_\${obj.file_name}" alt="/resources/images/logo.png">\${obj.product_name}</a>
+	            			<a href="/ji/product/productDetail?pno=\${obj.product_no}"><img src="/display?file_name=\${obj.file_path }/\${obj.uuid}_\${obj.file_name}" alt="/resources/images/logo.png">\${obj.product_name}</a>
 	            		</div>`;
 					$(".modal-left").append(tag);
 				})
@@ -701,7 +701,7 @@ $(function () {
     </div>
     
     <div class="header-content">
-        <div class="profile-picture">사진</div>
+        <img class="profile-picture" src="/resources/images/logo.png" alt="Logo">
         <div class="profile-info">
             <h2>${blog_userVo.user_name}(${blog_userVo.user_id})님</h2>
             <div class="profile-text">
@@ -789,12 +789,10 @@ $(function () {
 				        	</div>
 				        	<c:if test="${not empty product_list}">
 				        	<div class="blog-control">
-					            <h3 class="text-end">브랜드몰<div class="filters">
-					            <!-- <a id="filterBtn" href="#" class="btn btn-primary btn-standard">상품몰로</a> -->
-					            </div></h3>
-					            <div class="product-photo-grid">
+					            <h3 class="text-end">브랜드몰</h3>
+					            <div class="photo-grid">
 					            	<c:forEach items="${product_list }" var="tag">
-						                <div class="photo"><a href="/product/productDetail?pno=${tag.product_no }"><img src="/display?file_name=${tag.file_path }/${tag.uuid}_${tag.file_name}" alt="/resources/images/logo.png"></a></div>
+						                <div class="photo"><a href="/ji/product/productDetail?pno=${tag.product_no }"><img src="/display?file_name=${tag.file_path }/${tag.uuid}_${tag.file_name}" alt="/resources/images/logo.png"></a></div>
 					            	</c:forEach>
 					            </div>
 				        	</div>
@@ -835,7 +833,7 @@ $(function () {
 							     <c:if test="${not empty vo.productTagList }">
 							     <div class="post-icons">
 							     	<c:forEach items="${vo.productTagList }" var="tag" >
-							         <a href="/product/productDetail?pno=${tag.product_no}"><img src="/display?file_name=${tag.file_path }/${tag.uuid}_${tag.file_name}" alt="/resources/images/logo.png">${tag.product_name}</a>
+							         <a href="/jiDetail?pno=${tag.product_no}"><img src="/display?file_name=${tag.file_path }/${tag.uuid}_${tag.file_name}" alt="/resources/images/logo.png">${tag.product_name}</a>
 							     	</c:forEach>
 							     </div>
 							     </c:if>

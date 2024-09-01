@@ -120,7 +120,7 @@
 
 <script>
 $(function () {
-	$(".likeBtn").click(function () {
+	$(document).on("click",".likeBtn",function () {
 		let that = $(this);
 		let login_id = '${login.user_id}';
 		let blog_no = that.attr("data-blog_no");
@@ -201,7 +201,7 @@ $(function () {
 				$.each(rData, function (index, obj) {
 					let tag = `
 						<div class="cover">
-	            			<a href="/product/productDetail?pno=\${obj.product_no}"><img src="/display?file_name=\${obj.file_path }/\${obj.uuid}_\${obj.file_name}" alt="/resources/images/logo.png">\${obj.product_name}</a>
+	            			<a href="/ji/product/productDetail?pno=\${obj.product_no}"><img src="/display?file_name=\${obj.file_path }/\${obj.uuid}_\${obj.file_name}" alt="/resources/images/logo.png">\${obj.product_name}</a>
 	            		</div>`;
 					$(".modal-left").append(tag);
 				})
@@ -273,7 +273,7 @@ $(function () {
     };
 	
  	// 신고하기 버튼 클릭 시 모달 창 열기
-    $('.report-btn').click(function() {
+    $(document).on("click",'.report-btn',function() {
     	// 버튼에서 data-reg_id와 data-blog_no를 가져와 저장
         reportData.post_id = $(this).data('reg_id');
         reportData.write_num = $(this).data('blog_no');
@@ -282,7 +282,7 @@ $(function () {
     });
 
     // 모달 닫기 버튼 클릭 시 모달 창 닫기
-    $('.close-modal').click(function() {
+    $(document).on("click",'.close-modal',function() {
         $('#reportModal').hide();
     });
 
@@ -294,7 +294,7 @@ $(function () {
     });
 
     // 확인 버튼 클릭 시 처리
-    $('#reportSubmit').click(function() {
+    $(document).on("click",'#reportSubmit',function() {
     	reportData.re_reason = $('input[name="reason"]:checked').val();
     	reportData.re_id = '${login.user_id}';
         if (reportData.re_reason) {
@@ -323,7 +323,8 @@ $(function () {
     // 페이징 처리
     let page = 1;
     let isFetching = false;
-    let loginUserId = "\${loginUser != null ? loginUser.user_id : ''}";
+    let loginUserId = "${login != null ? login.user_id : ''}";
+    
     $(window).on('scroll', function() {
     	console.log($(window).scrollTop());
     	console.log($(window).height());
@@ -374,7 +375,7 @@ $(function () {
 	                    	\${vo.productTagList.length > 0 ? `
 	                    		 <div class="post-icons">
 	                    			\${vo.productTagList.map((tag, inIndex) => `
-			                             <a href="/product/productDetail?pno=\${tag.product_no}"><img src="/display?file_name=\${tag.file_path }/\${tag.uuid}_\${tag.file_name}" alt="/resources/images/logo.png">\${tag.product_name}</a>
+			                             <a href="/ji/product/productDetail?pno=\${tag.product_no}"><img src="/display?file_name=\${tag.file_path }/\${tag.uuid}_\${tag.file_name}" alt="/resources/images/logo.png">\${tag.product_name}</a>
 	                    			`).join('')}
 		                         </div>
 	                    			`: ''}
@@ -392,8 +393,8 @@ $(function () {
 	                           </div>
 	                         </div>
 	                         <div class="user-stats">
-	                           <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike" id="sumLike\${vo.blog_no }">${vo.sumLike }</span></i></div>
-	                           <div><i class="fa fa-handshake">팔로워<span class="sumFollow" id="sumFollow\${vo.blog_no }">${vo.sumFollower }</span></i></div>
+	                           <div><i class="fa fa-thumbs-up"> 좋아요<span class="sumLike" id="sumLike\${vo.blog_no }">\${vo.sumLike }</span></i></div>
+	                           <div><i class="fa fa-handshake">팔로워<span class="sumFollow" id="sumFollow\${vo.blog_no }">\${vo.sumFollower }</span></i></div>
 	                         </div>
 	                    </div>
 	                        <div class="post-content">
@@ -406,7 +407,7 @@ $(function () {
 	                        	</button>
 	                            <button><a class="open-modal" data-blog_no="\${vo.blog_no}"><i class="fa fa-comment">댓글 달기</i></a></button>
 	                            <button class="report-btn" data-reg_id="\${vo.user_id}" data-blog_no="\${vo.blog_no}"><i class="fa fa-exclamation-triangle">신고하기</i></button>
-	                            <button>\${vo.user_id === loginUserId ? `<a href="/hc/blog/modify_form?blog_no=\${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a>` : `<a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a>`}</button>
+	                            <button>\${vo.user_id == loginUserId ? `<a href="/hc/blog/modify_form?blog_no=\${vo.blog_no}"><i class="fa fa-pen-to-square">수정하기</i></a>` : `<a href="/hc/blog/register"><i class="fa fa-pen-to-square">글쓰기</i></a>`}</button>
 	                        </div>
 	                    </div>
 	                    `;
