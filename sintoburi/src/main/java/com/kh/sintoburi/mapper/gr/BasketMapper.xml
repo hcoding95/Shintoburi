@@ -77,7 +77,7 @@
 	<select id="getListWithPaging" resultType="BasketDetailDto">
 		select * from (
 			select k.user_id, p.product_name, p.price, 
-					(i.img_path || i.uuid || '_' || i.img_name) img_path,
+					(i.img_path || '/' || i.uuid || '_' || i.img_name) img_path,
 					b.product_no, b.p_count, b.bdno, b.put_date, (b.p_count*p.price) total_price,
                 row_number() over (order by put_date desc) as rn 
 	        from tbl_basket_detail b, tbl_product p, tbl_img i, tbl_basket k

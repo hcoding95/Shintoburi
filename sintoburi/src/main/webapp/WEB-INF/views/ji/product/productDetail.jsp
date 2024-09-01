@@ -69,7 +69,7 @@ $(function() {
 
 //리뷰 목록 정렬 함수
 function sortReviews() {
-	 let sortOrder = document.getElementById('sortOrder').ue;
+	 let sortOrder = document.getElementById('sortOrder').value;
 	 let product_no = '${product.product_no}';
 	
 	 $.ajax({
@@ -278,14 +278,17 @@ $(function() {
 
                         // 현재 유저가 상품 등록자일 경우 답변하기 버튼 표시
                         if ('${login.user_id}' === '${product.user_id}' && suggestion.parent_no === 0) {
-                            tr += `<td><button class="btn btn-sm btn-primary btnSuggestionAnswer" data-sno="\${suggestion.suggestion_no}" data-toggle="modal" data-target="#answerModal">답변하기</button></td>`;
+                            tr += `<td><button class="btn btn-sm btn-primary btnSuggestionAnswer" 
+                            	data-sno="\${suggestion.suggestion_no}" 
+                  				data-toggle="modal" data-target="#answerModal">답변하기</button></td>`;
                         } else if(suggestion.parent_no == -1) {
-                            tr += `<td><button class="btn btn-sm btn-success btnGetAnswer" data-sno="\${suggestion.suggestion_no}">답변보기</button></td>`;
+                            tr += `<td><button class="btn btn-sm btn-success btnGetAnswer" 
+                            	data-sno="\${suggestion.suggestion_no}">답변보기</button></td>`;
                         } else {
                         	tr += `<td></td>`;
                         }
-
                         tr += `</tr>`;
+                        
                         $("#suggestion_table tbody").append(tr);
                     });
                 } else {
