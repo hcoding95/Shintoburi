@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,39 +32,53 @@ public class HnUserController {
 
 	// 회원목록
 	@GetMapping("/userList")
-	public void userList(Model model, HnCriteria criteria) {
+	public String userList(Model model, HnCriteria criteria, HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+		System.out.println("관리자 로그인 계급은??" + login.getGrade());
+		if (login == null || (!"관리자".equals(login.getGrade().trim()) && !login.getGrade().equals("마스터")) ) {
+			System.out.println("나가라");
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
 
 		List<HnUserDto> list = userService.getList(criteria);
 		model.addAttribute("userList", list);
+
 		int total = userService.getTotal(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
-		
-		System.out.println("Criteria: " + criteria);
-		
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("criteria", criteria);
-		
+
+		return "/hn/manager/user/userList";
 	}
 
 	// 매니저목록
 	@GetMapping("/managerList")
-	public void managerList(Model model, HnCriteria criteria) {
+	public String managerList(Model model, HnCriteria criteria, HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+
+		if (login == null || !"마스터".equals(login.getGrade().trim())) {
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
+
 		List<HnUserDto> managerList = userService.managerList(criteria);
 		int total = userService.managerTotalCount(criteria);
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("managerList", managerList);
 		model.addAttribute("criteria", criteria);
+		return "/hn/manager/user/managerList";
 	}
-	
+
 	// 회원 상세보기
 	@PostMapping("/userDetail/{user_id}")
 	@ResponseBody
-	public UserVo userDetail(@PathVariable("user_id") String user_id , Model model) {
+	public UserVo userDetail(@PathVariable("user_id") String user_id, Model model) {
 		UserVo userVo = userService.selectById(user_id);
 		return userVo;
 	}
-	
+
 	// 사업자번호업데이트
 	@PostMapping("/modBusinessNum")
 	@ResponseBody
@@ -72,8 +88,7 @@ public class HnUserController {
 		boolean result = userService.modifyBusinessNum(user_id, business_num);
 		return result;
 	}
-	
-	
+
 	// 등급수정
 	@PostMapping("/modGrade")
 	@ResponseBody
@@ -86,15 +101,14 @@ public class HnUserController {
 		System.out.println("modGrade...result:" + result);
 		return result;
 	}
-	
+
 	// 등급 변경해야하는 회원 리스트
 	@GetMapping("/gradeChangeList")
 	public String gradeUpdateShow(Model model) {
 		List<HnUserDto> list = userService.gradeChangeList();
-		model.addAttribute("gradeChangeList",list);
+		model.addAttribute("gradeChangeList", list);
 		return "hn/manager/include/header";
 	}
-	
 
 //		로그인한 유저 문의사항
 //		@GetMapping("/enqList")
@@ -106,7 +120,5 @@ public class HnUserController {
 //			model.addAttribute("replyList", replyLisy);
 	//
 //		}
-
-	
 
 }

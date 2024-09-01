@@ -45,12 +45,15 @@ public class HnMainController {
 			System.out.println(userVo.getGrade());
 			switch (userVo.getGrade()) {
 			case "판매자":
-				location = "/hn/mypage/myPageMain";
+				location = "/hn/mypage/enqList";
 				break;
 			case "구매자":
-				location = "/hn/mypage/myPageMain";
+				location = "/hn/mypage/enqList";
 				break;
 			case "관리자":
+				location = "/hn/manager/user/userList";
+				break;
+			case "마스터":
 				location = "/hn/manager/user/userList";
 				break;
 			default:
@@ -62,7 +65,7 @@ public class HnMainController {
 		} else {
 			// 로그인실패
 			model.addAttribute("loginError", "아이디 또는 비밀번호가 잘못되었습니다.");
-			return "/ds/board/login";
+			return "/hn/main/login";
 		}
 	}
 

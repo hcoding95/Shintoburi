@@ -12,4 +12,5 @@ public interface DsLikeMapper {
 	public Integer delete(DsLikeDto vo);
 	public Integer select(Map<String, Object> map);
 	public Integer selectCount(Long bno);
+	public Integer updateLikeCountByBno(Map<String, Object> map);
 }

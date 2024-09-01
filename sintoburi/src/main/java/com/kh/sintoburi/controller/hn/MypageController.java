@@ -58,16 +58,13 @@ public class MypageController {
 	@Autowired
 	private HnUserService userService;
 
-	@GetMapping("/myPageMain")
-	public void myPageMain() {
-
-	}
 
 	// 1:1 문의사항
 	@GetMapping("/enqList")
 	public String getEnquiryList(HttpSession session, Model model, HnCriteria criteria) {
 		// 세션에서 로그인한 사용자 정보 가져오기
 		UserVo login = (UserVo) session.getAttribute("login");
+		
 		String user_id = login.getUser_id();
 		criteria.setUser_id(user_id);
 
@@ -283,7 +280,7 @@ public class MypageController {
 	public String userInfoMod(UserVo userVo, RedirectAttributes rttr) {
 		boolean result = userService.userInfoMod(userVo);
 		rttr.addFlashAttribute("infoMod", result);
-		return "redirect:/hn/mypage/myPageMain";
+		return "redirect:/hn/mypage/enqList";
 	}
 
 	// 회원정보 수정 전 비밀번호 체크
@@ -317,9 +314,9 @@ public class MypageController {
 	}
 	
 	// 회원탈퇴
-	@PostMapping("unRegister")
+	@PostMapping("/unRegister")
 	public String unRegister(HttpSession session, RedirectAttributes rttr ) {
-		HnUserDto login = (HnUserDto)session.getAttribute("login");
+		UserVo login = (UserVo)session.getAttribute("login");
 		String user_id = login.getUser_id();
 		boolean result = userService.unRegister(user_id);
 		session.invalidate();

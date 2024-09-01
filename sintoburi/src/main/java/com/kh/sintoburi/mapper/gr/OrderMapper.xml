@@ -64,7 +64,8 @@
   <select id="getOrderList" resultType="OrderDto">
 		select o.ono, o.user_phone, o.user_name, o.address, 
   			o.delivery_charge, o.delivery_status, o.payment_type, 
-  			o.pay_amount, o.sum_total, o.delivery_status, o.delivery_number, u.point,
+  			o.pay_amount, o.sum_total, o.delivery_status, o.delivery_number, 
+  			u.user_point,
         	CASE WHEN payment_state = '0' THEN '결제전' 
 		    ELSE '결제완료' 
         	end as p_state
@@ -75,7 +76,8 @@
   </select>
  
 <!--  주문상세 생성  -->
- <insert id="insertDetail">
+<!-- 지환 TODO !!!!!!!!!!!!!!!!!!!!!!-->
+ <insert id="insertDetail"> 
   	insert into tbl_order_detail
   		(odno, ono, product_no, p_count)
   	values
@@ -87,7 +89,7 @@
   	select o.user_id, o.ono, p.product_no, p.product_name, (i.img_path || i.uuid || '_' || i.img_name) img_path, d.p_count, p.price, o.delivery_status, o.order_date
 	from tbl_product p, tbl_img i, tbl_order_detail d, tbl_order o
 		where o.ono =  #{ono}
-	    and o.user_id = #{user_id}
+<!-- 	    and o.user_id = #{user_id} -->
 	    and o.ono= d.ono
 	    and d.product_no = p.product_no
 	    and p.product_no = i.product_no
@@ -96,7 +98,7 @@
   
 <!--   결제하기(가격빼기) -->
   <select id="payment" resultType ="PaymentDto">
-  select ono, u.point current_point, pay_amount,(u.point - pay_amount) remain_point, payment_state
+  select ono, u.user_point current_point, pay_amount,(u.user_point - pay_amount) remain_point, payment_state
         from (select a.ono, a.pay_amount, a.payment_state
               from(select *
                   from tbl_order o
@@ -108,7 +110,7 @@
 <!--   결제 후 포인트 갱신 -->
   <update id="updatePoint">
   	update tbl_user 
-  	set point = #{remain_point} 
+  	set user_point = #{remain_point} 
   	where user_id = #{user_id}
   </update>
   

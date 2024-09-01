@@ -123,7 +123,7 @@ $("#chatInput").focus();
 					
 			}
 			,error: function(){
-				console.log("채팅 못읽옴")
+				console.log("채팅 못읽옴");
 			
 			}	
 	

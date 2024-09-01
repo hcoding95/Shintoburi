@@ -7,7 +7,6 @@ import com.kh.sintoburi.domain.common.LoginDto;
 import com.kh.sintoburi.domain.common.UserVo;
 
 
-
 public interface DsUserMapper {
 	
 	@Select("select user_point from tbl_user where user_id=#{user_id}")

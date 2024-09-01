@@ -27,20 +27,16 @@ $(".btnMod").click(function() {
 			 success: function(rData) {
 				 	console.log("rData:", rData);
 	                if (rData) {
-	                    alert(delivery_status + "로 변경 되었습니다.");
+	                    alert(delivery_status + "(으)로 변경 되었습니다.");
 	                    window.location.reload();
 	                } else {
-	                    alert("변경 실패 , 다시 시도해 주세요.");
+	                    alert("변경 실패, 다시 시도해 주세요.");
 	                }
 	            }
 		});
        
    });
-   
-   
-   
-   
-   
+      
 });
 
 
@@ -98,30 +94,30 @@ $(".btnMod").click(function() {
 	</div>
 </div>
 
-<!-- Pagination -->
-<div class="row">
-    <div class="col-md-12">
-        <nav>
-            <ul class="pagination justify-content-center">
-                <c:if test="${pageMaker.prev}">
-                    <li class="page-item">
-                        <a class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a>
-                    </li>
-                </c:if>
-                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v">
-                    <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}">
-                        <a class="page-link userPage" href="${v}">${v}</a>
-                    </li>
-                </c:forEach>
-                <c:if test="${pageMaker.next}">
-                    <li class="page-item">
-                        <a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
-</div>
+<!--  Pagination --> 
+<!-- <div class="row"> -->
+<!--     <div class="col-md-12"> -->
+<!--         <nav> -->
+<!--             <ul class="pagination justify-content-center"> -->
+<%--                 <c:if test="${pageMaker.prev}"> --%>
+<!--                     <li class="page-item"> -->
+<%--                         <a class="page-link userPage" href="${pageMaker.startPage - 1}">&laquo;</a> --%>
+<!--                     </li> -->
+<%--                 </c:if> --%>
+<%--                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="v"> --%>
+<%--                     <li class="page-item ${v == pageMaker.cri.pageNum ? 'active' : ''}"> --%>
+<%--                         <a class="page-link userPage" href="${v}">${v}</a> --%>
+<!--                     </li> -->
+<%--                 </c:forEach> --%>
+<%--                 <c:if test="${pageMaker.next}"> --%>
+<!--                     <li class="page-item"> -->
+<%--                         <a class="page-link userPage" href="${pageMaker.endPage + 1}">&raquo;</a> --%>
+<!--                     </li> -->
+<%--                 </c:if> --%>
+<!--             </ul> -->
+<!--         </nav> -->
+<!--     </div> -->
+<!-- </div> -->
 <!-- // Pagination -->
             </div> <!-- card-body -->
     

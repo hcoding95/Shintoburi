@@ -66,7 +66,14 @@
             enquiry_type,
             status,
             write_date,
-            row_number() over (order by eno desc) as rn
+            ROW_NUMBER() OVER (
+                ORDER BY 
+                    CASE 
+                        WHEN status = '미처리' THEN 1 
+                        ELSE 0 
+                    END DESC, 
+                   eno DESC
+            ) AS rn
         from tbl_enquiry
         <where>
         enquiry_type != '등급문의'
@@ -136,7 +143,14 @@
             enquiry_type,
             status,
             write_date,
-            row_number() over (order by eno desc) as rn
+           ROW_NUMBER() OVER (
+                ORDER BY 
+                    CASE 
+                        WHEN status = '미처리' THEN 1 
+                        ELSE 0 
+                    END DESC, 
+                    eno DESC
+            ) AS rn
         from tbl_enquiry
         <where>
          enquiry_type = '등급문의'

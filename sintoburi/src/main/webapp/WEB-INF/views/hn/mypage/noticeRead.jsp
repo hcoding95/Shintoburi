@@ -60,7 +60,6 @@
             <fmt:formatDate value="${noticeVo.write_date}" pattern="yyyy-MM-dd"/>
         </p>
     </div>
-    
     <hr class="section-divider-middle">
     
     <div class="row">

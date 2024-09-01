@@ -20,10 +20,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/gr/upload")
 @Log4j
 public class UploadController {
-	
-	
-	
-	
+	//상품 이미지 처리
 	//<img src="/display?fileName=D:/upload/2024/07/23/0d781a29-1180-4542-815a-e7b88c16170d_horse.png"/>
 	@ResponseBody
 	@GetMapping("/display")
@@ -37,7 +34,5 @@ public class UploadController {
 				new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
 		return entity;
 	}
-	
-	
 	
 }

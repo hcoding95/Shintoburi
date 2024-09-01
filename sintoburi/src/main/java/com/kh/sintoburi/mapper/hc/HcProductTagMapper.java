@@ -10,6 +10,6 @@ public interface HcProductTagMapper {
 	public int update(HcProductTagDto tagDto);
 	public int deleteByPrimaryKey(HcProductTagDto tagDto);
 	public List<HcProductTagDto> getTagList(int blog_no);
-	
+	public List<HcProductTagDto> getProductListWithUserId(String user_id);
 	public List<HcProductTagDto> getProductListWithCondition(HcProductTagDto dto);
 }

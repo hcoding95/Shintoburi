@@ -1,5 +1,6 @@
 package com.kh.sintoburi.controller.gr;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -36,7 +37,7 @@ public class OrderController {
 	@Autowired
 	public OrderService orderService;
 	
-	//체크한 것 주문하기로 넘겨주기, 장바구니에서 삭제
+	//장바구니에서 체크한 것 주문하기로 넘겨주기, 장바구니 목록에서 삭제
 	@PostMapping("/run_order")
 	public String runOrder(HttpSession session, OrderVo orderVo, RedirectAttributes rttr) {
 		UserVo dto = (UserVo)session.getAttribute("login");
@@ -61,28 +62,38 @@ public class OrderController {
 		return "redirect:/gr/order/order_list";
 	}	
 			
-	//배송정보 입력 폼(더 해야 함: 주문자와 수취인이 다를 경우 입력한 정보 저장하기)
+	//배송정보 입력 폼(주문자 정보와 수취인 정보)
 	@GetMapping("/order_form")
-	public void orderForm(HttpSession session,
-			@ModelAttribute("product_no") int product_no,
-			@ModelAttribute("p_count") int p_count,
-			@ModelAttribute("ordernow") String ordernow) {
+	public void orderForm(HttpSession session) {
 		 int[] bdnos =(int[])session.getAttribute("bdnos");
 		 if (bdnos != null && bdnos.length > 0) {
-			 for (int bdno : bdnos) {
-				// log.info(bdno);
-			 }
+			 log.info("bdnos:" + Arrays.toString(bdnos));
 		 }
 	}
 	
-	//주문 전에 bdno 넘겨주기(주문하기에 정보 넘겨주고 장바구니 목록에서는 삭제)
-		@PostMapping("/pre_order")
-		public String preOrder(@RequestParam("bdnos") int[] bdnos, HttpSession session) {
-			session.setAttribute("bdnos", bdnos);
-			return "redirect:/gr/order/order_form";
-		}
+	//배송정보 입력 폼 (즉시 주문/결제 시)
+	// TODO: 지환씨 상품 보기 -> 바로 주문(/gr/order/order_form_now?product_no=1&p_count=2)
+	// 바로주문: 상품번호(product_no), 개수(p_count), 바로주문옵션(ordernow=Y)
+	@GetMapping("/order_form_now")
+	public String orderFormNow(HttpSession session,
+			@ModelAttribute("product_no") int product_no,
+			@ModelAttribute("p_count") int p_count,
+			Model model) {
+		log.info("product_no:" + product_no);
+		log.info("p_count:" + p_count);
+		model.addAttribute("ordernow", "Y");
+		return "/gr/order/order_form";
+	}
 	
-	//배송정보 입력
+	//주문 전에 bdno 넘겨주기(주문하기에 정보 넘겨주고 장바구니 목록에서는 삭제하는 상황)
+	@PostMapping("/pre_order")
+	public String preOrder(@RequestParam("bdnos") int[] bdnos, HttpSession session) {
+		log.info("bdnos:" + Arrays.toString(bdnos));
+		session.setAttribute("bdnos", bdnos);
+		return "redirect:/gr/order/order_form";
+	}
+	
+	//배송정보(수취인 이름,전화번호, 배송지) 입력
 	@GetMapping("/getDeliveryInfo")
 	@ResponseBody
 	public DeliveryDto getDeliveryInfo(HttpSession session) {
@@ -94,7 +105,7 @@ public class OrderController {
 		return dto;
 	}
 	
-	//주문정보 목록 //TODO 결제방법 뒤에 남은포인트 기록, 배송상태 기록
+	//장바구니에서 넘어온 주문서 목록
 	@GetMapping("/order_list")
 	public String orderList(Model model, HttpSession session, Integer ono){
 		UserVo dto = (UserVo)session.getAttribute("login");
@@ -106,10 +117,11 @@ public class OrderController {
 		String user_id = dto.getUser_id();
 		//System.o//ut.println("user_id: "+ user_id);
 		
-		System.out.println("id:"+user_id+"ono:"+ono);
+		System.out.println("id:"+user_id+", ono:"+ono);
 //		결제(가격 계산): 결제 전 정보 처리
-		PaymentDto paymentDto = orderService.payment(user_id, ono);
-		model.addAttribute("paymentDto",paymentDto);
+//		PaymentDto paymentDto = orderService.payment(user_id, ono);
+//		log.info("paymentDto:" + paymentDto);
+//		model.addAttribute("paymentDto",paymentDto);
 //		System.out.println("paymentDto" + paymentDto);
 		
 		List<OrderDto> orderList = orderService.getOrderList(user_id);
@@ -117,20 +129,20 @@ public class OrderController {
 		return "/gr/order/order_list";
 	}
 	
-	//주문상세 정보 목록(주문번호 누르면 주문상세로 이동)  
+	//주문서 상세정보 목록(주문번호 누르면 주문상세로 이동)  
 	@GetMapping("/detail/{ono}")
 	public String getDetailList(@PathVariable("ono") int ono,
 			Model model, HttpSession session ){
-		UserVo dto = (UserVo)session.getAttribute("login");
+		//UserVo dto = (UserVo)session.getAttribute("login");
 		// dto가 null인지 확인
 //	    if (dto == null) {
 //	       // return "redirect:/gr"; // 세션에 login 정보가 없으면 로그인 페이지로 리디렉션
 //	    }
 		//System.out.println("dto:" + dto);
-		String user_id = dto.getUser_id();
+		//String user_id = dto.getUser_id();
 		//System.out.println("user_id: "+ user_id);
 		
-		List<OrderDetailDto> detailList = orderService.getDetailList(user_id, ono);
+		List<OrderDetailDto> detailList = orderService.getDetailList(ono);
 		model.addAttribute("detailList", detailList);
 		return "/gr/order/detail";
 	}
@@ -143,22 +155,9 @@ public class OrderController {
 	@ResponseBody
 	public void doPay(@RequestBody PaymentDto paymentDto, 
 			Model model, HttpSession session) {
-		//system.out.println(paymentDto.toString());
-		
-		//UserVo dto = (UserVo)session.getAttribute("login");
-//		 if (dto == null) {
-//		        return "redirect:/gr";
-//		    }
-		// String user_id = dto.getUser_id();
-		 
-		 //int ono = paymentDto.getOno();
-		// paymentDto = orderService.payment(user_id, ono);
-			//model.addAttribute("paymentDto", paymentDto);
-			System.out.println( "paymentDto" + paymentDto);
-			
+		 System.out.println( "paymentDto" + paymentDto);
 		 orderService.updatePaymentState(paymentDto);
 		 orderService.updatePoint(paymentDto);
-		 
 		 //System.out.println(result);
 		 //JSP에 리턴 만듦 return "redirect:/gr/order/payment_list";
 	}
@@ -179,11 +178,19 @@ public class OrderController {
 		return "/gr/order/payment_list";
 	}
 	
-	// 지환씨 상품 보기 -> 바로 주문(/gr/order/order_form?product_no=1&count=2&ordernow=Y)
-	// 바로주문: 상품번호(product_no), 개수(count), 바로주문옵션(ordernow=Y)
+	//TODO: 지환님 즉시주문
+	// 즉시주문 결제시 배송정보 입력 후 주문서로  이동
 	@PostMapping("/ordernow")
-	public void ordernow(
-			int product_no, int p_count) {
-		
+	public String ordernow(
+			int product_no, int p_count, OrderVo orderVo, 
+			HttpSession session, RedirectAttributes rttr) {
+		log.info("product_no:" + product_no);
+		log.info("p_count:" + p_count);
+		log.info("orderVo:" + orderVo);
+		UserVo dto = (UserVo)session.getAttribute("login");
+		orderVo.setUser_id(dto.getUser_id());
+		orderService.runOrderNow(product_no, p_count, orderVo);
+		rttr.addAttribute("ono", orderVo.getOno());
+		return "redirect:/gr/order/order_list";
 	}
 }

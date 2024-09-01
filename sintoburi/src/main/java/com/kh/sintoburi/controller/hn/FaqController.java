@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.FaqVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
@@ -29,7 +32,13 @@ public class FaqController {
 
 	// 자주하는 질문
 	@GetMapping("/faqList")
-	public void faqList(Model model, HnCriteria criteria) {
+	public String faqList(Model model, HnCriteria criteria,HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+
+		if (login == null || (!"관리자".equals(login.getGrade()) && !login.getGrade().equals("마스터")) ) {
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
 		List<FaqVo> list = faqService.faqList(criteria);
 		model.addAttribute("faqList", list);
 		
@@ -38,6 +47,7 @@ public class FaqController {
 		System.out.println("Criteria: " + criteria);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("criteria", criteria);
+		return "/hn/manager/faq/faqList";
 
 	}
 

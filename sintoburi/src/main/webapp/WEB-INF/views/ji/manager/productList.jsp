@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ include file="/WEB-INF/views/include/top.jsp"%>
+<%@ include file="/WEB-INF/views/hn/mypage/include/myPageSide.jsp" %>
+
 
 <script>
 $(function () {

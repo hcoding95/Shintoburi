@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.sintoburi.domain.ds.DsBoardVo;
+import com.kh.sintoburi.domain.ds.DsCriteria;
 import com.kh.sintoburi.mapper.ds.DsBoardMapper;
 
 @Service
@@ -53,6 +54,27 @@ public class DsBoardServiceImpl implements DsBoardService {
 	public boolean upViewCount(Long bno) {
 		
 		return boardMapper.updataViewCount(bno)>0?true:false;
+	}
+
+
+	@Override
+	public List<DsBoardVo> getList(DsCriteria criteria) {
+		
+		return boardMapper.selectListWithPaging(criteria);
+	}
+
+
+	@Override
+	public Integer getTotal(DsCriteria criteria) {
+		
+		return boardMapper.getTotalCount(criteria);
+	}
+
+
+	@Override
+	public List<DsBoardVo> getPopularList(DsCriteria criteria) {
+		List<DsBoardVo> list = boardMapper.selectListMostLike(criteria);
+		return list;
 	}
 
 }

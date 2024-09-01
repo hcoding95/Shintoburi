@@ -15,10 +15,11 @@
 </style>
 
 <script>
+
+
 $(function() {
     $('.product-item').each(function() {
         let pno = $(this).data('pno');
-        
         let starContainer = $(this).find('.star-rating-container');
         
         $.ajax({
@@ -43,7 +44,7 @@ function generateStars(rating) {
     let starHtml = '';
     
     for (let i = 0; i < fullStars; i++) {
-        starHtml += '<i class="fas fa-star gold-star"></i>'; // 가득 찬 별
+        starHtml += '<i class="fas fa-star gold-star"></i>'; // 풀 별
     }
     
     if (halfStars) {
@@ -56,6 +57,16 @@ function generateStars(rating) {
     
     return starHtml;
 }
+
+$(function() {
+    $('.card-img-top').each(function() {
+        let img = $(this);
+        img.on('load', function() {
+            console.log('Width: ' + img.width());
+            console.log('Height: ' + img.height());
+        });
+    });
+});
 </script>
 
 		<section class="py-1">
@@ -83,9 +94,9 @@ function generateStars(rating) {
 		    		<input type="text" name="keyword" value="${keyword}">
 		    		<button type="submit" class="btn btn-success">검색</button>
 		    	</form>
+		        
 		    </div>
 		</section>
-		
 		<section class="py-1 product-list">
 					<div class="container px-4 px-lg-5 mt-3">
 						

@@ -46,19 +46,19 @@
 							<td>${orderDto.pay_amount}</td>
 							<td>${orderDto.delivery_status}</td>
 							<td><fmt:formatDate value="${orderDto.order_date}" pattern="yyyy-MM-dd"/></td>
-							<td><button type="button" data-ono="${orderDto.ono}"  id="btnCancel" name="btnCancel" class="btn btn-danger cancel" style="width:103px;" >결제취소</button></td>
+<%-- 							<td><button type="button" data-ono="${orderDto.ono}"  id="btnCancel" name="btnCancel" class="btn btn-danger cancel" style="width:103px;" >결제취소</button></td> --%>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</form>
-		<div class="container-fluid">
-			<div class="row justify-content-end">
-			    <div class="col-auto">
-			        <a href="/hc/main/home"  id="btnMain" class="btn btn-warning">쇼핑몰 홈</a>
-			    </div>
-			</div>
-		</div>	
+<!-- 		<div class="container-fluid"> -->
+<!-- 			<div class="row justify-content-end"> -->
+<!-- 			    <div class="col-auto"> -->
+<!-- 			        <a href="/hc/main/home"  id="btnMain" class="btn btn-warning">쇼핑몰 홈</a> -->
+<!-- 			    </div> -->
+<!-- 			</div> -->
+<!-- 		</div>	 -->
 									
 		</div>
 		

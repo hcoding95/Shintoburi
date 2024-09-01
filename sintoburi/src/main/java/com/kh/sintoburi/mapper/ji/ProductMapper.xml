@@ -20,10 +20,10 @@
 			select seq_product.nextval from dual
 		</selectKey>
 		insert into tbl_product
-		(product_no, product_name, details, price, stock, status, cate_no, summary)
+		(product_no, product_name, details, price, stock, status, cate_no, summary, user_id)
 		values
 		(#{product_no}, #{product_name}, #{details}, #{price}, #{stock},
-		#{status}, #{cate_no}, #{summary})
+		#{status}, #{cate_no}, #{summary}, #{user_id})
 	</insert>
 
 	<!-- 상품 목록 productMain -->
@@ -63,6 +63,36 @@
 		from (select *
 		from tbl_product
 		where cate_no = #{cate_no}
+		order by stock desc, price desc
+		) a
+		)
+		) p
+		,
+		(select * from tbl_img
+		where represent = '1') i
+		where p.product_no = i.product_no
+	</select>
+	
+	<select id="selectSearchProducts" resultType="DefaultProductListDto">
+		select p.product_no, p.product_name, p.price, p.cate_no,
+		p.user_id, i.uuid, i.img_name, i.img_path
+		from (select *
+		from (
+		select rownum rn, a.*
+		from (select *
+		from tbl_product
+		<where>
+		<choose>
+			<when test="type == 'P'.toString()">
+				product_name like '%' || #{keyword} || '%'
+			</when>
+			<when test="type == 'U'.toString()">
+				user_id like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+		</where>
+		
+		
 		order by stock desc, price desc
 		) a
 		)
@@ -138,4 +168,5 @@
 			reviewcnt = reviewcnt + #{amount}
 		where product_no = #{product_no}
 	</update>
+	
 </mapper>

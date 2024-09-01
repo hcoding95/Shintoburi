@@ -33,9 +33,10 @@ public class BasketController {
 	@Autowired
 	private BasketService basketService;
 	
-	//장바구니 담기(TODO 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기, 상품 이미지 넣기)
+	//장바구니에 물건 담기(TODO 지환: 구매 페이지 장바구니 버튼 누르기와 연동, 상품 번호가 같으면 개수 합하기)
 	@PostMapping("/putBasket")
 	public String putBasket(HttpSession session, BasketDetailVo detailVo, RedirectAttributes rttr) {
+		System.out.println("지금받은 디테일vo는?" + detailVo);
 		//장바구니 번호 가져오기
 		UserVo dto = (UserVo)session.getAttribute("login");
 //		if (dto == null) {
@@ -51,7 +52,7 @@ public class BasketController {
 			basketService.getBasketKey(vo);
 			bno = vo.getBno();
 		}
-		
+		detailVo.setBno(bno);
 		//장바구니 상세에 담기
 		boolean result = basketService.putBasket(detailVo);
 		rttr.addFlashAttribute("resultputBasket", result);
@@ -61,7 +62,6 @@ public class BasketController {
 	// 장바구니 목록 보기(페이징)
 	@GetMapping("/list")
 	public String list(Model model, HttpSession session, BasketCriteria criteria) {
-		// TODO 한나씨 로그인 처리 완료 후 세션에서 받아서 처리
 		UserVo dto = (UserVo)session.getAttribute("login");
 		System.out.println("로그인한 유저는?" + dto);
 //		if (dto == null) {
@@ -83,7 +83,7 @@ public class BasketController {
 		return "/gr/basket/list";
 	}
 		
-	// 장바구니 상품 개수 수정
+	// 장바구니에 담긴 상품 개수 수정
 	@PostMapping("/modCount")
 	@ResponseBody
 	public boolean modCount(@RequestBody Map<String, Integer> map) {
@@ -101,7 +101,7 @@ public class BasketController {
 		return result;
 	}
 	
-	//장바구니 상세에서 상품 제거 - 1개씩 제거
+	//장바구니 목록에서 체크한 상품 제거
 	@PostMapping("/removeOne")
 	@ResponseBody
 	public boolean removeOne(@RequestBody Map<String, List<Integer>> bdnos) {

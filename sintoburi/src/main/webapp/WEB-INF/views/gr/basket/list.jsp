@@ -62,10 +62,10 @@ $(function() {
 			contentType: "application/json; charset=utf-8",
 			success: function(result) {
 				if (result) {
-					alert("삭제 완료");
+					alert("삭제 완료되었습니다");
 					location.reload();
 				} else {
-					alert("삭제 실패");
+					alert("삭제 실패했습니다");
 				}
 			}
 		});
@@ -102,20 +102,20 @@ $(function() {
 	    });
 	
 	// 체크한 것 주문하기로 넘겨주기
-		$("#btnOrder").click(function(e){
-			e.preventDefault();
-			let checkedItems = $("[name=selectedItems]:checked");
-			console.log("checkedItems:", checkedItems);
-			$.each(checkedItems, function(idx, val) {
-				let bdno = checkedItems.eq(idx).val();
-				console.log("bdno:", bdno);
-				let inputTag = `<input type='hidden' name='bdnos' value='\${bdno}'>`;
-				console.log("inputTag:", inputTag);
-				$("#frm_bdnos").append(inputTag);
-			});
-			
- 			$("#frm_bdnos").submit();
- 		});
+	$("#btnOrder").click(function(e){
+		e.preventDefault();
+		let checkedItems = $("[name=selectedItems]:checked");
+		console.log("checkedItems:", checkedItems);
+		$.each(checkedItems, function(idx, val) {
+			let bdno = checkedItems.eq(idx).val();
+			console.log("bdno:", bdno);
+			let inputTag = `<input type='hidden' name='bdnos' value='\${bdno}'>`;
+			console.log("inputTag:", inputTag);
+			$("#frm_bdnos").append(inputTag);
+		});
+		
+		$("#frm_bdnos").submit();
+	});
 });
 
 </script>

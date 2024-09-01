@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.EnquiryReplyVo;
 import com.kh.sintoburi.domain.hn.EnquiryVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
@@ -39,7 +42,16 @@ public class EnquiryController {
 
 	// 상품문의사항목록
 	@GetMapping("/goodsList")
-	public void goodsEnqList(Model model, HnCriteria criteria) {
+	public String goodsEnqList(Model model, HnCriteria criteria,HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+
+		if (login == null || (!"관리자".equals(login.getGrade()) && !login.getGrade().equals("마스터")) ) {
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
+
+		
+		
 		List<EnquiryVo> list = enquiryService.goodsGetList(criteria);
 
 		int total = enquiryService.goodsTotalCount(criteria);
@@ -51,6 +63,7 @@ public class EnquiryController {
 		// 답변 리스트
 		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("replyList", replyLisy);
+		return "/hn/manager/enquiry/goodsList";
 	}
 
 	// 상품문의사항, 답변 상세보기
@@ -84,7 +97,14 @@ public class EnquiryController {
 
 	// 등급문의사항목록
 	@GetMapping("/gradeList")
-	public void gradeEnqList(Model model, HnCriteria criteria) {
+	public String gradeEnqList(Model model, HnCriteria criteria,HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+
+		if (login == null || (!"관리자".equals(login.getGrade()) && !login.getGrade().equals("마스터")) ) {
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
+		
 		List<EnquiryVo> list = enquiryService.gradeGetList(criteria);
 
 		int total = enquiryService.gradeTotalCount(criteria);
@@ -96,6 +116,7 @@ public class EnquiryController {
 		// 답변리스트
 		List<EnquiryReplyVo> replyLisy = replyService.replyList();
 		model.addAttribute("gradeReplyList", replyLisy);
+		return "/hn/manager/enquiry/gradeList";
 	}
 
 	// 등급문의사항, 답변 상세보기

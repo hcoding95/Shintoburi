@@ -42,6 +42,8 @@ $(function() {
             }
         });
     });
+    
+    
 });
 </script>
 
@@ -52,8 +54,22 @@ $(function() {
          <div class="card shadow mb-4">
              <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">관리자 목록</h6>
-			
+			    <h6 class="m-0 font-weight-bold text-primary" style="margin-right: 10px;">관리자 변경</h6>
+				<form id="searchForm" action="/hn/manager/user/managerList" method="get" style="display: flex; align-items: center;">
+			        <select id="selectSearch" name="type" class="form-control ml-4" style="width: 150px; margin-right: 10px;">
+			            <option value="A" ${criteria.type == 'A' ? 'selected' : ''}>전체</option>
+			            <option value="I" ${criteria.type == 'I' ? 'selected' : ''}>아이디</option>
+			            <option value="E" ${criteria.type == 'E' ? 'selected' : ''}>이메일</option>
+			            <option value="G" ${criteria.type == 'G' ? 'selected' : ''}>등급</option>
+			        </select>
+			        <select id="selectBusiness" class="form-control " 
+			        	style="width: 150px; margin-right: 10px; display:none">
+			            <option value="1">완료</option>
+			            <option value="0">미완료</option>
+			        </select>
+			      <input class="form-control" id="inputSearch" type="text" name="keyword" style="margin-right: 10px;width: 226px;">
+			        <button id="btnSearch" type="submit" class=" btn btn-primary btn-sm">검색</button>
+			    </form>
 			</div>
              <!-- Card Body -->
              <div class="card-body"> 
@@ -62,7 +78,7 @@ $(function() {
 		<table class="table">
 			<thead>
 				<tr class="col-md-8 text-center">
-					<th >아이디</th>
+					<th>아이디</th>
 					<th>이름</th>
 					<th>이메일</th>
 					<th>등급</th>
@@ -77,7 +93,7 @@ $(function() {
 					<td>${vo.user_id}</td>
 					<td>${vo.user_name}</td>
 					<td>${vo.user_email}</td>
-					 <td class="current-grade"> ${vo.grade} </td>
+					 <td class="current-grade" style="color: ${vo.grade == '관리자' ? 'green' : ''};">${vo.grade}</td>
 					 <td><fmt:formatDate value="${vo.last_login}"
                                		pattern="yyyy-MM-dd"/></td>
                        <td class="d-flex justify-content-center align-items-center">

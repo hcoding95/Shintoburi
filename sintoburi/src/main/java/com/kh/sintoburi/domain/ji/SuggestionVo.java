@@ -23,4 +23,5 @@ public class SuggestionVo {
 	private String user_id;
 	private Date suggestion_reg_date;
 	private Date suggestion_upd_date;
+	private Integer parent_no;
 }

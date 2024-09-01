@@ -12,7 +12,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DeliveryDto {
-
 	public String user_name;
 	public String user_phone;
 	public String address;

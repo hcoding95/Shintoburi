@@ -2,6 +2,8 @@ package com.kh.sintoburi.controller.hn;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.ReportPostVo;
@@ -33,7 +36,13 @@ public class ReportController {
 
 	// 신고게시글목록
 	@GetMapping("/reportList")
-	public void reportList(Model model, HnCriteria criteria) {
+	public String reportList(Model model, HnCriteria criteria,HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+
+		if (login == null || (!"관리자".equals(login.getGrade()) && !login.getGrade().equals("마스터")) ) {
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
 		List<ReportPostVo> list = reportPostService.ReportList(criteria);
 		model.addAttribute("reportList", list);
 		
@@ -41,6 +50,7 @@ public class ReportController {
 		HnPageDto pageMaker = new HnPageDto(criteria, total);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("criteria", criteria);
+		return "/hn/manager/report/reportList";
 	}
 
 	// 신고게시글상세보기

@@ -75,7 +75,7 @@ $(function() {
 			enctype : 'multipart/form-data',                                  
 			success : function(data) {   
 				$(el).summernote('insertImage', "${pageContext.request.contextPath}/resources/assets/images/upload/"+data, function($image) {
-					$image.css('width', "25%"); // 기본 이미지 크기
+					//$image.css('width', "25%"); // 기본 이미지 크기
 				
 				});
 	      

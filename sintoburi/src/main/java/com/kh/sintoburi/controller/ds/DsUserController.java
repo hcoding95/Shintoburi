@@ -19,10 +19,12 @@ import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.service.ds.DsUserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @RequestMapping("/ds/user/*")
 @RestController
 @RequiredArgsConstructor
+@Log4j
 public class DsUserController {
 	
 	@Autowired
@@ -76,44 +78,20 @@ public class DsUserController {
 	@PostMapping("/login")
 	@ResponseBody
 	public String login(@RequestBody LoginDto dto, HttpSession session) {
-			
 		UserVo vo = userService.login(dto);
+		log.info("vo:" + vo);
 		session.setAttribute("login", vo);
 		String grade=vo.getGrade();
-		if(vo.getGrade().equals("관리자")) {
+		System.out.println("등급은?" + grade);
+		if(vo.getGrade().trim().equals("관리자") || vo.getGrade().trim().equals("마스터")) {
+			System.out.println("매니저임");
 			return "manager";
 		}
 		
-	
-		
-		
+
 		return null;
 	}
 		
-//	@PostMapping("/login")	
-//	@ResponseBody
-//	public String loginAction(@RequestBody LoginDto dto, HttpSession session) {			
-//				
-//		UserVo vo = userService.login(dto);
-//		
-//		String path = "";		
-//		if(vo != null) {		
-//			session.setAttribute("login", vo);	
-////			String realPath = (String)session.getAttribute("targetLocation");	
-////
-////			System.out.println("내가보낼 타겟은?" + realPath);	
-////			path = "redirect:" + realPath;	
-//		} else {		
-//			path = "redirect:/ds/board/login";	
-//		}		
-//		return path;		
-//	}			
 
-		
-		
-		
-	
-	
-	
 
 }

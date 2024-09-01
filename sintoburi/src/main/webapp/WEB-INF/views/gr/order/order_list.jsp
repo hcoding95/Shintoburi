@@ -4,49 +4,51 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="/WEB-INF/views/include/top.jsp"%>     
     
+    
+    
 <script>
 $(function(){
-	
 	$(".payment").click(function(e) {
 		
 		//e.preventDefault(); 
-			let user_id = "${login.user_id}";
-	        let ono = $(this).attr("data-ono");
-	        let pay_amount = ${paymentDto.pay_amount};
-	        let current_point = ${paymentDto.current_point};
-	        let remain_point = ${paymentDto.remain_point};
-	        let payment_state = ${paymentDto.payment_state};
-	        
-	        if (current_point < pay_amount) {
-	            alert("포인트가 부족합니다.");
-	            return;
-	        }
-	        
-	        let data = {
-	        		"user_id":user_id,
-	        		"ono": ono,
-	                "pay_amount" : pay_amount,
-	                "current_point" : current_point,
-	                "remain_point" : remain_point,
-	                "payment_state" : payment_state
-	        }
-	        //console.log(data.ono);
-	        
-	        $.ajax({
-	            url: '/gr/order/do_pay', //결제 처리 요청을 보낼 URL
-	            type: 'POST',
-	            contentType: 'application/json',  //JSON 형식으로 전송
-	            data: JSON.stringify(data),
-	            success: function(response) {
-	             alert("결제완료 되었습니다.");
-	               $(location).attr("href","/gr/order/payment_list"); //서버에서 리다이렉트 URL을 받아서 이동
-	            },
-	            error: function() {
-	                alert("결제 처리 중 오류가 발생했습니다.");
-	            }
-	        });
-	    });
-	});
+		let user_id = "${login.user_id}";
+        let ono = $(this).attr("data-ono");
+        let pay_amount = $(this).attr("data-pay_amount");
+        let current_point = $(this).attr("data-user_point");
+        let remain_point = $(this).attr("data-remain_point");
+        let payment_state = $(this).attr("data-payment_state");
+        
+//         if (current_point < pay_amount) {
+	       if (remain_point < 0) {
+            alert("포인트가 부족합니다.");
+            return; 
+        }
+        
+        let data = {
+        		"user_id":user_id,
+        		"ono": ono,
+                "pay_amount" : pay_amount,
+                "current_point" : current_point,
+                "remain_point" : remain_point,
+                "payment_state" : payment_state
+        }
+        console.log("data:",data);
+        
+        $.ajax({
+            url: '/gr/order/do_pay', //결제 처리 요청을 보낼 URL
+            type: 'POST',
+            contentType: 'application/json',  //JSON 형식으로 전송
+            data: JSON.stringify(data),
+            success: function(response) {
+             alert("결제 완료되었습니다.");
+               $(location).attr("href","/gr/order/payment_list"); //서버에서 리다이렉트 URL을 받아서 이동
+            },
+            error: function() {
+                alert("결제 처리 중 오류가 발생했습니다.");
+            }
+        });
+    });
+});
 </script>
 
 
@@ -90,7 +92,7 @@ $(function(){
 						<td>${orderDto.user_phone}</td>
 						<td>${orderDto.address}</td>
 <%-- 						<td>${orderDto.payment_type}</td> --%>
-						<td>${orderDto.point}</td>
+						<td>${orderDto.user_point}</td>
 						<td>${orderDto.sum_total}</td>
 						<td>${orderDto.delivery_charge}</td>
 						<td>${orderDto.pay_amount}</td>
@@ -105,7 +107,13 @@ $(function(){
 <%-- 						<c:otherwise> --%>
 						<td>
 						<c:if test="${orderDto.p_state == '결제전'}">
-							<button type="button" data-ono="${orderDto.ono}"  id="btnPayment" name="btnPayment" class="btn btn-warning payment">결제</button>
+							<button type="button" id="btnPayment" name="btnPayment" class="btn btn-warning payment"
+								data-ono="${orderDto.ono}"  
+								data-pay_amount="${orderDto.pay_amount}"  
+								data-user_point="${orderDto.user_point}"  
+								data-remain_point="${orderDto.user_point - orderDto.pay_amount}"  
+								data-payment_state="${orderDto.payment_state}"  
+							>결제</button>
 						</c:if>
 						</td>
 <%-- 						</c:otherwise> --%>

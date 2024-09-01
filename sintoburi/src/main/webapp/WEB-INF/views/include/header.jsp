@@ -32,7 +32,17 @@
 
  
 <script>
-              
+
+$(function(){
+	let search = window.location.search;
+	let param = new URLSearchParams(search);
+	let keyword = param.get('keyword');
+
+	$("#searchInput").val(keyword);
+
+});
+
+
                       
 </script>
  
@@ -53,35 +63,52 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">홈</a></li>
 <!--                         <li class="nav-item"><a class="nav-link" href="#!">도움말</a></li> -->
-                        <li class="nav-item"><a class="nav-link" href="#!">상품몰</a></li>
+
+                        <a class="nav-link" href="/ji/product/productMain">상품몰</a>
+
+             
+
                     </ul>
-                      <c:if test="${empty login}">
-		                   	<a href="/ds/board/register">회원가입</a>
-		                    </c:if>
+<%--                       <c:if test="${empty login}"> --%>
+<!-- 		                   	<a href="/ds/board/register">회원가입</a> -->
+<%-- 		                    </c:if> --%>
                   
-					
-					
+
+
                     
                     	<nav class="navbar navbar-light bg-">
 						<div class="container-fluid">
-							<form class="d-flex">
+
+						
+			<form class="d-flex" action="/ds/board/index" method="get" id="searchForm">
+				<select name="type" class="form-select form-select">
+					<option value="T" ${criteria.type=='T'? 'selected' : '' }>제목</option>
+					<option value="C" ${criteria.type=='C'? 'selected' : '' }>내용</option>
+					<option value="W" ${criteria.type=='W'? 'selected' : '' }>작성자</option>
+					<option value="TC" ${criteria.type=='TC'? 'selected' : '' }>제목+내용</option>
+					<option value="TW" ${criteria.type=='TW'? 'selected' : '' }>제목+작성자</option>
+					<option value="CW" ${criteria.type=='CW'? 'selected' : '' }>내용+작성자</option>
+					<option value="TCW" ${criteria.type=='TCW'? 'selected' : ''}>제목+내용+작성자</option>
+				</select> <input type="text" name="keyword" class="form-control me-2" placeholder="검색" aria-label="Search" id="searchInput"
+				
+				value="${criteria.keyword}">
+				<button id="btnSearch" class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+			
+			</form>
+		
 							
-								<input class="form-control me-2" type="search" placeholder="검색"
-									aria-label="Search">
-								<button class="btn btn-outline-success" type="submit">
-									<i class="bi bi-search"></i>
-								</button>
-							</form>
+						
+						
 						</div>
 					</nav>
                     <form class="d-flex">
 					
 			
-					<button class="btn btn-outline-success" style="margin-right:10px;" type="submit">
+					<a class="btn btn-outline-success" style="margin-right:10px;" type="button" href="/gr/basket/list">
                             <i class="bi-cart-fill me-1"></i>
                             장바구니
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
+                        </a>
                         
                     <div>
                
@@ -149,7 +176,7 @@
 function openEventPopup(){
 	
 	if(${login.user_id==null}){
-		alert("로그인을 해주세요");
+		$(location).attr("href","/ds/board/login");
 		return;
 	}
 	
@@ -164,7 +191,7 @@ function openEventPopup(){
 
 function openChatPopup(){
 	if(${login.user_id==null}){
-		alert("로그인을 해주세요");
+		$(location).attr("href","/ds/board/login");
 		return;
 	}
 	

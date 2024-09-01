@@ -17,6 +17,7 @@
 	  </insert>
 	  
 <!-- 	  장바구니에 넣기 -->
+<!-- 지환 TODO !!!!!!!!!!!!!!!!!!!!!!-->
 	  <insert id="insertDetail">
 		insert into tbl_basket_detail
 			(bdno, product_no, bno, p_count)
@@ -92,27 +93,16 @@
 
  	<!-- 장바구니 합계 가격 -->
 	<select id="getSumPrice" resultType="int">
-	    select nvl(sum(total_price),0) sum_price
+	   select nvl(sum(total_price),0) sum_price
 	    from (
-	        select d.p_count cnt, 
-	               CASE 
-	                   WHEN (d.p_count * p.price) >= 30000 THEN 0 
-	                   ELSE 3000 
-	               END as delivery_charge,
-	               p.price price,  
-	               ((d.p_count * p.price) + 
-	               CASE 
-	                   WHEN (d.p_count * p.price) >= 30000 THEN 0 
-	                   ELSE 3000 
-	               END) as total_price
+	        select d.p_count cnt, p.price price,(d.p_count * p.price) total_price 
 	        from tbl_basket_detail d
 	        join tbl_product p on d.product_no = p.product_no
 	        where d.bno = (
-	            select bno 
-	            from tbl_basket
-	            where user_id = #{user_id}
+                            select bno 
+                            from tbl_basket
+                            where user_id = #{user_id})
 	        )
-	    )
 	</select>
 	
 <!-- 	bdno 삭제해도 bdno에서 얻을 수 있는 정보를 주문상세에 넘겨주기   -->

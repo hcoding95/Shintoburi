@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sintoburi.domain.common.UserVo;
 import com.kh.sintoburi.domain.hn.HnCriteria;
 import com.kh.sintoburi.domain.hn.HnPageDto;
 import com.kh.sintoburi.domain.hn.MainNoticeDto;
@@ -43,7 +45,14 @@ public class NoticeController {
 
 	// 공지사항
 	@GetMapping("/noticeList")
-	public void noticeList(Model model, HnCriteria criteria) {
+	public String noticeList(Model model, HnCriteria criteria,HttpSession session) {
+		UserVo login = (UserVo) session.getAttribute("login");
+
+		if (login == null || (!"관리자".equals(login.getGrade()) && !login.getGrade().equals("마스터")) ) {
+			session.invalidate();
+			return "redirect:/ds/board/login";
+		}
+		
 		List<NoticeVo> list = noticeService.getListNotice(criteria);
 		model.addAttribute("noticeList", list);
 
@@ -57,6 +66,7 @@ public class NoticeController {
 		System.out.println("Criteria: " + criteria);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("criteria", criteria);
+		return "/hn/manager/notice/noticeList";
 	}
 
 	// 공지사항등록폼
@@ -109,7 +119,7 @@ public class NoticeController {
 		if (dto.getImportant() != null && dto.getImportant().equals("Y")) {
 			MainNoticeDto mainNoticeDto = new MainNoticeDto();
 			mainNoticeDto.setTitle(noticeVo.getTitle());
-			mainNoticeDto.setUrl("/hn/manager/notice/noticeDetail/" + n_no);
+			mainNoticeDto.setUrl("/hn/mypage/noticeRead/?n_no=" + n_no);
 			request.getServletContext().setAttribute("noti", mainNoticeDto);
 		}
 		
@@ -167,7 +177,7 @@ public class NoticeController {
 		if (dto.getImportant() != null && dto.getImportant().equals("Y")) {
 			MainNoticeDto mainNoticeDto = new MainNoticeDto();
 			mainNoticeDto.setTitle(noticeVo.getTitle());
-			mainNoticeDto.setUrl("/hn/manager/notice/noticeDetail/" + n_no);
+			mainNoticeDto.setUrl("/hn/mypage/noticeRead/?n_no=" + n_no);
 			request.getServletContext().setAttribute("noti", mainNoticeDto);
 		}
 		rttr.addFlashAttribute("noticeMod", n_no);

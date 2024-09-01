@@ -23,13 +23,13 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		
+
 		<multipart-config>
-			<!-- location에 //192.168.0.88/upload_shard/ 가틍ㄴ  -->
-			<location>G:/upload/tmp</location>
-			<max-file-size>20971520</max-file-size><!-- 20MB  -->
-			<max-request-size>41943040</max-request-size><!-- 40MB  -->
-			<file-size-threshold>20971520</file-size-threshold><!-- 20MB  -->
+<!-- 			<location>//192.168.0.69/upload_share/temp</location> -->
+			<location>D:/upload/tmp</location>
+			<max-file-size>20971520</max-file-size><!-- 20MB -->
+			<max-request-size>41943040</max-request-size><!-- 40MB -->
+			<file-size-threshold>20971520</file-size-threshold><!-- 20MB -->
 		</multipart-config>
 	</servlet>
 		
@@ -38,13 +38,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<multipart-config>
-<!-- 			<location>//192.168.0.69/upload_share/temp</location> -->
-			<location>D:/upload/temp</location>
-			<max-file-size>20971520</max-file-size><!-- 20MB -->
-			<max-request-size>41943040</max-request-size><!-- 40MB -->
-			<file-size-threshold>20971520</file-size-threshold><!-- 20MB -->
-	</multipart-config>
+
 	
 	
 	<!-- Encoding Filter  -->

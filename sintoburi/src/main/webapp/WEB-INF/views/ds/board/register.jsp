@@ -15,6 +15,16 @@
 <script>
 
 $(function() {
+	
+	let loginStatus  = "${login}";
+	
+	console.log(loginStatus);
+	
+	if(loginStatus==null||loginStatus==""){
+		console.log("로그인안됨");
+	} else{
+		$(location).attr("href","/ds/board/index");
+	}
 
 	
 	$("#btnRegister").click(function(){	
@@ -126,7 +136,7 @@ $(function() {
 				}
 				setTimeout(() => {
 					alert("가입이 완료되었습니다.");
-					$(location).attr("href","/ds/board/login");
+					$(location).attr("href","/ds/board/index");
 				}, 500);
 			}
 		
