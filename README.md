@@ -73,8 +73,8 @@
   <tr>
     <td align="center" class="지환">
         <a href="https://github.com/sunlake123"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-        <br/>
-        <a href="https://velog.io/@sunlake123"><img alt="vlog-link" height="25" src="https://img.shields.io/badge/Tech blog-20C997?style=flat-square&logo=Velog&&logoColor=white"/></a>
+     
+       
    </td>
    <td align="center" class="동석">
         <a href="https://github.com/bingsoo95"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
@@ -84,15 +84,11 @@
    </td>
    <td align="center" class="규림">
         <a href="https://github.com/YesunPark"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-        <br/>
-        <a href="https://velog.io/@lynn080"><img alt="vlog-link" height="25" src="https://img.shields.io/badge/Tech blog-20C997?style=flat-square&logo=Velog&&logoColor=white"/></a>
-        <br/>   
-        <a href="mailto:lynn08082@gmail.com"><img alt="gmail-link" height="25" src="https://img.shields.io/badge/Email-d14836?style=flat-square&logo=Gmail&&logoColor=white"/></a>
+   
    </td>
    <td align="center" class="한나">
         <a href="https://github.com/rkoji"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-        <br/>   
-        <a href="mailto:wl0wn1212@gmail.com"><img alt="gmail-link" height="25" src="https://img.shields.io/badge/Email-d14836?style=flat-square&logo=Gmail&&logoColor=white"/></a>
+
    </td>
   </tr>
 
@@ -169,7 +165,7 @@
     <br/>
     - 공지사항 및 faq 관리
     <br/>
-    - 신고게시글 및 문의 관리
+    - 신고 게시글 및 문의 관리
    </td>
   </tr>
 </table>
@@ -177,11 +173,21 @@
 ## [ 공통 기능 ]
 
 ### 회원가입, 로그인
-- 사용자는 이메일, 비밀번호, 닉네임, 휴대전화번호를 이용해 회원가입할 수 있다.
-- 관리자는 이메일, 비밀번호, 관리자 인증코드, 실명을 이용해 회원가입할 수 있다.
-- 회원가입 시 사용한 이메일과 비밀번호를 이용해 로그인할 수 있다.
+- 사용자는 개인정보를 입력해 회원가입할 수 있다.
+- 회원가입 시 사용한 아이디와 비밀번호를 이용해 로그인할 수 있다.
 
-### 상품 목록 및 상품 상세 조회
+### 상품 목록 및 상세조회
+- 상품 카테고리 별 상품 목록을 조회할 수 있다.
+
+
+### 블로그 게시글 목록 및 상세 조회
+- 블로그 게시글 목록 및 상세 조회를 할 수 있다.
+
+
+### 커뮤니티 게시글 목록 및 상세 조회 
+
+
+### 공지사항 및 자주하는 질문
 - 상품 카테고리 별 상품 목록을 조회할 수 있다.
   - 판매중인 상품과 매진된 상품이 전부 조회되며, 카테고리 별 상품이 아닌 전체 상품 목록 조회는 불가능하다.
 - 베스트 상품 목록
@@ -191,24 +197,31 @@
 
 ## [ 사용자 기능 ]
 
-### 장바구니 관리
-- 장바구니에 상품을 추가한 후, 상품의 수량을 조절하거나 상품을 삭제할 수 있다.
-
-### 주문 관리
-- 결제를 하면 장바구니에 담겨있는 모든 상품이 주문 내역으로 생성된다.
-- 기본적으로 3개월간의 주문 내역이 조회되고, 기간을 설정할 시 설정한 기간동안의 내역이 조회된다.
-- 본인의 모든 주문 내역을 조회할 수 있다.
-- 주문한 상품들의 조리가 시작된 후 시간이 얼마나 경과되었는지 조회할 수 있다.
-- 관리자가 주문을 수락하기 이전에는 사용자가 주문을 취소할 수 있다.
+### 상품몰 관리
 
 
-### 리뷰 관리
-- 본인이 주문한 상품에 대해 리뷰 내용, 별점(1~5점), 사진 1장으로 리뷰를 등록할 수 있다.
+### 주문관리 및 장바구니 
+언니꺼 
 
+
+### 블로그 관리
+
+
+### 커뮤니티 관리
+
+
+### 마이페이지 관리
+- 1:1 문의사항 등록,수정,삭제가 가능하다.
+- 회원수정 및 탈퇴가 가능하다.
 
 ## [ 관리자 기능 ]
 
-### 상품 및 상품 카테고리 관리
+### 회원 및 등급 관리
+- 회원 목록 조회 및 상세 정보 확인을 할 수 있다.
+- 회원의 등급 수정 및 사업자번호 업데이트를 할 수 있다.
+- 등급 변경이 필요한 회원 리스트 조회를 할 수 있다.
+
+### 상품 및 카테고리 관리
 - 상품을 등록할 수 있다.(상품 사진은 1장만 등록할 수 있다.)
 - 등록한 상품의 정보를 수정, 삭제할 수 있다.
 - 상품 전체 목록을 조회할 수 있고, 상품 하나의 정보도 조회할 수 있다.
@@ -216,14 +229,14 @@
 - 상품 카테고리를 등록할 수 있고, 등록한 상품 카테고리를 수정, 삭제할 수 있다.
 - 상품 카테고리 전체 목록을 조회할 수 있고, 상품 카테고리 하나의 정보도 조회할 수 있다.
 
-### 옵션 및 옵션 카테고리 관리
-- 옵션 및 옵션 카테고리를 등록할 수 있고, 등록한 옵션을 수정, 삭제할 수 있다.
-- 옵션 및 옵션 카테고리의 전체 목록을 조회할 수 있고, 하나의 정보도 조회할 수 있다
+### 공지사항 및 faq 관리
+- 게시글 목록 조회 및 등록, 수정, 삭제를 할 수 있다.
+- 공지사항 항목에 따라 일반/중요/관리자로 나뉘며 상단에 표시 된다.
 
-### 주문 관리
-- 주문이 어떻게 진행되고 있는지 확인할 수 있도록 주문의 상태를 변경할 수 있다.
-- 주문이 들어오면 예상 조리 시간을 선택해야 한다.
-- 주문이 들어오면 주문을 수락하거나 거절할 수 있다.
+### 신고 게시글 및 문의 관리
+- 신고된 게시글 목록 조회 및 삭제처리를 할 수 있다.
+- 상품 및 등급 관련 문의 사항 관리 및 답변처리를 할 수있다.
+
 
 
 
