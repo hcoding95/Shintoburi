@@ -72,7 +72,7 @@ $(function() {
         let extName = fileName.substring(dotIndex + 1).toLowerCase();
         console.log("extName:", extName);
         
-        if(extName == "jpg" || extName == "png" || extName == "gif") {
+        if(extName == "jpg" || extName == "png" || extName == "gif" || extName =="jfif") {
             return true;
         }
         return false;
@@ -93,7 +93,7 @@ $(function() {
         // 비동기 전송
         $.ajax({
             type: "post",
-            url: "/uploadFormAction",
+            url: "/ji/uploadFormAction",
             contentType: false, 
             processData: false,
             data: formData,
@@ -108,7 +108,7 @@ $(function() {
                     let fileName = `\${obj.img_path}/\${obj.uuid}_\${obj.img_name}`;
                     console.log("fileName:", fileName);
                     if (!isImage) {
-                            imgTag = `<a href='/download?fileName=\${obj.img_path}\/${obj.uuid}_\${obj.img_name}'>
+                            imgTag = `<a href='/download?file_name=\${obj.img_path}\/${obj.uuid}_\${obj.img_name}'>
                                     <img src='/resources/images/default.png' width='100'></a>`;
                     } 
                     else {

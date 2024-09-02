@@ -87,8 +87,9 @@ public class ProductMgmtController {
 	// 수정 처리
 	@PostMapping("/modifyProduct")
 	public String modifyProduct(ProductVo productVo, RedirectAttributes rttr) {
-		
+		log.info("productvo:" + productVo);
 	    List<ProductImageVo> delList = productVo.getDelList();
+	    log.info("delList:" + delList);
 	    if (delList != null && !delList.isEmpty()) {
 	        for (ProductImageVo img : delList) {
 	            imgService.delImg(img.getUuid(), img.getImg_name());
@@ -98,6 +99,7 @@ public class ProductMgmtController {
 	    }
 
 	    List<ProductImageVo> imgList = productVo.getImgList();
+	    log.info("imgList:" + imgList);
 	    if (imgList != null && !imgList.isEmpty()) {
 	        for (ProductImageVo img : imgList) {
 	            img.setProduct_no(productVo.getProduct_no());
