@@ -23,50 +23,6 @@
 > 백엔드 5명
 
 
-## 팀원
-
-<div align="center">
-<table align="center"> <!-- 팀원 표 -->
-  <tr>
-   <th >
-    Backend 고지환
-   </th>
-   <th>
-    Backend 김동석
-   </th>
-   <th >
-    Backend 김효철
-   </th>
-   <th >
-    Backend 이규림
-   </th>
-   <th >
-    Backend 장한나
-   </th>
-   </tr>
-  <tr>
-  
-       
-   </td>
-   <td align="center" class="동석">
-        <a href="https://github.com/bingsoo95"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-   </td>
-   <td align="center" class="효철">
-        <a href="https://github.com/thsu1084"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-   </td>
-   <td align="center" class="규림">
-        <a href="https://github.com/YesunPark"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-   
-   </td>
-   <td align="center" class="한나">
-        <a href="https://github.com/rkoji"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-
-   </td>
-  </tr>
-
-</table>
-</div>
-
 
 # ERD 구조
 
