@@ -98,9 +98,7 @@
 
 # ERD 구조
 
-[👉 ERD Cloud에서 직접 보기](https://www.erdcloud.com/d/pqop6rtCyk7PzkgLD)
-
-![ERD 0913](https://github.com/YesunPark/cafe-bom/assets/108933466/71aefe7c-ab4b-44fb-a7e9-9585f9875e15)
+![image](https://github.com/user-attachments/assets/451945ab-b113-4d8f-a7ac-02c7c056a306)
 
 
 
