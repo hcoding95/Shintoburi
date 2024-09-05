@@ -23,11 +23,12 @@
 
 
 # 기술 스택
-언어 JAVA (JDK11) , HTML/CSS, JavaScript
-서버 ApacheTomcat 9.0
-프레임워크 SpringMVC, MyBatis 3.4.6
-DB Oracle11.2
-IDE eclipse
+언어 JAVA (JDK11) , HTML/CSS, JavaScript<br>
+서버 ApacheTomcat 9.0<br>
+프레임워크 SpringMVC, MyBatis 3.4.6<br>
+DB Oracle11.2<br>
+빌드 maven<br>
+IDE eclipse<br>
 
 # 주요 기능
 
