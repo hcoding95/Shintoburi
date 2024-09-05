@@ -45,31 +45,7 @@
    </th>
    </tr>
   <tr>
-    <td align="center">
-        <img src="https://github.com/YesunPark/cafe-bom/assets/108933466/801e2b25-e3fa-4c9e-83e3-43b3b0280a78" width=300px alt="고지환"> 
-        <br/>
-    </td>
-    <td align="center">
-        <img src="https://github.com/YesunPark/cafe-bom/assets/108933466/871f84d5-a2da-49e0-927e-8c023f2419ed" width=300px alt="김동석"> 
-        <br/>
-    </td>
-    <td align="center">
-        <img src="https://github.com/YesunPark/cafe-bom/assets/108933466/98f1d69f-3890-45af-9c90-2221b478dd7b" width=300px alt="김효철"> 
-        <br/>
-    </td>
-    <td align="center">
-        <img src="https://user-images.githubusercontent.com/61264510/220117269-9ca3a740-5483-4c26-83f1-3fe2aa3f957b.png" width=300px alt="이규림"> 
-        <br/>
-    </td>
-    <td align="center">
-        <img src="https://github.com/YesunPark/cafe-bom/assets/108933466/77fe609d-7718-434e-b1ca-98dc61a40816" width=300px alt="장한나"> 
-        <br/>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" class="지환">
-        <a href="https://github.com/sunlake123"><img alt="github-link" height="25" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-     
+  
        
    </td>
    <td align="center" class="동석">
